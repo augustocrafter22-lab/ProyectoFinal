@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>S.G.R.S.I. - Soporte Técnico</title>
+</head>
+<body>
+    <header>
+        <h1>S.G.R.S.I. - Panel de Docentes</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>Nuevo Reporte de Laboratorio</h2>
+            <form action="index.html" method="GET">
+                
+                <fieldset>
+                    <legend>Datos de ubicación</legend>
+                    <p>
+                        <label for="docente">Nombre del docente:</label>
+                        <input type="text" id="docente" name="docente" required>
+                    </p>
+                    <p>
+                        <label for="laboratorio">Laboratorio:</label>
+                        <input type="text" id="laboratorio" name="laboratorio" required>
+                    </p>
+                </fieldset>
+
+                <figure>
+                    <figcaption><strong>Detalle de equipos y errores</strong></figcaption>
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th scope="col">pcnum</th>
+                                <th scope="col">Nombre y apellido</th>
+                                <th scope="col">error (si no funciona no poner nada)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="number" name="pcnum1" required></td>
+                                <td><input type="text" name="alumno1" required></td>
+                                <td><input type="text" name="error1"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="number" name="pcnum2"></td>
+                                <td><input type="text" name="alumno2"></td>
+                                <td><input type="text" name="error2"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="number" name="pcnum3"></td>
+                                <td><input type="text" name="alumno3"></td>
+                                <td><input type="text" name="error3"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="number" name="pcnum4"></td>
+                                <td><input type="text" name="alumno4"></td>
+                                <td><input type="text" name="error4"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="number" name="pcnum5"></td>
+                                <td><input type="text" name="alumno5"></td>
+                                <td><input type="text" name="error5"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="number" name="pcnum6"></td>
+                                <td><input type="text" name="alumno6"></td>
+                                <td><input type="text" name="error6"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </figure>
+
+                <menu>
+                    <a href="index.html">Volver (Cancelar)</a>
+                    <button type="submit">Enviar Reporte Técnico</button>
+                </menu>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

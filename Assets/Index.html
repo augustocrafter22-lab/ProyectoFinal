@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>S.G.R.S.I. - Inicio</title>
+</head>
+<body>
+    <header>
+        <h1>S.G.R.S.I.</h1>
+        <p>Sistema de Gestión de Recursos y Soporte de Informática</p>
+    </header>
+
+    <main>
+        <section>
+            <h2>Acceso al Sistema</h2>
+            <form action="soporte.html" method="GET">
+                <fieldset>
+                    <legend>Credenciales obligatorias</legend>
+                    <p>
+                        <label for="cedula">Cédula de Identidad:</label>
+                        <input type="text" id="cedula" name="cedula" placeholder="Ej: 1234567-8" required>
+                    </p>
+                    <p>
+                        <label for="clave">Contraseña:</label>
+                        <input type="password" id="clave" name="clave" placeholder="********" required>
+                    </p>
+                </fieldset>
+                
+                <menu>
+                    <button type="submit">Ingresar</button>
+                </menu>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
