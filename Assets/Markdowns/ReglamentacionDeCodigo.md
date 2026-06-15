@@ -1,9 +1,3 @@
-Entendido. Aunque volvemos a recalcar que **esto no pertenece al libro *Código Limpio* de Robert C. Martin** (ya que la obra original no trata sobre HTML ni desarrollo web), lo integro a tu documento como una regla adoptada para el desarrollo frontend.
-
-He añadido esta norma en el **Capítulo 1 (como el punto 1.7)** para que mantenga la coherencia con el resto de tus principios generales. Aquí tienes la reglamentación completa y actualizada:
-
----
-
 # REGLAMENTACIÓN DE CÓDIGO LIMPIO
 
 ### CAPÍTULO 1: PRINCIPIOS GENERALES
