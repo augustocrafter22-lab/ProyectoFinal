@@ -40,5 +40,5 @@ function asociarDiagnosticoTicket(evento) {
 
   guardarDatos();
   document.querySelector("#formDiagnosticoTicket").reset();
-  mostrarMensaje("RF38: diagnóstico asociado al ticket correctamente.");
+  mostrarMensaje("Diagnóstico asociado al ticket correctamente.");
 }
