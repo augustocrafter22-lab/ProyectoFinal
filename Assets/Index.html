@@ -1,8 +1,85 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>S.G.R.S.I.</title>
-    
-    <link rel="stylesheet" href="../Assets/Css/style.css">
+    <link rel="stylesheet" href="../Assets/Css/login.css" />
+    <link rel="stylesheet" href="../Assets/Css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css"
+    />
+  </head>
+  <body>
+    <main>
+      <section class="SGRSI">
+        <img
+          src="../Assets/Imagenes/Deklan_EnterpriceIMG.png"
+          alt="DeKlan Enterprise"
+          class="logo"
+          length="200px"
+          width="200px"
+          height="125px"
+        />
+        <h1>S.G.R.S.I.</h1>
+        <p>Sistema de Gestión de Recursos y Soporte de Informática</p>
+      </section>
+      <section class="seccionLogin">
+        <form
+          action="InicioSesion"
+          method="POST"
+          class="login-form"
+          id="loginForm"
+        >
+          <!-- define la url de destino -->
+          <h2>Iniciar Sesión</h2>
+          <fieldset>
+            <label for="username">CI:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              minlength="7"
+              maxlength="8"
+              required
+            />
+
+            <label for="password">Contraseña:</label>
+            <input
+              type="password"
+              id="clave"
+              name="clave"
+              autocomplete="current-password"
+              minlength="8"
+              required
+            />
+            <label for="remember" class="remember-me">
+              <input type="checkbox" id="remember" name="remember" />
+              Recuerdame
+            </label>
+          </fieldset>
+          <span>
+            <!-- Mensaje de error para mostrar si las credenciales son incorrectas
+           el mensaje se escribira desde java en el caso de que las credenciales sean incorrectas -->
+          </span>
+          <p id="errorMessage" style="color: red"></p>
+          <button type="submit">Ingresar</button>
+          <table class="recuperacionContraseña">
+            <tr>
+              <td>
+                <a href="RecuperarContraseña.html">¿Olvidaste tu contraseña?</a>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </section>
+    </main>
+
+    <!-- Script de validación de inicio de sesión -->
+    <!--
+        Se importa el archivo login.js que contiene la lógica de validación del formulario de inicio de sesión.
+    -->
+    <script src="../Assets/JS/login.js"></script>
+  </body>
+</html>

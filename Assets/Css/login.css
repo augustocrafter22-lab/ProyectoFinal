@@ -1,0 +1,231 @@
+body {
+  height: 100vh; /* Ocupa toda la altura de la pantalla visible */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1; /* Se estira elásticamente para ocupar todo el espacio que sobra */
+  display: flex; /* Pone los dos paneles internos en fila (uno al lado del otro) */
+  width: 100%;
+}
+
+.SGRSI {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra el contenido verticalmente */
+  align-items: center; /* Centra el contenido horizontalmente */
+  flex: 1; /* Se reparte el espacio disponible 50/50 con el login */
+  width: 50%;
+  background-color: var(--AzulOscuro);
+  color: var(--blancoPuro);
+  text-align: center;
+  padding: 2rem;
+  box-sizing: border-box; /* Evita que el padding sume ancho extra a la caja */
+}
+
+.SGRSI img {
+  max-width: 150px;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.SGRSI h1 {
+  margin: 0.5rem 0;
+  font-size: 2rem;
+}
+
+.SGRSI p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+
+.seccionLogin {
+  background-color: var(--blancoPuro);
+  color: var(--negro);
+  font-family: "Barlow", sans-serif;
+  text-align: center;
+  line-height: 1.7;
+  margin: 0;
+  padding: 2rem;
+  flex: 1;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.seccionLogin h2 {
+  color: var(--negro);
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-transform: uppercase; /* Pasa el texto a mayúsculas por CSS */
+  margin-top: 0;
+}
+
+.seccionLogin form {
+  background-color: var(--blancoPuro);
+  color: var(--negro);
+  width: 100%;
+  max-width: 400px; /* Evita que el formulario se estire de más en pantallas gigantes */
+  display: flex;
+  flex-direction: column;
+}
+
+.seccionLogin legend {
+  color: var(--oscuro);
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.seccionLogin fieldset {
+  margin-bottom: 1rem;
+  border: none; /* Elimina el borde gris con relieve que viene por defecto */
+  padding: 0;
+}
+
+.seccionLogin label {
+  color: var(--oscuro);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: left;
+  display: block; /* Al ser bloque, obliga al input de abajo a colocarse en otra línea */
+  margin-bottom: 0.5rem;
+}
+
+.seccionLogin input {
+  width: 100%;
+  padding: 0.75rem;
+  font-family: "Barlow", sans-serif;
+  font-size: 1rem;
+  color: var(--oscuro);
+  background-color: var(--grisClaro);
+  border: none;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+}
+
+.seccionLogin input:focus {
+  background-color: var(--blancoCristal);
+  color: var(--oscuro);
+  outline: none; /* Quita el anillo de resaltado por defecto del navegador */
+}
+
+.seccionLogin button {
+  background-color: var(--blancoCristal);
+  color: var(--oscuro);
+  font-family: "Barlow", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  cursor: pointer; /* Cambia el cursor a la "manito" interactiva */
+  box-sizing: border-box;
+}
+
+/* Hover: mouse encima / Focus: seleccionado con las flechas o tabulador */
+.seccionLogin button:hover,
+.seccionLogin button:focus {
+  background-color: var(--negro);
+  color: var(--blancoPuro);
+}
+
+/* Active: El momento exacto del click (cuando se mantiene hundido) */
+.seccionLogin button:active {
+  background-color: var(--oscuro);
+  color: var(--blancoPuro);
+}
+
+/* Tablets y pantallas medianas */
+@media (max-width: 768px) {
+  .SGRSI,
+  .seccionLogin {
+    width: 100%;
+    padding: 1.5rem;
+  }
+
+  .SGRSI h1 {
+    font-size: 1.5rem;
+  }
+
+  .SGRSI p {
+    font-size: 0.9rem;
+  }
+
+  .SGRSI img {
+    max-width: 120px;
+  }
+
+  .seccionLogin h2 {
+    font-size: 1.5rem;
+  }
+
+  .seccionLogin form {
+    max-width: 100%;
+  }
+}
+
+/* Celulares */
+@media (max-width: 480px) {
+  main {
+    flex-direction: column; /* Gira el diseño: presentación ARRIBA y login ABAJO */
+  }
+
+  .SGRSI,
+  .seccionLogin {
+    width: 100%;
+    flex: none; /* Cancela el comportamiento elástico para que no se estiren de más */
+    padding: 1rem;
+  }
+
+  .SGRSI {
+    min-height: auto; /* Se adapta a la altura justa de su contenido */
+  }
+
+  .SGRSI img {
+    max-width: 100px;
+  }
+
+  .SGRSI h1 {
+    font-size: 1.25rem;
+  }
+
+  .SGRSI p {
+    font-size: 0.85rem;
+  }
+
+  .seccionLogin {
+    min-height: auto;
+  }
+
+  .seccionLogin h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .seccionLogin form {
+    max-width: 100%;
+  }
+
+  .seccionLogin input {
+    font-size: 16px; /* Evita que los navegadores móviles fuercen un zoom molesto */
+  }
+}
+
+#errorMessage {
+  min-height: 20px; /* **IMPORTANTE: Ajusta esta altura** para que sea suficiente para una línea de tu mensaje de error */
+  text-align: center;
+  margin-top: 10px;
+  color: red;
+  /* Puedes establecer una min-height aquí también si quieres un espacio mínimo consistente */
+}
+
+#errorMessage.show {
+  visibility: visible; /* Hace visible el elemento */
+}
