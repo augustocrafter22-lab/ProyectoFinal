@@ -26,7 +26,12 @@
         <p>Sistema de Gestión de Recursos y Soporte de Informática</p>
       </section>
       <section class="seccionLogin">
-        <form action="InicioSesion" method="POST" class="login-form">
+        <form
+          action="InicioSesion"
+          method="POST"
+          class="login-form"
+          id="loginForm"
+        >
           <!-- define la url de destino -->
           <h2>Iniciar Sesión</h2>
           <fieldset>
@@ -49,7 +54,7 @@
               minlength="8"
               required
             />
-            <label for="remember">
+            <label for="remember" class="remember-me">
               <input type="checkbox" id="remember" name="remember" />
               Recuerdame
             </label>
@@ -64,7 +69,18 @@
             </tr>
           </table>
         </form>
+        <span>
+          <!-- Mensaje de error para mostrar si las credenciales son incorrectas
+           el mensaje se escribira desde java en el caso de que las credenciales sean incorrectas -->
+        </span>
+        <p id="errorMessage" style="color: red"></p>
       </section>
     </main>
+
+    <!-- Script de validación de inicio de sesión -->
+    <!--
+        Se importa el archivo login.js que contiene la lógica de validación del formulario de inicio de sesión.
+    -->
+    <script src="../Assets/JS/login.js"></script>
   </body>
 </html>
