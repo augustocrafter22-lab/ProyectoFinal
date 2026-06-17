@@ -5,5 +5,8 @@ const ticket = {
     laboratorio: document.getElementById("laboratorioTaller").value,
     asunto: document.getElementById("asunto").value,
     descripcion: document.getElementById("descripcion").value,
-    fecha: fechaActual
+    prioridad: document.getElementById("prioridad").value,
+    fecha: fechaActual,
+    turno: document.getElementById("turno").value,
+    
 };
