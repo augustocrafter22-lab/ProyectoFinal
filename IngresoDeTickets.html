@@ -1,21 +1,29 @@
-<h1>Nuevo Ticket</h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Ingreso de Tickets</title>
+<meta charset="UTF-8">
+</head>
 <section></section>
 <body>
+<h1>Nuevo Ticket</h1>
 <p>Hola! Este espacio es para ingresar nuevos tickets sobre incidencias que hayan en los equipos de los laboratorios </p>
 <p>Por favor, llena el siguiente formulario para reportar cualquier problema que hayas encontrado en los equipos de los laboratorios. </p>
+
 <form id ="ticketForm">
 <label for="laboratorioTaller">Espacio de Trabajo</label> 
+
 <select name="Laboratorio" id="laboratorioTaller" required>
-    <option value="">Seleccione un espacio</option>
-    <option value="Laboratorio 1">Laboratorio 1</option>
-    <option value="Laboratorio 2">Laboratorio 2</option>
-    <option value="Laboratorio 3">Laboratorio 3</option>
-    <option value="Laboratorio 4">Laboratorio 4</option>
-    <option value="Laboratorio 5">Laboratorio 5</option>
-    <option value="Laboratorio 6">Laboratorio 6</option>
-    <option value="Taller 1">Taller 1</option>
-    <option value="Taller 2">Taller 2</option>
-    <option value="Taller 3">Taller 3</option>
+<option value="">Seleccione un espacio</option>
+<option value="Laboratorio 1">Laboratorio 1</option>
+<option value="Laboratorio 2">Laboratorio 2</option>
+<option value="Laboratorio 3">Laboratorio 3</option>
+<option value="Laboratorio 4">Laboratorio 4</option>
+<option value="Laboratorio 5">Laboratorio 5</option>
+<option value="Laboratorio 6">Laboratorio 6</option>
+<option value="Taller 1">Taller 1</option>
+<option value="Taller 2">Taller 2</option>
+<option value="Taller 3">Taller 3</option>
 </select>
 
 <br><br>
@@ -52,16 +60,15 @@
 rows="5" 
 cols="40"
 placeholder="Describa la incidencia detectada:" required></textarea>
-<script src="Tickets.js"></script>
 
 <br><br>
 
 <label for="turno">Turno donde fue registrada la incidencia:</label>
 <select id="turno" name="turno" required>
-    <option value="">Seleccione un turno</option>
-    <option value="Matutino">Matutino</option>
-    <option value="Vespertino">Vespertino</option>
-    <option value="Nocturno">Nocturno</option>
+<option value="">Seleccione un turno</option>
+<option value="Matutino">Matutino</option>
+<option value="Vespertino">Vespertino</option>
+<option value="Nocturno">Nocturno</option>
 </select>
 
 <br><br>
@@ -77,6 +84,7 @@ placeholder="Describa la incidencia detectada:" required></textarea>
 <button type="submit">Enviar Ticket</button>
 
 </form>
+<script src="Tickets.js"></script>
 </body>
-
+</html>
 
