@@ -1,90 +1,89 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<title>Ingreso de Tickets</title>
-<meta charset="UTF-8">
+    <title>Ingreso de Tickets</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../Assets/Css/global.css" />
+
 </head>
-<section></section>
-<body>
-<h1>Nuevo Ticket</h1>
-<p>Hola! Este espacio es para ingresar nuevos tickets sobre incidencias que hayan en los equipos de los laboratorios </p>
-<p>Por favor, llena el siguiente formulario para reportar cualquier problema que hayas encontrado en los equipos de los laboratorios. </p>
+<section>
 
-<form id ="ticketForm">
-<label for="laboratorioTaller">Espacio de Trabajo</label> 
+    <body>
+        <h1>Nuevo Ticket</h1>
+        <p>¡Hola! Este espacio es para ingresar nuevos tickets sobre incidencias que hayan en los equipos de los
+            laboratorios </p>
+        <form id="ticketForm">
 
-<select name="Laboratorio" id="laboratorioTaller" required>
-<option value="">Seleccione un espacio</option>
-<option value="Laboratorio 1">Laboratorio 1</option>
-<option value="Laboratorio 2">Laboratorio 2</option>
-<option value="Laboratorio 3">Laboratorio 3</option>
-<option value="Laboratorio 4">Laboratorio 4</option>
-<option value="Laboratorio 5">Laboratorio 5</option>
-<option value="Laboratorio 6">Laboratorio 6</option>
-<option value="Taller 1">Taller 1</option>
-<option value="Taller 2">Taller 2</option>
-<option value="Taller 3">Taller 3</option>
-</select>
+            <label for="laboratorioTaller">Espacio de Trabajo</label>
+            <select name="Laboratorio" id="laboratorioTaller" required>
+                <option value="">Seleccione un espacio</option>
+                <option value="Laboratorio 1">Laboratorio 1</option>
+                <option value="Laboratorio 2">Laboratorio 2</option>
+                <option value="Laboratorio 3">Laboratorio 3</option>
+                <option value="Laboratorio 4">Laboratorio 4</option>
+                <option value="Laboratorio 5">Laboratorio 5</option>
+                <option value="Laboratorio 6">Laboratorio 6</option>
+                <option value="Taller 1">Taller 1</option>
+                <option value="Taller 2">Taller 2</option>
+                <option value="Taller 3">Taller 3</option>
+            </select>
 
-<br><br>
-<label for="Equipos">Equipos</label>
-<select name="Equipos" id="equipo" required>
-<option value="">Seleccione un equipo</option>
-<option value="PC-01">PC-01</option>
-<option value="PC-02">PC-02</option>
-<option value="PC-03">PC-03</option>
-<option value="PC-04">PC-04</option>
-<option value="PC-05">PC-05</option>
-<option value="PC-06">PC-06</option>
-<option value="PC-07">PC-07</option>
-<option value="PC-08">PC-08</option>
-<option value="PC-09">PC-09</option>
-<option value="PC-10">PC-10</option>
-<option value="PC-11">PC-11</option>
-<option value="PC-12">PC-12</option>
-<option value="PC-13">PC-13</option>
-<option value="PC-14">PC-14</option>
-<option value="PC-15">PC-15</option>
-<option value="PC-16">PC-16</option>
-</select>
+            <br><br>
+            <label for="Equipos">Equipos</label>
+            <select name="Equipos" id="equipo" required>
+                <option value="">Seleccione un equipo</option>
+                <option value="PC-01">PC-01</option>
+                <option value="PC-02">PC-02</option>
+                <option value="PC-03">PC-03</option>
+                <option value="PC-04">PC-04</option>
+                <option value="PC-05">PC-05</option>
+                <option value="PC-06">PC-06</option>
+                <option value="PC-07">PC-07</option>
+                <option value="PC-08">PC-08</option>
+                <option value="PC-09">PC-09</option>
+                <option value="PC-10">PC-10</option>
+                <option value="PC-11">PC-11</option>
+                <option value="PC-12">PC-12</option>
+                <option value="PC-13">PC-13</option>
+                <option value="PC-14">PC-14</option>
+                <option value="PC-15">PC-15</option>
+                <option value="PC-16">PC-16</option>
+            </select>
 
-<br><br>
-<label for="asunto">Asunto:</label>
-<input type="text" id="asunto" name="asunto" placeholder="Ej: La computadora no enciende" required>
+            <br><br>
+            <label for="asunto">Asunto:</label>
+            <input type="text" id="asunto" name="asunto" placeholder="Ej: La computadora no enciende" required>
 
-<br><br>
-<label for="descripcion">Descripción:</label>
+            <br><br>
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion" name="descripcion" rows="5" cols="40"
+                placeholder="Describa la incidencia detectada:" required></textarea>
 
-<br><br>
-<textarea id="descripcion" name="descripcion" 
-rows="5" 
-cols="40"
-placeholder="Describa la incidencia detectada:" required></textarea>
+            <br><br>
 
-<br><br>
+            <label for="turno">Turno donde fue registrada la incidencia:</label>
+            <select id="turno" name="turno" required>
+                <option value="">Seleccione un turno</option>
+                <option value="Matutino">Matutino</option>
+                <option value="Vespertino">Vespertino</option>
+                <option value="Nocturno">Nocturno</option>
+            </select>
 
-<label for="turno">Turno donde fue registrada la incidencia:</label>
-<select id="turno" name="turno" required>
-<option value="">Seleccione un turno</option>
-<option value="Matutino">Matutino</option>
-<option value="Vespertino">Vespertino</option>
-<option value="Nocturno">Nocturno</option>
-</select>
+            <br><br>
 
-<br><br>
+            <label for="grupo">Grupo:</label>
+            <input type="text" id="grupo" name="grupo" placeholder="Ej: 3MB" required>
 
-<label for ="grupo">Grupo:</label>
-<input type="text" id="grupo" name="grupo" placeholder="Ej: 3MB" required>
+            <br><br>
 
-<br><br>
+            <label for="profesor">Profesor que reporta la incidencia:</label>
+            <input type="text" id="profesor" name="profesor" placeholder="Ej: Augusto Lopéz" required>
+            <br><br>
+            <button type="submit">Enviar Ticket</button>
 
-<label for="profesor">Profesor que reporta la incidencia:</label>
-<input type="text" id="profesor" name="profesor" placeholder="Ej: Augusto Lopéz" required>
-<br><br>
-<button type="submit">Enviar Ticket</button>
+        </form>
+        <script src="./js/Tickets.js"></script>
+    </body>
 
-</form>
-<script src="Tickets.js"></script>
-</body>
 </html>
-
