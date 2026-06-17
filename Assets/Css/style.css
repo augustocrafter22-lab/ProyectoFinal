@@ -1,3 +1,14 @@
+:root {
+  --blancoPuro: #ffffff;
+  --blancoCristal: #dceaf8;
+  --gris: #c0c0c0;
+  --grisClaro: #ebebeb;
+  --amarillo: #eeb906;
+  --oscuro: #4e5b64;
+  --medio: #47606f;
+  --AzulOscuro: #1f5397;
+  --negro: #000000;
+}
 #registrarDiagnostico {
   border-left: 6px solid #1d4fbf;
 }
