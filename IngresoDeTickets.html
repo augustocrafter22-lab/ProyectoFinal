@@ -50,6 +50,21 @@ cols="40"
 placeholder="Describa la incidencia detectada:" required></textarea>
 <script src="Tickets.js"></script>
 <br><br>
+<label for="prioridad">Prioridad:</label>
+<select id="prioridad" name="prioridad">
+<option value="Baja">Baja</option>
+<option value="Media">Media</option>
+<option value="Alta">Alta</option>
+</select>
+    <br><br>
+<label for="turno">Turno donde fue registrada la incidencia:</label>
+<select id="turno" name="turno">
+    <option value="Matutino">Matutino</option>
+    <option value="Vespertino">Vespertino</option>
+    <option value="Nocturno">Nocturno</option>
+</select>
+<br><br>
+<button type="submit">Enviar Ticket</button>
 
 </form>
 </body>
