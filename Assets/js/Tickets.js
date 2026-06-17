@@ -8,5 +8,6 @@ const ticket = {
     prioridad: document.getElementById("prioridad").value,
     fecha: fechaActual,
     turno: document.getElementById("turno").value,
+    grupo: document.getElementById("grupo").value,
     profesor: document.getElementById("profesor").value
 };
