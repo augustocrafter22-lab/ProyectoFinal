@@ -9,3 +9,15 @@
   --AzulOscuro: #1f5397;
   --negro: #000000;
 }
+#registrarDiagnostico {
+  border-left: 6px solid #1d4fbf;
+}
+#Solucion {
+  border-left: 6px solid #22c55e;
+}
+#DiagnosticoTicket {
+  border-left: 6px solid #fa9c0f;
+}
+#AsociarSolucionTicket {
+  border-left: 6px solid #64748b;
+}
