@@ -1,0 +1,30 @@
+<h1>Registro de Diagnósticos</h1>
+<section></section>
+<body>
+    <p>Aqui se registrara el diagnóstico asociado al ticket.</p>
+    <link rel="stylesheet" href="../Css/style.css">
+    
+</body>
+<section class="modulo" id="DiagnosticoTicket">
+  <h2>RF38 - Asociar diagnóstico a ticket</h2>
+
+  <form class="formulario" id="formDiagnosticoTicket">
+    <label for="DiagnosticoTicketTicket">Ticket</label>
+    <select id="DiagnosticoTicketTicket" required>
+        <option value="INC-1566">INC-1566</option>
+        <option value="INC-5678">INC-5678</option>
+        <option value="INC-9012">INC-9012</option>
+        <option value="INC-3456">INC-3456</option>
+        <option value="INC-7890">INC-7890</option>
+        <option value="INC-2345">INC-2345</option>
+        <option value="INC-6789">INC-6789</option>
+        <option value="INC-0123">INC-0123</option>
+        <option value="INC-4567">INC-4567</option>
+    </select>
+
+    <label for="DiagnosticoTicketDiagnostico">Diagnóstico asociado</label>
+    <textarea id="DiagnosticoTicketDiagnostico" rows="4" minlength="10" required></textarea>
+
+    <button class="boton-principal" type="submit">Asociar diagnóstico</button>
+  </form>
+</section>
