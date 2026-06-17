@@ -7,8 +7,9 @@ const inputContrasenia = document.getElementById("clave"); // Obtenemos el campo
 const rememberMe = document.getElementById("remember");
 const errorMessageDisplay = document.getElementById("errorMessage");
 formulario.addEventListener("submit", function (event) {
-  // Agregamos un evento de envío al formulario
-  event.preventDefault(); // Evitamos que el formulario se envíe al servidor
+  event.preventDefault();
+  errorMessageDisplay.textContent = ""; // Limpia el mensaje anterior
+
   if (inputCI.value === CI && inputContrasenia.value === contrasenia) {
     // Validamos que los valores ingresados coincidan con los predefinidos
     // Aquí iría el código para redirigir al usuario a la página principal
@@ -19,6 +20,6 @@ formulario.addEventListener("submit", function (event) {
     }
     window.location.href = "Principal.html"; // Redirigimos al usuario a la página principal
   } else {
-    errorMessageDisplay.textContent = "CI o contraseña incorrectos"; // Mostramos una alerta si los datos son incorrectos
+    errorMessageDisplay.textContent = "CI o contraseña incorrectos"; // Muestra el mensaje de error
   }
 });

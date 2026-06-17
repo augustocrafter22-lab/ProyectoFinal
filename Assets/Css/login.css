@@ -217,3 +217,15 @@ main {
     font-size: 16px; /* Evita que los navegadores móviles fuercen un zoom molesto */
   }
 }
+
+#errorMessage {
+  min-height: 20px; /* **IMPORTANTE: Ajusta esta altura** para que sea suficiente para una línea de tu mensaje de error */
+  text-align: center;
+  margin-top: 10px;
+  color: red;
+  /* Puedes establecer una min-height aquí también si quieres un espacio mínimo consistente */
+}
+
+#errorMessage.show {
+  visibility: visible; /* Hace visible el elemento */
+}
