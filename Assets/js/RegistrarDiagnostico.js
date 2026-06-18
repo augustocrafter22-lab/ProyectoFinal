@@ -29,6 +29,8 @@ function registrarDiagnostico(evento) {
     return;
   }
 
+const diagnostico = obtenerDatos();
+
   const diagnostico = {
     id: crearId("INC"),
     ticketId: ticket.id,
@@ -38,9 +40,27 @@ function registrarDiagnostico(evento) {
     tecnico: datos.usuarioActual
   };
 
-  datos.diagnosticos.push(diagnostico);
-  guardarDatos();
+  guardarDatos(diagnostico);
 
   document.querySelector("#formregistrarDiagnostico").reset();
   mostrarMensaje("Diagnóstico registrado correctamente.");
+}
+
+function obtenerDatos() {
+    const datosGuardados = localStorage.getItem("diagnostico");
+    if (datosGuardados === null) {
+      return {
+      id: [],
+      ticketId: [],
+      equipoId: [],
+      texto: [],
+      fecha: [],
+      tecnico: null
+      }
+    }
+    return JSON.parse(datosGuardados);
+  }
+
+function guardarDatos(diagnostico) {
+    localStorage.setItem("diagnostico", JSON.stringify(diagnostico));
 }

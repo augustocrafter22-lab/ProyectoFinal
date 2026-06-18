@@ -29,6 +29,8 @@ function registrarSolucion(evento) {
     return;
   }
 
+const solucion = obtenerDatos();
+
   const solucion = {
     id: crearId("SL"),
     ticketId: ticket.id,
@@ -38,9 +40,27 @@ function registrarSolucion(evento) {
     tecnico: datos.usuarioActual
   };
 
-  datos.soluciones.push(solucion);
-  guardarDatos();
+  guardarDatos(solucion);
 
   document.querySelector("#formRegistrarSolucion").reset();
   mostrarMensaje("Solución registrada correctamente.");
 }
+
+function obtenerDatos() {
+    const datosGuardados = localStorage.getItem("solucion");
+    if (datosGuardados === null) {
+      return {
+      id: [],
+      ticketId: [],
+      equipoId: [],
+      texto: [],
+      fecha: [],
+      tecnico: null
+      }
+    }
+    return JSON.parse(datosGuardados);
+  }
+
+  function guardarDatos(solucion) {
+    localStorage.setItem("solucion", JSON.stringify(solucion));
+  }

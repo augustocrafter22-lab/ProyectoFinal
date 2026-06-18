@@ -29,16 +29,38 @@ function asociarSolucionTicket(evento) {
     return;
   }
 
-  datos.soluciones.push({
+  const SolucionTicket = obtenerDatos();
+
+  const SolucionTicket = {
     id: crearId("INC"),
     ticketId: ticket.id,
     equipoId: ticket.equipoId,
     texto: texto,
     fecha: obtenerFechaActual(),
     tecnico: datos.usuarioActual
-  });
+  };
 
-  guardarDatos();
+  guardarDatos(SolucionTicket);
+
   document.querySelector("#formAsociarSolucionTicket").reset();
   mostrarMensaje("La solución fue asociada al ticket correctamente.");
+}
+
+function obtenerDatos() {
+  const datosGuardados = localStorage.getItem("SolucionTicket");
+  if (datosGuardados === null) {
+    return {
+      id: [],
+      ticketId: [],
+      equipoId: [],
+      texto: [],
+      fecha: [],
+      tecnico: null
+    };
+  }
+  return JSON.parse(datosGuardados);
+}
+
+function guardarDatos(SolucionTicket) {
+  const datos = localStorage.getItem("SolucionTicket", JSON.stringify(SolucionTicket));
 }

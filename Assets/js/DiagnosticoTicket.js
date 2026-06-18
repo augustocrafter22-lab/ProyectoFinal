@@ -29,6 +29,8 @@ function asociarDiagnosticoTicket(evento) {
     return;
   }
 
+  const datos = obtenerDatos();
+
   datos.diagnosticos.push({
     id: crearId("INC"),
     ticketId: ticket.id,
@@ -38,16 +40,28 @@ function asociarDiagnosticoTicket(evento) {
     tecnico: datos.usuarioActual
   });
 
-  function guardarDatos() {
-
-    const datos = localStorage.getItem("datos");
-    if (datos === null)  retun []; {
-      return JSON.parse(datos);
-  } 
-}
-
-  guardarDatos();
+  guardarDatos(datos);
 
   document.querySelector("#formDiagnosticoTicket").reset();
   mostrarMensaje("Diagnóstico asociado al ticket correctamente.");
+}
+
+function obtenerDatos() {
+  const datosGuardados = localStorage.getItem("datos");
+  if (!datosGuardados) {
+    return {
+      id: [],
+      ticketId: [],
+      equipoId: [],
+      texto: [],
+      fecha: [],
+      tecnico: null
+    };
+  }
+
+  return JSON.parse(datosGuardados);
+}
+
+function guardarDatos(datos) {
+  localStorage.setItem("datos", JSON.stringify(datos));
 }
