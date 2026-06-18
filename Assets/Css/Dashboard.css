@@ -1,0 +1,197 @@
+:root {
+  --blancoPuro: #ffffff;
+  --blancoCristal: #dceaf8;
+  --gris: #c0c0c0;
+  --grisClaro: #ebebeb;
+  --amarillo: #eeb906;
+  --oscuro: #4e5b64;
+  --medio: #47606f;
+  --AzulOscuro: #1f5397;
+  --negro: #000000;
+}
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--blancoPuro);
+    max-width: 768px;
+    margin: auto;
+    min-height: 100vh;
+}
+section.Estadistica{
+display: grid;
+grid-template-columns: repeat(2, minmax(0, 1fr));
+gap: 10px;
+margin-bottom: rem 0.75;
+}
+header.BarraSuperior{
+    background-color: #1f5397;
+    display:  grid;
+    grid-template-columns: 40px 1fr 40px;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    gap: 8px;
+}
+header.BarraSuperior h1{
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--blancoPuro);
+    text-align: center;
+}
+header.BarraSuperior button.btnMenu{
+    background: none;
+    border: none;
+    color: var(--blancoCristal);
+    cursor: pointer;
+    padding: 4px;
+    font-size: 22px;
+    line-height: 1;
+}
+.menu{
+    filter: invert(100%);
+}
+section.Bienvenida{
+    background: var(--AzulOscuro);
+    padding: 0.5rem 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+section.Bienvenida p{
+    color: var(--blancoCristal);
+    font-size: 16px;
+    font-weight: 500;
+}
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+article{
+    display: block;
+}
+article.CartaEstadistica{
+    background: var(--blancoPuro);
+    border-radius: 12px;
+    padding: 1rem;
+
+}
+.Puntito1{
+    filter: invert(27%)
+        sepia(93%)
+        saturate(3468%)
+        hue-rotate(218deg)
+        brightness(99%)
+        contrast(86%);
+}
+.Puntito2{
+filter: invert(71%)
+        sepia(81%)
+        saturate(4758%)
+        hue-rotate(351deg)
+        brightness(99%)
+        contrast(97%);
+}
+.Puntito3{
+    filter: invert(69%)
+        sepia(84%)
+        saturate(2631%)
+        hue-rotate(10deg)
+        brightness(108%)
+        contrast(94%);
+}
+.Puntito4{
+    filter: invert(59%)
+        sepia(58%)
+        saturate(520%)
+        hue-rotate(89deg)
+        brightness(90%)
+        contrast(111%);
+}
+article.CartaEstadistica .CantidadEstadistica{
+font-size: 28px;
+font-weight: 500;
+color: var(--negro);
+line-height: 1;
+}
+article.CartaEstadistica .EtiquetaEstadistica{
+font-size: 12px;
+color: var(--medio);
+margin-top: 4px;
+}
+.punto{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: block;
+}
+.indice{
+    list-style: none;
+    padding: 0;
+}
+ul.indice li{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--medio);
+    padding: 3px 0;
+}
+
+section.PanelGrafico{
+    background: var(--blancoPuro);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    border: 0.5px solid var(--blancoCristal);
+
+}
+section.PanelGrafico h2{
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--negro);
+    margin-bottom: 0.75rem;
+}
+table.tablaEstado{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+table.tablaEstado td{
+    padding: 9px 10px;
+    color:black;
+    border-bottom: 0.5px solid whitesmoke;
+    vertical-align: center;
+}
+span.etiqueta-estado{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.puntoA{
+    background: red;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+.puntoB{
+    background: yellow;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+.puntoC{
+    background: green;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+.puntoD{
+    background: gray;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+
+
+
+
