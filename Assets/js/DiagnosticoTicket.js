@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", iniciarDiagnosticoTicket);
 
 function iniciarDiagnosticoTicket() {
-  cargarSelectTickets("#DiagnosticoTicketTicket");
-
-  const formulario = document.querySelector("#formDiagnosticoTicket");
+  const formulario = document.getElementById("formDiagnosticoTicket");
 
   if (!formulario) {
     return;
@@ -15,53 +13,56 @@ function iniciarDiagnosticoTicket() {
 function asociarDiagnosticoTicket(evento) {
   evento.preventDefault();
 
-  const ticketId = document.querySelector("#DiagnosticoTicketTicket").value;
-  const texto = document.querySelector("#DiagnosticoTicketDiagnostico").value.trim();
-  const ticket = obtenerTicket(ticketId);
-
-  if (!ticket) {
-    mostrarMensaje("No se encontró el ticket.");
-    return;
-  }
+  const ticketId = document.getElementById("DiagnosticoTicketTicket").value;
+  const texto = document.getElementById("DiagnosticoTicketDiagnostico").value.trim();
 
   if (!validarMinimo(texto, 10)) {
     mostrarMensaje("El diagnóstico asociado debe tener al menos 10 caracteres.");
     return;
   }
 
-  const datos = obtenerDatos();
+  const diagnosticos = obtenerDatos();
 
-  datos.diagnosticos.push({
+  const nuevoDiagnostico = {
     id: crearId("INC"),
-    ticketId: ticket.id,
-    equipoId: ticket.equipoId,
+    ticketId: ticketId,
     texto: texto,
     fecha: obtenerFechaActual(),
-    tecnico: datos.usuarioActual
-  });
+    tecnico: localStorage.getItem("CI")
+  };
 
-  guardarDatos(datos);
+  diagnosticos.push(nuevoDiagnostico);
+  guardarDatos(diagnosticos);
 
-  document.querySelector("#formDiagnosticoTicket").reset();
+  document.getElementById("formDiagnosticoTicket").reset();
   mostrarMensaje("Diagnóstico asociado al ticket correctamente.");
 }
 
 function obtenerDatos() {
-  const datosGuardados = localStorage.getItem("datos");
-  if (!datosGuardados) {
-    return {
-      id: [],
-      ticketId: [],
-      equipoId: [],
-      texto: [],
-      fecha: [],
-      tecnico: null
-    };
+  const datosGuardados = localStorage.getItem("diagnosticos");
+
+  if (datosGuardados === null) {
+    return [];
   }
 
   return JSON.parse(datosGuardados);
 }
 
-function guardarDatos(datos) {
-  localStorage.setItem("datos", JSON.stringify(datos));
+function guardarDatos(diagnosticos) {
+  localStorage.setItem("diagnosticos", JSON.stringify(diagnosticos));
+}
+function validarMinimo(texto, minimo) {
+  return texto.length >= minimo;
+}
+
+function crearId(prefijo) {
+  return prefijo + "-" + Date.now();
+}
+
+function obtenerFechaActual() {
+  return new Date().toLocaleDateString("es-UY");
+}
+
+function mostrarMensaje(mensaje) {
+  alert(mensaje);
 }

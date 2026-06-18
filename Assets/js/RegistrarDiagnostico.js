@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", iniciarRegistrarDiagnostico);
 
 function iniciarRegistrarDiagnostico() {
-  cargarSelectTickets("#registrarDiagnosticoTicket");
-
-  const formulario = document.querySelector("#formregistrarDiagnostico");
+  const formulario = document.getElementById("formregistrarDiagnostico");
 
   if (!formulario) {
     return;
@@ -15,52 +13,56 @@ function iniciarRegistrarDiagnostico() {
 function registrarDiagnostico(evento) {
   evento.preventDefault();
 
-  const ticketId = document.querySelector("#registrarDiagnosticoTicket").value;
-  const texto = document.querySelector("#registrarDiagnosticoDiagnostico").value.trim();
-  const ticket = obtenerTicket(ticketId);
+  const ticketId = document.getElementById("registrarDiagnosticoTicket").value;
+  const texto = document.getElementById("registrarDiagnosticoDiagnostico").value.trim();
 
-  if (!ticket) {
-    mostrarMensaje("No se encontró el ticket.");
-    return;
-  }
-
-  if (!Minimo(texto, 10)) {
+  if (!validarMinimo(texto, 10)) {
     mostrarMensaje("El diagnóstico debe tener al menos 10 caracteres.");
     return;
   }
 
-const diagnostico = obtenerDatos();
+  const diagnosticos = obtenerDatos();
 
-  const diagnostico = {
+  const nuevoDiagnostico = {
     id: crearId("INC"),
-    ticketId: ticket.id,
-    equipoId: ticket.equipoId,
+    ticketId: ticketId,
     texto: texto,
     fecha: obtenerFechaActual(),
-    tecnico: datos.usuarioActual
+    tecnico: localStorage.getItem("CI")
   };
 
-  guardarDatos(diagnostico);
+  diagnosticos.push(nuevoDiagnostico);
+  guardarDatos(diagnosticos);
 
-  document.querySelector("#formregistrarDiagnostico").reset();
+  document.getElementById("formregistrarDiagnostico").reset();
   mostrarMensaje("Diagnóstico registrado correctamente.");
 }
 
 function obtenerDatos() {
-    const datosGuardados = localStorage.getItem("diagnostico");
-    if (datosGuardados === null) {
-      return {
-      id: [],
-      ticketId: [],
-      equipoId: [],
-      texto: [],
-      fecha: [],
-      tecnico: null
-      }
-    }
-    return JSON.parse(datosGuardados);
+  const datosGuardados = localStorage.getItem("diagnosticos");
+
+  if (datosGuardados === null) {
+    return [];
   }
 
-function guardarDatos(diagnostico) {
-    localStorage.setItem("diagnostico", JSON.stringify(diagnostico));
+  return JSON.parse(datosGuardados);
+}
+
+function guardarDatos(diagnosticos) {
+  localStorage.setItem("diagnosticos", JSON.stringify(diagnosticos));
+}
+function validarMinimo(texto, minimo) {
+  return texto.length >= minimo;
+}
+
+function crearId(prefijo) {
+  return prefijo + "-" + Date.now();
+}
+
+function obtenerFechaActual() {
+  return new Date().toLocaleDateString("es-UY");
+}
+
+function mostrarMensaje(mensaje) {
+  alert(mensaje);
 }

@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", iniciarregistrarSolucion);
 
 function iniciarregistrarSolucion() {
-  cargarSelectTickets("#registrarSolucionTicket");
-
-  const formulario = document.querySelector("#formRegistrarSolucion");
+  const formulario = document.getElementById("formRegistrarSolucion");
 
   if (!formulario) {
     return;
@@ -15,52 +13,56 @@ function iniciarregistrarSolucion() {
 function registrarSolucion(evento) {
   evento.preventDefault();
 
-  const ticketId = document.querySelector("#registrarSolucionTicket").value;
-  const texto = document.querySelector("#registrarSolucionSolucion").value.trim();
-  const ticket = obtenerTicket(ticketId);
-
-  if (!ticket) {
-    mostrarMensaje("No se encontró el ticket seleccionado.");
-    return;
-  }
+  const ticketId = document.getElementById("registrarSolucionTicket").value;
+  const texto = document.getElementById("registrarSolucionSolucion").value.trim();
 
   if (!validarMinimo(texto, 10)) {
     mostrarMensaje("La solución debe tener al menos 10 caracteres.");
     return;
   }
 
-const solucion = obtenerDatos();
+  const soluciones = obtenerDatos();
 
-  const solucion = {
+  const nuevaSolucion = {
     id: crearId("SL"),
-    ticketId: ticket.id,
-    equipoId: ticket.equipoId,
+    ticketId: ticketId,
     texto: texto,
     fecha: obtenerFechaActual(),
-    tecnico: datos.usuarioActual
+    tecnico: localStorage.getItem("CI")
   };
 
-  guardarDatos(solucion);
+  soluciones.push(nuevaSolucion);
+  guardarDatos(soluciones);
 
-  document.querySelector("#formRegistrarSolucion").reset();
+  document.getElementById("formRegistrarSolucion").reset();
   mostrarMensaje("Solución registrada correctamente.");
 }
 
 function obtenerDatos() {
-    const datosGuardados = localStorage.getItem("solucion");
-    if (datosGuardados === null) {
-      return {
-      id: [],
-      ticketId: [],
-      equipoId: [],
-      texto: [],
-      fecha: [],
-      tecnico: null
-      }
-    }
-    return JSON.parse(datosGuardados);
+  const datosGuardados = localStorage.getItem("soluciones");
+
+  if (datosGuardados === null) {
+    return [];
   }
 
-  function guardarDatos(solucion) {
-    localStorage.setItem("solucion", JSON.stringify(solucion));
-  }
+  return JSON.parse(datosGuardados);
+}
+
+function guardarDatos(soluciones) {
+  localStorage.setItem("soluciones", JSON.stringify(soluciones));
+}
+function validarMinimo(texto, minimo) {
+  return texto.length >= minimo;
+}
+
+function crearId(prefijo) {
+  return prefijo + "-" + Date.now();
+}
+
+function obtenerFechaActual() {
+  return new Date().toLocaleDateString("es-UY");
+}
+
+function mostrarMensaje(mensaje) {
+  alert(mensaje);
+}
