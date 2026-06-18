@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+    <link rel="stylesheet" href="../Css/Dashboard.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+
+<body>
+
+    <header class="BarraSuperior">
+        <button class="btnMenu"><img class="menu" src="../Imagenes/Bootstrap/list.svg" alt="menu" width="40" height="40px"></button>
+        <h1>SGRSI</h1>
+
+    </header>
+
+    <section class="Bienvenida">
+
+        <img src="../Imagenes/Deklan_EnterpriceIMG.png" alt="Deklan_Enterprice" height="50px" width="70">
+        <p>¡Bienvenido, Usuario!</p>
+        <img src="../Imagenes/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo-Utu" height="70px" width="70">
+    </section>
+    <main>
+        <section class="Estadistica">
+            <article class="CartaEstadistica">
+                <p class="Puntito1"><img src="../Imagenes/Bootstrap/circle-fill.svg" width="12" alt=""></p>
+                <p class="CantidadEstadistica">12</p>
+                <p class="EtiquetaEstadistica">Reportes</p>
+            </article>
+            <article class="CartaEstadistica">
+                <p class="Puntito2"><img src="../Imagenes/Bootstrap/circle-fill.svg" width="12" alt=""></p>
+                <p class="CantidadEstadistica">8</p>
+                <p class="EtiquetaEstadistica">Incidencias abiertas</p>
+            </article>
+            <article class="CartaEstadistica">
+                <p class="Puntito3"><img src="../Imagenes/Bootstrap/circle-fill.svg" width="12" alt=""></p>
+                <p class="CantidadEstadistica">5</p>
+                <p class="EtiquetaEstadistica">En Proceso</p>
+            </article>
+            <article class="CartaEstadistica">
+                <p class="Puntito4"><img src="../Imagenes/Bootstrap/circle-fill.svg" width="12" alt=""></p>
+                <p class="CantidadEstadistica">23</p>
+                <p class="EtiquetaEstadistica">Resueltas</p>
+            </article>
+        </section>
+        
+        <section class="PanelGrafico">
+            <h2>Incidencias por estado</h2>
+            <figure class="grafico">
+                <canvas id="grafico1"></canvas>
+                <ul class="indice">
+                    <li><span class="punto" style="background: #ef4444;"></span>
+                    Abiertas
+                    <strong>8</strong>
+                </li>
+                <li><span class="punto" style="background: #f97316;"></span>
+                    En Proceso
+                    <strong>5</strong>
+                </li>
+                <li><span class="punto" style="background: #22c55e;"></span>
+                    Resueltas 
+                    <strong>23</strong>
+                </li>
+                <li><span class="punto" style="background: #94a3b8;"></span>Cerradas
+                     
+                    <strong>8</strong>
+                </li>   
+                </ul>
+            </figure>
+        </section>
+         <section class="PanelGrafico">
+            <h2>Tiempos de Resolución</h2>
+            <figure class="grafico">
+                <canvas id="grafico2"></canvas>
+                <ul class="indice">
+                    <li><span class="punto" style="background: #195f07;"></span>
+                    3 dias ~
+                    <strong>5</strong>
+                </li>
+                <li><span class="punto" style="background: #87b115;"></span>
+                    1-2 semanas
+                    <strong>10</strong>
+                </li>
+                <li><span class="punto" style="background: #fffb00;"></span>
+                    1 mes 
+                    <strong>6</strong>
+                </li>
+                <li><span class="punto" style="background: #ff0000;"></span>
+                    + 1 mes 
+                    <strong>2</strong>
+                </li>   
+               
+                </ul>
+            </figure>
+        </section>
+        <section class="PanelGrafico">
+    <h2>Tiempos de Resolución</h2>
+    <figure class="graficoBarra" style="position: relative;">
+        <canvas id="grafico3"></canvas>
+    </figure>
+</section>
+
+    </main>
+    <script src="../JS/Dashboard.js"></script>
+</body>
+</html>
