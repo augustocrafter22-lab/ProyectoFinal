@@ -1,3 +1,36 @@
+:root {
+    --color-navy: #153894;
+    --color-azul: #1956c0;
+    --color-azul-oscuro: #103e82;
+    --color-dorado: #d2953a;
+    --color-fondo: #f1f2f6;
+    --color-tarjeta: #ffffff;
+    --color-input-bg: #f6f7fc;
+    --color-borde: #d7dbe8;
+    --color-texto: #1f2433;
+    --color-texto-suave: #6b7280;
+    --radio: 10px;
+}
+.VistaDeTickets {
+    background-color: var(--color-navy);
+    color: #ffffff;
+    padding: 28px 24px;
+}
+.VistaDeTickets h1 {
+    margin: 0 0 6px 0;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+#nuevoTicketBtn {
+    background-color: var(--color-tarjeta);
+    color: #4100f3;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--radio);
+    cursor: pointer;
+}
+
 .ticket {
     background-color: white;
     border-left: 5px solid rgb(0, 132, 255);

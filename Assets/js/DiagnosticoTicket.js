@@ -38,7 +38,16 @@ function asociarDiagnosticoTicket(evento) {
     tecnico: datos.usuarioActual
   });
 
+  function guardarDatos() {
+
+    const datos = localStorage.getItem("datos");
+    if (datos === null)  retun []; {
+      return JSON.parse(datos);
+  } 
+}
+
   guardarDatos();
+
   document.querySelector("#formDiagnosticoTicket").reset();
   mostrarMensaje("Diagnóstico asociado al ticket correctamente.");
 }
