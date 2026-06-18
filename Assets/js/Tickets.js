@@ -1,3 +1,5 @@
+
+
 const formulario = document.getElementById("ticketForm");
 
 formulario.addEventListener("submit", function(evento) {
@@ -14,8 +16,8 @@ formulario.addEventListener("submit", function(evento) {
         fecha: fechaActual,
         turno: document.getElementById("turno").value,
         grupo: document.getElementById("grupo").value,
-        profesor: document.getElementById("profesor").value
-        ,estado: "Pendiente"
+        profesor: document.getElementById("profesor").value,
+        estado: "Pendiente"
     };
 
     console.log(ticket);
