@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Solucion</title>
+  <link rel="stylesheet" href="../assets/Css/style.css">
+</head>
+
+<h1>Registro de Soluciones</h1>
+<section></section>
+
+<body>
+  <p>Aqui se podran registrar las soluciones técnicas en base al ticket.</p>
+
+
+</body>
+<section></section>
+<section class="modulo" id="Solucion">
+  <h2>Registre su resolucion</h2>
+  <form class="formulario" id="formRegistrarSolucion">
+    <label for="registrarSolucionTicket">Ticket</label>
+    <select id="registrarSolucionTicket" required>
+      <option value="INC-2026-0001">INC-2026-0001</option>
+      <option value="INC-2026-0002">INC-2026-0002</option>
+      <option value="INC-2026-0003">INC-2026-0003</option>
+      <option value="INC-2026-0004">INC-2026-0004</option>
+      <option value="INC-2026-0005">INC-2026-0005</option>
+      <option value="INC-2026-0006">INC-2026-0006</option>
+      <option value="INC-2026-0007">INC-2026-0007</option>
+      <option value="INC-2026-0008">INC-2026-0008</option>
+      <option value="INC-2026-0009">INC-2026-0009</option>
+    </select>
+
+    <label for="registrarSolucionSolucion">Solución tecnica aplicada</label>
+    <textarea id="registrarSolucionSolucion" rows="4" minlength="10" required></textarea>
+
+    <button class="boton-principal" type="submit">Registrar solución</button>
+  </form>
+</section>
+<script src="../assets/js/RegistraSolucion.js"></script>
+
+</html>
