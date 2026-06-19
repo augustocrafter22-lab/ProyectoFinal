@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar Diagnóstico</title>
+    <link rel="stylesheet" href="../Css/style.css">
+</head>
+<body>
+
+<header class="encabezado">
+        <h1>Modificar Diagnóstico</h1>
+        <p>Seleccioná un diagnóstico registrado para modificar su contenido.</p>
+</header>
+
+<section class="modulo" id="modificarDiagnostico">
+        <h2>Editar diagnóstico</h2>
+
+        <form class="formulario" id="formModificarDiagnostico">
+
+    <label for="modificarDiagnosticoSelect">Diagnóstico a modificar</label>
+    <select id="modificarDiagnosticoSelect" required></select>
+
+    <label for="modificarDiagnosticoTexto">Diagnóstico técnico</label>
+    <textarea id="modificarDiagnosticoTexto" rows="4" minlength="10" required></textarea>
+
+    <button class="boton-principal" type="submit">Guardar cambios</button>
+
+        </form>
+</section>
+
+<script src="../js/ModificarDiagnostico.js"></script>
+
+</body>
+</html>
