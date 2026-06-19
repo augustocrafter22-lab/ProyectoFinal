@@ -36,7 +36,7 @@ function asociarSolucionTicket(evento) {
     texto: texto,
     fecha: obtenerFechaActual(),
     tecnico: datos.usuarioActual
-  });
+  })¿;
 
   guardarDatos();
   document.querySelector("#formAsociarSolucionTicket").reset();

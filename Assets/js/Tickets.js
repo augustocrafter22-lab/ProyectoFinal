@@ -6,6 +6,7 @@ formulario.addEventListener("submit", function(evento) {
 
     evento.preventDefault();
 
+    /* Se guarda la fecha en el momento del envío */
     const fechaActual = new Date().toLocaleDateString();
 
     const ticket = {
@@ -17,7 +18,9 @@ formulario.addEventListener("submit", function(evento) {
         turno: document.getElementById("turno").value,
         grupo: document.getElementById("grupo").value,
         profesor: document.getElementById("profesor").value,
-        estado: "Pendiente"
+        estado: "Pendiente",
+        idIncidencia: "INC-" + fechaActual + "-" + (tickets.length + 1),
+        prioridad: "Indefinida"
     };
 
     tickets.push(ticket);
@@ -27,6 +30,11 @@ formulario.addEventListener("submit", function(evento) {
         JSON.stringify(tickets)
     );
 
-    formulario.reset();
+    console.log("Ticket creado:");
+    console.log(ticket);
 
+    console.log("Tickets guardados:");
+    console.log(tickets);
+
+    formulario.reset();
 });
