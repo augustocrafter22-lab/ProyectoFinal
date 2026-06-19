@@ -13,20 +13,9 @@ function iniciarAsociarSolucionTicket() {
 function asociarSolucionTicket(evento) {
   evento.preventDefault();
 
-  const ticketId = document.querySelector("#AsociarSolucionTicketTicket").value;
-  const texto = document
-    .querySelector("#AsociarSolucionTicketSolucion")
-    .value.trim();
-  const ticket = obtenerTicket(ticketId);
-
-  if (!ticket) {
-    mostrarMensaje("No se encontró el ticket.");
-    return;
-  }
-  const ticketId = document.getElementById("rf39Ticket").value;
+  const ticketId = document.getElementById("Ticket").value;
   const texto = document.getElementById("AsociarSolucionTicketSolucion").value.trim();
 
-  /* Validación de longitud mínima: evita soluciones vacías o triviales. */
   if (!validarMinimo(texto, 10)) {
     mostrarMensaje("La solución asociada debe tener al menos 10 caracteres.");
     return;
@@ -35,12 +24,10 @@ function asociarSolucionTicket(evento) {
   const soluciones = obtenerDatos();
 
   const nuevaSolucion = {
-    id: crearId("SL"),
+    id: crearId("SOL"),
     ticketId: ticketId,
     texto: texto,
     fecha: obtenerFechaActual(),
-    tecnico: datos.usuarioActual,
-  });
     tecnico: localStorage.getItem("CI")
   };
 
@@ -64,6 +51,7 @@ function obtenerDatos() {
 function guardarDatos(soluciones) {
   localStorage.setItem("soluciones", JSON.stringify(soluciones));
 }
+
 function validarMinimo(texto, minimo) {
   return texto.length >= minimo;
 }

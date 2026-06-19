@@ -136,3 +136,37 @@ body {
 .boton-secundario:hover {
   background-color: #f1f2f6;
 }
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.tabla-th {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 2px solid var(--color-azul);
+  color: var(--color-azul);
+  font-size: 13px;
+}
+
+.tabla-td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--color-borde);
+  font-size: 13px;
+}
+
+.tabla-fila-par {
+  background-color: #f6f7fc;
+}
+
+.tabla-fila-impar {
+  background-color: #ffffff;
+}
+
+.tabla-vacia {
+  text-align: center;
+  padding: 16px;
+  color: #6b7280;
+}

@@ -26,7 +26,6 @@ function registrarSolucion(evento) {
   const ticketId = document.getElementById("registrarSolucionTicket").value;
   const texto = document.getElementById("registrarSolucionSolucion").value.trim();
 
-  /* Validación de longitud mínima: evita soluciones vacías o triviales. */
   if (!validarMinimo(texto, 10)) {
     mostrarMensaje("La solución debe tener al menos 10 caracteres.");
     return;
