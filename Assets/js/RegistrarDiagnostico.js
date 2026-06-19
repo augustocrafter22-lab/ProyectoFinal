@@ -13,6 +13,18 @@ function iniciarRegistrarDiagnostico() {
 function registrarDiagnostico(evento) {
   evento.preventDefault();
 
+  const ticketId = document.querySelector("#registrarDiagnosticoTicket").value;
+  const texto = document
+    .querySelector("#registrarDiagnosticoDiagnostico")
+    .value.trim();
+  const ticket = obtenerTicket(ticketId);
+
+  if (!ticket) {
+    mostrarMensaje("No se encontró el ticket.");
+    return;
+  }
+
+  /* Validación de longitud mínima: evita diagnósticos vacíos o triviales. */
   const ticketId = document.getElementById("registrarDiagnosticoTicket").value;
   const texto = document.getElementById("registrarDiagnosticoDiagnostico").value.trim();
 
@@ -28,6 +40,7 @@ function registrarDiagnostico(evento) {
     ticketId: ticketId,
     texto: texto,
     fecha: obtenerFechaActual(),
+    tecnico: datos.usuarioActual,
     tecnico: localStorage.getItem("CI")
   };
 

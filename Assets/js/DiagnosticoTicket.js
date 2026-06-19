@@ -13,11 +13,24 @@ function iniciarDiagnosticoTicket() {
 function asociarDiagnosticoTicket(evento) {
   evento.preventDefault();
 
+  const ticketId = document.querySelector("#DiagnosticoTicketTicket").value;
+  const texto = document
+    .querySelector("#DiagnosticoTicketDiagnostico")
+    .value.trim();
+  const ticket = obtenerTicket(ticketId);
+
+  if (!ticket) {
+    mostrarMensaje("No se encontró el ticket.");
+    return;
+  }
   const ticketId = document.getElementById("DiagnosticoTicketTicket").value;
   const texto = document.getElementById("DiagnosticoTicketDiagnostico").value.trim();
 
+  /* Validación de longitud mínima: evita diagnósticos vacíos o triviales. */
   if (!validarMinimo(texto, 10)) {
-    mostrarMensaje("El diagnóstico asociado debe tener al menos 10 caracteres.");
+    mostrarMensaje(
+      "El diagnóstico asociado debe tener al menos 10 caracteres.",
+    );
     return;
   }
 
@@ -28,6 +41,8 @@ function asociarDiagnosticoTicket(evento) {
     ticketId: ticketId,
     texto: texto,
     fecha: obtenerFechaActual(),
+    tecnico: datos.usuarioActual,
+  });
     tecnico: localStorage.getItem("CI")
   };
 
