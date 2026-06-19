@@ -8,10 +8,21 @@
   --medio: #47606f;
   --AzulOscuro: #1f5397;
   --negro: #000000;
+  --color-navy: #153894;
+  --color-azul: #1956c0;
+  --color-azul-oscuro: #103e82;
+  --color-dorado: #d2953a;
+  --color-fondo: #f1f2f6;
+  --color-tarjeta: #ffffff;
+  --color-input-bg: #f6f7fc;
+  --color-borde: #d7dbe8;
+  --color-texto: #1f2433;
+  --color-texto-suave: #6b7280;
+  --radio: 10px;
 }
 body{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: var(--blancoPuro);
+    background: var(--color-fondo);
     max-width: 768px;
     margin: auto;
     min-height: 100vh;
@@ -23,7 +34,7 @@ gap: 10px;
 margin-bottom: rem 0.75;
 }
 header.BarraSuperior{
-    background-color: #1f5397;
+    background-color: var(--color-navy);
     display:  grid;
     grid-template-columns: 40px 1fr 40px;
     align-items: center;
@@ -49,7 +60,7 @@ header.BarraSuperior button.btnMenu{
     filter: invert(100%);
 }
 section.Bienvenida{
-    background: var(--AzulOscuro);
+    background: var(--color-navy);
     padding: 0.5rem 1rem 1.25rem;
     display: flex;
     align-items: center;
