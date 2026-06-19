@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", iniciarRegistrarDiagnostico);
 
 function iniciarRegistrarDiagnostico() {
-  cargarSelectTickets("#registrarDiagnosticoTicket");
-
-  const formulario = document.querySelector("#formregistrarDiagnostico");
+  const formulario = document.getElementById("formregistrarDiagnostico");
 
   if (!formulario) {
     return;
@@ -27,23 +25,57 @@ function registrarDiagnostico(evento) {
   }
 
   /* Validación de longitud mínima: evita diagnósticos vacíos o triviales. */
+  const ticketId = document.getElementById("registrarDiagnosticoTicket").value;
+  const texto = document.getElementById("registrarDiagnosticoDiagnostico").value.trim();
+
   if (!validarMinimo(texto, 10)) {
     mostrarMensaje("El diagnóstico debe tener al menos 10 caracteres.");
     return;
   }
 
-  const diagnostico = {
+  const diagnosticos = obtenerDatos();
+
+  const nuevoDiagnostico = {
     id: crearId("INC"),
-    ticketId: ticket.id,
-    equipoId: ticket.equipoId,
+    ticketId: ticketId,
     texto: texto,
     fecha: obtenerFechaActual(),
     tecnico: datos.usuarioActual,
+    tecnico: localStorage.getItem("CI")
   };
 
-  datos.diagnosticos.push(diagnostico);
-  guardarDatos();
+  diagnosticos.push(nuevoDiagnostico);
+  guardarDatos(diagnosticos);
 
-  document.querySelector("#formregistrarDiagnostico").reset();
+  document.getElementById("formregistrarDiagnostico").reset();
   mostrarMensaje("Diagnóstico registrado correctamente.");
+}
+
+function obtenerDatos() {
+  const datosGuardados = localStorage.getItem("diagnosticos");
+
+  if (datosGuardados === null) {
+    return [];
+  }
+
+  return JSON.parse(datosGuardados);
+}
+
+function guardarDatos(diagnosticos) {
+  localStorage.setItem("diagnosticos", JSON.stringify(diagnosticos));
+}
+function validarMinimo(texto, minimo) {
+  return texto.length >= minimo;
+}
+
+function crearId(prefijo) {
+  return prefijo + "-" + Date.now();
+}
+
+function obtenerFechaActual() {
+  return new Date().toLocaleDateString("es-UY");
+}
+
+function mostrarMensaje(mensaje) {
+  alert(mensaje);
 }

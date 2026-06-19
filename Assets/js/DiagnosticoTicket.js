@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", iniciarDiagnosticoTicket);
 
 function iniciarDiagnosticoTicket() {
-  cargarSelectTickets("#DiagnosticoTicketTicket");
-
-  const formulario = document.querySelector("#formDiagnosticoTicket");
+  const formulario = document.getElementById("formDiagnosticoTicket");
 
   if (!formulario) {
     return;
@@ -25,6 +23,8 @@ function asociarDiagnosticoTicket(evento) {
     mostrarMensaje("No se encontró el ticket.");
     return;
   }
+  const ticketId = document.getElementById("DiagnosticoTicketTicket").value;
+  const texto = document.getElementById("DiagnosticoTicketDiagnostico").value.trim();
 
   /* Validación de longitud mínima: evita diagnósticos vacíos o triviales. */
   if (!validarMinimo(texto, 10)) {
@@ -34,16 +34,50 @@ function asociarDiagnosticoTicket(evento) {
     return;
   }
 
-  datos.diagnosticos.push({
+  const diagnosticos = obtenerDatos();
+
+  const nuevoDiagnostico = {
     id: crearId("INC"),
-    ticketId: ticket.id,
-    equipoId: ticket.equipoId,
+    ticketId: ticketId,
     texto: texto,
     fecha: obtenerFechaActual(),
     tecnico: datos.usuarioActual,
   });
+    tecnico: localStorage.getItem("CI")
+  };
 
-  guardarDatos();
-  document.querySelector("#formDiagnosticoTicket").reset();
+  diagnosticos.push(nuevoDiagnostico);
+  guardarDatos(diagnosticos);
+
+  document.getElementById("formDiagnosticoTicket").reset();
   mostrarMensaje("Diagnóstico asociado al ticket correctamente.");
+}
+
+function obtenerDatos() {
+  const datosGuardados = localStorage.getItem("diagnosticos");
+
+  if (datosGuardados === null) {
+    return [];
+  }
+
+  return JSON.parse(datosGuardados);
+}
+
+function guardarDatos(diagnosticos) {
+  localStorage.setItem("diagnosticos", JSON.stringify(diagnosticos));
+}
+function validarMinimo(texto, minimo) {
+  return texto.length >= minimo;
+}
+
+function crearId(prefijo) {
+  return prefijo + "-" + Date.now();
+}
+
+function obtenerFechaActual() {
+  return new Date().toLocaleDateString("es-UY");
+}
+
+function mostrarMensaje(mensaje) {
+  alert(mensaje);
 }

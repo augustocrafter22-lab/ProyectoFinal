@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", iniciarAsociarSolucionTicket);
 
 function iniciarAsociarSolucionTicket() {
-  cargarSelectTickets("#AsociarSolucionTicketTicket");
-
-  const formulario = document.querySelector("#formAsociarSolucionTicket");
+  const formulario = document.getElementById("formAsociarSolucionTicket");
 
   if (!formulario) {
     return;
@@ -25,6 +23,8 @@ function asociarSolucionTicket(evento) {
     mostrarMensaje("No se encontró el ticket.");
     return;
   }
+  const ticketId = document.getElementById("rf39Ticket").value;
+  const texto = document.getElementById("AsociarSolucionTicketSolucion").value.trim();
 
   /* Validación de longitud mínima: evita soluciones vacías o triviales. */
   if (!validarMinimo(texto, 10)) {
@@ -32,16 +32,50 @@ function asociarSolucionTicket(evento) {
     return;
   }
 
-  datos.soluciones.push({
-    id: crearId("INC"),
-    ticketId: ticket.id,
-    equipoId: ticket.equipoId,
+  const soluciones = obtenerDatos();
+
+  const nuevaSolucion = {
+    id: crearId("SL"),
+    ticketId: ticketId,
     texto: texto,
     fecha: obtenerFechaActual(),
     tecnico: datos.usuarioActual,
   });
+    tecnico: localStorage.getItem("CI")
+  };
 
-  guardarDatos();
-  document.querySelector("#formAsociarSolucionTicket").reset();
+  soluciones.push(nuevaSolucion);
+  guardarDatos(soluciones);
+
+  document.getElementById("formAsociarSolucionTicket").reset();
   mostrarMensaje("La solución fue asociada al ticket correctamente.");
+}
+
+function obtenerDatos() {
+  const datosGuardados = localStorage.getItem("soluciones");
+
+  if (datosGuardados === null) {
+    return [];
+  }
+
+  return JSON.parse(datosGuardados);
+}
+
+function guardarDatos(soluciones) {
+  localStorage.setItem("soluciones", JSON.stringify(soluciones));
+}
+function validarMinimo(texto, minimo) {
+  return texto.length >= minimo;
+}
+
+function crearId(prefijo) {
+  return prefijo + "-" + Date.now();
+}
+
+function obtenerFechaActual() {
+  return new Date().toLocaleDateString("es-UY");
+}
+
+function mostrarMensaje(mensaje) {
+  alert(mensaje);
 }

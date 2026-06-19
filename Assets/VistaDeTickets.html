@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vista de Tickets</title>
+    <link rel="stylesheet" href="../Assets/Css/global.css">
+    <link rel="stylesheet" href="../Assets/Css/vistaTicket.css">
+</head>
+
+<body>
+
+    <section class="VistaDeTickets">
+        <h1>Vista de Tickets</h1>
+        <p>Aquí se podrán visualizar los tickets ingresados, su estado actual y prioridad. Además, se podrán actualizar los estados de los tickets a medida que se vayan resolviendo las incidencias.</p>
+        <a href="IngresoDeTickets.html">
+            <button id="nuevoTicketBtn">+ Nueva</button>
+        </a>
+    </section>
+
+<section id="listaTickets">
+
+    <article class="ticket">
+
+        <section class="ticketInfo">
+            <h3>INC-2026-0012</h3>
+
+            <p>Equipo no enciende</p>
+
+            <p>PC-01</p>
+        </section>
+
+        <section class="ticketEstado">
+            <p class="estado">Abierta</p>
+
+            <p class="prioridad alta">Alta</p>
+        </section>
+
+    </article>
+
+    <article class="ticket">
+
+        <section class="ticketInfo">
+            <h3>INC-2026-0011</h3>
+
+            <p>PC sin imagen</p>
+
+            <p>PC-15</p>
+        </section>
+
+        <section class="ticketEstado">
+            <p class="estado">En Proceso</p>
+            <p class="prioridad media">Media</p>
+        </section>
+    </section>
+        <section>
+        <article class="ticket">
+
+            <section class="ticketInfo">
+                <h3>INC-2026-0010</h3>
+
+                <p>Teclado no funciona</p>
+
+                <p>PC-08</p>
+            </section>
+
+            <section class="ticketEstado">
+                <p class="estado">Resuelta</p>
+                <p class="prioridad baja">Baja</p>
+            </section>
+
+
+
+    </article>
+  <script src="./js/IngresoTickets.js"></script>
+</section>
+</body>
+</html>
