@@ -1,6 +1,6 @@
-
-
 const formulario = document.getElementById("ticketForm");
+
+let tickets = JSON.parse(localStorage.getItem("tickets")) || [];
 
 formulario.addEventListener("submit", function(evento) {
 
@@ -20,7 +20,13 @@ formulario.addEventListener("submit", function(evento) {
         estado: "Pendiente"
     };
 
-    console.log(ticket);
+    tickets.push(ticket);
+
+    localStorage.setItem(
+        "tickets",
+        JSON.stringify(tickets)
+    );
 
     formulario.reset();
+
 });
