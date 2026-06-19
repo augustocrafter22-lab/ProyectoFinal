@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambiar Estado de Equipo</title>
+    <link rel="stylesheet" href="../Css/style.css">
+</head>
+<body>
+    <header class="encabezado">
+        <h1>Cambiar Estado de los Equipos</h1>
+        <p>Modificá el estado de un equipo. El cambio quedará registrado.</p>
+    </header>
+
+        <section class="modulo" id="cambiarEstadoEquipo">
+            <h2>Registrar cambio de estado</h2>
+
+            <form class="formulario" id="formCambiarEstado">
+                
+
+        <label for="cambiarEstadoEquipoSelect">Equipo</label>
+        <select id="cambiarEstadoEquipoSelect" required>
+            <option value=""> Seleccione un equipo </option>
+            <option value="PC-01"> PC-01 </option>
+            <option value="PC-02"> PC-02 </option>
+            <option value="PC-03"> PC-03 </option>
+            <option value="PC-04"> PC-04 </option>
+            <option value="PC-05"> PC-05 </option>
+            <option value="PC-06"> PC-06 </option>
+            <option value="PC-07"> PC-07 </option>
+            <option value="PC-08"> PC-08 </option>
+            <option value="PC-09"> PC-09 </option>
+        </select>
+
+        <label for="cambiarEstadoActual">Estado actual</label>
+        <input type="text" id="cambiarEstadoActual" readonly placeholder="Se cargará al seleccionar el equipo">
+
+        <label for="cambiarEstadoNuevo">Nuevo estado</label>
+        <select id="cambiarEstadoNuevo" required>
+            <option value=""> Seleccioná un estado </option>
+            <option value="Disponible">Disponible</option>
+            <option value="En uso">En uso</option>
+            <option value="En mantenimiento">En mantenimiento</option>
+            <option value="Fuera de servicio">Fuera de servicio</option>
+        </select>
+
+        <button class="boton-principal" type="submit">Guardar cambios</button>
+
+    </form>
+    </section>
+
+        <script src="../js/CambioEstado.js"></script>
+
+        </body>
+        </html>
