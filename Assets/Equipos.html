@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Equipos</title>
+    <link rel="stylesheet" href="../Assets/Css/global.css" />
+    <link rel="stylesheet" href="../Assets/Css/equipos.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css"
+    />
+  </head>
+  <body>
+    <header class="barraNavegacion">
+      <img
+        src="../Assets/Imagenes/Deklan_EnterpriceIMG.png"
+        alt="Logo de la empresa"
+        class="logo"
+        length="200px"
+        width="200px"
+        height="125px"
+      />
+      <h1>Sistema de Gestión de Recursos y Soporte de Informática</h1>
+
+      <nav>
+        <button class="btnMenu" id="btnMenu" type="button">
+          <img src="../Assets/Imagenes/list.svg" alt="Menú" class="iconoMenu" />
+        </button>
+
+        <button class="btnCerrarMenu" id="btnCerrarMenu" type="button">
+          <img
+            src="../Assets/Imagenes/x.svg"
+            alt="Cerrar Menu"
+            class="iconoMenu"
+          />
+        </button>
+
+        <ul class="listaNavegacion">
+          <li><a href="dashboard.html" class="btnNavegacion">Inicio</a></li>
+          <li>
+            <a href="IngresoDeTickets.html" class="btnNavegacion"
+              >Ingresar un ticket</a
+            >
+          </li>
+          <li><a href="index.html" class="btnNavegacion">cerrar sesion</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="encabezado">
+        <h1>Registro de Equipos</h1>
+        <p>Complete los datos para registrar un nuevo equipo en el sistema.</p>
+      </section>
+
+      <section class="modulo" id="registroEquipos">
+        <div class="mensaje-feedback"></div>
+
+        <form class="formulario" id="formEquipo">
+          <label for="nombreEquipo">Nombre del equipo</label>
+          <input
+            type="text"
+            id="nombreEquipo"
+            name="nombreEquipo"
+            placeholder="Ej: PC-01"
+            required
+          />
+
+          <label for="laboratorioEquipo">Espacio de Trabajo</label>
+          <select id="laboratorioEquipo" required>
+            <option value="">Seleccione un espacio</option>
+            <option value="Laboratorio 1">Laboratorio 1</option>
+            <option value="Laboratorio 2">Laboratorio 2</option>
+            <option value="Laboratorio 3">Laboratorio 3</option>
+            <option value="Laboratorio 4">Laboratorio 4</option>
+            <option value="Laboratorio 5">Laboratorio 5</option>
+            <option value="Laboratorio 6">Laboratorio 6</option>
+          </select>
+
+          <label for="tipoEquipo">Tipo de equipo</label>
+          <select id="tipoEquipo" required>
+            <option value="">Seleccione un tipo</option>
+            <option value="PC">PC</option>
+            <option value="Impresora">Impresora3D</option>
+            <option value="Monitor">Monitor</option>
+            <option value="Proyector">Proyector</option>
+            <option value="Otro">Otro</option>
+          </select>
+
+          <label for="estadoEquipo">Estado</label>
+          <select id="estadoEquipo" required>
+            <option value="">Seleccione un estado</option>
+            <option value="Disponible">Disponible</option>
+            <option value="En reparación">En reparación</option>
+            <option value="Fuera de servicio">Fuera de servicio</option>
+          </select>
+
+          <button class="boton-principal" type="submit">
+            Registrar Equipo
+          </button>
+        </form>
+      </section>
+
+      <section class="modulo" id="listaEquipos">
+        <h2>Equipos registrados</h2>
+        <table class="tabla-equipos">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Ubicación</th>
+              <th>Tipo</th>
+              <th>Estado</th>
+              <th>Fecha de registro</th>
+            </tr>
+          </thead>
+          <tbody id="cuerpoTablaEquipos"></tbody>
+        </table>
+      </section>
+    </main>
+
+    <script src="../Assets/JS/datosCompartidos.js"></script>
+    <script src="../Assets/JS/Equipos.js"></script>
+    <script src="../Assets/JS/barraNavegacion.js"></script>
+  </body>
+</html>

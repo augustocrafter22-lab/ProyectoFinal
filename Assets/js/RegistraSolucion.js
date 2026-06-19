@@ -16,7 +16,9 @@ function registrarSolucion(evento) {
   evento.preventDefault();
 
   const ticketId = document.querySelector("#registrarSolucionTicket").value;
-  const texto = document.querySelector("#registrarSolucionSolucion").value.trim();
+  const texto = document
+    .querySelector("#registrarSolucionSolucion")
+    .value.trim();
   const ticket = obtenerTicket(ticketId);
 
   if (!ticket) {
@@ -24,6 +26,7 @@ function registrarSolucion(evento) {
     return;
   }
 
+  /* Validación de longitud mínima: evita soluciones vacías o triviales. */
   if (!validarMinimo(texto, 10)) {
     mostrarMensaje("La solución debe tener al menos 10 caracteres.");
     return;
@@ -35,7 +38,7 @@ function registrarSolucion(evento) {
     equipoId: ticket.equipoId,
     texto: texto,
     fecha: obtenerFechaActual(),
-    tecnico: datos.usuarioActual
+    tecnico: datos.usuarioActual,
   };
 
   datos.soluciones.push(solucion);
