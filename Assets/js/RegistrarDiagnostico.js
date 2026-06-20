@@ -24,7 +24,6 @@ function registrarDiagnostico(evento) {
     return;
   }
 
-  /* Validación de longitud mínima: evita diagnósticos vacíos o triviales. */
   const ticketId = document.getElementById("registrarDiagnosticoTicket").value;
   const texto = document.getElementById("registrarDiagnosticoDiagnostico").value.trim();
 

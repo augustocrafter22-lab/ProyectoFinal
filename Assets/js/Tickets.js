@@ -1,34 +1,15 @@
 const formulario = document.getElementById("ticketForm");
 
-formulario.addEventListener("submit", function (evento) {
-  evento.preventDefault();
 let tickets = JSON.parse(localStorage.getItem("tickets")) || [];
 
 formulario.addEventListener("submit", function(evento) {
 
-  /* Se captura la fecha en el momento del envío para reflejar
-       el instante exacto del reporte, no una fecha posterior. */
-  const fechaActual = new Date().toLocaleDateString();
+    evento.preventDefault();
 
-  const ticket = {
-    equipo: document.getElementById("equipo").value,
-    laboratorio: document.getElementById("laboratorioTaller").value,
-    asunto: document.getElementById("asunto").value,
-    descripcion: document.getElementById("descripcion").value,
-    fecha: fechaActual,
-    turno: document.getElementById("turno").value,
-    grupo: document.getElementById("grupo").value,
-    profesor: document.getElementById("profesor").value,
-    /* "Pendiente" es el estado inicial por defecto; cambia
-           conforme avanza el flujo de diagnóstico/solución. */
-    estado: "Pendiente",
-  };
-
-  console.log(ticket);
-
-  formulario.reset();
-});
+    const fechaActual = new Date().toLocaleDateString();
+    const idIncidencia = "INC-" + new Date().getFullYear() + "-" + String(tickets.length + 1).padStart(4, "0");
     const ticket = {
+        idIncidencia: idIncidencia,
         equipo: document.getElementById("equipo").value,
         laboratorio: document.getElementById("laboratorioTaller").value,
         asunto: document.getElementById("asunto").value,
@@ -37,7 +18,8 @@ formulario.addEventListener("submit", function(evento) {
         turno: document.getElementById("turno").value,
         grupo: document.getElementById("grupo").value,
         profesor: document.getElementById("profesor").value,
-        estado: "Pendiente"
+        estado: "Pendiente",
+        prioridad: "Indefinida"
     };
 
     tickets.push(ticket);
@@ -46,6 +28,9 @@ formulario.addEventListener("submit", function(evento) {
         "tickets",
         JSON.stringify(tickets)
     );
+
+    console.log(ticket);
+    console.log(tickets);
 
     formulario.reset();
 
