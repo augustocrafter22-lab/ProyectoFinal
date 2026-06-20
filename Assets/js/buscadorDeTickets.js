@@ -9,14 +9,10 @@ buscarTicket.addEventListener("click", function() {
 
         const idIncidencia = ticket.querySelector("h3").textContent.trim();
 
-        if (idIncidencia === textoBuscado) {
-
+        if (textoBuscado === "" || idIncidencia === textoBuscado) {
             ticket.style.display = "flex";
-
         } else {
-
             ticket.style.display = "none";
-
         }
 
     });

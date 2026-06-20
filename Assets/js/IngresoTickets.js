@@ -7,6 +7,7 @@ tickets.forEach(function(ticket, indice) {
     const article = document.createElement("article");
     article.classList.add("ticket");
 
+
     const ticketInfo = document.createElement("section");
     ticketInfo.classList.add("ticketInfo");
 
@@ -27,6 +28,7 @@ tickets.forEach(function(ticket, indice) {
     ticketInfo.appendChild(asunto);
     ticketInfo.appendChild(equipo);
 
+
     const ticketEstado = document.createElement("section");
     ticketEstado.classList.add("ticketEstado");
 
@@ -44,6 +46,7 @@ tickets.forEach(function(ticket, indice) {
 
     selectEstado.addEventListener("change", function() {
         tickets[indice].estado = selectEstado.value;
+        article.dataset.estado = selectEstado.value; // actualiza el data attribute al cambiar
         localStorage.setItem("tickets", JSON.stringify(tickets));
     });
 
@@ -61,6 +64,7 @@ tickets.forEach(function(ticket, indice) {
 
     selectPrioridad.addEventListener("change", function() {
         tickets[indice].prioridad = selectPrioridad.value;
+        article.dataset.prioridad = selectPrioridad.value; // actualiza el data attribute al cambiar
         localStorage.setItem("tickets", JSON.stringify(tickets));
     });
 
