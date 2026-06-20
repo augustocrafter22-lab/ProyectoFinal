@@ -57,6 +57,7 @@
           <thead>
             <tr>
               <th>ID</th>
+              <th>Laboratorio</th>
             </tr>
           </thead>
           <tbody id="cuerpoTablaPc"></tbody>
@@ -90,9 +91,19 @@
                   name="ID"
                   placeholder="Ingrese el Id del dispositivo"
                   title="Ingrese el Id del dispositivo"
-                  maxlength="8"
                   required
                 />
+                <div class="cajaEntradaDeDatos">
+                  <label for="Lab">Laboratorio</label>
+                  <input
+                    type="text"
+                    id="Lab"
+                    name="Lab"
+                    placeholder="Ingrese el Laboratorio"
+                    title="Ingrese el Laboratorio"
+                    required
+                  />
+                </div>
               </div>
             </fieldset>
             <button type="submit">Guardar Pc</button>
