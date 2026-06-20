@@ -34,7 +34,7 @@ tickets.forEach(function(ticket, indice) {
 
     const selectEstado = document.createElement("select");
     selectEstado.className = "select-estado";
-    ["Pendiente", "Abierto", "En Proceso", "Resuelto", "Cerrado"].forEach(function(opcion) {
+    ["Pendiente", "En Proceso", "Resuelto", "Cerrado"].forEach(function(opcion) {
         const opt = document.createElement("option");
         opt.value = opcion;
         opt.textContent = opcion;

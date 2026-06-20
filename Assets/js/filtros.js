@@ -1,36 +1,31 @@
-const filtroPrioridad = document.getElementById("filtroPrioridad");
-const ticketsVista = document.querySelectorAll(".ticket");
-
-filtroPrioridad.addEventListener("change", function() {
+function aplicarFiltros() {
 
     const prioridadSeleccionada = filtroPrioridad.value;
-
-    ticketsVista.forEach(function(ticket) {
-
-        const textoTicket = ticket.textContent;
-
-        if (prioridadSeleccionada === "" || textoTicket.includes(prioridadSeleccionada)) {
-            ticket.style.display = "flex";
-        } else {
-            ticket.style.display = "none";
-        }
-    });
-});
-
-const filtroEstado = document.getElementById("filtroEstado");
-
-filtroEstado.addEventListener("change", function() {
-
     const estadoSeleccionado = filtroEstado.value;
 
-    ticketsVista.forEach(function(ticket) {
+    const ticketsVista = document.querySelectorAll(".ticket");
 
-        const textoTicket = ticket.textContent;
+    ticketsVista.forEach(function(article) {
 
-        if (estadoSeleccionado === "" || textoTicket.includes(estadoSeleccionado)) {
-            ticket.style.display = "flex";
+        const selectEstado = article.querySelector(".select-estado");
+        const selectPrioridad = article.querySelector(".select-prioridad");
+
+        const coincideEstado =
+            estadoSeleccionado === "" ||
+            selectEstado.value === estadoSeleccionado;
+
+        const coincidePrioridad =
+            prioridadSeleccionada === "" ||
+            selectPrioridad.value === prioridadSeleccionada;
+
+        if (coincideEstado && coincidePrioridad) {
+            article.style.display = "flex";
         } else {
-            ticket.style.display = "none";
+            article.style.display = "none";
         }
+
     });
-});
+}
+
+filtroPrioridad.addEventListener("change", aplicarFiltros);
+filtroEstado.addEventListener("change", aplicarFiltros);
