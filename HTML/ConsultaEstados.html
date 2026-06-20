@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Estados</title>
+    <link rel="stylesheet" href="../assets/Css/style.css">
+</head>
+<body>
+
+<header class="encabezado">
+    <h1>Historial de Estados</h1>
+    <p>Consultá todos los estados que tuvo un equipo a lo largo del tiempo.</p>
+</header>
+
+<section class="modulo" id="historialEstados" style="max-width: 720px;">
+    <h2>Estados registrados</h2>
+
+    <label for="historialEstadosEquipoSelect" style="font-size:13px; font-weight:600; color:#6b7280;">Equipo</label>
+    <select id="historialEstadosEquipoSelect" style="width:100%; padding:10px 14px; border:1px solid #d7dbe8; border-radius:10px; font-size:14px; margin-bottom:18px;">
+    <option value=""> Seleccioná un equipo </option>
+    <option value="PC-01">PC-01</option>
+    <option value="PC-02">PC-02</option>
+    <option value="PC-03">PC-03</option>
+    <option value="PC-04">PC-04</option>
+    <option value="PC-05">PC-05</option>
+    <option value="PC-06">PC-06</option>
+    <option value="PC-07">PC-07</option>
+    <option value="PC-08">PC-08</option>
+    <option value="PC-09">PC-09</option>
+    <option value="PC-10">PC-10</option>
+    </select>
+
+    <table id="tablaHistorialEstados" style="width:100%; border-collapse:collapse; font-size:14px;"></table>
+</section>
+
+<script src="../assets/Js/HistorialEstados.js"></script>
+
+</body>
+</html>
