@@ -15,7 +15,7 @@ display: none;
 }
 .BarraNavegacion h1{
     color: white;
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: 700;
     display: flex;
     justify-content: flex-end;
@@ -51,6 +51,9 @@ nav ul li{
     padding: 0;
     
 }
+.menu{
+    filter: invert();
+}
 @media (max-width: 768px){
 .listaNavegacion{
 display: none;
@@ -61,7 +64,7 @@ flex-direction: column;
 justify-content: flex-start;
 width: 50vw;
 height: calc(100vh - 3.5rem);
-background-color: #143894;
+background-color: #0D2673;
 }
 }
 @media (max-width: 768px) {
@@ -99,5 +102,6 @@ background-color: #143894;
     display: flex;
 }
 }
+
 
 
