@@ -1,27 +1,15 @@
 const formulario = document.getElementById("ticketForm");
 
-formulario.addEventListener("submit", function (evento) {
-  evento.preventDefault();
 let tickets = JSON.parse(localStorage.getItem("tickets")) || [];
-  const fechaActual = new Date().toLocaleDateString();
 
-  const ticket = {
-    equipo: document.getElementById("equipo").value,
-    laboratorio: document.getElementById("laboratorioTaller").value,
-    asunto: document.getElementById("asunto").value,
-    descripcion: document.getElementById("descripcion").value,
-    fecha: fechaActual,
-    turno: document.getElementById("turno").value,
-    grupo: document.getElementById("grupo").value,
-    profesor: document.getElementById("profesor").value,
-    estado: "Pendiente",
-  };
+formulario.addEventListener("submit", function(evento) {
 
-  console.log(ticket);
+    evento.preventDefault();
 
-  formulario.reset();
-});
+    const fechaActual = new Date().toLocaleDateString();
+    const idIncidencia = "INC-" + new Date().getFullYear() + "-" + String(tickets.length + 1).padStart(4, "0");
     const ticket = {
+        idIncidencia: idIncidencia,
         equipo: document.getElementById("equipo").value,
         laboratorio: document.getElementById("laboratorioTaller").value,
         asunto: document.getElementById("asunto").value,
@@ -30,7 +18,8 @@ let tickets = JSON.parse(localStorage.getItem("tickets")) || [];
         turno: document.getElementById("turno").value,
         grupo: document.getElementById("grupo").value,
         profesor: document.getElementById("profesor").value,
-        estado: "Pendiente"
+        estado: "Pendiente",
+        prioridad: "Indefinida"
     };
 
     tickets.push(ticket);
@@ -39,6 +28,9 @@ let tickets = JSON.parse(localStorage.getItem("tickets")) || [];
         "tickets",
         JSON.stringify(tickets)
     );
+
+    console.log(ticket);
+    console.log(tickets);
 
     formulario.reset();
 

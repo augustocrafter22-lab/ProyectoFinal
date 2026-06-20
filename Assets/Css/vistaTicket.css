@@ -79,3 +79,21 @@
     content: " ●";
     color: green;
 }
+
+#filtroPrioridad {
+    background-color: rgb(0, 53, 132);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--radio);
+    cursor: pointer;
+}
+
+#FiltrarPrioridad {
+    background-color: rgb(0, 53, 132);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--radio);
+    cursor: pointer;
+}
