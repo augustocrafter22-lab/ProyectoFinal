@@ -15,6 +15,8 @@
     <section class="VistaDeTickets">
 
         <h1>Vista de Tickets</h1>
+        <input type="text" id="buscadorDeTickets" placeholder="Buscar por número de ticket...">
+        <button id="buscarTicket">Buscar</button>
         <p>Aquí se podrán visualizar los tickets ingresados, su estado actual y prioridad. Además, se podrán actualizar los estados de los tickets a medida que se vayan resolviendo las incidencias.</p>
         
         <a href="IngresoDeTickets.html">
@@ -37,7 +39,7 @@
         <select id="filtroEstado">
 
             <option value="">Todos los estados</option>
-            <option value="Abierto">Abierto</option>
+            <option value="Pendiente">Pendiente</option>
             <option value="En Proceso">En Proceso</option>
             <option value="Resuelto">Resuelto</option>
             <option value="Cerrado">Cerrado</option>
@@ -52,7 +54,7 @@
 
 <script src="../Assets/js/IngresoTickets.js"></script>
 <script src="../Assets/js/filtros.js"></script>
-
+<script src="../Assets/js/buscadorDeTickets.js"></script>
 
 </body>
 </html>
