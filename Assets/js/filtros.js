@@ -16,3 +16,21 @@ filtroPrioridad.addEventListener("change", function() {
         }
     });
 });
+
+const filtroEstado = document.getElementById("filtroEstado");
+
+filtroEstado.addEventListener("change", function() {
+
+    const estadoSeleccionado = filtroEstado.value;
+
+    ticketsVista.forEach(function(ticket) {
+
+        const textoTicket = ticket.textContent;
+
+        if (estadoSeleccionado === "" || textoTicket.includes(estadoSeleccionado)) {
+            ticket.style.display = "flex";
+        } else {
+            ticket.style.display = "none";
+        }
+    });
+});
