@@ -65,6 +65,8 @@ function agregarFilaPc(pc) {
 
   fila.appendChild(campoLab);
   cuerpoTablaPc.appendChild(fila);
+  fila.appendChild(campoID);
+  cuerpoTablaPc.appendChild(fila);
 }
 
 function actualizarTabla() {

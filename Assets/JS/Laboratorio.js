@@ -6,6 +6,7 @@ const hoy = ahora.toISOString().split("T")[0];
 const horaActual = ahora.toTimeString().slice(0, 5);
 const fecha = document.getElementById("FechaEstimada");
 const hora = document.getElementById("HoraEstimada");
+const Restricciones = document.getElementById("Restricciones");
 
 fecha.min = hoy;
 hora.min = horaActual;
@@ -28,6 +29,7 @@ form.addEventListener('submit', function (e) {
         detalleSoftware: document.getElementById("DetalleSoftware").value || "Sin detalle",
         fechaEstimada: fecha.value,
         horaEstimada: hora.value,
+        Restricciones: document.getElementById("Restricciones").value,
     }
 
     const solicitudGuardada = JSON.parse(localStorage.getItem('Solicitudes')) || [];
@@ -42,12 +44,19 @@ solicitudSoftware.addEventListener('change', function () {
     if (this.value === "Si") {
         detalleSoftware.required = true;
         detalleSoftware.disabled = false;
+        Restricciones.required = true;
+        Restricciones.disabled = false;
     } else {
         detalleSoftware.required = false;
         detalleSoftware.disabled = true;
         detalleSoftware.value = "";
+        Restricciones.required = false;
+        Restricciones.disabled = true;
+        Restricciones.value = "";
     }
 });
 detalleSoftware.disabled = true;
 detalleSoftware.required = false;
+Restricciones.disabled = true;
+Restricciones.required = false;
 
