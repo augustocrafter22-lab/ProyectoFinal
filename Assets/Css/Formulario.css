@@ -1,0 +1,77 @@
+.seccionFormulario {
+  color: var(--oscuro);
+  font-family: "Barlow", sans-serif;
+  line-height: 1.6;
+}
+
+.seccionFormulario h2,
+.seccionFormulario legend {
+  color: var(--oscuro);
+  font-weight: 700;
+}
+
+.seccionFormulario label {
+  color: var(--oscuro);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.seccionFormulario input,
+.seccionFormulario textarea,
+.seccionFormulario select {
+  font-family: "Barlow", sans-serif;
+  font-size: 1rem;
+  color: var(--oscuro);
+  width: 100%;
+  max-width: 40rem;
+}
+
+.seccionFormulario option {
+  color: var(--oscuro);
+}
+
+.seccionFormulario input:focus,
+.seccionFormulario textarea:focus,
+.seccionFormulario select:focus {
+  background-color: var(--grisClaro);
+  color: var(--oscuro);
+}
+
+.seccionFormulario button {
+  background-color: var(--oscuro);
+  color: var(--blancoCristal);
+  font-family: "Barlow", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.seccionFormulario button:hover {
+  background-color: var(--amarillo);
+  color: var(--oscuro);
+}
+
+.seccionFormulario button:active {
+  background-color: var(--medio);
+  color: var(--medio);
+}
+
+.cajaTextarea textarea {
+  min-height: 25rem;
+}
+
+.cajaEntradaDeDatos {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  white-space: nowrap;
+}
+
+.cajaTextarea {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.cajaCheckbox input {
+  width: auto;
+}
