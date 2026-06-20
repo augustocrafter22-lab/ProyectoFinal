@@ -45,7 +45,9 @@
 
 .ticketInfo h3 {
     font-size: 13px;
-    color: #6b7280;
+    color: #1145ac;
+    font-weight: bold;
+
 }
 
 .ticketInfo p {
@@ -57,27 +59,12 @@
 }
 
 .estado {
-    background-color: rgb(0, 132, 255);
+    background-color: rgb(0, 53, 132);
     color: white;
     padding: 5px 12px;
     border-radius: 20px;
     font-weight: bold;
     display: inline-block;
-}
-
-.prioridad.alta::after {
-    content: " ●";
-    color: red;
-}
-
-.prioridad.media::after {
-    content: " ●";
-    color: orange;
-}
-
-.prioridad.baja::after {
-    content: " ●";
-    color: green;
 }
 
 #filtroPrioridad {
@@ -105,4 +92,24 @@
     padding: 10px 20px;
     border-radius: var(--radio);
     cursor: pointer;
+}
+
+#buscadorDeTickets {
+    width: 200px;
+    padding: 5px;
+    border: none;
+    border-radius: var(--radio);
+    background-color: rgb(0, 53, 132);
+    color: white;
+        
+}
+
+#buscarTicket {
+width: 60px;
+padding: 3px;
+border-radius: var(--radio);
+background-color: rgb(0,53,132);
+border: 0px;
+cursor: pointer;
+color: white;
 }
