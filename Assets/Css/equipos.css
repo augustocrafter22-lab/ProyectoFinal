@@ -1,14 +1,8 @@
-/* ============================================================
-   equipos.css — Estilos específicos para la página de equipos
-   ============================================================ */
-
-/* Tabla de equipos: mantiene consistencia visual con global.css */
 .tabla-equipos {
   width: 100%;
   margin-top: 18px;
 }
 
-/* Acciones sobre cada fila (editar/eliminar) */
 .acciones-columna {
   display: flex;
   gap: 8px;
@@ -29,14 +23,13 @@
   background-color: var(--color-input-bg);
 }
 
-/* Mensajes de retroalimentación para el usuario */
 .mensaje-feedback {
   padding: 10px 14px;
   border-radius: var(--radio);
   margin-bottom: 14px;
   font-size: 14px;
   font-weight: 500;
-  display: none; /* oculto hasta que se necesite mostrar */
+  display: none;
 }
 
 .mensaje-feedback.exito {
