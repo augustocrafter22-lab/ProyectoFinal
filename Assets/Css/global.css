@@ -355,7 +355,7 @@ footer a:active {
   .btnMenu,
   .btnCerrarMenu {
     align-items: center;
-    background-color: var(--oscuro);
+    background-color: var(--color-navy);
     border: none;
     padding: 0 0.5rem;
     height: 100%;
