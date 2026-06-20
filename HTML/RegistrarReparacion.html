@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrar Reparación</title>
+  <link rel="stylesheet" href="../assets/Css/style.css">
+</head>
+<body>
+
+<header class="encabezado">
+  <h1>Registrar Reparación</h1>
+  <p>Registrá una reparación realizada sobre un equipo.</p>
+</header>
+
+<section class="modulo" id="registrarReparacion">
+  <h2>Nueva reparación</h2>
+
+  <form class="formulario" id="formRegistrarReparacion">
+
+    <label for="reparacionEquipoSelect">Equipo</label>
+    <select id="reparacionEquipoSelect" required>
+      <option value=""> Seleccioná un equipo </option>
+      <option value="PC-01">PC-01</option>
+      <option value="PC-02">PC-02</option>
+      <option value="PC-03">PC-03</option>
+      <option value="PC-04">PC-04</option>
+      <option value="PC-05">PC-05</option>
+      <option value="PC-06">PC-06</option>
+      <option value="PC-07">PC-07</option>
+      <option value="PC-08">PC-08</option>
+      <option value="PC-09">PC-09</option>
+      <option value="PC-10">PC-10</option>
+    </select>
+
+    <label for="reparacionDescripcion">Descripción de la reparación</label>
+    <textarea id="reparacionDescripcion" rows="4" minlength="10" required></textarea>
+
+    <button class="boton-principal" type="submit">Registrar reparación</button>
+
+  </form>
+</section>
+
+<script src="../assets/Js/RegistrarReparacion.js"></script>
+
+</body>
+</html>
