@@ -1,6 +1,6 @@
 /* Controla la apertura/cierre del menú hamburguesa en pantallas angostas. */
 const btnMenu = document.getElementById("btnMenu");
-const btnCerrarMenu = document.getElementById("btnCerrarMenu");
+const btnCerrarMenu = document.getElementById("btnMenuC");
 const listaNavegacion = document.querySelector(".listaNavegacion");
 
 /* Muestra el menú lateral y oculta el botón hamburguesa.

@@ -22,29 +22,6 @@ grid-template-columns: repeat(2, minmax(0, 1fr));
 gap: 10px;
 margin-bottom: rem 0.75;
 }
-header.BarraSuperior{
-    background-color: #1f5397;
-    display:  grid;
-    grid-template-columns: 40px 1fr 40px;
-    align-items: center;
-    padding: 0.75rem 1rem;
-    gap: 8px;
-}
-header.BarraSuperior h1{
-    font-size: 22px;
-    font-weight: 500;
-    color: var(--blancoPuro);
-    text-align: center;
-}
-header.BarraSuperior button.btnMenu{
-    background: none;
-    border: none;
-    color: var(--blancoCristal);
-    cursor: pointer;
-    padding: 4px;
-    font-size: 22px;
-    line-height: 1;
-}
 .menu{
     filter: invert(100%);
 }
