@@ -2,7 +2,7 @@ let tickets = JSON.parse(localStorage.getItem("tickets")) || [];
 
 const listaTickets = document.getElementById("listaTickets");
 
-tickets.forEach(function(ticket) {
+tickets.forEach(function(ticket, indice) {
 
     const article = document.createElement("article");
     article.classList.add("ticket");
@@ -11,7 +11,11 @@ tickets.forEach(function(ticket) {
     ticketInfo.classList.add("ticketInfo");
 
     const idIncidencia = document.createElement("h3");
-    idIncidencia.textContent = ticket.idIncidencia;
+    const enlace = document.createElement("a");
+    enlace.href = "ConsultarDiagnostico.html?ticket=" + ticket.idIncidencia;
+    enlace.textContent = ticket.idIncidencia;
+    enlace.className = "ticket-enlace";
+    idIncidencia.appendChild(enlace);
 
     const asunto = document.createElement("p");
     asunto.textContent = ticket.asunto;
@@ -26,20 +30,46 @@ tickets.forEach(function(ticket) {
     const ticketEstado = document.createElement("section");
     ticketEstado.classList.add("ticketEstado");
 
-    const estado = document.createElement("p");
-    estado.classList.add("estado");
-    estado.textContent = ticket.estado;
+    const selectEstado = document.createElement("select");
+    selectEstado.className = "select-estado";
+    ["Pendiente", "Abierto", "En Proceso", "Resuelto", "Cerrado"].forEach(function(opcion) {
+        const opt = document.createElement("option");
+        opt.value = opcion;
+        opt.textContent = opcion;
+        if (ticket.estado === opcion) {
+            opt.selected = true;
+        }
+        selectEstado.appendChild(opt);
+    });
 
-    const prioridad = document.createElement("p");
-    prioridad.classList.add("prioridad");
-    prioridad.textContent = "Prioridad: " + ticket.prioridad;
+    selectEstado.addEventListener("change", function() {
+        tickets[indice].estado = selectEstado.value;
+        localStorage.setItem("tickets", JSON.stringify(tickets));
+    });
+
+    const selectPrioridad = document.createElement("select");
+    selectPrioridad.className = "select-prioridad";
+    ["Indefinida", "Alta", "Media", "Baja"].forEach(function(opcion) {
+        const opt = document.createElement("option");
+        opt.value = opcion;
+        opt.textContent = "Prioridad: " + opcion;
+        if (ticket.prioridad === opcion) {
+            opt.selected = true;
+        }
+        selectPrioridad.appendChild(opt);
+    });
+
+    selectPrioridad.addEventListener("change", function() {
+        tickets[indice].prioridad = selectPrioridad.value;
+        localStorage.setItem("tickets", JSON.stringify(tickets));
+    });
 
     const laboratorio = document.createElement("p");
     laboratorio.classList.add("laboratorio");
     laboratorio.textContent = ticket.laboratorio;
 
-    ticketEstado.appendChild(estado);
-    ticketEstado.appendChild(prioridad);
+    ticketEstado.appendChild(selectEstado);
+    ticketEstado.appendChild(selectPrioridad);
     ticketEstado.appendChild(laboratorio);
 
     article.appendChild(ticketInfo);

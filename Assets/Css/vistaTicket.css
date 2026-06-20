@@ -113,3 +113,25 @@ border: 0px;
 cursor: pointer;
 color: white;
 }
+.select-estado {
+  background-color: #1956c0;
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.select-prioridad {
+  background-color: #f6f7fc;
+  color: #1f2433;
+  border: 1px solid #d7dbe8;
+  padding: 5px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: block;
+  margin-bottom: 6px;
+}

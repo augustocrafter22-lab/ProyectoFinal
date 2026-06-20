@@ -1,19 +1,36 @@
 document.addEventListener("DOMContentLoaded", iniciarConsultarDiagnostico);
 
 function iniciarConsultarDiagnostico() {
-  renderizarTabla();
+  const params = new URLSearchParams(window.location.search);
+  const ticketFiltro = params.get("ticket");
+
+  if (ticketFiltro) {
+    const titulo = document.querySelector("#consultarDiagnostico h2");
+    if (titulo) {
+      titulo.textContent = "Diagnósticos del ticket " + ticketFiltro;
+    }
+  }
+
+  renderizarTabla(ticketFiltro);
 }
 
-function renderizarTabla() {
+function renderizarTabla(ticketFiltro) {
   const tabla = document.getElementById("tablaDiagnosticos");
-  const diagnosticos = obtenerDatos();
+  const todos = obtenerDatos();
+
+  const diagnosticos = ticketFiltro
+    ? todos.filter(function (d) { return d.ticketId === ticketFiltro; })
+    : todos;
 
   if (diagnosticos.length === 0) {
     const cuerpo = document.createElement("tbody");
     const fila = document.createElement("tr");
     const celda = document.createElement("td");
 
-    celda.textContent = "No hay diagnósticos registrados.";
+    celda.textContent = ticketFiltro
+      ? "No hay diagnósticos registrados para el ticket " + ticketFiltro + "."
+      : "No hay diagnósticos registrados.";
+
     celda.setAttribute("colspan", "5");
     celda.className = "tabla-vacia";
 
@@ -35,6 +52,7 @@ function renderizarTabla() {
   });
 
   encabezado.appendChild(filaEncabezado);
+
 
   const cuerpo = document.createElement("tbody");
 
