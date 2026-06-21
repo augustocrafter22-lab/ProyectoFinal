@@ -1,92 +1,32 @@
 :root {
     --color-navy: #153894;
     --color-azul: #1956c0;
-    --color-azul-oscuro: #103e82;
-    --color-dorado: #d2953a;
+    --color-azul-oscuro: rgb(0, 53, 132);
+    --color-borde-ticket: rgb(0, 132, 255);
     --color-fondo: #f1f2f6;
     --color-tarjeta: #ffffff;
-    --color-input-bg: #f6f7fc;
-    --color-borde: #d7dbe8;
     --color-texto: #1f2433;
-    --color-texto-suave: #6b7280;
     --radio: 10px;
 }
+
 .VistaDeTickets {
     background-color: var(--color-navy);
-    color: #ffffff;
+    color: white;
     padding: 28px 24px;
 }
+
 .VistaDeTickets h1 {
     margin: 0 0 6px 0;
     font-size: 22px;
     font-weight: 600;
 }
 
-#nuevoTicketBtn {
-    background-color: rgb(0, 53, 132);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: var(--radio);
-    cursor: pointer;
-}
-
-.ticket {
-    background-color: rgb(255, 255, 255);
-    border-left: 5px solid rgb(0, 132, 255);
-    border-radius: 12px;
-    padding: 15px;
-    margin-bottom: 15px;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.ticketInfo h3 {
-    font-size: 13px;
-    color: #1145ac;
-    font-weight: bold;
-
-}
-
-.ticketInfo p {
-    margin: 5px 0;
-}
-
-.ticketEstado {
-    text-align: right;
-}
-
-.estado {
-    background-color: rgb(0, 53, 132);
-    color: white;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-weight: bold;
-    display: inline-block;
-}
-
-#filtroPrioridad {
-    background-color: rgb(0, 53, 132);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: var(--radio);
-    cursor: pointer;
-}
-
-#FiltrarPrioridad {
-    background-color: rgb(0, 53, 132);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: var(--radio);
-    cursor: pointer;
-}
-
-#filtroEstado {
-    background-color: rgb(0, 53, 132);
+#nuevoTicketBtn,
+#filtroPrioridad,
+#FiltrarPrioridad,
+#filtroEstado
+ {
+    background-color: var(--color-azul-oscuro);
     color: white;
     border: none;
     padding: 10px 20px;
@@ -99,39 +39,47 @@
     padding: 5px;
     border: none;
     border-radius: var(--radio);
-    background-color: rgb(0, 53, 132);
+    background-color: var(--color-azul-oscuro);
     color: white;
-        
 }
 
-#buscarTicket {
-width: 60px;
-padding: 3px;
-border-radius: var(--radio);
-background-color: rgb(0,53,132);
-border: 0px;
-cursor: pointer;
-color: white;
-}
-.select-estado {
-  background-color: #1956c0;
-  color: white;
-  border: none;
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  display: block;
-  margin-bottom: 6px;
+.ticket,
+.vistaTicket {
+    background-color: var(--color-tarjeta);
+    border-left: 5px solid var(--color-borde-ticket);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.select-prioridad {
-  background-color: #f6f7fc;
-  color: #1f2433;
-  border: 1px solid #d7dbe8;
-  padding: 5px 12px;
-  border-radius: 20px;
-  cursor: pointer;
-  display: block;
-  margin-bottom: 6px;
+.ticketInfo h3,
+.vistaTicketInfo h3 {
+    font-size: 13px;
+    color: #1145ac;
+    font-weight: bold;
 }
+
+.ticketInfo p,
+.vistaTicketInfo p {
+    margin: 5px 0;
+}
+
+.ticketEstado,
+.vistaTicketEstado {
+    text-align: right;
+}
+
+.estado {
+    background-color: var(--color-azul-oscuro);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+
