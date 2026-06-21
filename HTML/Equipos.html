@@ -58,9 +58,9 @@
             <tr>
               <th>ID</th>
               <th>Laboratorio</th>
-              <th>Estado</th>
-              <th>Marca</th>
-
+              <th>Tipo</th>
+              <th>Categoría</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody id="cuerpoTablaPc"></tbody>
@@ -114,23 +114,20 @@
                 <option value="Laboratorio 6">Laboratorio 6</option>
               </select>
 
-              <select class="cajaEntradaDeDatos" id="Estado">
-                <option value="Operativo">Operativo</option>
-                <option value="Degradado">Degradado</option>
-                <option value="En mantenimiento">En mantenimiento</option>
-                <option value="No operativo">No operativo</option>
-                <option value="obsoleto">Obsoleto</option>
+              <select class="cajaEntradaDeDatos" id="Tipo">
+                <option value="Laptop">Laptop</option>
+                <option value="Desktop">Desktop</option>
+                <option value="Tablet">Tablet</option>
+                <option value="Impresora">Impresora</option>
+                <option value="Router">Router</option>
+                <option value="Servidor">Servidor</option>
               </select>
 
-
-
-              <select class="cajaEntradaDeDatos" id="Marca">
-                <option value="Lenovo">Lenovo</option>
-                <option value="HP">HP</option>
-                <option value="Asus">Asus</option>
-                <option value="Acer">Acer</option>
-                <option value="Sony">Sony</option>
-                <option value="Dell">Dell</option>
+              <select class="cajaEntradaDeDatos" id="Categoria">
+                <option value="Dañado">Dañado</option>
+                <option value="Funcionando">Funcionando</option>
+                <option value="En mantenimiento">En mantenimiento</option>
+                <option value="No funciona">Periférico</option>
               </select>
             </fieldset>
             </fieldset>
