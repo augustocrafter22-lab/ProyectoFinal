@@ -10,8 +10,7 @@ function aplicarFiltros() {
 
     const ticketsVista = document.querySelectorAll(".ticket");
 
-    ticketsVista.forEach(function(article) {
-
+        ticketsVista.forEach(article => {
         const selectEstado = article.querySelector(".select-estado");
         const selectPrioridad = article.querySelector(".select-prioridad");
 
