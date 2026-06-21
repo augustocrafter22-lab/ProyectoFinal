@@ -3,8 +3,15 @@
   margin-top: 18px;
 }
 
-.filtroContenedor {
+.filtrosBarra {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
   margin-bottom: 20px;
+}
+
+.filtroContenedor {
+  margin-bottom: 0;
 }
 
 .filtroInput {
@@ -22,12 +29,13 @@
 .filtroInput:focus {
   outline: none;
   border-color: var(--color-primario);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  box-shadow: 0 0 0 3px rgba(25, 86, 192, 0.15);
 }
 
 .acciones-columna {
   display: flex;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .btn-accion {
@@ -37,12 +45,15 @@
   padding: 6px 12px;
   cursor: pointer;
   font-size: 13px;
-  color: var(--color-texto);
-  transition: background-color 0.2s ease;
+  color: var(--oscuro);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .btn-accion:hover {
-  background-color: var(--color-input-bg);
+  background-color: var(--oscuro);
+  color: var(--blancoPuro);
 }
 
 .mensaje-feedback {
@@ -66,4 +77,81 @@
   background-color: #fee2e2;
   color: #991b1b;
   border: 1px solid #fecaca;
+}
+
+.tablaResponsiva {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.tablaResponsiva table {
+  width: 100%;
+  min-width: 600px;
+}
+
+.cajaEncabezado {
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.dialogGestionarPc {
+  border: none;
+  border-radius: var(--radio);
+  padding: 28px;
+  width: 90vw;
+  max-width: 480px;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 28px rgba(20, 48, 92, 0.25);
+  background-color: var(--blancoPuro);
+}
+
+.dialogGestionarPc::backdrop {
+  background-color: rgba(20, 48, 92, 0.45);
+}
+
+@media (max-width: 768px) {
+  section.tablaPcs {
+    margin: 1rem 0.5rem;
+    padding: 0.75rem;
+  }
+
+  .filtrosBarra {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .filtroInput {
+    max-width: 100%;
+  }
+
+  .cajaEncabezado {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cajaEncabezado h2 {
+    margin-right: 0;
+  }
+
+  .cajaEncabezado button {
+    width: 100%;
+  }
+
+  th,
+  td {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.9rem;
+  }
+
+  .dialogGestionarPc {
+    width: 94vw;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tablaResponsiva table {
+    min-width: 480px;
+  }
 }
