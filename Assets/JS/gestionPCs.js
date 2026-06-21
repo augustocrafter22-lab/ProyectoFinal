@@ -4,6 +4,7 @@
 
 const btnAltaPc = document.getElementById("btnAltaPc");
 const btnCerrarGestionarPc = document.getElementById("btnCerrarGestionarPc");
+const btnMasInformacion = document.getElementById("btnMasInformacion");
 const dialogGestionarPc = document.querySelector(".dialogGestionarPc");
 const cuerpoTablaPc = document.getElementById("cuerpoTablaPc");
 const formularioGestionarPc = document.getElementById("formularioGestionarPc");
@@ -14,9 +15,12 @@ const entradaID = document.getElementById("ID");
 const entradaLab = document.getElementById("Lab");
 const entradaEstado = document.getElementById("Estado");
 const entradaMarca = document.getElementById("Marca");
+const entradaInfo = document.getElementById("Info");
 
 // Auxiliar para guardar datos vinculados a la modificacion de una PC
 let pcEnEdicion = false;
+let pcMasInformacion = false;
+let pcMostrarInfo = false;
 
 /**
  * GESTION DEL ESTADO DEL FORMULARIO/MODAL
@@ -24,12 +28,46 @@ let pcEnEdicion = false;
 
 function limpiarEstadoGestionarPc() {
   pcEnEdicion = false;
+  pcMostrarInfo = false;
   entradaID.readOnly = false;
+  entradaLab.readOnly = false;
+  entradaMarca.readOnly = false;
+  entradaEstado.readOnly = false;
+  entradaInfo.readOnly = false;
   formularioGestionarPc.reset();
 }
 
 function abrirAltaPc() {
   limpiarEstadoGestionarPc();
+  dialogGestionarPc.showModal();
+}
+
+function abrirMasInfo(id) {
+  pcMostrarInfo = true;
+
+  const pcs = cargarPcsGuardadasLocal();
+  const pcAMostrar = pcs.find((pc) => {
+    return pc.id === id;
+  });
+
+  if (pcAMostrar === undefined) {
+    return;
+  }
+
+  // Cargar los datos al formulario en modo lectura
+  entradaID.value = pcAMostrar.id;
+  entradaLab.value = pcAMostrar.lab;
+  entradaEstado.value = pcAMostrar.estado;
+  entradaMarca.value = pcAMostrar.marca;
+  entradaInfo.value = pcAMostrar.info || "";
+
+  // Hacer todos los campos readonly
+  entradaID.readOnly = true;
+  entradaLab.readOnly = true;
+  entradaMarca.readOnly = true;
+  entradaEstado.readOnly = true;
+  entradaInfo.readOnly = true;
+
   dialogGestionarPc.showModal();
 }
 
@@ -56,7 +94,6 @@ function abrirModificarPc(id) {
   entradaEstado.value = pcAModificar.estado;
   entradaMarca.value = pcAModificar.marca;
 
-
   // Proteger el ID para que no se modifique
   entradaID.readOnly = true;
 
@@ -79,6 +116,7 @@ function obtenerDatosFormularioPc() {
     lab: entradaLab.value.trim(),
     estado: entradaEstado.value.trim(),
     marca: entradaMarca.value.trim(),
+    info: entradaInfo.value.trim(),
   };
   return pc;
 }
@@ -126,9 +164,19 @@ function agregarFilaPc(pc) {
     eliminarPcLocal(pc.id);
   });
 
+  //Boton mas info
+  const btnMasInformacion = document.createElement("button");
+  btnMasInformacion.type = "button";
+  btnMasInformacion.textContent = "Mas Informacion";
+  btnMasInformacion.classList.add("btnOperacion");
+  btnMasInformacion.addEventListener("click", () => {
+    abrirMasInfo(pc.id);
+  });
+
   // Armado de la estructura DOM
   cajaOperaciones.appendChild(btnModificar);
   cajaOperaciones.appendChild(btnEliminar);
+  cajaOperaciones.appendChild(btnMasInformacion);
   campoOperaciones.appendChild(cajaOperaciones);
 
   fila.appendChild(campoID);
@@ -171,6 +219,7 @@ function modificarPcLocal(pcEnFormulario) {
   pcAModificar.lab = pcEnFormulario.lab;
   pcAModificar.estado = pcEnFormulario.estado;
   pcAModificar.marca = pcEnFormulario.marca;
+  pcAModificar.info = pcEnFormulario.info;
 
   actualizarPcsLocal(pcs);
 }
@@ -199,6 +248,13 @@ function guardarPcLocal(pc) {
 
 function gestionarPc(eventoFormulario) {
   eventoFormulario.preventDefault();
+
+  // No hacer nada si solo se está mostrando información
+  if (pcMostrarInfo) {
+    cerrarGestionarPc();
+    return;
+  }
+
   const pc = obtenerDatosFormularioPc();
 
   if (!pcEnEdicion) {
@@ -219,7 +275,7 @@ function aplicarFiltroID() {
   const idBuscado = filtroID.value.trim().toUpperCase();
   const filas = cuerpoTablaPc.querySelectorAll("tr");
 
-  filas.forEach(function(fila) {
+  filas.forEach(function (fila) {
     const celdaID = fila.querySelector("td");
     const idFila = celdaID.textContent.trim().toUpperCase();
 
