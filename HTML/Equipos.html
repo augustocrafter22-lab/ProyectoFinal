@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Equipos</title>
-    <link rel="stylesheet" href="../Assets/Css/global.css" />
+    <link rel="stylesheet" href="../Assets/Css/barraNavegación.css">
+    <link rel="stylesheet" href="../Assets/Css/style.css" />
     <link rel="stylesheet" href="../Assets/Css/equipos.css" />
     <link
       rel="stylesheet"
@@ -14,35 +15,27 @@
     <link rel="stylesheet" href="../Assets/Css/globalSistema.css" />
   </head>
   <body>
-    <header class="barraNavegacion">
-      <img
-        src="../Assets/Imagenes/Deklan_EnterpriceIMG.png"
-        alt="Logo de la empresa"
-        class="logo"
-        width="200"
-        height="125"
-      />
-      <h1>Sistema de Gestión de Recursos y Soporte de Informática</h1>
+    <header class="BarraNavegacion">
 
-      <nav>
-        <button class="btnMenu" id="btnMenu" type="button">
-          <img src="../Assets/Imagenes/list.svg" alt="Menú" class="iconoMenu" />
-        </button>
-        <button class="btnCerrarMenu" id="btnCerrarMenu" type="button">
-          <img
-            src="../Assets/Imagenes/x.svg"
-            alt="Cerrar Menú"
-            class="iconoMenu"
-          />
-        </button>
-        <ul class="listaNavegacion">
-          <li><a href="login.html" class="btnNavegacion">Cerrar sesión</a></li>
-        </ul>
-      </nav>
+        <nav>
+            <button class="btnMenu" id="btnMenu" type="button"><img class="menu"
+                    src="../Assets/Imagenes/Bootstrap/list.svg" alt="menu" width="40" height="40px"></button>
+
+            <button class="btnMenuC" id="btnMenuC" type="button">
+                <img src="../Assets/Imagenes/Bootstrap/x.svg" alt="X" class="menu" width="40" height="40px">
+            </button>
+
+            <ul class="listaNavegacion">
+                <li><a href="Tecnico.html">Regresar</a></li>
+                <li><a href="Login.html">Cerrar sesion</a></li>
+            </ul>
+        </nav>
+        <h1>S.G.R.S.I</h1>
+        <img src="../Assets/Imagenes/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo-Utu" width="75px">
     </header>
 
     <main>
-      <section class="tablaPcs">
+      <section class="modulo">
         <header class="cajaEncabezado">
           <h2>Datos de Equipos</h2>
           <button type="button" class="btnOperacion" id="btnAltaPc">

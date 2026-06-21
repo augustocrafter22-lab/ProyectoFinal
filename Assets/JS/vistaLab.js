@@ -50,3 +50,26 @@ function renderizarTabla(datos) {
     });
 }
 renderizarTabla(solicitudes);
+
+
+function aplicarFiltros() {
+    const fechaFiltro = filtroPorFecha.value;
+    const labFiltro = filtroPorLaboratorio.value;
+
+    const filtradas = solicitudes.filter(function (s) {
+        const coincideFecha = fechaFiltro === "" || s.fechaEstimada === fechaFiltro;
+        const coincideLab = labFiltro === "" || s.laboratorio === labFiltro;
+        return coincideFecha && coincideLab;
+    });
+
+    renderizarTabla(filtradas);
+}
+
+filtroPorFecha.addEventListener("change", aplicarFiltros);
+filtroPorLaboratorio.addEventListener("change", aplicarFiltros);
+
+btnLimpiarFiltro.addEventListener("click", function () {
+    filtroPorFecha.value = "";
+    filtroPorLaboratorio.value = "";
+});
+
