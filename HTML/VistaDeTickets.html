@@ -7,6 +7,7 @@
     <title>Vista de Tickets</title>
     <link rel="stylesheet" href="../Assets/Css/global.css">
     <link rel="stylesheet" href="../Assets/Css/vistaTicket.css">
+    <link rel="stylesheet" href="../Assets/Css/vistaTicket2.css">
 
 </head>
 
@@ -15,14 +16,38 @@
     <section class="VistaDeTickets">
 
         <h1>Vista de Tickets</h1>
+
         <input type="text" id="buscadorDeTickets" placeholder="Buscar por número de ticket...">
         <button id="buscarTicket">Buscar</button>
+
         <p>Aquí se podrán visualizar los tickets ingresados, su estado actual y prioridad. Además, se podrán actualizar los estados de los tickets a medida que se vayan resolviendo las incidencias.</p>
         
         <a href="IngresoDeTickets.html">
             <button id="nuevoTicketBtn">+ Nueva</button>
        
         </a>
+        
+        <select id="filtroDeEquipos">
+            <option value="">Todos los equipos</option>
+            <option value="PC-01">PC-01</option>
+            <option value="PC-02">PC-02</option>
+            <option value="PC-03">PC-03</option>
+            <option value="PC-04">PC-04</option>
+            <option value="PC-05">PC-05</option>
+            <option value="PC-06">PC-06</option>
+            <option value="PC-07">PC-07</option>
+            <option value="PC-08">PC-08</option>
+            <option value="PC-09">PC-09</option>
+            <option value="PC-10">PC-10</option>
+            <option value="PC-11">PC-11</option>
+            <option value="PC-12">PC-12</option>
+            <option value="PC-13">PC-13</option>
+            <option value="PC-14">PC-14</option>
+            <option value="PC-15">PC-15</option>
+            <option value="PC-16">PC-16</option>
+            
+        </select>
+
         <select id="filtroPrioridad">
 
             <option value="">Todas las prioridades</option>
@@ -46,9 +71,13 @@
 
         </select>
 
+
+        
     </section>
 
-<section id="listaTickets">
+<section 
+
+id="listaTickets">
 
 </section>
 
