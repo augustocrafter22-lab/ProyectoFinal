@@ -128,6 +128,13 @@ function agregarFilaPc(pc) {
   cajaOperaciones.appendChild(btnModificar);
   cajaOperaciones.appendChild(btnEliminar);
   campoOperaciones.appendChild(cajaOperaciones);
+  const campoMarca = document.createElement("td");
+  campoMarca.textContent = pc.marca;
+  const campoMarca = document.createElement("td");
+  campoMarca.textContent = pc.marca;
+
+  fila.appendChild(campoID);
+  cuerpoTablaPc.appendChild(fila);
 
   fila.appendChild(campoID);
   fila.appendChild(campoLab);
@@ -135,6 +142,12 @@ function agregarFilaPc(pc) {
   fila.appendChild(campoCategoria);
   fila.appendChild(campoOperaciones);
 
+  cuerpoTablaPc.appendChild(fila);
+
+  fila.appendChild(campoLab);
+  cuerpoTablaPc.appendChild(fila);
+
+  fila.appendChild(campoMarca);
   cuerpoTablaPc.appendChild(fila);
 }
 
