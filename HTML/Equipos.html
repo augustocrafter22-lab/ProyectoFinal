@@ -50,6 +50,15 @@
           </button>
         </header>
 
+        <section class="filtroContenedor">
+          <input
+            type="text"
+            class="filtroInput"
+            id="filtroID"
+            placeholder="Filtrar por ID...q"
+          />
+        </section>
+
         <table>
           <caption>
             Listado de equipos registrados
@@ -58,8 +67,8 @@
             <tr>
               <th>ID</th>
               <th>Laboratorio</th>
-              <th>Tipo</th>
-              <th>Categoría</th>
+              <th>Marca</th>
+              <th>Estado</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -114,47 +123,20 @@
                 <option value="Laboratorio 6">Laboratorio 6</option>
               </select>
 
-              <select class="cajaEntradaDeDatos" id="Tipo">
-                <option value="Laptop">Laptop</option>
-                <option value="Desktop">Desktop</option>
-                <option value="Tablet">Tablet</option>
-                <option value="Impresora">Impresora</option>
-                <option value="Router">Router</option>
-                <option value="Servidor">Servidor</option>
+              <select class="cajaEntradaDeDatos" id="Marca">
+                <option value="Dell">Dell</option>
+                <option value="HP">HP</option>
+                <option value="Lenovo">Lenovo</option>
+                <option value="Asus">Asus</option>
+                <option value="Acer">Acer</option>
               </select>
 
-              <select class="cajaEntradaDeDatos" id="Categoria">
+              <select class="cajaEntradaDeDatos" id="Estado">
                 <option value="Dañado">Dañado</option>
                 <option value="Funcionando">Funcionando</option>
                 <option value="En mantenimiento">En mantenimiento</option>
-                <option value="No funciona">Periférico</option>
+                <option value="No funciona">No funciona</option>
               </select>
-            </fieldset>
-              <div class="cajaEntradaDeDatos">
-                <label for="ID">ID</label>
-                <input
-                  type="text"
-                  id="ID"
-                  name="ID"
-                  placeholder="Ingrese el Id del dispositivo"
-                  title="Ingrese el Id del dispositivo"
-                  required
-                />
-                <div class="cajaEntradaDeDatos">
-                  <label for="Lab">Laboratorio</label>
-                  <input
-                    type="text"
-                    id="Lab"
-                    name="Lab"
-                    placeholder="Ingrese el Laboratorio"
-                    title="Ingrese el Laboratorio"
-                    required
-                  />
-                </div>
-                  maxlength="8"
-                  required
-                />
-              </div>
             </fieldset>
             <button type="submit">Guardar Pc</button>
           </fieldset>
