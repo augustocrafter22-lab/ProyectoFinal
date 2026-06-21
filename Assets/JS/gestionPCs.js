@@ -70,6 +70,11 @@ function agregarFilaPc(pc) {
 
   fila.appendChild(campoLab);
   cuerpoTablaPc.appendChild(fila);
+  fila.appendChild(campoID);
+  cuerpoTablaPc.appendChild(fila);
+
+  fila.appendChild(campoLab);
+  cuerpoTablaPc.appendChild(fila);
 
   fila.appendChild(campoMarca);
   cuerpoTablaPc.appendChild(fila);
