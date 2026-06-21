@@ -58,6 +58,9 @@
             <tr>
               <th>ID</th>
               <th>Laboratorio</th>
+              <th>Estado</th>
+              <th>Marca</th>
+
             </tr>
           </thead>
           <tbody id="cuerpoTablaPc"></tbody>
@@ -80,34 +83,56 @@
           <fieldset>
             <legend>Gestión de PC</legend>
 
-            <fieldset>
+            <fieldset class="seccionDatos">
               <legend>Datos del dispositivo</legend>
 
-              <div class="cajaEntradaDeDatos">
-                <label for="ID">ID</label>
-                <input
-                  type="text"
-                  id="ID"
-                  name="ID"
-                  placeholder="Ingrese el Id del dispositivo"
-                  title="Ingrese el Id del dispositivo"
-                  required
-                />
-                <div class="cajaEntradaDeDatos">
-                  <label for="Lab">Laboratorio</label>
-                  <input
-                    type="text"
-                    id="Lab"
-                    name="Lab"
-                    placeholder="Ingrese el Laboratorio"
-                    title="Ingrese el Laboratorio"
-                    required
-                  />
-                </div>
-                  maxlength="8"
-                  required
-                />
-              </div>
+              <select class="cajaEntradaDeDatos" id="ID">
+                <option value="PC-01">01</option>
+                <option value="PC-02">02</option>
+                <option value="PC-03">03</option>
+                <option value="PC-04">04</option>
+                <option value="PC-05">05</option>
+                <option value="PC-01">06</option>
+                <option value="PC-07">07</option>
+                <option value="PC-08">08</option>
+                <option value="PC-09">09</option>
+                <option value="PC-10">10</option>
+                <option value="PC-11">11</option>
+                <option value="PC-12">12</option>
+                <option value="PC-13">13</option>
+                <option value="PC-14">14</option>
+                <option value="PC-15">15</option>
+                <option value="PC-16">16</option>
+              </select>
+
+              <select class="cajaEntradaDeDatos" id="Lab">
+                <option value="Laboratorio 1">Laboratorio 1</option>
+                <option value="Laboratorio 2">Laboratorio 2</option>
+                <option value="Laboratorio 3">Laboratorio 3</option>
+                <option value="Laboratorio 4">Laboratorio 4</option>
+                <option value="Laboratorio 5">Laboratorio 5</option>
+                <option value="Laboratorio 6">Laboratorio 6</option>
+              </select>
+
+              <select class="cajaEntradaDeDatos" id="Estado">
+                <option value="Operativo">Operativo</option>
+                <option value="Degradado">Degradado</option>
+                <option value="En mantenimiento">En mantenimiento</option>
+                <option value="No operativo">No operativo</option>
+                <option value="obsoleto">Obsoleto</option>
+              </select>
+
+
+
+              <select class="cajaEntradaDeDatos" id="Marca">
+                <option value="Lenovo">Lenovo</option>
+                <option value="HP">HP</option>
+                <option value="Asus">Asus</option>
+                <option value="Acer">Acer</option>
+                <option value="Sony">Sony</option>
+                <option value="Dell">Dell</option>
+              </select>
+            </fieldset>
             </fieldset>
             <button type="submit">Guardar Pc</button>
           </fieldset>
