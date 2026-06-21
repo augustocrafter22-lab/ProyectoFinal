@@ -8,6 +8,8 @@ const dialogGestionarPc = document.querySelector(".dialogGestionarPc");
 const cuerpoTablaPc = document.getElementById("cuerpoTablaPc");
 const formularioGestionarPc = document.getElementById("formularioGestionarPc");
 const entradaID = document.getElementById("ID");
+const entradaLab = document.getElementById("Lab");
+const entradaMarca = document.getElementById("Marca");
 
 /**
  * GESTION DEL ESTADO DEL FORMULARIO/MODAL
@@ -42,6 +44,8 @@ function cargarPcsGuardadasLocal() {
 function obtenerDatosFormularioPc() {
   return {
     id: entradaID.value.trim(),
+    lab: entradaLab.value.trim(),
+    marca: entradaMarca.value.trim(),
   };
 }
 
@@ -55,7 +59,19 @@ function agregarFilaPc(pc) {
   const campoID = document.createElement("td");
   campoID.textContent = pc.id;
 
+  const campoLab = document.createElement("td");
+  campoLab.textContent = pc.lab;
+
+  const campoMarca = document.createElement("td");
+  campoMarca.textContent = pc.marca;
+
   fila.appendChild(campoID);
+  cuerpoTablaPc.appendChild(fila);
+
+  fila.appendChild(campoLab);
+  cuerpoTablaPc.appendChild(fila);
+
+  fila.appendChild(campoMarca);
   cuerpoTablaPc.appendChild(fila);
 }
 
