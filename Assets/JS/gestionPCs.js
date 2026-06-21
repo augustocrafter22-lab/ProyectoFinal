@@ -11,28 +11,7 @@ const formularioGestionarPc = document.getElementById("formularioGestionarPc");
 const filtroID = document.getElementById("filtroID");
 const filtroEstado = document.getElementById("filtroEstado");
 const filtroLab = document.getElementById("filtroLab");
-
-function aplicarFiltroEstado() {
-  const estadoBuscado = filtroEstado.value.trim().toUpperCase();
-  const filas = cuerpoTablaPc.querySelectorAll("tr");
-
-  filas.forEach(function (fila) {
-    // Seleccionamos TODAS las celdas y elegimos la número 4 (índice 3)
-    const celdas = fila.querySelectorAll("td");
-    const celdaEstado = celdas[3];
-
-    // Verificamos que la celda exista antes de leer su texto
-    if (celdaEstado) {
-      const estadoFila = celdaEstado.textContent.trim().toUpperCase();
-
-      if (estadoBuscado === "" || estadoFila.includes(estadoBuscado)) {
-        fila.style.display = "table-row";
-      } else {
-        fila.style.display = "none";
-      }
-    }
-  });
-}
+const filtroDisponibilidad = document.getElementById("filtroDisponibilidad");
 
 // Campos del formulario
 const entradaID = document.getElementById("ID");
@@ -59,6 +38,7 @@ function limpiarEstadoGestionarPc() {
   entradaMarca.readOnly = false;
   entradaEstado.readOnly = false;
   entradaInfo.readOnly = false;
+  entradaDisponibilidad.readOnly = false;
   formularioGestionarPc.reset();
 }
 
@@ -83,6 +63,7 @@ function abrirMasInfo(id) {
   entradaLab.value = pcAMostrar.lab;
   entradaEstado.value = pcAMostrar.estado;
   entradaMarca.value = pcAMostrar.marca;
+  entradaDisponibilidad.value = pcAMostrar.disponibilidad;
   entradaInfo.value = pcAMostrar.info || "";
   entradaDisponibilidad.value = pcAMostrar.disponibilidad;
 
@@ -90,6 +71,7 @@ function abrirMasInfo(id) {
   entradaLab.readOnly = true;
   entradaMarca.readOnly = true;
   entradaEstado.readOnly = true;
+  entradaDisponibilidad.readOnly = true;
   entradaInfo.readOnly = true;
   entradaDisponibilidad.readOnly = true;
 
@@ -142,6 +124,7 @@ function obtenerDatosFormularioPc() {
     lab: entradaLab.value.trim(),
     estado: entradaEstado.value.trim(),
     marca: entradaMarca.value.trim(),
+    disponibilidad: entradaDisponibilidad.value.trim(),
     info: entradaInfo.value.trim(),
     disponibilidad: entradaDisponibilidad.value.trim(),
   };
@@ -250,6 +233,7 @@ function modificarPcLocal(pcEnFormulario) {
   pcAModificar.lab = pcEnFormulario.lab;
   pcAModificar.estado = pcEnFormulario.estado;
   pcAModificar.marca = pcEnFormulario.marca;
+  pcAModificar.disponibilidad = pcEnFormulario.disponibilidad;
   pcAModificar.info = pcEnFormulario.info;
   pcAModificar.disponibilidad = pcEnFormulario.disponibilidad;
 
@@ -360,6 +344,31 @@ function aplicarFiltroLab() {
     }
   });
 }
+
+function aplicarFiltroDisponibilidad() {
+  const disponibilidadBuscado = filtroDisponibilidad.value.trim().toUpperCase();
+  const filas = cuerpoTablaPc.querySelectorAll("tr");
+
+  filas.forEach(function (fila) {
+    const celdas = fila.querySelectorAll("td");
+    const celdaDisponibilidad = celdas[4];
+
+    if (celdaDisponibilidad) {
+      const disponibilidadFila = celdaDisponibilidad.textContent
+        .trim()
+        .toUpperCase();
+
+      if (
+        disponibilidadBuscado === "" ||
+        disponibilidadFila.includes(disponibilidadBuscado)
+      ) {
+        fila.style.display = "table-row";
+      } else {
+        fila.style.display = "none";
+      }
+    }
+  });
+}
 /**
  * EVENTOS
  */
@@ -371,6 +380,7 @@ dialogGestionarPc.addEventListener("cancel", limpiarEstadoGestionarPc);
 filtroID.addEventListener("input", aplicarFiltroID);
 filtroEstado.addEventListener("input", aplicarFiltroEstado);
 filtroLab.addEventListener("input", aplicarFiltroLab);
+filtroDisponibilidad.addEventListener("input", aplicarFiltroDisponibilidad);
 
 // Inicializar tabla al cargar la vista
 actualizarTabla();
