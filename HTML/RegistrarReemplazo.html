@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrar Reemplazo de Componente</title>
+  <link rel="stylesheet" href="../Assets/Css/style.css">
+</head>
+<body>
+
+<header class="encabezado">
+  <h1>Registrar Reemplazo de Componente</h1>
+  <p>Registrá el reemplazo de un componente en un equipo.</p>
+</header>
+
+<section class="modulo" id="registrarReemplazo">
+  <h2>Nuevo reemplazo</h2>
+
+  <form class="formulario" id="formRegistrarReemplazo">
+
+    <label for="reemplazoEquipoSelect">Equipo</label>
+    <select id="reemplazoEquipoSelect" required>
+      <option value=""> Seleccioná un equipo </option>
+      <option value="PC-01">PC-01</option>
+      <option value="PC-02">PC-02</option>
+      <option value="PC-03">PC-03</option>
+      <option value="PC-04">PC-04</option>
+      <option value="PC-05">PC-05</option>
+      <option value="PC-06">PC-06</option>
+      <option value="PC-07">PC-07</option>
+      <option value="PC-08">PC-08</option>
+      <option value="PC-09">PC-09</option>
+      <option value="PC-10">PC-10</option>
+    </select>
+
+    <label for="reemplazoComponente">Componente reemplazado</label>
+    <select id="reemplazoComponente" required>
+      <option value=""> Seleccioná el cambio </option>
+      <option value="Disco duro">Disco duro</option>
+      <option value="Memoria RAM">Memoria RAM</option>
+      <option value="Teclado">Teclado</option>
+      <option value="Mouse">Mouse</option>
+      <option value="Monitor">Monitor</option>
+      <option value="Fuente de poder">PSU</option>
+      <option value="Placa de video">Placa de video</option>
+      <option value="Placa madre">Placa madre</option>
+      <option value="Procesador">CPU</option>
+      <option value="Ventilador">Fan</option>
+      <option value="Cable de red">Cable de Ethernet</option>
+      <option value="Otro">Otro</option>
+    </select>
+
+    <label for="reemplazoDescripcion">Descripción del reemplazo</label>
+    <textarea id="reemplazoDescripcion" rows="4" minlength="10" required></textarea>
+
+    <button class="boton-principal" type="submit">Registrar reemplazo</button>
+
+  </form>
+</section>
+
+<script src="../Assets/js/RegistrarReemplazo.js"></script>
+
+</body>
+</html>
