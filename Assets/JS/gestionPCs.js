@@ -9,6 +9,7 @@ const cuerpoTablaPc = document.getElementById("cuerpoTablaPc");
 const formularioGestionarPc = document.getElementById("formularioGestionarPc");
 const entradaID = document.getElementById("ID");
 const entradaLab = document.getElementById("Lab");
+const entradaEstado = document.getElementById("Estado");
 const entradaMarca = document.getElementById("Marca");
 
 /**
@@ -45,6 +46,7 @@ function obtenerDatosFormularioPc() {
   return {
     id: entradaID.value.trim(),
     lab: entradaLab.value.trim(),
+    estado: entradaEstado.value.trim(),
     marca: entradaMarca.value.trim(),
   };
 }
@@ -62,15 +64,22 @@ function agregarFilaPc(pc) {
   const campoLab = document.createElement("td");
   campoLab.textContent = pc.lab;
 
+  const campoEstado = document.createElement("td");
+  campoEstado.textContent = pc.estado;
+
+  const campoMarca = document.createElement("td");
+  campoMarca.textContent = pc.marca;
   const campoMarca = document.createElement("td");
   campoMarca.textContent = pc.marca;
 
   fila.appendChild(campoID);
   cuerpoTablaPc.appendChild(fila);
 
-  fila.appendChild(campoLab);
-  cuerpoTablaPc.appendChild(fila);
   fila.appendChild(campoID);
+  fila.appendChild(campoLab);
+  fila.appendChild(campoEstado);
+  fila.appendChild(campoMarca);
+  
   cuerpoTablaPc.appendChild(fila);
 
   fila.appendChild(campoLab);

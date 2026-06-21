@@ -58,6 +58,9 @@
             <tr>
               <th>ID</th>
               <th>Laboratorio</th>
+              <th>Estado</th>
+              <th>Marca</th>
+
             </tr>
           </thead>
           <tbody id="cuerpoTablaPc"></tbody>
@@ -80,7 +83,7 @@
           <fieldset>
             <legend>Gestión de PC</legend>
 
-            <fieldset>
+            <fieldset class="seccionDatos">
               <legend>Datos del dispositivo</legend>
 
               <select class="cajaEntradaDeDatos" id="ID">
@@ -111,6 +114,16 @@
                 <option value="Laboratorio 6">Laboratorio 6</option>
               </select>
 
+              <select class="cajaEntradaDeDatos" id="Estado">
+                <option value="Operativo">Operativo</option>
+                <option value="Degradado">Degradado</option>
+                <option value="En mantenimiento">En mantenimiento</option>
+                <option value="No operativo">No operativo</option>
+                <option value="obsoleto">Obsoleto</option>
+              </select>
+
+
+
               <select class="cajaEntradaDeDatos" id="Marca">
                 <option value="Lenovo">Lenovo</option>
                 <option value="HP">HP</option>
@@ -119,6 +132,7 @@
                 <option value="Sony">Sony</option>
                 <option value="Dell">Dell</option>
               </select>
+            </fieldset>
               <div class="cajaEntradaDeDatos">
                 <label for="ID">ID</label>
                 <input
