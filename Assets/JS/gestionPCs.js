@@ -7,12 +7,13 @@ const btnCerrarGestionarPc = document.getElementById("btnCerrarGestionarPc");
 const dialogGestionarPc = document.querySelector(".dialogGestionarPc");
 const cuerpoTablaPc = document.getElementById("cuerpoTablaPc");
 const formularioGestionarPc = document.getElementById("formularioGestionarPc");
+const filtroID = document.getElementById("filtroID");
 
 // Campos del formulario
 const entradaID = document.getElementById("ID");
 const entradaLab = document.getElementById("Lab");
-const entradaTipo = document.getElementById("Tipo");
-const entradaCategoria = document.getElementById("Categoria");
+const entradaEstado = document.getElementById("Estado");
+const entradaMarca = document.getElementById("Marca");
 
 // Auxiliar para guardar datos vinculados a la modificacion de una PC
 let pcEnEdicion = false;
@@ -52,8 +53,9 @@ function abrirModificarPc(id) {
   // Cargar los datos al formulario
   entradaID.value = pcAModificar.id;
   entradaLab.value = pcAModificar.lab;
-  entradaTipo.value = pcAModificar.tipo;
-  entradaCategoria.value = pcAModificar.categoria;
+  entradaEstado.value = pcAModificar.estado;
+  entradaMarca.value = pcAModificar.marca;
+
 
   // Proteger el ID para que no se modifique
   entradaID.readOnly = true;
@@ -75,8 +77,8 @@ function obtenerDatosFormularioPc() {
   const pc = {
     id: entradaID.value.trim(),
     lab: entradaLab.value.trim(),
-    tipo: entradaTipo.value.trim(),
-    categoria: entradaCategoria.value.trim(),
+    estado: entradaEstado.value.trim(),
+    marca: entradaMarca.value.trim(),
   };
   return pc;
 }
@@ -95,11 +97,11 @@ function agregarFilaPc(pc) {
   const campoLab = document.createElement("td");
   campoLab.textContent = pc.lab;
 
-  const campoTipo = document.createElement("td");
-  campoTipo.textContent = pc.tipo;
+  const campoMarca = document.createElement("td");
+  campoMarca.textContent = pc.marca;
 
-  const campoCategoria = document.createElement("td");
-  campoCategoria.textContent = pc.categoria;
+  const campoEstado = document.createElement("td");
+  campoEstado.textContent = pc.estado;
 
   // Espacio para colocar los botones de operaciones
   const campoOperaciones = document.createElement("td");
@@ -128,26 +130,13 @@ function agregarFilaPc(pc) {
   cajaOperaciones.appendChild(btnModificar);
   cajaOperaciones.appendChild(btnEliminar);
   campoOperaciones.appendChild(cajaOperaciones);
-  const campoMarca = document.createElement("td");
-  campoMarca.textContent = pc.marca;
-  const campoMarca = document.createElement("td");
-  campoMarca.textContent = pc.marca;
-
-  fila.appendChild(campoID);
-  cuerpoTablaPc.appendChild(fila);
 
   fila.appendChild(campoID);
   fila.appendChild(campoLab);
-  fila.appendChild(campoTipo);
-  fila.appendChild(campoCategoria);
+  fila.appendChild(campoMarca);
+  fila.appendChild(campoEstado);
   fila.appendChild(campoOperaciones);
 
-  cuerpoTablaPc.appendChild(fila);
-
-  fila.appendChild(campoLab);
-  cuerpoTablaPc.appendChild(fila);
-
-  fila.appendChild(campoMarca);
   cuerpoTablaPc.appendChild(fila);
 }
 
@@ -180,8 +169,8 @@ function modificarPcLocal(pcEnFormulario) {
   }
 
   pcAModificar.lab = pcEnFormulario.lab;
-  pcAModificar.tipo = pcEnFormulario.tipo;
-  pcAModificar.categoria = pcEnFormulario.categoria;
+  pcAModificar.estado = pcEnFormulario.estado;
+  pcAModificar.marca = pcEnFormulario.marca;
 
   actualizarPcsLocal(pcs);
 }
@@ -223,6 +212,26 @@ function gestionarPc(eventoFormulario) {
 }
 
 /**
+ * FILTROS
+ */
+
+function aplicarFiltroID() {
+  const idBuscado = filtroID.value.trim().toUpperCase();
+  const filas = cuerpoTablaPc.querySelectorAll("tr");
+
+  filas.forEach(function(fila) {
+    const celdaID = fila.querySelector("td");
+    const idFila = celdaID.textContent.trim().toUpperCase();
+
+    if (idBuscado === "" || idFila.includes(idBuscado)) {
+      fila.style.display = "table-row";
+    } else {
+      fila.style.display = "none";
+    }
+  });
+}
+
+/**
  * EVENTOS
  */
 
@@ -230,6 +239,7 @@ formularioGestionarPc.addEventListener("submit", gestionarPc);
 btnAltaPc.addEventListener("click", abrirAltaPc);
 btnCerrarGestionarPc.addEventListener("click", cerrarGestionarPc);
 dialogGestionarPc.addEventListener("cancel", limpiarEstadoGestionarPc);
+filtroID.addEventListener("input", aplicarFiltroID);
 
 // Inicializar tabla al cargar la vista
 actualizarTabla();

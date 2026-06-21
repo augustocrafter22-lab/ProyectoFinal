@@ -3,6 +3,28 @@
   margin-top: 18px;
 }
 
+.filtroContenedor {
+  margin-bottom: 20px;
+}
+
+.filtroInput {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px 14px;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  font-size: 14px;
+  background-color: var(--color-input-bg);
+  color: var(--color-texto);
+  transition: border-color 0.2s ease;
+}
+
+.filtroInput:focus {
+  outline: none;
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
 .acciones-columna {
   display: flex;
   gap: 8px;
