@@ -9,6 +9,7 @@ const dialogGestionarPc = document.querySelector(".dialogGestionarPc");
 const cuerpoTablaPc = document.getElementById("cuerpoTablaPc");
 const formularioGestionarPc = document.getElementById("formularioGestionarPc");
 const filtroID = document.getElementById("filtroID");
+const filtroEstado = document.getElementById("filtroEstado");
 
 // Campos del formulario
 const entradaID = document.getElementById("ID");
@@ -286,7 +287,25 @@ function aplicarFiltroID() {
     }
   });
 }
+function aplicarFiltroEstado() {
+  const estadoBuscado = filtroEstado.value.trim().toUpperCase();
+  const filas = cuerpoTablaPc.querySelectorAll("tr");
 
+  filas.forEach(function (fila) {
+    const celdas = fila.querySelectorAll("td");
+    const celdaEstado = celdas[3];
+
+    if (celdaEstado) {
+      const estadoFila = celdaEstado.textContent.trim().toUpperCase();
+
+      if (estadoBuscado === "" || estadoFila.includes(estadoBuscado)) {
+        fila.style.display = "table-row";
+      } else {
+        fila.style.display = "none";
+      }
+    }
+  });
+}
 /**
  * EVENTOS
  */
@@ -296,6 +315,7 @@ btnAltaPc.addEventListener("click", abrirAltaPc);
 btnCerrarGestionarPc.addEventListener("click", cerrarGestionarPc);
 dialogGestionarPc.addEventListener("cancel", limpiarEstadoGestionarPc);
 filtroID.addEventListener("input", aplicarFiltroID);
+filtroEstado.addEventListener("input", aplicarFiltroEstado);
 
 // Inicializar tabla al cargar la vista
 actualizarTabla();
