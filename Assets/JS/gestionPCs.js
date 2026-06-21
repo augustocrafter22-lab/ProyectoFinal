@@ -69,12 +69,23 @@ function agregarFilaPc(pc) {
 
   const campoMarca = document.createElement("td");
   campoMarca.textContent = pc.marca;
+  const campoMarca = document.createElement("td");
+  campoMarca.textContent = pc.marca;
+
+  fila.appendChild(campoID);
+  cuerpoTablaPc.appendChild(fila);
 
   fila.appendChild(campoID);
   fila.appendChild(campoLab);
   fila.appendChild(campoEstado);
   fila.appendChild(campoMarca);
   
+  cuerpoTablaPc.appendChild(fila);
+
+  fila.appendChild(campoLab);
+  cuerpoTablaPc.appendChild(fila);
+
+  fila.appendChild(campoMarca);
   cuerpoTablaPc.appendChild(fila);
 }
 
