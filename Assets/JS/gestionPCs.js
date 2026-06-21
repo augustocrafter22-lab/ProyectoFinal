@@ -40,6 +40,7 @@ const entradaLab = document.getElementById("Lab");
 const entradaEstado = document.getElementById("Estado");
 const entradaMarca = document.getElementById("Marca");
 const entradaInfo = document.getElementById("Info");
+const entradaDisponibilidad = document.getElementById("Disponibilidad");
 
 // Auxiliar para guardar datos vinculados a la modificacion de una PC
 let pcEnEdicion = false;
@@ -78,19 +79,19 @@ function abrirMasInfo(id) {
     return;
   }
 
-  // Cargar los datos al formulario en modo lectura
   entradaID.value = pcAMostrar.id;
   entradaLab.value = pcAMostrar.lab;
   entradaEstado.value = pcAMostrar.estado;
   entradaMarca.value = pcAMostrar.marca;
   entradaInfo.value = pcAMostrar.info || "";
+  entradaDisponibilidad.value = pcAMostrar.disponibilidad;
 
-  // Hacer todos los campos readonly
   entradaID.readOnly = true;
   entradaLab.readOnly = true;
   entradaMarca.readOnly = true;
   entradaEstado.readOnly = true;
   entradaInfo.readOnly = true;
+  entradaDisponibilidad.readOnly = true;
 
   dialogGestionarPc.showModal();
 }
@@ -117,6 +118,7 @@ function abrirModificarPc(id) {
   entradaLab.value = pcAModificar.lab;
   entradaEstado.value = pcAModificar.estado;
   entradaMarca.value = pcAModificar.marca;
+  entradaDisponibilidad.value = pcAModificar.disponibilidad;
 
   // Proteger el ID para que no se modifique
   entradaID.readOnly = true;
@@ -141,6 +143,7 @@ function obtenerDatosFormularioPc() {
     estado: entradaEstado.value.trim(),
     marca: entradaMarca.value.trim(),
     info: entradaInfo.value.trim(),
+    disponibilidad: entradaDisponibilidad.value.trim(),
   };
   return pc;
 }
@@ -165,9 +168,12 @@ function agregarFilaPc(pc) {
   const campoEstado = document.createElement("td");
   campoEstado.textContent = pc.estado;
 
+  const campoDisponibilidad = document.createElement("td");
+  campoDisponibilidad.textContent = pc.disponibilidad;
+
   // Espacio para colocar los botones de operaciones
   const campoOperaciones = document.createElement("td");
-  const cajaOperaciones = document.createElement("div");
+  const cajaOperaciones = document.createElement("section");
   cajaOperaciones.classList.add("cajaOperaciones");
 
   // Botón Modificar
@@ -207,6 +213,7 @@ function agregarFilaPc(pc) {
   fila.appendChild(campoLab);
   fila.appendChild(campoMarca);
   fila.appendChild(campoEstado);
+  fila.appendChild(campoDisponibilidad);
   fila.appendChild(campoOperaciones);
 
   cuerpoTablaPc.appendChild(fila);
@@ -244,6 +251,7 @@ function modificarPcLocal(pcEnFormulario) {
   pcAModificar.estado = pcEnFormulario.estado;
   pcAModificar.marca = pcEnFormulario.marca;
   pcAModificar.info = pcEnFormulario.info;
+  pcAModificar.disponibilidad = pcEnFormulario.disponibilidad;
 
   actualizarPcsLocal(pcs);
 }
