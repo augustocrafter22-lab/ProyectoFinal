@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrar Intervención Técnica</title>
+  <link rel="stylesheet" href="../Assets/Css/style.css">
+</head>
+<body>
+
+<header class="encabezado">
+  <h1>Registrar Intervención Técnica</h1>
+  <p>Registrá una intervención técnica realizada sobre un equipo. </p>
+</header>
+
+<section class="modulo" id="registrarIntervencion">
+  <h2>Nueva intervención</h2>
+
+  <form class="formulario" id="formRegistrarIntervencion">
+
+    <label for="intervencionEquipoSelect">Equipo</label>
+    <select id="intervencionEquipoSelect" required>
+      <option value=""> Seleccioná un equipo </option>
+      <option value="PC-01">PC-01</option>
+      <option value="PC-02">PC-02</option>
+      <option value="PC-03">PC-03</option>
+      <option value="PC-04">PC-04</option>
+      <option value="PC-05">PC-05</option>
+      <option value="PC-06">PC-06</option>
+      <option value="PC-07">PC-07</option>
+      <option value="PC-08">PC-08</option>
+      <option value="PC-09">PC-09</option>
+      <option value="PC-10">PC-10</option>
+    </select>
+
+    <label for="intervencionTipo">Tipo de intervención</label>
+    <select id="intervencionTipo" required>
+      <option value=""> Seleccioná un tipo </option>
+      <option value="Mantenimiento">Mantenimiento</option>
+      <option value="Revisión">Revisión</option>
+      <option value="Actualización de software">Actualización de software</option>
+      <option value="Diagnóstico técnico">Diagnóstico técnico</option>
+      <option value="Otro">Otros</option>
+    </select>
+
+    <label for="intervencionDescripcion">Descripción</label>
+    <textarea id="intervencionDescripcion" rows="4" minlength="10" required></textarea>
+
+    <button class="boton-principal" type="submit">Registrar intervención</button>
+
+  </form>
+</section>
+
+<script src="../Assets/Js/RegistrarIntervencion.js"></script>
+
+</body>
+</html>
