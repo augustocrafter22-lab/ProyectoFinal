@@ -15,7 +15,6 @@ formulario.addEventListener("submit", function(evento) {
         asunto: document.getElementById("asunto").value,
         descripcion: document.getElementById("descripcion").value,
         fecha: fechaActual,
-        fechaFiltro: new Date().toISOString().split("T")[0],
         turno: document.getElementById("turno").value,
         grupo: document.getElementById("grupo").value,
         profesor: document.getElementById("profesor").value,

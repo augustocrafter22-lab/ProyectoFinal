@@ -95,34 +95,9 @@ tickets.forEach((ticket, indice) => {
     laboratorio.classList.add("laboratorio");
     laboratorio.textContent = ticket.laboratorio;
 
-    const btnFinalizar = document.createElement("button");
-    btnFinalizar.textContent = "Finalizar Ticket";
-    btnFinalizar.classList.add("btn-finalizar");
-
-    btnFinalizar.addEventListener("click", () => {
-
-        tickets[indice].estado = "Resuelto";
-        tickets[indice].fechaFinalizacion = new Date().toLocaleDateString();
-
-        localStorage.setItem(
-            "tickets",
-            JSON.stringify(tickets)
-        );
-
-        location.reload();
-
-    });
-
     ticketEstado.appendChild(selectEstado);
     ticketEstado.appendChild(selectPrioridad);
     ticketEstado.appendChild(laboratorio);
-    ticketEstado.appendChild(btnFinalizar);
-
-    if (ticket.fechaFinalizacion) {
-        const fechaFinalizacion = document.createElement("p");
-        fechaFinalizacion.textContent = "Finalizado: " + ticket.fechaFinalizacion;
-        ticketEstado.appendChild(fechaFinalizacion);
-    }
 
     article.appendChild(ticketInfo);
     article.appendChild(ticketEstado);
