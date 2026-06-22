@@ -254,10 +254,6 @@ function guardarPcLocal(pc) {
     return pcGuardada.id === pc.id;
   });
 
-  if (idExistente) {
-    return;
-  }
-
   pcs.push(pc);
   actualizarPcsLocal(pcs);
 }
