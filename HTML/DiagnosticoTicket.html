@@ -1,20 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Diagnostico de Tickets</title>
   <link rel="stylesheet" href="../assets/Css/style.css">
+  <link rel="stylesheet" href="../Assets/Css/barraNavegación.css">
 </head>
 
 <body>
-<h1>Registro de Diagnósticos</h1>
+  <header class="BarraNavegacion">
+
+    <nav>
+      <button class="btnMenu" id="btnMenu" type="button"><img class="menu" src="../Assets/Imagenes/Bootstrap/list.svg"
+          alt="menu" width="40" height="40px"></button>
+
+      <button class="btnMenuC" id="btnMenuC" type="button">
+        <img src="../Assets/Imagenes/Bootstrap/x.svg" alt="X" class="menu" width="40" height="40px">
+      </button>
+
+      <ul class="listaNavegacion">
+        <li><a href="Tecnico.html">Regresar</a></li>
+        <li><a href="Login.html">Cerrar sesion</a></li>
+      </ul>
+    </nav>
+    <h1>S.G.R.S.I</h1>
+    <img src="../Assets/Imagenes/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo-Utu" width="75px">
+  </header>
+  <section class="encabezado">
+    <h1>Registro de Diagnósticos</h1>
     <p>Aqui se registrara el diagnóstico asociado al ticket.</p>
-<section class="modulo" id="DiagnosticoTicket">
-  <h2>Asociar diagnóstico a ticket</h2>
-  <form class="formulario" id="formDiagnosticoTicket">
-    <label for="DiagnosticoTicketTicket">Ticket</label>
-    <select id="DiagnosticoTicketTicket" required>
+  </section>
+  <section class="modulo" id="DiagnosticoTicket">
+    <h2>Asociar diagnóstico a ticket</h2>
+    <form class="formulario" id="formDiagnosticoTicket">
+      <label for="DiagnosticoTicketTicket">Ticket</label>
+      <select id="DiagnosticoTicketTicket" required>
         <option value="INC-2026-0001">INC-2026-0001</option>
         <option value="INC-2026-0002">INC-2026-0002</option>
         <option value="INC-2026-0003">INC-2026-0003</option>
@@ -24,14 +46,16 @@
         <option value="INC-2026-0007">INC-2026-0007</option>
         <option value="INC-2026-0008">INC-2026-0008</option>
         <option value="INC-2026-0009">INC-2026-0009</option>
-    </select>
+      </select>
 
-    <label for="DiagnosticoTicketDiagnostico">Diagnóstico asociado</label>
-    <textarea id="DiagnosticoTicketDiagnostico" rows="4" minlength="10" required></textarea>
+      <label for="DiagnosticoTicketDiagnostico">Diagnóstico asociado</label>
+      <textarea id="DiagnosticoTicketDiagnostico" rows="4" minlength="10" required></textarea>
 
-    <button class="boton-principal" type="submit">Asociar diagnóstico</button>
-  </form>
-</section>
-    <script src="../Assets/Js/DiagnosticoTicket.js"></script>
-    </body>
+      <button class="boton-principal" type="submit">Asociar diagnóstico</button>
+    </form>
+  </section>
+  <script src="../Assets/Js/DiagnosticoTicket.js"></script>
+  <script src="../Assets/JS/barraNavegacion.js"></script>
+</body>
+
 </html>

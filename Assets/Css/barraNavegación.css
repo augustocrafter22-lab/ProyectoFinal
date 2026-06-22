@@ -10,6 +10,15 @@ header.BarraNavegacion{
     z-index: 100;
     justify-content: space-between;
 }
+nav {
+  display:flex;
+}
+nav a{
+  display: inline-block;
+  border: white;
+  border: 1px solid;
+  border-radius: var(--radio);
+}
 .btnMenu, .btnMenuC{
 display: none;
 }

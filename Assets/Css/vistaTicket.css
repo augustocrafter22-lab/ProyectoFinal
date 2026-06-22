@@ -91,3 +91,11 @@
     font-weight: bold;
     cursor: pointer;
 }
+.btn-finalizar{
+     background-color: var(--color-azul-oscuro);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--radio);
+    cursor: pointer;
+}

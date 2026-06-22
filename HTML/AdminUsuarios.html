@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador de usuarios</title>
+    <link rel="stylesheet" href="../Assets/Css/barraNavegación.css">
+    <link rel="stylesheet" href="../Assets/Css/style.css">
+    <link rel="stylesheet" href="../Assets/Css/Editor.css">
+</head>
+
+<body>
+    <header class="BarraNavegacion">
+
+        <nav>
+            <button class="btnMenu" id="btnMenu" type="button"><img class="menu"
+                    src="../Assets/Imagenes/Bootstrap/list.svg" alt="menu" width="40" height="40px"></button>
+
+            <button class="btnMenuC" id="btnMenuC" type="button">
+                <img src="../Assets/Imagenes/Bootstrap/x.svg" alt="X" class="menu" width="40" height="40px">
+            </button>
+
+            <ul class="listaNavegacion">
+                <li><a href="Coordinador.html">Regresar</a></li>
+                <li><a href="Login.html">Cerrar sesion</a></li>
+            </ul>
+        </nav>
+        <h1>S.G.R.S.I</h1>
+        <img src="../Assets/Imagenes/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo-Utu" width="75px">
+    </header>
+
+    <section class="encabezado">
+        <h1>Bienvendio, coordinador</h1>
+        <p>Este es el administrador de usuarios</p>
+    </section>
+    <section class="modulo">
+        <fieldset class="controles">
+        <legend>Filtros</legend>
+        <label for="filtroPorRol">Rol:</label>
+        <select id="filtroPorRol">
+            <option value="">Todos</option>
+            <option value="coordinador">Coordinador</option>
+            <option value="tecnico">Técnico</option>
+            <option value="solicitante">Solicitante</option>
+        </select>
+        <button class="boton-filtro" id="btnLimpiarFiltroUsuarios" type="button">Limpiar filtros</button>
+    </fieldset>
+
+    <table id="tablaUsuarios">
+        <caption>Listado de usuarios registrados</caption>
+        <thead>
+            <tr>
+                <th>CI</th>
+                <th>Rol</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="cuerpoTablaUsuarios"></tbody>
+    </table>
+
+</section>
+
+<button class="boton-principal" id="btnAltaUsuario" type="button">Agregar usuario</button>
+
+<dialog class="dialogGestionarUsuario" id="dialogGestionarUsuario">
+    <button id="btnCerrarGestionarUsuario" type="button">
+        <img src="../Assets/Imagenes/Bootstrap/x.svg" alt="Cerrar" width="24" height="24">
+    </button>
+    <form id="formularioGestionarUsuario">
+        <fieldset>
+            <legend>Gestión de usuario</legend>
+            <fieldset>
+                <legend>Datos del usuario</legend>
+                <div class="cajaEntradaDeDatos">
+                    <label for="ci">CI</label>
+                    <input type="text" id="ci" name="ci" placeholder="Ingrese la CI"
+                           inputmode="numeric" maxlength="8" required>
+                </div>
+                <div class="cajaEntradaDeDatos">
+                    <label for="contrasenia">Contraseña</label>
+                    <input type="text" id="contrasenia" name="contrasenia"
+                           placeholder="Ingrese la contraseña" required>
+                </div>
+                <div class="cajaEntradaDeDatos">
+                    <label for="rol">Rol</label>
+                    <select id="rol" name="rol" required>
+                        <option value="" disabled selected>Seleccione un rol</option>
+                        <option value="coordinador">Coordinador</option>
+                        <option value="tecnico">Técnico</option>
+                        <option value="solicitante">Solicitante</option>
+                    </select>
+                </div>
+            </fieldset>
+            <button class="boton-secundario" type="submit">Guardar usuario</button>
+        </fieldset>
+    </form>
+</dialog>
+   </section>
+    </body>
+    <script src="../Assets/JS/barraNavegacion.js"></script>
+    <script src="../Assets/JS/Editor.js"></script>
+    </html>

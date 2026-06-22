@@ -1,62 +1,86 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cambiar Ubicación de Equipo</title>
     <link rel="stylesheet" href="../assets/Css/style.css">
+    <link rel="stylesheet" href="../Assets/Css/barraNavegación.css">
 </head>
+
 <body>
 
-<header class="encabezado">
-    <h1>Cambiar Ubicación de Equipo</h1>
-    <p>Modificá la ubicación de un equipo y se guardara en el registro.</p>
-</header>
+    <header class="BarraNavegacion">
 
-<section class="modulo" id="cambiarUbicacionEquipo">
-    <h2>Registrar cambio de ubicación</h2>
+        <nav>
+            <button class="btnMenu" id="btnMenu" type="button"><img class="menu"
+                    src="../Assets/Imagenes/Bootstrap/list.svg" alt="menu" width="40" height="40px"></button>
 
-    <form class="formulario" id="formCambiarUbicacion">
+            <button class="btnMenuC" id="btnMenuC" type="button">
+                <img src="../Assets/Imagenes/Bootstrap/x.svg" alt="X" class="menu" width="40" height="40px">
+            </button>
 
-    <label for="cambiarUbicacionEquipoSelect">Equipo</label>
-    <select id="cambiarUbicacionEquipoSelect" required>
-        <option value=""> Seleccioná un equipo </option>
-        <option value="PC-01">PC-01</option>
-        <option value="PC-02">PC-02</option>
-        <option value="PC-03">PC-03</option>
-        <option value="PC-04">PC-04</option>
-        <option value="PC-05">PC-05</option>
-        <option value="PC-06">PC-06</option>
-        <option value="PC-07">PC-07</option>
-        <option value="PC-08">PC-08</option>
-        <option value="PC-09">PC-09</option>
-        <option value="PC-10">PC-10</option>
-    </select>
+            <ul class="listaNavegacion">
+                <li><a href="Tecnico.html">Regresar</a></li>
+                <li><a href="Login.html">Cerrar sesion</a></li>
+            </ul>
+        </nav>
+        <h1>S.G.R.S.I</h1>
+        <img src="../Assets/Imagenes/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo-Utu" width="75px">
+    </header>
 
-    <label for="cambiarUbicacionActual">Ubicación actual</label>
-    <input type="text" id="cambiarUbicacionActual" readonly placeholder="Se cargará al seleccionar el equipo">
+    <header class="encabezado">
+        <h1>Cambiar Ubicación de Equipo</h1>
+        <p>Modificá la ubicación de un equipo y se guardara en el registro.</p>
+    </header>
 
-    <label for="cambiarUbicacionNueva">Nueva ubicación</label>
-    <select id="cambiarUbicacionNueva" required>
-        <option value=""> Seleccioná una ubicación </option>
-        <option value="Laboratorio 1">Laboratorio 1</option>
-        <option value="Laboratorio 2">Laboratorio 2</option>
-        <option value="Laboratorio 3">Laboratorio 3</option>
-        <option value="Laboratorio 4">Laboratorio 4</option>
-        <option value="Laboratorio 5">Laboratorio 5</option>
-        <option value="Laboratorio 6">Laboratorio 6</option>
-        <option value="Taller 1">Taller 1</option>
-        <option value="Taller 2">Taller 2</option>
-        <option value="Taller 3">Taller 3</option>
+    <section class="modulo" id="cambiarUbicacionEquipo">
+        <h2>Registrar cambio de ubicación</h2>
 
-    </select>
+        <form class="formulario" id="formCambiarUbicacion">
 
-    <button class="boton-principal" type="submit">Guardar cambio</button>
+            <label for="cambiarUbicacionEquipoSelect">Equipo</label>
+            <select id="cambiarUbicacionEquipoSelect" required>
+                <option value=""> Seleccioná un equipo </option>
+                <option value="PC-01">PC-01</option>
+                <option value="PC-02">PC-02</option>
+                <option value="PC-03">PC-03</option>
+                <option value="PC-04">PC-04</option>
+                <option value="PC-05">PC-05</option>
+                <option value="PC-06">PC-06</option>
+                <option value="PC-07">PC-07</option>
+                <option value="PC-08">PC-08</option>
+                <option value="PC-09">PC-09</option>
+                <option value="PC-10">PC-10</option>
+            </select>
 
-    </form>
-</section>
+            <label for="cambiarUbicacionActual">Ubicación actual</label>
+            <input type="text" id="cambiarUbicacionActual" readonly placeholder="Se cargará al seleccionar el equipo">
 
-<script src="../Assets/Js/CambioUbicacion.js"></script>
+            <label for="cambiarUbicacionNueva">Nueva ubicación</label>
+            <select id="cambiarUbicacionNueva" required>
+                <option value=""> Seleccioná una ubicación </option>
+                <option value="Laboratorio 1">Laboratorio 1</option>
+                <option value="Laboratorio 2">Laboratorio 2</option>
+                <option value="Laboratorio 3">Laboratorio 3</option>
+                <option value="Laboratorio 4">Laboratorio 4</option>
+                <option value="Laboratorio 5">Laboratorio 5</option>
+                <option value="Laboratorio 6">Laboratorio 6</option>
+                <option value="Taller 1">Taller 1</option>
+                <option value="Taller 2">Taller 2</option>
+                <option value="Taller 3">Taller 3</option>
+
+            </select>
+
+            <button class="boton-principal" type="submit">Guardar cambio</button>
+
+        </form>
+    </section>
+
+    <script src="../Assets/Js/CambioUbicacion.js"></script>
+    <script src="../Assets/JS/barraNavegacion.js"></script>
 
 </body>
+
 </html>

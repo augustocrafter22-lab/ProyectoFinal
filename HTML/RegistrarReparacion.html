@@ -1,47 +1,74 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registrar Reparación</title>
   <link rel="stylesheet" href="../assets/Css/style.css">
+  <link rel="stylesheet" href="../Assets/Css/barraNavegación.css">
 </head>
+
 <body>
+  <header class="BarraNavegacion">
 
-<header class="encabezado">
-  <h1>Registrar Reparación</h1>
-  <p>Registrá una reparación realizada sobre un equipo.</p>
-</header>
+    <nav>
+      <button class="btnMenu" id="btnMenu" type="button"><img class="menu" src="../Assets/Imagenes/Bootstrap/list.svg"
+          alt="menu" width="40" height="40px"></button>
 
-<section class="modulo" id="registrarReparacion">
-  <h2>Nueva reparación</h2>
+      <button class="btnMenuC" id="btnMenuC" type="button">
+        <img src="../Assets/Imagenes/Bootstrap/x.svg" alt="X" class="menu" width="40" height="40px">
+      </button>
 
-  <form class="formulario" id="formRegistrarReparacion">
+      <ul class="listaNavegacion">
+        <li><a href="Tecnico.html">Regresar</a></li>
+        <li><a href="RegistrarDiagnostico.html">Registrar diagnostico</a></li>
+        <li><a href="RegistrarIntervencion.html">Registrar intervencion</a></li>
+        <li><a href="RegistrarReemplazo.html">Registrar reemplazo</a></li>
+        <li><a href="RegistrarSolucion.html">Registrar solucion</a></li>
+        <li><a href="Login.html">Cerrar sesion</a></li>
+      </ul>
+    </nav>
+    <h1>S.G.R.S.I</h1>
+    <img src="../Assets/Imagenes/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo-Utu" width="75px">
+  </header>
 
-    <label for="reparacionEquipoSelect">Equipo</label>
-    <select id="reparacionEquipoSelect" required>
-      <option value=""> Seleccioná un equipo </option>
-      <option value="PC-01">PC-01</option>
-      <option value="PC-02">PC-02</option>
-      <option value="PC-03">PC-03</option>
-      <option value="PC-04">PC-04</option>
-      <option value="PC-05">PC-05</option>
-      <option value="PC-06">PC-06</option>
-      <option value="PC-07">PC-07</option>
-      <option value="PC-08">PC-08</option>
-      <option value="PC-09">PC-09</option>
-      <option value="PC-10">PC-10</option>
-    </select>
+  <header class="encabezado">
+    <h1>Registrar Reparación</h1>
+    <p>Registrá una reparación realizada sobre un equipo.</p>
+  </header>
 
-    <label for="reparacionDescripcion">Descripción de la reparación</label>
-    <textarea id="reparacionDescripcion" rows="4" minlength="10" required></textarea>
+  <section class="modulo" id="registrarReparacion">
+    <h2>Nueva reparación</h2>
 
-    <button class="boton-principal" type="submit">Registrar reparación</button>
+    <form class="formulario" id="formRegistrarReparacion">
 
-  </form>
-</section>
+      <label for="reparacionEquipoSelect">Equipo</label>
+      <select id="reparacionEquipoSelect" required>
+        <option value=""> Seleccioná un equipo </option>
+        <option value="PC-01">PC-01</option>
+        <option value="PC-02">PC-02</option>
+        <option value="PC-03">PC-03</option>
+        <option value="PC-04">PC-04</option>
+        <option value="PC-05">PC-05</option>
+        <option value="PC-06">PC-06</option>
+        <option value="PC-07">PC-07</option>
+        <option value="PC-08">PC-08</option>
+        <option value="PC-09">PC-09</option>
+        <option value="PC-10">PC-10</option>
+      </select>
 
-<script src="../Assets/Js/RegistrarReparacion.js"></script>
+      <label for="reparacionDescripcion">Descripción de la reparación</label>
+      <textarea id="reparacionDescripcion" rows="4" minlength="10" required></textarea>
+
+      <button class="boton-principal" type="submit">Registrar reparación</button>
+
+    </form>
+  </section>
+
+  <script src="../Assets/Js/RegistrarReparacion.js"></script>
+  <script src="../Assets/JS/barraNavegacion.js"></script>
 
 </body>
+
 </html>

@@ -5,13 +5,35 @@
 
     <meta charset="UTF-8">
     <title>Vista de Tickets</title>
-    <link rel="stylesheet" href="../Assets/Css/global.css">
+    <link rel="stylesheet" href="../Assets/Css/style.css">
     <link rel="stylesheet" href="../Assets/Css/vistaTicket.css">
     <link rel="stylesheet" href="../Assets/Css/vistaTicket2.css">
+    <link rel="stylesheet" href="../Assets/Css/barraNavegación.css">
 
 </head>
 
 <body>
+
+        <header class="BarraNavegacion">
+
+        <nav>
+            <button class="btnMenu" id="btnMenu" type="button"><img class="menu"
+                    src="../Assets/Imagenes/Bootstrap/list.svg" alt="menu" width="40" height="40px"></button>
+
+            <button class="btnMenuC" id="btnMenuC" type="button">
+                <img src="../Assets/Imagenes/Bootstrap/x.svg" alt="X" class="menu" width="40" height="40px">
+            </button>
+
+           <ul class="listaNavegacion">
+                <li><a href="Tecnico.html">Regresar</a></li>
+                <li><a href="Login.html">Cerrar sesion</a></li>
+            </ul>
+        </nav>
+        <h1>S.G.R.S.I</h1>
+        <img src="../Assets/Imagenes/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo-Utu" width="75px">
+    </header>
+
+
 
     <section class="VistaDeTickets">
 
@@ -21,12 +43,7 @@
         <button id="buscarTicket">Buscar</button>
 
         <p>Aquí se podrán visualizar los tickets ingresados, su estado actual y prioridad. Además, se podrán actualizar los estados de los tickets a medida que se vayan resolviendo las incidencias.</p>
-        
-        <a href="IngresoDeTickets.html">
-            <button id="nuevoTicketBtn">+ Nueva</button>
-       
-        </a>
-        
+    
         <select id="filtroDeEquipos">
             <option value="">Todos los equipos</option>
             <option value="PC-01">PC-01</option>
@@ -78,9 +95,7 @@
         
     </section>
 
-<section 
-
-id="listaTickets">
+<section id="listaTickets">
 
 </section>
 
@@ -88,6 +103,7 @@ id="listaTickets">
 <script src="../Assets/js/filtros.js"></script>
 <script src="../Assets/js/buscadorDeTickets.js"></script>
 <script src="../Assets/js/filtroDeFechas"></script>
+<script src="../Assets/JS/barraNavegacion.js"></script>
 
 </body>
 </html>
