@@ -4,8 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Equipos</title>
-    <link rel="stylesheet" href="../Assets/Css/barraNavegación.css">
-    <link rel="stylesheet" href="../Assets/Css/style.css" />
+    <link rel="stylesheet" href="../Assets/Css/globale.css" />
     <link rel="stylesheet" href="../Assets/Css/equipos.css" />
     <link
       rel="stylesheet"
@@ -53,7 +52,7 @@
         </section>
 
         <select class="filtroInput" id="filtroEstado">
-          <option value="">Todos los estados</option>
+          <option value="">estados</option>
           <option value="Dañado">Dañado</option>
           <option value="Funcionando">Funcionando</option>
           <option value="En mantenimiento">En mantenimiento</option>
@@ -70,6 +69,12 @@
           <option value="Laboratorio 6">Laboratorio 6</option>
         </select>
 
+        <select class="filtroInput" id="filtroDisponibilidad">
+          <option value="">Disponibilidad</option>
+          <option value="Disponible">Disponible</option>
+          <option value="No disponible">No disponible</option>
+        </select>
+
         <table>
           <caption>
             Listado de equipos registrados
@@ -80,6 +85,7 @@
               <th>Laboratorio</th>
               <th>Marca</th>
               <th>Estado</th>
+              <th>Disponibilidad</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -147,6 +153,11 @@
                 <option value="Funcionando">Funcionando</option>
                 <option value="En mantenimiento">En mantenimiento</option>
                 <option value="No funciona">No funciona</option>
+              </select>
+
+              <select class="cajaEntradaDeDatos" id="Disponibilidad">
+                <option value="Disponible">Disponible</option>
+                <option value="No disponible">No disponible</option>
               </select>
 
               <label for="Info">Información</label>
