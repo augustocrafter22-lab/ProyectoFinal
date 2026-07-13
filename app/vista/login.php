@@ -26,7 +26,7 @@
       </section>
       <section class="seccionLogin">
         <form
-          action="InicioSesion"
+          action="../app/controlador/procesarLogin.php"
           method="POST"
           class="login-form"
           id="loginForm"
@@ -60,7 +60,5 @@
         </form>
       </section>
     </main>
-
-    <script src="../Assets/JS/login.js"></script>
   </body>
 </html>
