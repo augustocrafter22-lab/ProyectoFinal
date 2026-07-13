@@ -26,12 +26,11 @@
       </section>
       <section class="seccionLogin">
         <form
-          action="InicioSesion"
+          action="procesarLogin.php"
           method="POST"
           class="login-form"
           id="loginForm"
         >
-          <!-- define la url de destino -->
           <h2>Iniciar Sesión</h2>
           <fieldset>
             <label for="username">CI:</label>
@@ -54,13 +53,14 @@
               required
             />
 
-
-          <p id="errorMessage" style="color: red"></p>
+          <?php if (isset($_GET["error"])): ?>
+            <p id="errorMessage" style="color: red">CI o contraseña incorrectos</p>
+          <?php else: ?>
+            <p id="errorMessage" style="color: red"></p>
+          <?php endif; ?>
           <button type="submit" class="boton-principal">Ingresar</button>
         </form>
       </section>
     </main>
-
-    <script src="../Assets/JS/login.js"></script>
   </body>
 </html>
