@@ -1,5 +1,6 @@
 <?php
 
+require_once '../modelo/ConectorPDO.php';
 require_once '../modelo/Usuario.php';
 require_once '../modelo/ConsultaUsuario.php';
 require_once '../modelo/Login.php';
