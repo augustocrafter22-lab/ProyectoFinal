@@ -1,47 +1,61 @@
 <?php
 
-require_once '../modelo/ConectorPDO.php';
-require_once '../modelo/Usuario.php';
-require_once '../modelo/ConsultaUsuario.php';
-require_once '../modelo/Login.php';
+require_once __DIR__ . '/../modelo/ConectorPDO.php';
+require_once __DIR__ . '/../modelo/Usuario.php';
+require_once __DIR__ . '/../modelo/ConsultaUsuario.php';
+require_once __DIR__ . '/../modelo/Login.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    header("Location: login.php");
-    exit();
+//Comprueba que el formulario haya sido enviado mediante POST
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    $mensaje = "Acceso Denegado: Petición incorrecta";
+    header("Location: login.php?" . "error=" . $mensaje);
+    exit;
 }
 
-$cedula = trim($_POST['cedula'] ?? '');
-$contraseña = $_POST['contraseña'] ?? '';
+//Recupera las credenciales provenientes del formulario
+$cedula = trim($_POST["cedula"] ?? "");
+$clave = $_POST["clave"] ?? "";
 
-$consultaUsuario = new ConsultaUsuario();
-$login = new Login();
-$usuario = $login->autenticar($cedula, $contraseña);
+$conectorPDO = new ConectorPDO ("localhost", "Deklan", "123", "deklan");
+$conexion = $conectorPDO->establecerConexion();
 
+    $accesoDatosUsuario = new AccesoDatosUsuario($conexion);
+    $login = new Login($accesoDatosUsuario);
+
+$conectorPDO->desconectar();
+
+$usuario = $login->autenticar($cedula, $clave);
+
+//Si las credenciales no coinciden, muestra el error y detiene el proceso
 if ($usuario === null) {
-    exit('Cédula o contraseña incorrecta, o usuario inactivo.');
+    $mensaje = "Acceso Denegado: La cédula o la contraseña son incorrectas.";
+    header("Location: login.php?" . "error=" . $mensaje);
+    exit;
 }
 
-if ($usuario->esAdministrador()) {
-    header("Location: ../vista/administrador.php");
-    exit();
-} elseif ($usuario->esTecnico()) {
-    header("Location: ../vista/tecnico.php");
-    exit();
-} elseif ($usuario->esCoordinador()) {
-    header("Location: ../vista/coordinador.php");
-    exit();
-} else {
-    exit('Rol de usuario no reconocido.');
+//Solo se encuentra implementado el rol administrador
+if (!$usuario->esAdministrador()) {
+    $mensaje = "Acceso Denegado: El usuario no tiene acceso al panel de administración.";
+    header("Location: login.php?" . "error=" . $mensaje);
+    exit;
 }
 
 session_start();
 session_regenerate_id(true);
-$_SESSION['cedula'] = $usuario->getCedula();
-$_SESSION['administrador'] = $usuario->esAdministrador() ? 'administrador' : '';
-$_SESSION['tecnico'] = $usuario->esTecnico() ? 'tecnico' : '';
-$_SESSION['coordinador'] = $usuario->esCoordinador() ? 'coordinador' : '';
 
-header("Location: administrador.php");
-exit();
+$_SESSION["cedula"] = $usuario->getCedula();
+$_SESSION["administrador"] = $usuario->esAdministrador();
+$_SESSION["tecnico"] = $usuario->esTecnico();
+$_SESSION["docente"] = $usuario->esDocente();
 
-?>
+if ($_SESSION["administrador"] && $_SESSION["tecnico"]) {
+    header("Location: panelRoles.php");
+} elseif ($_SESSION["docente"]) {
+    header("Location: docente.php");
+} elseif ($_SESSION["administrador"]) {
+    header("Location: administrador.php");
+}
+
+exit;
+
+    ?>
