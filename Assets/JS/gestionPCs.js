@@ -1,7 +1,3 @@
-/**
- * CONSTANTES Y VARIABLES NECESARIAS
- */
-
 const btnAltaPc = document.getElementById("btnAltaPc");
 const btnCerrarGestionarPc = document.getElementById("btnCerrarGestionarPc");
 const btnMasInformacion = document.getElementById("btnMasInformacion");
@@ -12,8 +8,6 @@ const filtroID = document.getElementById("filtroID");
 const filtroEstado = document.getElementById("filtroEstado");
 const filtroLab = document.getElementById("filtroLab");
 const filtroDisponibilidad = document.getElementById("filtroDisponibilidad");
-
-// Campos del formulario
 const entradaID = document.getElementById("ID");
 const entradaLab = document.getElementById("Lab");
 const entradaEstado = document.getElementById("Estado");
@@ -21,14 +15,9 @@ const entradaMarca = document.getElementById("Marca");
 const entradaInfo = document.getElementById("Info");
 const entradaDisponibilidad = document.getElementById("Disponibilidad");
 
-// Auxiliar para guardar datos vinculados a la modificacion de una PC
 let pcEnEdicion = false;
 let pcMasInformacion = false;
 let pcMostrarInfo = false;
-
-/**
- * GESTION DEL ESTADO DEL FORMULARIO/MODAL
- */
 
 function limpiarEstadoGestionarPc() {
   pcEnEdicion = false;
@@ -94,23 +83,16 @@ function abrirModificarPc(id) {
   if (pcAModificar === undefined) {
     return;
   }
-
-  // Cargar los datos al formulario
   entradaID.value = pcAModificar.id;
   entradaLab.value = pcAModificar.lab;
   entradaEstado.value = pcAModificar.estado;
   entradaMarca.value = pcAModificar.marca;
   entradaDisponibilidad.value = pcAModificar.disponibilidad;
 
-  // Proteger el ID para que no se modifique
   entradaID.readOnly = true;
 
   dialogGestionarPc.showModal();
 }
-
-/**
- * OBTENCION Y RECUPERACION DE DATOS
- */
 
 function cargarPcsGuardadasLocal() {
   const pcsGuardadas = localStorage.getItem("pcs");
@@ -131,14 +113,9 @@ function obtenerDatosFormularioPc() {
   return pc;
 }
 
-/**
- * GESTION DE FILAS DE LA TABLA
- */
-
 function agregarFilaPc(pc) {
   const fila = document.createElement("tr");
 
-  // Creación de celdas
   const campoID = document.createElement("td");
   campoID.textContent = pc.id;
 
@@ -154,12 +131,10 @@ function agregarFilaPc(pc) {
   const campoDisponibilidad = document.createElement("td");
   campoDisponibilidad.textContent = pc.disponibilidad;
 
-  // Espacio para colocar los botones de operaciones
   const campoOperaciones = document.createElement("td");
   const cajaOperaciones = document.createElement("section");
   cajaOperaciones.classList.add("cajaOperaciones");
 
-  // Botón Modificar
   const btnModificar = document.createElement("button");
   btnModificar.type = "button";
   btnModificar.textContent = "Modificar";
@@ -168,7 +143,6 @@ function agregarFilaPc(pc) {
     abrirModificarPc(pc.id);
   });
 
-  // Botón Eliminar
   const btnEliminar = document.createElement("button");
   btnEliminar.type = "button";
   btnEliminar.textContent = "Eliminar";
@@ -177,7 +151,6 @@ function agregarFilaPc(pc) {
     eliminarPcLocal(pc.id);
   });
 
-  //Boton mas info
   const btnMasInformacion = document.createElement("button");
   btnMasInformacion.type = "button";
   btnMasInformacion.textContent = "Mas Informacion";
@@ -186,7 +159,6 @@ function agregarFilaPc(pc) {
     abrirMasInfo(pc.id);
   });
 
-  // Armado de la estructura DOM
   cajaOperaciones.appendChild(btnModificar);
   cajaOperaciones.appendChild(btnEliminar);
   cajaOperaciones.appendChild(btnMasInformacion);
@@ -240,10 +212,6 @@ function modificarPcLocal(pcEnFormulario) {
   actualizarPcsLocal(pcs);
 }
 
-/**
- * FUNCIONALIDADES PRINCIPALES
- */
-
 function actualizarPcsLocal(pcs) {
   localStorage.setItem("pcs", JSON.stringify(pcs));
 }
@@ -254,14 +222,16 @@ function guardarPcLocal(pc) {
     return pcGuardada.id === pc.id;
   });
 
+  if (idExistente) {
+    return;
+  }
+
   pcs.push(pc);
   actualizarPcsLocal(pcs);
 }
 
 function gestionarPc(eventoFormulario) {
   eventoFormulario.preventDefault();
-
-  // No hacer nada si solo se está mostrando información
   if (pcMostrarInfo) {
     cerrarGestionarPc();
     return;
@@ -278,10 +248,6 @@ function gestionarPc(eventoFormulario) {
   cerrarGestionarPc();
   actualizarTabla();
 }
-
-/**
- * FILTROS
- */
 
 function aplicarFiltroID() {
   const idBuscado = filtroID.value.trim().toUpperCase();
@@ -365,9 +331,6 @@ function aplicarFiltroDisponibilidad() {
     }
   });
 }
-/**
- * EVENTOS
- */
 
 formularioGestionarPc.addEventListener("submit", gestionarPc);
 btnAltaPc.addEventListener("click", abrirAltaPc);
@@ -378,5 +341,4 @@ filtroEstado.addEventListener("input", aplicarFiltroEstado);
 filtroLab.addEventListener("input", aplicarFiltroLab);
 filtroDisponibilidad.addEventListener("input", aplicarFiltroDisponibilidad);
 
-// Inicializar tabla al cargar la vista
 actualizarTabla();

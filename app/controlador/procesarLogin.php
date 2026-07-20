@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 $cedula = trim($_POST["cedula"] ?? "");
 $clave = $_POST["clave"] ?? "";
 
-$conectorPDO = new ConectorPDO ("localhost", "Deklan", "123", "deklan");
+$conectorPDO = new ConectorPDO ("localhost", "deklan", "123", "deklan");
 $conexion = $conectorPDO->establecerConexion();
 
     $accesoDatosUsuario = new AccesoDatosUsuario($conexion);
@@ -58,4 +58,4 @@ if ($_SESSION["administrador"] && $_SESSION["tecnico"]) {
 
 exit;
 
-    ?>
+?>

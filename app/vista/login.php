@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>S.G.R.S.I.</title>
-    <link rel="stylesheet" href="../Assets/Css/login.css" />
-    <link rel="stylesheet" href="../Assets/Css/style.css" />
+    <link rel="stylesheet" href="../../Assets/Css/login.css" />
+    <link rel="stylesheet" href="../../Assets/Css/style.css" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css"
@@ -15,7 +15,7 @@
     <main>
       <section class="SGRSI">
         <img
-          src="../Assets/Imagenes/Isotipo-UTU-Color-Dorado-PNG.png"
+          src="../../Assets/Imagenes/Isotipo-UTU-Color-Dorado-PNG.png"
           alt="DeKlan Enterprise"
           class="logo"
           length="200px"
@@ -26,7 +26,7 @@
       </section>
       <section class="seccionLogin">
         <form
-          action="../app/controlador/procesarLogin.php"
+          action="../../app/controlador/procesarLogin.php"
           method="POST"
           class="login-form"
           id="loginForm"

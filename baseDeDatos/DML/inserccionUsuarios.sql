@@ -13,5 +13,17 @@ INSERT INTO DOCENTE (cedula)
 VALUES ('11223344');
 
 DELETE FROM USUARIO 
-WHERE cedula = ¨{una cedula}";
+WHERE cedula = {'una cedula'};
 
+DELETE from ADMINISTRADOR
+WHERE cedula = {'una cedula'};
+
+DELETE from TECNICO
+WHERE cedula = {'una cedula'};
+
+DELETE from DOCENTE
+WHERE cedula = {'una cedula'};
+
+UPDATE USUARIO
+SET clave = 'clave nueva'
+WHERE cedula = 'cedula de usuario a modificar'

@@ -41,7 +41,7 @@
             </ul>
         </nav>
         <h1>S.G.R.S.I</h1>
-        <img src="../Assets/Imagenes/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo-Utu" width="75px">
+        <img src="../../Assets/Imagenes/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo-Utu" width="75px">
     </header>
 
     <section class="encabezado">
@@ -49,9 +49,8 @@
          <p>Haga uso del menu para comenzar.</p>
     </section>
     <section class="modulo-imagen"> 
-        <img src="../Assets/Imagenes/Servidores.jpg" alt="UTU_9296-1024x614" width="500px">
+        <img src="../../Assets/Imagenes/Servidores.jpg" alt="UTU_9296-1024x614" width="500px">
     </section>
     </body>
-    <script src="../Assets/JS/barraNavegacion.js"></script>
-    <script src="../Assets/JS/Verificador.js"></script>
+    <script src="../../Assets/JS/barraNavegacion.js"></script>
     </html>
