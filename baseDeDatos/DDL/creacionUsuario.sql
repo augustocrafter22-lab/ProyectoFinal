@@ -1,7 +1,7 @@
 CREATE TABLE USUARIO (
     cedula CHAR(8) NOT NULL,
     clave VARCHAR(255) NOT NULL,
-    activo BOOLEAN NOT NULL DEFAULT TRUE,
+    activo BOOLEAN NOT NULL DEFAULT FALSE,
 
     CONSTRAINT pk_usuario
         PRIMARY KEY (cedula)

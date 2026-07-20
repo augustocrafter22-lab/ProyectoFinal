@@ -5,8 +5,8 @@ class ConsultaUsuario
     public function buscarUsuario(string $cedula): ?Usuario
     {
         $datos = [
-            '12345678' => ['clave' => password_hash('123456789', PASSWORD_DEFAULT), 'activo' => true, 'administrador' => true, 'tecnico' => false, 'coordinador' => false],
-            '87654321' => ['clave' => password_hash('987654321', PASSWORD_DEFAULT), 'activo' => true, 'administrador' => false, 'tecnico' => true, 'coordinador' => false],
+            '12345678' => ['clave' => password_hash('123456789', PASSWORD_DEFAULT), 'activo' => true],
+            '87654321' => ['clave' => password_hash('987654321', PASSWORD_DEFAULT), 'activo' => true],
         ];
 
         if (!isset($datos[$cedula])) {
