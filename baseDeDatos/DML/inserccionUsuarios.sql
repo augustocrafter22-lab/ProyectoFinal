@@ -1,9 +1,9 @@
 INSERT INTO USUARIO (cedula, clave, activo);
-VALUES ('12345678', 'clave123', TRUE);
+VALUES ('12345678', 'clave123', FALSE);
 INSERT INTO USUARIO (cedula, clave, activo);
-VALUES ('87654321', 'clave456', TRUE);
+VALUES ('87654321', 'clave456', FALSE);
 INSERT INTO USUARIO (cedula, clave, activo)
-VALUES ('11223344', 'clave789', TRUE);
+VALUES ('11223344', 'clave789', FALSE);
 
 INSERT INTO ADMINISTRADOR (cedula)
 VALUES ('12345678');
