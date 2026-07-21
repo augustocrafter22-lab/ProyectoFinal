@@ -4,13 +4,15 @@ class Usuario {
     private string $cedula;
     private string $claveHash;
     private bool $activo;
-    private string $rol; 
+    private array $roles;
 
-    public function __construct(string $cedula, string $claveHash, bool $activo, string $rol) {
+    // $roles es un arreglo con los roles que tiene el usuario,
+    // por ejemplo: ["administrador"], ["tecnico"], ["administrador", "tecnico"] o [].
+    public function __construct(string $cedula, string $claveHash, bool $activo, array $roles) {
         $this->cedula = $cedula;
         $this->claveHash = $claveHash;
         $this->activo = $activo;
-        $this->rol = $rol;
+        $this->roles = $roles;
     }
 
     public function getCedula(): string {
@@ -25,20 +27,20 @@ class Usuario {
         return $this->activo;
     }
 
-    public function getRol(): string {
-        return $this->rol;
+    public function getRoles(): array {
+        return $this->roles;
     }
 
     public function esCoordinador(): bool {
-        return $this->rol === "coordinador";
+        return in_array("coordinador", $this->roles, true);
     }
 
     public function esTecnico(): bool {
-        return $this->rol === "tecnico";
+        return in_array("tecnico", $this->roles, true);
     }
 
-    public function esSolicitante(): bool {
-        return $this->rol === "solicitante";
+    public function tieneAlgunRol(): bool {
+        return count($this->roles) > 0;
     }
 }
 
