@@ -21,9 +21,9 @@ class ConsultaUsuario {
             ],
             [
                 "cedula"    => "33333333",
-                "claveHash" => password_hash("solicitante123", PASSWORD_DEFAULT),
+                "claveHash" => password_hash("docente123", PASSWORD_DEFAULT),
                 "activo"    => true,
-                "rol"       => "solicitante"
+                "rol"       => "docente"
             ]
         ];
     }
