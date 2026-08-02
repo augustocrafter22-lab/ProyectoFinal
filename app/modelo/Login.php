@@ -1,13 +1,13 @@
 <?php
 class Login {
-private ConsultaUsuario $consultaUsuario;
+private AccesoDatosUsuario $AccesoDatosUsuario;
 
-public function __construct() {
-    $this->consultaUsuario = new ConsultaUsuario();
+public function __construct (AccesoDatosUsuario $accesoDatosUsuario) {
+    $this->accesoDatosUsuario = $accesoDatosUsuario;
 }
 
 public function autenticar(string $cedula, string $contraseña): ?Usuario {
-    $usuario = $this->consultaUsuario->obtenerUsuarioPorCedula($cedula);
+    $usuario = $this->accesoDatosUsuario->buscarUsuarioCedula($cedula);
     if ($usuario === null) {
         return null;
     }

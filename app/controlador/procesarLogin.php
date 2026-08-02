@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../modelo/ConectorPDO.php';
 require_once __DIR__ . '/../modelo/Usuario.php';
-require_once __DIR__ . '/../modelo/ConsultaUsuario.php';
+require_once __DIR__ . '/../modelo/AccesoDatosUsuario.php';
 require_once __DIR__ . '/../modelo/Login.php';
 
 //Comprueba que el formulario haya sido enviado mediante POST
@@ -22,10 +22,9 @@ $conexion = $conectorPDO->establecerConexion();
     $accesoDatosUsuario = new AccesoDatosUsuario($conexion);
     $login = new Login($accesoDatosUsuario);
 
-$conectorPDO->desconectar();
+    $usuario = $login->autenticar($cedula, $clave);
 
-$usuario = $login->autenticar($cedula, $clave);
-
+    $conectorPDO->desconectar();
 //Si las credenciales no coinciden, muestra el error y detiene el proceso
 if ($usuario === null) {
     $mensaje = "Acceso Denegado: La cédula o la contraseña son incorrectas.";

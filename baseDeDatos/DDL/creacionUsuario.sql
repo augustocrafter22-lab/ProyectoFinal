@@ -1,4 +1,4 @@
-CREATE TABLE USUARIO (
+CREATE TABLE USUARIO ( 
     cedula CHAR(8) NOT NULL,
     clave VARCHAR(255) NOT NULL,
     activo BOOLEAN NOT NULL DEFAULT FALSE,
@@ -21,13 +21,12 @@ CREATE TABLE TECNICO (
         PRIMARY KEY (cedula)
 );
 
-create table DOCENTE (
+CREATE TABLE DOCENTE (
     cedula CHAR(8) NOT NULL,
 
     CONSTRAINT pk_docente
         PRIMARY KEY (cedula)
 );
-
 
 ALTER TABLE ADMINISTRADOR
     ADD CONSTRAINT fk_administrador_usuario
