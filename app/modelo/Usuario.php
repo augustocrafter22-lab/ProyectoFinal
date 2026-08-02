@@ -7,7 +7,6 @@ class Usuario {
     private bool $administrador;
     private bool $tecnico;
     private bool $docente;
-    private bool $coordinador;
     
 
     public function __construct(string $cedula, string $clave, bool $activo, bool $administrador, bool $tecnico,bool $coordinador, bool $docente) {
@@ -16,7 +15,6 @@ class Usuario {
         $this->activo = $activo;
         $this->administrador = $administrador;
         $this->tecnico = $tecnico;
-        $this->coordinador = $coordinador;
         $this->docente = $docente;
     }
     public function getCedula(): string {
@@ -33,9 +31,6 @@ class Usuario {
     }
     public function esTecnico(): bool {
         return $this->tecnico;
-    }
-    public function esCoordinador(): bool {
-        return $this->coordinador;
     }
     public function esDocente(): bool {
         return $this->docente;

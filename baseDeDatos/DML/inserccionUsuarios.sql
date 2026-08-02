@@ -1,5 +1,3 @@
--- INSERTAR USUARIOS
-
 INSERT INTO USUARIO (cedula, clave, activo)
 VALUES ('11111111', 'clave123', TRUE);
 
@@ -9,22 +7,24 @@ VALUES ('22222222', 'clave456', TRUE);
 INSERT INTO USUARIO (cedula, clave, activo)
 VALUES ('33333333', 'clave789', TRUE);
 
+INSERT INTO USUARIO (cedula, clave, activo)
+VALUES ('44444444', 'clave444', TRUE);
 
--- ASIGNAR ROLES
-
+-- Administrador
 INSERT INTO ADMINISTRADOR (cedula)
 VALUES ('11111111');
 
+-- Técnico
 INSERT INTO TECNICO (cedula)
 VALUES ('22222222');
 
+-- Docente
 INSERT INTO DOCENTE (cedula)
 VALUES ('44444444');
 
-INSERT INTO COORDINADOR (cedula)
-VALUES ('33333333');
-
--- ELIMINAR REGISTROS 
+-- Usuario con ambos roles (Administrador y Técnico)
+INSERT INTO TECNICO (cedula)
+VALUES ('11111111');
 
 DELETE FROM ADMINISTRADOR
 WHERE cedula = '11111111';
@@ -36,10 +36,7 @@ DELETE FROM DOCENTE
 WHERE cedula = '44444444';
 
 DELETE FROM USUARIO
-WHERE cedula = '11111111';
-
-
--- MODIFICAR DATOS 
+WHERE cedula = '33333333';
 
 UPDATE USUARIO
 SET clave = 'nuevaClave'

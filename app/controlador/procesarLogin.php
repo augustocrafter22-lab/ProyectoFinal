@@ -5,56 +5,73 @@ require_once __DIR__ . '/../modelo/Usuario.php';
 require_once __DIR__ . '/../modelo/AccesoDatosUsuario.php';
 require_once __DIR__ . '/../modelo/Login.php';
 
-//Comprueba que el formulario haya sido enviado mediante POST
+// Comprueba que el formulario haya sido enviado mediante POST.
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    $mensaje = "Acceso Denegado: Petición incorrecta";
-    header("Location: login.php?" . "error=" . $mensaje);
+    header("Location: ../vista/login.php?error=peticion_incorrecta");
     exit;
 }
 
-//Recupera las credenciales provenientes del formulario
+// las credenciales provenientes del formulario.
 $cedula = trim($_POST["cedula"] ?? "");
 $clave = $_POST["clave"] ?? "";
 
-$conectorPDO = new ConectorPDO ("localhost", "deklan", "123", "deklan");
+// la conexión con la base de datos.
+$conectorPDO = new ConectorPDO(
+    "localhost",
+    "deklan",
+    "123",
+    "deklan"
+);
+
 $conexion = $conectorPDO->establecerConexion();
 
-    $accesoDatosUsuario = new AccesoDatosUsuario($conexion);
-    $login = new Login($accesoDatosUsuario);
+// los objetos necesarios para buscar y autenticar al usuario.
+$accesoDatosUsuario = new AccesoDatosUsuario($conexion);
+$login = new Login($accesoDatosUsuario);
 
-    $usuario = $login->autenticar($cedula, $clave);
+// autenticar al usuario.
+$usuario = $login->autenticar($cedula, $clave);
 
-    $conectorPDO->desconectar();
-//Si las credenciales no coinciden, muestra el error y detiene el proceso
+// cierra la conexión después de realizar la consulta.
+$conectorPDO->desconectar();
+
+// si las credenciales no coinciden, vuelve al login.
 if ($usuario === null) {
-    $mensaje = "Acceso Denegado: La cédula o la contraseña son incorrectas.";
-    header("Location: login.php?" . "error=" . $mensaje);
+    header("Location: ../vista/login.php?error=credenciales_incorrectas");
     exit;
 }
 
-//Solo se encuentra implementado el rol administrador
-if (!$usuario->esAdministrador()) {
-    $mensaje = "Acceso Denegado: El usuario no tiene acceso al panel de administración.";
-    header("Location: login.php?" . "error=" . $mensaje);
+// comprueba si el usuario no tiene ningún rol habilitado.
+if (
+    !$usuario->esAdministrador() &&
+    !$usuario->esTecnico() &&
+    !$usuario->esDocente()
+) {
+    header("Location: ../vista/login.php?error=sin_roles");
     exit;
 }
 
+// inicia la sesión del usuario autenticado.
 session_start();
 session_regenerate_id(true);
 
+// guarda la cédula y los roles en la sesión.
 $_SESSION["cedula"] = $usuario->getCedula();
 $_SESSION["administrador"] = $usuario->esAdministrador();
 $_SESSION["tecnico"] = $usuario->esTecnico();
 $_SESSION["docente"] = $usuario->esDocente();
 
+// primero comprueba el caso del usuario con ambos roles.
+
 if ($_SESSION["administrador"] && $_SESSION["tecnico"]) {
-    header("Location: panelRoles.php");
-} elseif ($_SESSION["docente"]) {
-    header("Location: docente.php");
+    header("Location: ../vista/administrador.php");
 } elseif ($_SESSION["administrador"]) {
-    header("Location: administrador.php");
+    header("Location: ../vista/administrador.php");
+} elseif ($_SESSION["tecnico"]) {
+    header("Location: ../vista/tecnico.php");
+} elseif ($_SESSION["docente"]) {
+    header("Location: ../vista/docente.php");
 }
 
 exit;
-
 ?>
