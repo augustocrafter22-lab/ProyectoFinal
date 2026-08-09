@@ -1,3 +1,7 @@
+//  Esta función generaba las tarjetas de tickets leyendo el localStorage.
+// Ahora los datos provienen de la base de datos y las tarjetas ya se
+// encuentran generadas por PHP en vistaTickets.php.
+
 let tickets = JSON.parse(localStorage.getItem("tickets")) || [];
 
 const listaTickets = document.getElementById("listaTickets");

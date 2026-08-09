@@ -14,7 +14,7 @@
 
 <body>
 
-        <header class="BarraNavegacion">
+    <header class="BarraNavegacion">
 
         <nav>
             <button class="btnMenu" id="btnMenu" type="button"><img class="menu"
@@ -24,7 +24,7 @@
                 <img src="../Assets/Imagenes/Bootstrap/x.svg" alt="X" class="menu" width="40" height="40px">
             </button>
 
-           <ul class="listaNavegacion">
+            <ul class="listaNavegacion">
                 <li><a href="Tecnico.html">Regresar</a></li>
                 <li><a href="cerrarSesion.php">Cerrar sesion</a></li>
             </ul>
@@ -43,7 +43,7 @@
         <button id="buscarTicket">Buscar</button>
 
         <p>Aquí se podrán visualizar los tickets ingresados, su estado actual y prioridad. Además, se podrán actualizar los estados de los tickets a medida que se vayan resolviendo las incidencias.</p>
-    
+
         <select id="filtroDeEquipos">
             <option value="">Todos los equipos</option>
             <option value="PC-01">PC-01</option>
@@ -62,7 +62,7 @@
             <option value="PC-14">PC-14</option>
             <option value="PC-15">PC-15</option>
             <option value="PC-16">PC-16</option>
-            
+
         </select>
 
         <select id="filtroPrioridad">
@@ -88,22 +88,69 @@
 
         </select>
 
-<input type="date" id="fechaDesde">
-<input type="date" id="fechaHasta">
-<button id="filtrarFechas">Filtrar fechas</button>
+        <input type="date" id="fechaDesde">
+        <input type="date" id="fechaHasta">
+        <button id="filtrarFechas">Filtrar fechas</button>
 
-        
+
     </section>
 
-<section id="listaTickets">
+    <section id="listaTickets">
 
-</section>
+        <?php foreach ($tickets as $ticket) { ?>
 
-<script src="../Assets/js/IngresoTickets.js"></script>
-<script src="../Assets/js/filtros.js"></script>
-<script src="../Assets/js/buscadorDeTickets.js"></script>
-<script src="../Assets/js/filtroDeFechas.js"></script>
-<script src="../Assets/JS/barraNavegacion.js"></script>
-<script src="../Assets/JS/Verificador.js"></script>
+            <article class="ticket" data-fecha="<?= htmlspecialchars($ticket["fechaCreacion"]) ?>">
+
+                <section class="ticketInfo">
+                    <h3>
+                        <a href="ConsultarDiagnostico.html?ticket=<?= htmlspecialchars($ticket["idTicket"]) ?>" class="ticket-enlace">
+                            <?= htmlspecialchars($ticket["idTicket"]) ?>
+                        </a>
+                    </h3>
+
+                    <p><?= htmlspecialchars($ticket["asunto"]) ?></p>
+
+                    <p><?= htmlspecialchars($ticket["equipo"]) ?></p>
+                </section>
+
+                <section class="ticketEstado">
+
+                    <select class="select-estado">
+                        <?php foreach (["Pendiente", "En Proceso", "Resuelto", "Cerrado"] as $opcion) { ?>
+                            <option value="<?= htmlspecialchars($opcion) ?>" <?= $ticket["estado"] === $opcion ? "selected" : "" ?>>
+                                <?= htmlspecialchars($opcion) ?>
+                            </option>
+                        <?php } ?>
+                    </select>
+
+                    <select class="select-prioridad">
+                        <?php foreach (["Indefinida", "Alta", "Media", "Baja"] as $opcion) { ?>
+                            <option value="<?= htmlspecialchars($opcion) ?>" <?= $ticket["prioridad"] === $opcion ? "selected" : "" ?>>
+                                Prioridad: <?= htmlspecialchars($opcion) ?>
+                            </option>
+                        <?php } ?>
+                    </select>
+
+                    <p class="laboratorio"><?= htmlspecialchars($ticket["laboratorio"]) ?></p>
+
+                    <button type="button" class="btn-finalizar">Finalizar Ticket</button>
+
+                    <?php if (!empty($ticket["fechaFinalizacion"])) { ?>
+                        <p>Finalizado: <?= htmlspecialchars($ticket["fechaFinalizacion"]) ?></p>
+                    <?php } ?>
+
+                </section>
+
+            </article>
+
+        <?php } ?>
+
+    </section>
+
+    <script src="../Assets/js/IngresoTickets.js"></script>
+    <script src="../Assets/js/filtros.js"></script>
+    <script src="../Assets/js/buscadorDeTickets.js"></script>
+    <script src="../Assets/js/filtroDeFechas.js"></script>
+    <script src="../Assets/JS/barraNavegacion.js"></script>
 </body>
 </html>
