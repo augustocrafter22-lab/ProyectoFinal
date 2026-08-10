@@ -18,7 +18,7 @@
     <header class="barraNavegacion">
         <img src="../../Imagenes/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo de la empresa" class="logo">
 
-        <h1>Todo en blanco</h1>
+        <h1>S.G.R.S.I</h1>
 
         <nav>
             <button class="btnMenu" id="btnMenu" type="button">
