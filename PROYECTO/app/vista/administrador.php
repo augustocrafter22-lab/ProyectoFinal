@@ -1,3 +1,16 @@
+<?php
+
+require_once __DIR__ . "/../config/config.php";
+
+session_start();
+
+if (!isset($_SESSION["cedula"])) {
+        exit;
+}
+require_once RUTA_CONTROLADOR . "/cargarAdministrador.php";
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -74,7 +87,7 @@
                 <img src="../../Imagenes/Bootstrap/x.svg" alt="Cerrar formulario" class="iconoMenu">
             </button>
 
-            <form action="administrador.php" method="post" id="formularioGestionarEmpleado">
+          <form action="procesarAltaUsuario.php" method="post" id="formularioGestionarEmpleado">
                 <fieldset>
                     <legend>
                         Gestión de empleado

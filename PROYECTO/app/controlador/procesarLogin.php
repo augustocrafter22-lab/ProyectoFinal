@@ -1,9 +1,9 @@
 <?php
 
-require_once __DIR__ . "/../modelo/ConectorPDO.php";
-require_once __DIR__ . "/../modelo/Usuario.php";
-require_once __DIR__ . "/../modelo/AccesoDatosUsuario.php";
-require_once __DIR__ . "/../modelo/Login.php";
+require_once RUTA_MODELO . "/ConectorPDO.php";
+require_once RUTA_MODELO . "/AccesoDatosUsuario.php";
+require_once RUTA_MODELO . "/Usuario.php";
+require_once RUTA_MODELO . "/Login.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     header("Location: ../HTML/Login.php");
@@ -15,6 +15,12 @@ $clave = $_POST["clave"] ?? "";
 
 $conectorPDO = new ConectorPDO("localhost", "root", "", "sgrsi");
 $conexion = $conectorPDO->establecerConexion();
+
+if ($conexion === null) {
+    $mensaje = "Acceso Denegado: Problemas con la conexión.";
+    header("Location: login.php?error=" . urlencode($mensaje));
+    exit;
+}
 
 $accesoDatosUsuario = new AccesoDatosUsuario($conexion);
 $login = new Login($accesoDatosUsuario);

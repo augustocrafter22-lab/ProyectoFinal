@@ -1,3 +1,11 @@
+<?php
+
+require_once __DIR__ . "/../config/config.php";
+
+require_once RUTA_VISTA . "/login.php";
+
+?>
+
 <!doctype html>
 <html lang="es">
   <head>
