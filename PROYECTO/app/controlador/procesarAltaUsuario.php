@@ -1,0 +1,56 @@
+<?php
+
+require_once __DIR__ . "/../../config/config.php";
+require_once RUTA_MODELO . "/ConectorPDO.php";
+require_once RUTA_MODELO . "/AltaDatosUsuario.php";
+
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    header("Location: " . URL_BASE . "/app/vista/administrador.php?error=" . urlencode("Método no permitido"));
+    exit;
+}
+
+$cedula = trim($_POST["ci"] ?? "");
+$clave = trim($_POST["contrasenia"] ?? "");
+$rol = trim($_POST["rol"] ?? "");
+
+if (empty($cedula) || empty($clave) || empty($rol)) {
+    header("Location: " . URL_BASE . "/app/vista/administrador.php?error=" . urlencode("Todos los campos son requeridos"));
+    exit;
+}
+
+if (strlen($cedula) !== 8 || !ctype_digit($cedula)) {
+    header("Location: " . URL_BASE . "/app/vista/administrador.php?error=" . urlencode("CI debe tener 8 dígitos"));
+    exit;
+}
+
+try {
+    $conectorPDO = new ConectorPDO(BD_HOST, BD_USER, BD_PASS, BD_NAME);
+    $conexion = $conectorPDO->establecerConexion();
+
+    if ($conexion === null) {
+        throw new Exception("No se pudo conectar a la base de datos");
+    }
+
+    $altaDatosUsuario = new AltaDatosUsuario($conexion);
+
+    if ($altaDatosUsuario->usuarioExiste($cedula)) {
+        header("Location: " . URL_BASE . "/app/vista/administrador.php?error=" . urlencode("El usuario ya existe"));
+        $conectorPDO->desconectar();
+        exit;
+    }
+
+    $claveHasheada = password_hash($clave, PASSWORD_BCRYPT);
+    $resultado = $altaDatosUsuario->crearUsuario($cedula, $claveHasheada, 1, $rol);
+
+    $conectorPDO->desconectar();
+
+    if ($resultado) {
+        header("Location: " . URL_BASE . "/app/vista/administrador.php?exito=" . urlencode("Usuario creado exitosamente"));
+    } else {
+        header("Location: " . URL_BASE . "/app/vista/administrador.php?error=" . urlencode("Error al crear el usuario"));
+    }
+
+} catch (Exception $e) {
+    header("Location: " . URL_BASE . "/app/vista/administrador.php?error=" . urlencode("Error: " . $e->getMessage()));
+}
+exit;
