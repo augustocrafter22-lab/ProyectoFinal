@@ -10,25 +10,25 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
 
-    <link rel="stylesheet" href="../../Css/globalSistema.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 
-    <link rel="stylesheet" href="../../Css/login.css">
+    <link rel="stylesheet" href="assets/css/login.css">
 </head>
 
 <body id="inicio">
 
     <header class="barraNavegacion">
-        <img src="../../Imagenes/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo de la empresa" class="logo">
+        <img src="assets/imagenes/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo de la empresa" class="logo">
 
         <h1>S.G.R.S.I</h1>
 
         <nav>
             <button class="btnMenu" id="btnMenu" type="button">
-                <img src="../../Imagenes/Bootstrap/list.svg" alt="Abrir menú" class="iconoMenu">
+                <img src="assets/imagenes/Bootstrap/list.svg" alt="Abrir menú" class="iconoMenu">
             </button>
 
             <button class="btnCerrarMenu" id="btnCerrarMenu" type="button">
-                <img src="../../Imagenes/Bootstrap/x.svg" alt="Cerrar menú" class="iconoMenu">
+                <img src="assets/imagenes/Bootstrap/x.svg" alt="Cerrar menú" class="iconoMenu">
             </button>
 
             <ul class="listaNavegacion">
