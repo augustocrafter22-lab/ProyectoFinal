@@ -35,7 +35,7 @@ document.addEventListener("click", (e) => {
         modoEdicion = true;
 
         document.getElementById("ci").value = cedula;
-        document.getElementById("ci").readOnly = true;  // ← Usa readOnly en lugar de disabled
+        document.getElementById("ci").readOnly = true;  // Usa readOnly en lugar de disabled
         document.getElementById("ci").required = false;
         
         document.getElementById("contrasenia").value = "";
