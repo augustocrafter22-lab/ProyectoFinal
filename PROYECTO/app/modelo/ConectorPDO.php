@@ -1,7 +1,6 @@
 <?php
 
-Class ConectorPDO
-{
+class ConectorPDO {
     private string $servername;
     private string $username;
     private string $password;
@@ -17,19 +16,24 @@ Class ConectorPDO
     }
 
     public function establecerConexion(): ?PDO {       
-         try {
-            $this->conexion = new PDO("mysql:host=$this->servername;dbname=$this->dbname", $this->username, $this->password);
-            // set the PDO error mode to exception
+        try {
+            $dsn = "mysql:host=" . $this->servername . ";dbname=" . $this->dbname . ";charset=utf8mb4";
+            $this->conexion = new PDO($dsn, $this->username, $this->password);
             $this->conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $this->conexion;
         } catch (PDOException $e) {
-            echo "Error al conectar...";
+            echo "Error al conectar: " . $e->getMessage();
+            return null;
         }
-        return $this->conexion;
     }
 
     public function desconectar() {
         $this->conexion = null;
     }
-};
+}
+
+//Código para depuración
+//$ConectorPDO = new ConectorPDO ("localhost:3306", "DK", "123", "test");
+//$ConectorPDO->establecerConexion();
 
 ?>

@@ -33,7 +33,3 @@ class Login {
         return $this->error;
     }
 }
-
- $mensaje = $_GET["error"] ?? "";
-          ?>
-            <p id="errorMessage" style="color: red"><?= htmlspecialchars($mensaje) ?></p>

@@ -1,59 +1,69 @@
 <?php
 
+require_once __DIR__ . "/../../config/config.php";
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosUsuario.php";
 require_once RUTA_MODELO . "/Usuario.php";
 require_once RUTA_MODELO . "/Login.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    header("Location: ../HTML/Login.php");
+    header("Location: " . URL_BASE . "/app/vista/login.php");
     exit;
 }
 
 $cedula = trim($_POST["username"] ?? "");
 $clave = $_POST["clave"] ?? "";
 
-$conectorPDO = new ConectorPDO("localhost", "root", "", "sgrsi");
-$conexion = $conectorPDO->establecerConexion();
-
-if ($conexion === null) {
-    $mensaje = "Acceso Denegado: Problemas con la conexión.";
-    header("Location: login.php?error=" . urlencode($mensaje));
+if (empty($cedula) || empty($clave)) {
+    header("Location: " . URL_BASE . "/app/vista/login.php?error=" . urlencode("Ingrese cédula y contraseña"));
     exit;
 }
 
-$accesoDatosUsuario = new AccesoDatosUsuario($conexion);
-$login = new Login($accesoDatosUsuario);
+try {
+    $conectorPDO = new ConectorPDO(BD_HOST, BD_USER, BD_PASS, BD_NAME);
+    $conexion = $conectorPDO->establecerConexion();
 
-$conectorPDO->desconectar();
+    if ($conexion === null) {
+        throw new Exception("No se pudo conectar a la base de datos");
+    }
 
-$usuario = $login->autenticar($cedula, $clave);
+    $accesoDatosUsuario = new AccesoDatosUsuario($conexion);
+    $login = new Login($accesoDatosUsuario);
+    $usuario = $login->autenticar($cedula, $clave);
 
-if ($usuario === null) {
-    header("Location: ../HTML/Login.php?error=" . urlencode($login->getError()));
+    $conectorPDO->desconectar();
+
+    if ($usuario === null) {
+        header("Location: " . URL_BASE . "/app/vista/login.php?error=" . urlencode($login->getError()));
+        exit;
+    }
+
+    if (!$usuario->tieneAlgunRol()) {
+        header("Location: " . URL_BASE . "/app/vista/login.php?error=" . urlencode("Usuario sin roles habilitados"));
+        exit;
+    }
+
+    session_start();
+    session_regenerate_id(true);
+
+    $_SESSION["cedula"] = $usuario->getCedula();
+    $_SESSION["coordinador"] = $usuario->esCoordinador();
+    $_SESSION["tecnico"] = $usuario->esTecnico();
+    $_SESSION["roles"] = $usuario->getRoles();
+
+    if ($usuario->esCoordinador() && $usuario->esTecnico()) {
+        header("Location: " . URL_BASE . "/public/PanelRoles.php");
+    } elseif ($usuario->esCoordinador()) {
+        header("Location: " . URL_BASE . "/app/vista/administrador.php");
+    } elseif ($usuario->esTecnico()) {
+        header("Location: " . URL_BASE . "/public/Tecnico.html");
+    } else {
+        header("Location: " . URL_BASE . "/app/vista/login.php?error=" . urlencode("No tiene permisos"));
+    }
+    exit;
+
+} catch (Exception $e) {
+    header("Location: " . URL_BASE . "/app/vista/login.php?error=" . urlencode("Error: " . $e->getMessage()));
     exit;
 }
-
-if (!$usuario->tieneAlgunRol()) {
-    header("Location: ../HTML/Login.php?error=" . urlencode("El usuario no tiene roles habilitados para ingresar."));
-    exit;
-}
-
-session_start();
-session_regenerate_id(true);
-
-$_SESSION["cedula"] = $usuario->getCedula();
-$_SESSION["coordinador"] = $usuario->esCoordinador();
-$_SESSION["tecnico"] = $usuario->esTecnico();
-
-if ($_SESSION["coordinador"] && $_SESSION["tecnico"]) {
-    header("Location: ../HTML/PanelRoles.php");
-} elseif ($_SESSION["coordinador"]) {
-    header("Location: ../HTML/Coordinador.php");
-} elseif ($_SESSION["tecnico"]) {
-    header("Location: ../HTML/Tecnico.php");
-}
-
-exit;
-
 ?>

@@ -6,8 +6,6 @@ class Usuario {
     private bool $activo;
     private array $roles;
 
-    // $roles es un arreglo con los roles que tiene el usuario,
-    // por ejemplo: ["administrador"], ["tecnico"], ["administrador", "tecnico"] o [].
     public function __construct(string $cedula, string $claveHash, bool $activo, array $roles) {
         $this->cedula = $cedula;
         $this->claveHash = $claveHash;
@@ -39,9 +37,12 @@ class Usuario {
         return in_array("tecnico", $this->roles, true);
     }
 
+    public function esDocente(): bool {
+        return in_array("docente", $this->roles, true);
+    }
+
     public function tieneAlgunRol(): bool {
         return count($this->roles) > 0;
     }
 }
-
 ?>

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -25,7 +24,7 @@
                     <label for="username">CI:</label>
                     <input type="text" id="username" name="username" minlength="7" maxlength="8" required />
 
-                    <label for="password">Contraseña:</label>
+                    <label for="clave">Contraseña:</label>
                     <input type="password" id="clave" name="clave" autocomplete="current-password" minlength="4" required />
 
                     <p id="errorMessage" style="color: red"></p>
@@ -35,5 +34,6 @@
         </section>
     </main>
 
-    <script src="../../public/assets/js/login.js"></script>
+   
 </body>
+</html>

@@ -1,87 +1,56 @@
 <?php
 
+require_once __DIR__ . "/../../config/config.php";
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AltaDatosUsuario.php";
 
-
-session_start();
-
-
-//Comprueba que el formulario haya sido enviado mediante POST
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    $mensaje = "Acceso Denegado: Petición incorrecta";
-
-    header("Location: administrador.php?error=" . urlencode($mensaje));
+    header("Location: " . URL_BASE . "/app/vista/administrador.php?error=" . urlencode("Método no permitido"));
     exit;
 }
 
+$cedula = trim($_POST["ci"] ?? "");
+$clave = trim($_POST["contrasenia"] ?? "");
+$rol = trim($_POST["rol"] ?? "");
 
-//Recupera los datos provenientes del formulario
-$cedula = trim($_POST["cedula"] ?? "");
-$nombre = trim($_POST["nombre"] ?? "");
-$apellido = trim($_POST["apellido"] ?? "");
-
-$clave = $_POST["clave"] ?? "";
-$confirmarClave = $_POST["confirmarClave"] ?? "";
-
-$cargo = trim($_POST["cargo"] ?? "");
-
-if ($cedula === "" || $nombre === "" || $apellido === "" || $clave === "" || $confirmarClave === "" || $cargo === "" ) {
-    $mensaje = "No se pudo registrar el empleado: existen campos vacíos.";
-    header("Location: administrador.php?error=" . urlencode($mensaje));
+if (empty($cedula) || empty($clave) || empty($rol)) {
+    header("Location: " . URL_BASE . "/app/vista/administrador.php?error=" . urlencode("Todos los campos son requeridos"));
     exit;
 }
 
-if (!preg_match("/^[1-9][0-9]{7}$/", $cedula)) {
-    $mensaje = "No se pudo registrar el empleado: cédula incorrecta.";
-
-    header("Location: administrador.php?error=" . urlencode($mensaje));
+if (strlen($cedula) !== 8 || !ctype_digit($cedula)) {
+    header("Location: " . URL_BASE . "/app/vista/administrador.php?error=" . urlencode("CI debe tener 8 dígitos"));
     exit;
 }
 
-if (strlen($clave) < 12) {
-    $mensaje = "La contraseña debe contener al menos 12 caracteres.";
+try {
+    $conectorPDO = new ConectorPDO(BD_HOST, BD_USER, BD_PASS, BD_NAME);
+    $conexion = $conectorPDO->establecerConexion();
 
-    header("Location: administrador.php?error=" . urlencode($mensaje));
-    exit;
+    if ($conexion === null) {
+        throw new Exception("No se pudo conectar a la base de datos");
+    }
+
+    $altaDatosUsuario = new AltaDatosUsuario($conexion);
+
+    if ($altaDatosUsuario->usuarioExiste($cedula)) {
+        header("Location: " . URL_BASE . "/app/vista/administrador.php?error=" . urlencode("El usuario ya existe"));
+        $conectorPDO->desconectar();
+        exit;
+    }
+
+    $claveHasheada = password_hash($clave, PASSWORD_BCRYPT);
+    $resultado = $altaDatosUsuario->crearUsuario($cedula, $claveHasheada, 1, $rol);
+
+    $conectorPDO->desconectar();
+
+    if ($resultado) {
+        header("Location: " . URL_BASE . "/app/vista/administrador.php?exito=" . urlencode("Usuario creado exitosamente"));
+    } else {
+        header("Location: " . URL_BASE . "/app/vista/administrador.php?error=" . urlencode("Error al crear el usuario"));
+    }
+
+} catch (Exception $e) {
+    header("Location: " . URL_BASE . "/app/vista/administrador.php?error=" . urlencode("Error: " . $e->getMessage()));
 }
-
-if ($clave !== $confirmarClave) {
-    $mensaje = "Las contraseñas ingresadas no coinciden.";
-
-    header("Location: administrador.php?error=" . urlencode($mensaje));
-    exit;
-}
-
-$claveHash = password_hash($clave, PASSWORD_DEFAULT);
-
-$conectorPDO = new ConectorPDO("localhost:3306", "leandro", "123", "test");
-
-$conexion = $conectorPDO->establecerConexion();
-
-if ($conexion === null) {
-    $mensaje = "No se pudo establecer conexión con la base de datos.";
-
-    header("Location: administrador.php?error=" . urlencode($mensaje));
-    exit;
-}
-
-$altaDatosUsuario = new AltaDatosUsuario($conexion);
-
-$resultado = $altaDatosUsuario->registrarUsuario($cedula, $nombre, $apellido, $claveHash, $cargo);
-
-$conectorPDO->desconectar();
-
-
-if (!$resultado) {
-    $mensaje = "No se pudo registrar el empleado.";
-
-    header("Location: administrador.php?error=" . urlencode($mensaje));
-    exit;
-}
-
-$mensaje = "Usuario ingresado exitosamente.";
-header("Location: administrador.php?resultado=" . urlencode($mensaje));
 exit;
-
-?>

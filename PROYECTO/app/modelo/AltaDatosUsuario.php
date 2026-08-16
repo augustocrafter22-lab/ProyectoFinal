@@ -1,79 +1,133 @@
 <?php
 
-/**
- * Clase encargada de realizar operaciones de alta
- * relacionadas con los usuarios del sistema.
- */
 class AltaDatosUsuario
 {
     private PDO $conexion;
 
-    /**
-     * Constructor parametrizado que recibe una conexión a la base de datos.
-     * @param PDO $conexion La conexión a la base de datos. PRECONDICIÓN: No debe ser NULL.
-     */
     public function __construct(PDO $conexion)
     {
         $this->conexion = $conexion;
     }
 
-    /**
-     * Registra un nuevo usuario con su rol.
-     *
-     * @param string $cedula Cédula del usuario.
-     * @param string $nombre Nombre del usuario.
-     * @param string $apellido Apellido del usuario.
-     * @param string $claveHash Hash de la contraseña.
-     * @param string $rol Rol del Empleado en el sistema
-     *
-     * @return bool TRUE si el registro se completa correctamente, FALSE en caso contrario.
-     */
-    public function registrarUsuario(string $cedula, string $nombre, string $apellido, string $claveHash, string $rol): bool
+    public function usuarioExiste(string $cedula): bool
     {
+        $sql = "SELECT cedula FROM USUARIO WHERE cedula = :cedula";
+        $consulta = $this->conexion->prepare($sql);
+        $consulta->execute(["cedula" => $cedula]);
+        return $consulta->fetch() !== false;
+    }
 
+    public function crearUsuario(string $cedula, string $claveHasheada, int $activo, string $rol): bool
+    {
         try {
-            //Método que ejecuta de forma agrupada todas las instrucciones dirigidas a la base de datos
-            //Si una instrucción falla, retorna excepción con la posibilidad de deshacer cambios con rollBack()
             $this->conexion->beginTransaction();
 
-            $sqlUsuario = "INSERT INTO USUARIO (cedula, nombre, apellido, claveHash) VALUES (:cedula, :nombre, :apellido, :claveHash)";
+            // Insertar en USUARIO
+            $sql = "INSERT INTO USUARIO (cedula, clave, activo) VALUES (:cedula, :clave, :activo)";
+            $consulta = $this->conexion->prepare($sql);
+            $consulta->execute([
+                ":cedula" => $cedula,
+                ":clave" => $claveHasheada,
+                ":activo" => $activo
+            ]);
 
-            $consultaUsuario = $this->conexion->prepare($sqlUsuario);
-
-            $consultaUsuario->execute(["cedula" => $cedula, "nombre" => $nombre, "apellido" => $apellido, "claveHash" => $claveHash]);
-
-            switch ($rol) {
-                case "Administrador":
-                    $sqlRol = "INSERT INTO ADMINISTRADOR (cedula) VALUES (:cedula)";
-                    break;
-                case "Logística":
-                    $sqlRol = "INSERT INTO LOGISTICA (cedula) VALUES (:cedula)";
-                    break;
-                default:
-                    $this->conexion->rollBack();
-                    return false;
+            // Insertar en tabla según rol
+            if ($rol === "coordinador") {
+                $sql = "INSERT INTO ADMINISTRADOR (cedula) VALUES (:cedula)";
+            } elseif ($rol === "tecnico") {
+                $sql = "INSERT INTO TECNICO (cedula) VALUES (:cedula)";
+            } elseif ($rol === "docente") {
+                $sql = "INSERT INTO DOCENTE (cedula) VALUES (:cedula)";
+            } else {
+                throw new Exception("Rol no válido");
             }
-            
-            $consultaRol = $this->conexion->prepare($sqlRol);
 
-            $consultaRol->execute(["cedula" => $cedula]);
+            $consulta = $this->conexion->prepare($sql);
+            $consulta->execute([":cedula" => $cedula]);
 
-            //Confirma todas las operaciones realizadas.
             $this->conexion->commit();
-
             return true;
 
-        } catch (PDOException $error) {
+        } catch (Exception $e) {
+            $this->conexion->rollBack();
+            throw $e;
+        }
+    }
 
-            //Verifica si se encuentra en una transacción
-            if ($this->conexion->inTransaction()) {
-                //Deshace los cambios causados por la excepción
-                $this->conexion->rollBack();
+    public function actualizarUsuario(string $cedula, string $clave = null, string $rol = null, int $activo = null): bool
+    {
+        try {
+            $this->conexion->beginTransaction();
+
+            // Actualizar USUARIO
+            $updates = [];
+            $params = [":cedula" => $cedula];
+
+            if ($clave !== null) {
+                $updates[] = "clave = :clave";
+                $params[":clave"] = password_hash($clave, PASSWORD_BCRYPT);
             }
 
-            return false;
+            if ($activo !== null) {
+                $updates[] = "activo = :activo";
+                $params[":activo"] = $activo;
+            }
+
+            if (!empty($updates)) {
+                $sql = "UPDATE USUARIO SET " . implode(", ", $updates) . " WHERE cedula = :cedula";
+                $consulta = $this->conexion->prepare($sql);
+                $consulta->execute($params);
+            }
+
+            // Actualizar rol si se proporciona
+            if ($rol !== null) {
+                // Eliminar de todas las tablas de rol
+                $this->conexion->prepare("DELETE FROM ADMINISTRADOR WHERE cedula = :cedula")->execute([":cedula" => $cedula]);
+                $this->conexion->prepare("DELETE FROM TECNICO WHERE cedula = :cedula")->execute([":cedula" => $cedula]);
+                $this->conexion->prepare("DELETE FROM DOCENTE WHERE cedula = :cedula")->execute([":cedula" => $cedula]);
+
+                // Insertar en nuevo rol
+                if ($rol === "coordinador") {
+                    $sql = "INSERT INTO ADMINISTRADOR (cedula) VALUES (:cedula)";
+                } elseif ($rol === "tecnico") {
+                    $sql = "INSERT INTO TECNICO (cedula) VALUES (:cedula)";
+                } elseif ($rol === "docente") {
+                    $sql = "INSERT INTO DOCENTE (cedula) VALUES (:cedula)";
+                } else {
+                    throw new Exception("Rol no válido");
+                }
+
+                $this->conexion->prepare($sql)->execute([":cedula" => $cedula]);
+            }
+
+            $this->conexion->commit();
+            return true;
+
+        } catch (Exception $e) {
+            $this->conexion->rollBack();
+            throw $e;
+        }
+    }
+
+    public function eliminarUsuario(string $cedula): bool
+    {
+        try {
+            $this->conexion->beginTransaction();
+
+            // Eliminar de todas las tablas de rol
+            $this->conexion->prepare("DELETE FROM ADMINISTRADOR WHERE cedula = :cedula")->execute([":cedula" => $cedula]);
+            $this->conexion->prepare("DELETE FROM TECNICO WHERE cedula = :cedula")->execute([":cedula" => $cedula]);
+            $this->conexion->prepare("DELETE FROM DOCENTE WHERE cedula = :cedula")->execute([":cedula" => $cedula]);
+
+            // Eliminar de USUARIO
+            $this->conexion->prepare("DELETE FROM USUARIO WHERE cedula = :cedula")->execute([":cedula" => $cedula]);
+
+            $this->conexion->commit();
+            return true;
+
+        } catch (Exception $e) {
+            $this->conexion->rollBack();
+            throw $e;
         }
     }
 }
-
-?>
