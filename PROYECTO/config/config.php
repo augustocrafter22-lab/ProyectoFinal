@@ -8,8 +8,6 @@ define("RUTA_CONTROLADOR", RUTA_APP . "/controlador");
 define("RUTA_VISTA", RUTA_APP . "/vista");
 
 define("RUTA_PUBLIC", RUTA_RAIZ . "/public");
-
-// URL base (para redirecciones)
 define("URL_BASE", "/PROYECTO");
 
 // Configuración de BD
