@@ -17,33 +17,54 @@ class AltaDatosUsuario
         return $consulta->fetch() !== false;
     }
 
-    public function crearUsuario(string $cedula, string $claveHasheada, int $activo, string $rol): bool
+    public function crearUsuario(string $cedula, string $claveHasheada, string $nombre, string $apellido, int $activo, array $roles): bool
     {
+        $rolesValidos = [
+            "coordinador" => "administrador",
+            "tecnico" => "tecnico",
+            "docente" => "docente"
+        ];
+        // Validaciones
+
+        // Valida que el nombre no este vacio
+        if(trim($nombre) === ""){
+            throw new Exception("El nombre no puede estar vacío");
+        }
+
+        // Valida que el apellido no este vacio
+        if(trim($apellido) === ""){
+            throw new Exception("El apellido no puede estar vacío");
+        }
+        // Vlida que la contraseña no tenga espacios al final
+        if(trim($claveHasheada) === chop($claveHasheada)) {
+            throw new Exception("La contraseña no puede tener espacios al final");
+        }
+
+        foreach ($roles as $rol => $value) {
+            if (!isset($rolesValidos[$rol])) {
+                throw new Exception("Rol no válido");
+            }
+        }
+
         try {
             $this->conexion->beginTransaction();
 
             // Insertar en USUARIO
-            $sql = "INSERT INTO USUARIO (cedula, clave, activo) VALUES (:cedula, :clave, :activo)";
+            $sql = "INSERT INTO USUARIO (cedula, clave, nombre, apellido, activo) VALUES (:cedula, :clave, :nombre, :apellido, :activo)";
             $consulta = $this->conexion->prepare($sql);
             $consulta->execute([
                 ":cedula" => $cedula,
                 ":clave" => $claveHasheada,
+                ":nombre" => $nombre,
+                ":apellido" => $apellido,
                 ":activo" => $activo
             ]);
 
-            // Insertar en tabla según rol
-            if ($rol === "coordinador") {
-                $sql = "INSERT INTO ADMINISTRADOR (cedula) VALUES (:cedula)";
-            } elseif ($rol === "tecnico") {
-                $sql = "INSERT INTO TECNICO (cedula) VALUES (:cedula)";
-            } elseif ($rol === "docente") {
-                $sql = "INSERT INTO DOCENTE (cedula) VALUES (:cedula)";
-            } else {
-                throw new Exception("Rol no válido");
+            foreach ($roles as $rol) {
+                $tablaRol = $rolesValidos[$rol];
+                $sql = "INSERT INTO $tablaRol (cedula) VALUES (:cedula)";
+                $this->conexion->prepare($sql)->execute([":cedula" => $cedula]);
             }
-
-            $consulta = $this->conexion->prepare($sql);
-            $consulta->execute([":cedula" => $cedula]);
 
             $this->conexion->commit();
             return true;
@@ -54,8 +75,42 @@ class AltaDatosUsuario
         }
     }
 
-    public function actualizarUsuario(string $cedula, string $clave = null, string $rol = null, int $activo = null): bool
+    public function actualizarUsuario(string $cedula, string $nombre = null, string $apellido = null, string $clave = null, array $roles = null, int $activo = null): bool
     {
+        $rolesValidos = [
+            "coordinador" => "administrador",
+            "tecnico" => "tecnico",
+            "docente" => "docente"
+        ];
+
+    // Si se está actualizando nombre, no puede quedar vacío
+    if ($nombre !== null && trim($nombre) === "") {
+        throw new Exception("El nombre es obligatorio");
+    }
+    // Si se está actualizando apellido, no puede quedar vacío
+    if ($apellido !== null && trim($apellido) === "") {
+        throw new Exception("El apellido es obligatorio");
+    }
+
+    // Si se está actualizando roles, tiene que quedar al menos uno
+    if ($roles !== null) {
+        if (empty($roles)) {
+            throw new Exception("Debe seleccionar al menos un rol");
+        }
+        foreach ($roles as $rol) {
+            if (!isset($rolesValidos[$rol])) {
+                throw new Exception("Rol no válido: " . $rol);
+            }
+        }
+    }
+
+        if ($roles !== null) {
+            foreach ($roles as $rol) {
+                if (!isset($rolesValidos[$rol])) {
+                    throw new Exception("Rol no válido");
+                }
+            }
+        }
         try {
             $this->conexion->beginTransaction();
 
@@ -66,6 +121,14 @@ class AltaDatosUsuario
             if ($clave !== null) {
                 $updates[] = "clave = :clave";
                 $params[":clave"] = password_hash($clave, PASSWORD_BCRYPT);
+            }
+            if ($nombre !== null) {
+                $updates[] = "nombre = :nombre";
+                $params[":nombre"] = $nombre;
+            }
+            if ($apellido !== null) {
+                $updates[] = "apellido = :apellido";
+                $params[":apellido"] = $apellido;
             }
 
             if ($activo !== null) {
@@ -80,24 +143,18 @@ class AltaDatosUsuario
             }
 
             // Actualizar rol si se proporciona
-            if ($rol !== null) {
+            if ($roles !== null) {
                 // Eliminar de todas las tablas de rol
                 $this->conexion->prepare("DELETE FROM ADMINISTRADOR WHERE cedula = :cedula")->execute([":cedula" => $cedula]);
                 $this->conexion->prepare("DELETE FROM TECNICO WHERE cedula = :cedula")->execute([":cedula" => $cedula]);
                 $this->conexion->prepare("DELETE FROM DOCENTE WHERE cedula = :cedula")->execute([":cedula" => $cedula]);
 
-                // Insertar en nuevo rol
-                if ($rol === "coordinador") {
-                    $sql = "INSERT INTO ADMINISTRADOR (cedula) VALUES (:cedula)";
-                } elseif ($rol === "tecnico") {
-                    $sql = "INSERT INTO TECNICO (cedula) VALUES (:cedula)";
-                } elseif ($rol === "docente") {
-                    $sql = "INSERT INTO DOCENTE (cedula) VALUES (:cedula)";
-                } else {
-                    throw new Exception("Rol no válido");
-                }
-
+                // Insertar en nuevos roles
+                foreach ($roles as $rol) {
+                 $tablaRol = $rolesValidos[$rol];
+                $sql = "INSERT INTO $tablaRol (cedula) VALUES (:cedula)";
                 $this->conexion->prepare($sql)->execute([":cedula" => $cedula]);
+                }
             }
 
             $this->conexion->commit();
@@ -123,4 +180,4 @@ class AltaDatosUsuario
     }
 }
 
-    
+

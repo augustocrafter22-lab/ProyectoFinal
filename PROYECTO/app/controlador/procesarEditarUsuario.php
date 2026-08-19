@@ -10,11 +10,13 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 }
 
 $cedula = trim($_POST["ci"] ?? "");
+$nombre = trim($_POST["nombre"] ?? "");
+$apellido = trim($_POST["apellido"] ?? "");
 $clave = trim($_POST["contrasenia"] ?? "");
-$rol = trim($_POST["rol"] ?? "");
+$roles = $_POST["roles"] ?? [];
 
-if (empty($cedula) || empty($rol)) {
-    header("Location: " . URL_BASE . "/public/Administrador.php?error=" . urlencode("CI y Rol son requeridos"));
+if (empty($cedula) || empty($roles)) {
+    header("Location: " . URL_BASE . "/public/Administrador.php?error=" . urlencode("CI y al menos un rol son requeridos"));
     exit;
 }
 
@@ -30,9 +32,11 @@ try {
 
     $resultado = $altaDatosUsuario->actualizarUsuario(
         $cedula,
+        !empty($nombre) ? $nombre : null,
+        !empty($apellido) ? $apellido : null,
         !empty($clave) ? $clave : null,
-        $rol,
-        1
+        $roles,
+        null // activo no se toca desde este formulario
     );
 
     $conectorPDO->desconectar();

@@ -41,6 +41,8 @@
         <thead>
             <tr>
                 <th>CI</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
                 <th>Roles</th>
                 <th>Estado</th>
                 <th>Acciones</th>
@@ -50,6 +52,8 @@
             <?php foreach ($usuarios as $usuario): ?>
                 <tr>
                     <td><?= htmlspecialchars($usuario["cedula"]) ?></td>
+                    <td><?= htmlspecialchars($usuario["nombre"]) ?></td>
+                    <td><?= htmlspecialchars($usuario["apellido"]) ?></td>
                     <td><?= htmlspecialchars(implode(", ", $usuario["roles"])) ?></td>
                     <td><?= $usuario["activo"] ? "Activo" : "Inactivo" ?></td>
                     <td>
@@ -74,10 +78,12 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-    </section>
+
     <section class="botonera">
         <button class="boton-principal" id="btnCrear" type="button">Agregar usuario</button>
     </section>
+
+
     <dialog class="dialogGestionarUsuario" id="dialogGestionarUsuario">
         <button id="btnCerrarGestionarUsuario" type="button">
             <img src="<?= URL_BASE ?>/public/assets/img/Bootstrap/x.svg" alt="Cerrar" width="24" height="24">
@@ -93,18 +99,29 @@
                             maxlength="8">
                     </div>
                     <div class="cajaEntradaDeDatos">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Ingrese el nombre">
+                    </div>
+                    <div class="cajaEntradaDeDatos">
+                        <label for="apellido">Apellido</label>
+                        <input type="text" id="apellido" name="apellido" placeholder="Ingrese el apellido">
+                    </div>
+                    <div class="cajaEntradaDeDatos">
                         <label for="contrasenia">Contraseña</label>
                         <input type="password" id="contrasenia" name="contrasenia" placeholder="Ingrese la contraseña">
                     </div>
-                    <div class="cajaEntradaDeDatos">
-                        <label for="rol">Rol</label>
-                        <select id="rol" name="rol">
-                            <option value="" disabled selected>Seleccione un rol</option>
-                            <option value="coordinador">Coordinador</option>
-                            <option value="tecnico">Técnico</option>
-                            <option value="docente">Docente</option>
-                        </select>
-                    </div>
+                    <fieldset class="roles">
+                        <legend>Roles</legend>
+                        <label>
+                            <input type="checkbox" name="roles[]" value="coordinador"> Coordinador
+                        </label>
+                        <label>
+                            <input type="checkbox" name="roles[]" value="tecnico"> Técnico
+                        </label>
+                        <label>
+                            <input type="checkbox" name="roles[]" value="docente"> Docente
+                        </label>
+                    </fieldset>
                 </fieldset>
                 <button class="boton-secundario" type="submit">Guardar usuario</button>
             </fieldset>

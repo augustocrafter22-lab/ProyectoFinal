@@ -52,12 +52,22 @@ try {
     $_SESSION["docente"] = $usuario->esDocente();
     $_SESSION["roles"] = $usuario->getRoles();
 
-    if ($usuario->esCoordinador() && $usuario->esTecnico()) {
+    if ($usuario->esCoordinador() && $usuario->esTecnico() && $usuario->esDocente()) {
+        header("Location: " . URL_BASE . "/public/PanelRoles.php");
+    } elseif ($usuario->esCoordinador() && $usuario->esTecnico()) {
+        header("Location: " . URL_BASE . "/public/PanelRoles.php");
+    } elseif ($usuario->esCoordinador() && $usuario->esDocente()) {
+        header("Location: " . URL_BASE . "/public/PanelRoles.php");
+    } elseif ($usuario->esTecnico() && $usuario->esDocente()) {
+        header("Location: " . URL_BASE . "/public/PanelRoles.php");
+    } elseif ($usuario->esCoordinador() && $usuario->esDocente()) {
         header("Location: " . URL_BASE . "/public/PanelRoles.php");
     } elseif ($usuario->esCoordinador()) {
         header("Location: " . URL_BASE . "/public/Administrador.php");
     } elseif ($usuario->esTecnico()) {
         header("Location: " . URL_BASE . "/public/Tecnico.html");
+    } elseif ($usuario->esDocente()) {
+        header("Location: " . URL_BASE . "/public/Docente.html");
     } else {
         header("Location: " . URL_BASE . "/public/login.php?error=" . urlencode("No tiene permisos"));
     }

@@ -25,7 +25,7 @@
                     <input type="text" id="username" name="username" minlength="7" maxlength="8" required />
 
                     <label for="clave">Contraseña:</label>
-                    <input type="password" id="clave" name="clave" autocomplete="current-password" minlength="4" required />
+                    <input type="password" id="clave" name="clave" autocomplete="current-password" minlength="1" required />
 
                     <p id="errorMessage" style="color: red"></p>
                     <button type="submit" class="boton-principal">Ingresar</button>
