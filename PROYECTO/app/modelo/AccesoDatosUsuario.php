@@ -24,7 +24,12 @@ class AccesoDatosUsuario {
                 CASE
                     WHEN t.cedula IS NOT NULL THEN 'tecnico'
                     ELSE NULL
-                END AS rol_tecnico
+                END AS rol_tecnico,
+
+                CASE
+                    WHEN d.cedula IS NOT NULL THEN 'docente'
+                    ELSE NULL
+                END AS rol_docente
 
             FROM USUARIO AS u
 
@@ -34,6 +39,9 @@ class AccesoDatosUsuario {
             LEFT JOIN TECNICO AS t
                 ON t.cedula = u.cedula
 
+            LEFT JOIN DOCENTE AS d
+                ON d.cedula = u.cedula
+            
             WHERE u.cedula = :cedula
         ";
 

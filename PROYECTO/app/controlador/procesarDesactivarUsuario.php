@@ -9,12 +9,10 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit;
 }
 
-$cedula = trim($_POST["ci"] ?? "");
-$clave = trim($_POST["contrasenia"] ?? "");
-$rol = trim($_POST["rol"] ?? "");
+$cedula = trim($_POST["cedula"] ?? "");
 
-if (empty($cedula) || empty($rol)) {
-    header("Location: " . URL_BASE . "/public/Administrador.php?error=" . urlencode("CI y Rol son requeridos"));
+if (empty($cedula)) {
+    header("Location: " . URL_BASE . "/public/Administrador.php?error=" . urlencode("CI requerido"));
     exit;
 }
 
@@ -27,20 +25,14 @@ try {
     }
 
     $altaDatosUsuario = new AltaDatosUsuario($conexion);
-
-    $resultado = $altaDatosUsuario->actualizarUsuario(
-        $cedula,
-        !empty($clave) ? $clave : null,
-        $rol,
-        1
-    );
+    $resultado = $altaDatosUsuario->desactivarUsuario($cedula);
 
     $conectorPDO->desconectar();
 
     if ($resultado) {
-        header("Location: " . URL_BASE . "/public/Administrador.php?exito=" . urlencode("Usuario actualizado exitosamente"));
+        header("Location: " . URL_BASE . "/public/Administrador.php?exito=" . urlencode("Usuario desactivado exitosamente"));
     } else {
-        header("Location: " . URL_BASE . "/public/Administrador.php?error=" . urlencode("Error al actualizar el usuario"));
+        header("Location: " . URL_BASE . "/public/Administrador.php?error=" . urlencode("Error al desactivar el usuario"));
     }
 
 } catch (Exception $e) {

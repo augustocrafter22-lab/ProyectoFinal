@@ -7,7 +7,7 @@ require_once RUTA_MODELO . "/Usuario.php";
 require_once RUTA_MODELO . "/Login.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    header("Location: " . URL_BASE . "/app/vista/login.php");
+    header("Location: " . URL_BASE . "/public/login.php");
     exit;
 }
 
@@ -15,12 +15,12 @@ $cedula = trim($_POST["username"] ?? "");
 $clave = $_POST["clave"] ?? "";
 
 if (empty($cedula) || empty($clave)) {
-    header("Location: " . URL_BASE . "/app/vista/login.php?error=" . urlencode("Ingrese cédula y contraseña"));
+    header("Location: " . URL_BASE . "/public/login.php?error=" . urlencode("Ingrese cédula y contraseña"));
     exit;
 }
 
 try {
-    $conectorPDO = new ConectorPDO(BD_HOST, BD_USER, BD_PASS, BD_NAME);
+    $conectorPDO = new ConectorPDO($_ENV['BD_HOST'], $_ENV['BD_USER'], $_ENV['BD_PASS'], $_ENV['BD_NAME']);
     $conexion = $conectorPDO->establecerConexion();
 
     if ($conexion === null) {
@@ -34,12 +34,12 @@ try {
     $conectorPDO->desconectar();
 
     if ($usuario === null) {
-        header("Location: " . URL_BASE . "/app/vista/login.php?error=" . urlencode($login->getError()));
+        header("Location: " . URL_BASE . "/public/login.php?error=" . urlencode($login->getError()));
         exit;
     }
 
     if (!$usuario->tieneAlgunRol()) {
-        header("Location: " . URL_BASE . "/app/vista/login.php?error=" . urlencode("Usuario sin roles habilitados"));
+        header("Location: " . URL_BASE . "/public/login.php?error=" . urlencode("Usuario sin roles habilitados"));
         exit;
     }
 
@@ -49,21 +49,22 @@ try {
     $_SESSION["cedula"] = $usuario->getCedula();
     $_SESSION["coordinador"] = $usuario->esCoordinador();
     $_SESSION["tecnico"] = $usuario->esTecnico();
+    $_SESSION["docente"] = $usuario->esDocente();
     $_SESSION["roles"] = $usuario->getRoles();
 
     if ($usuario->esCoordinador() && $usuario->esTecnico()) {
         header("Location: " . URL_BASE . "/public/PanelRoles.php");
     } elseif ($usuario->esCoordinador()) {
-        header("Location: " . URL_BASE . "/app/vista/administrador.php");
+        header("Location: " . URL_BASE . "/public/Administrador.php");
     } elseif ($usuario->esTecnico()) {
         header("Location: " . URL_BASE . "/public/Tecnico.html");
     } else {
-        header("Location: " . URL_BASE . "/app/vista/login.php?error=" . urlencode("No tiene permisos"));
+        header("Location: " . URL_BASE . "/public/login.php?error=" . urlencode("No tiene permisos"));
     }
     exit;
 
 } catch (Exception $e) {
-    header("Location: " . URL_BASE . "/app/vista/login.php?error=" . urlencode("Error: " . $e->getMessage()));
+    header("Location: " . URL_BASE . "/public/login.php?error=" . urlencode("Error: " . $e->getMessage()));
     exit;
 }
 ?>

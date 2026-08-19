@@ -4,7 +4,7 @@ require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosUsuario.php";
 
 try {
-    $conectorPDO = new ConectorPDO(BD_HOST, BD_USER, BD_PASS, BD_NAME);
+    $conectorPDO = new ConectorPDO($_ENV['BD_HOST'], $_ENV['BD_USER'], $_ENV['BD_PASS'], $_ENV['BD_NAME']);
     $conexion = $conectorPDO->establecerConexion();
 
     if ($conexion === null) {
@@ -21,8 +21,6 @@ try {
     echo "Error: " . $e->getMessage();
     exit;
 }
-?>
-<?php
-    require_once __DIR__ . "/../vista/administrador.php";
+    require_once RUTA_VISTA . "/administrador.php";
 
     ?>
