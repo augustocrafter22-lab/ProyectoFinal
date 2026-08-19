@@ -24,7 +24,7 @@ if (strlen($cedula) !== 8 || !ctype_digit($cedula)) {
 }
 
 try {
-    $conectorPDO = new ConectorPDO(BD_HOST, BD_USER, BD_PASS, BD_NAME);
+    $conectorPDO = new ConectorPDO($_ENV['BD_HOST'], $_ENV['BD_USER'], $_ENV['BD_PASS'], $_ENV['BD_NAME']);
     $conexion = $conectorPDO->establecerConexion();
 
     if ($conexion === null) {
@@ -45,12 +45,12 @@ try {
     $conectorPDO->desconectar();
 
     if ($resultado) {
-        header("Location: " . URL_BASE . "/app/vista/administrador.php?exito=" . urlencode("Usuario creado exitosamente"));
+        header("Location: " . URL_BASE . "/public/Administrador.php?exito=" . urlencode("Usuario creado exitosamente"));
     } else {
-        header("Location: " . URL_BASE . "/app/vista/administrador.php?error=" . urlencode("Error al crear el usuario"));
+        header("Location: " . URL_BASE . "/public/Administrador.php?error=" . urlencode("Error al crear el usuario"));
     }
 
 } catch (Exception $e) {
-    header("Location: " . URL_BASE . "/app/vista/administrador.php?error=" . urlencode("Error: " . $e->getMessage()));
+    header("Location: " . URL_BASE . "/public/Administrador.php?error=" . urlencode("Error: " . $e->getMessage()));
 }
 exit;

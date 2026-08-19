@@ -89,6 +89,12 @@ form.formulario label {
   color: var(--color-texto-suave);
   margin-top: 10px;
 }
+.botonera {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
 
 form.formulario select,
 form.formulario textarea,
@@ -118,7 +124,7 @@ form.formulario input {
 
 .boton-principal {
   margin-top: 22px;
-  width: 100%;
+  width: 50%;
   padding: 12px 20px;
   border: none;
   border-radius: var(--radio);
@@ -127,6 +133,9 @@ form.formulario input {
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   transition: background-color 0.2s ease;
 }
 
@@ -187,4 +196,11 @@ tr:nth-child(even) {
 }
 img{
   border-radius: var(--radio);
+}
+caption {
+  caption-side: bottom;
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-texto-suave);
+  margin-top: 8px;
 }

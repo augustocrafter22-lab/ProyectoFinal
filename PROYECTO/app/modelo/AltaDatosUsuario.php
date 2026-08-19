@@ -109,25 +109,18 @@ class AltaDatosUsuario
         }
     }
 
-    public function eliminarUsuario(string $cedula): bool
+    public function desactivarUsuario(string $cedula): bool
     {
-        try {
-            $this->conexion->beginTransaction();
-
-            // Eliminar de todas las tablas de rol
-            $this->conexion->prepare("DELETE FROM ADMINISTRADOR WHERE cedula = :cedula")->execute([":cedula" => $cedula]);
-            $this->conexion->prepare("DELETE FROM TECNICO WHERE cedula = :cedula")->execute([":cedula" => $cedula]);
-            $this->conexion->prepare("DELETE FROM DOCENTE WHERE cedula = :cedula")->execute([":cedula" => $cedula]);
-
-            // Eliminar de USUARIO
-            $this->conexion->prepare("DELETE FROM USUARIO WHERE cedula = :cedula")->execute([":cedula" => $cedula]);
-
-            $this->conexion->commit();
-            return true;
-
-        } catch (Exception $e) {
-            $this->conexion->rollBack();
-            throw $e;
-        }
+        $sql = "UPDATE USUARIO SET activo = 0 WHERE cedula = :cedula";
+        $consulta = $this->conexion->prepare($sql);
+        return $consulta->execute([":cedula" => $cedula]);
+    }
+    public function activarUsuario(string $cedula): bool
+    {
+        $sql = "UPDATE USUARIO SET activo = 1 WHERE cedula = :cedula";
+        $consulta = $this->conexion->prepare($sql);
+        return $consulta->execute([":cedula" => $cedula]);
     }
 }
+
+    
