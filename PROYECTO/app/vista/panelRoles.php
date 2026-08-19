@@ -21,23 +21,30 @@
             </button>
 
             <ul class="listaNavegacion">
-                <li><a href="<?= URL_BASE ?>/public/Administrador.php">Inicio</a></li>
                 <li><a href="<?= URL_BASE ?>/public/cerrarSesion.php">Cerrar sesion</a></li>
             </ul>
         </nav>
         <h1>S.G.R.S.I</h1>
         <img src="<?= URL_BASE ?>/public/assets/img/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo-Utu" width="75px">
     </header>
+<section class="encabezado">
+    <h1>Bienvenido, <?= htmlspecialchars($usuario->getNombre()) ?> <?= htmlspecialchars($usuario->getApellido()) ?></h1>
+    <p>Seleccione el rol con el que desea ingresar</p>
+</section>
 
-    <section class="encabezado">
-        <h1>Bienvenido, <?= htmlspecialchars($usuarios[0]["nombre"]) ?> <?= htmlspecialchars($usuarios[0]["apellido"]) ?></h1>
-        <p>Seleccione el rol con el que desea ingresar</p>
-    </section>
-
-    <section class="botonera">
+<section class="botonera">
+    <?php if ($_SESSION["coordinador"]): ?>
         <button class="boton-principal" type="button" onclick="location.href='<?= URL_BASE ?>/public/Administrador.php'">Coordinador</button>
+    <?php endif; ?>
+
+    <?php if ($_SESSION["tecnico"]): ?>
         <button class="boton-principal" type="button" onclick="location.href='<?= URL_BASE ?>/public/Tecnico.html'">Técnico</button>
+    <?php endif; ?>
+
+    <?php if ($_SESSION["docente"]): ?>
         <button class="boton-principal" type="button" onclick="location.href='<?= URL_BASE ?>/public/Docente.html'">Docente</button>
-    </section>
+    <?php endif; ?>
+</section>
 </body>
+<script src="<?= URL_BASE ?>/public/assets/js/barraNavegacion.js"></script>
 </html>
