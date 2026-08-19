@@ -14,6 +14,8 @@ class AccesoDatosUsuario {
             SELECT
                 u.cedula,
                 u.clave AS claveHash,
+                u.nombre,
+                u.apellido,
                 u.activo,
 
                 CASE
@@ -67,6 +69,8 @@ class AccesoDatosUsuario {
 
         return new Usuario(
             $datos["cedula"],
+            $datos["nombre"],
+            $datos["apellido"],
             $datos["claveHash"],
             (bool) $datos["activo"],
             $roles
@@ -76,19 +80,18 @@ class AccesoDatosUsuario {
         $sql = "
             SELECT
                 u.cedula,
+                u.nombre,
+                u.apellido,
                 u.activo,
-                GROUP_CONCAT(
-                    CASE 
-                        WHEN a.cedula IS NOT NULL THEN 'coordinador'
-                        WHEN t.cedula IS NOT NULL THEN 'tecnico'
-                        WHEN d.cedula IS NOT NULL THEN 'docente'
-                    END
+                CONCAT_WS(', ',
+                    CASE WHEN a.cedula IS NOT NULL THEN 'coordinador' END,
+                    CASE WHEN t.cedula IS NOT NULL THEN 'tecnico' END,
+                    CASE WHEN d.cedula IS NOT NULL THEN 'docente' END
                 ) AS roles
             FROM USUARIO AS u
             LEFT JOIN ADMINISTRADOR AS a ON a.cedula = u.cedula
             LEFT JOIN TECNICO AS t ON t.cedula = u.cedula
             LEFT JOIN DOCENTE AS d ON d.cedula = u.cedula
-            GROUP BY u.cedula
             ORDER BY u.cedula ASC
         ";
 
@@ -97,9 +100,11 @@ class AccesoDatosUsuario {
 
         $usuarios = [];
         while ($datos = $consulta->fetch(PDO::FETCH_ASSOC)) {
-            $rolesArray = $datos["roles"] ? explode(",", $datos["roles"]) : [];
+            $rolesArray = $datos["roles"] ? explode(", ", $datos["roles"]) : [];
             $usuarios[] = [
                 "cedula" => $datos["cedula"],
+                "nombre"=> $datos["nombre"],
+                "apellido"=> $datos["apellido"],
                 "activo" => (bool) $datos["activo"],
                 "roles" => $rolesArray
             ];

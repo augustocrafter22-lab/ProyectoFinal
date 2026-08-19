@@ -92,6 +92,8 @@ form.formulario label {
 .botonera {
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
   gap: 10px;
   margin-top: 20px;
 }

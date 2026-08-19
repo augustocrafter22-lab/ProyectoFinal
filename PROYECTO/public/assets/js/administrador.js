@@ -1,8 +1,7 @@
 // Dialog para gestionar usuarios
 const dialog = document.querySelector(".dialogGestionarUsuario");
-const btnAbrirDialog = document.getElementById("btnAltaUsuario");
+const btnAbrirDialog = document.getElementById("btnCrear");
 const btnCerrarDialog = document.getElementById("btnCerrarGestionarUsuario");
-
 
 // Tabla de usuarios
 const cuerpoTablaUsuarios = document.getElementById("cuerpoTablaUsuarios");
@@ -12,36 +11,35 @@ const formulario = document.getElementById("formularioGestionarUsuario");
 
 // Inputs del formulario
 const inputCI = document.getElementById("ci");
+const inputNombre = document.getElementById("nombre");
+const inputApellido = document.getElementById("apellido");
 const inputContrasenia = document.getElementById("contrasenia");
-const entradaRol = document.getElementById("rol");
-
-// Filtro de usuarios
-const filtroPorRol = document.getElementById("filtroPorRol");
-const btnLimpiarFiltroUsuarios = document.getElementById("btnLimpiarFiltroUsuarios");
+const checkboxesRol = document.querySelectorAll("input[name='roles[]']");
 
 // Variable para controlar el modo de edición
-
 let modoEdicion = false;
 
-const formularios = document.querySelectorAll(".formularioDesactivarUsuario");
+const formulariosDesactivar = document.querySelectorAll(".formularioDesactivarUsuario");
 const formulariosActivar = document.querySelectorAll(".formularioActivarUsuario");
 
-function limpiarEstadoFormulario() {
-    modoEdicion = false;
-    inputCI.readonly = false;
-    formulario.reset();
+function limpiarCheckboxesRol() {
+    for (const checkbox of checkboxesRol) {
+        checkbox.checked = false;
+    }
 }
 
 function abrirDialogCrear() {
     modoEdicion = false;
-    inputCI.readonly = false;
+    inputCI.readOnly = false;
     formulario.reset();
+    limpiarCheckboxesRol();
     dialog.showModal();
 }
 
 function cerrarDialog() {
     formulario.reset();
-    inputCI.readonly = false;
+    limpiarCheckboxesRol();
+    inputCI.readOnly = false;
     modoEdicion = false;
     dialog.close();
 }
@@ -66,46 +64,47 @@ function editarUsuario(eventoEditar) {
         return;
     }
     const fila = btnEditar.closest("tr");
-    inputCI.value = fila.cells[0].textContent.trim();
-    inputContrasenia.value = fila.cells[1].textContent.trim();
-    entradaRol.value = fila.cells[2].textContent.trim();
+
+    const cedula = fila.cells[0].textContent.trim();
+    const nombre = fila.cells[1].textContent.trim();
+    const apellido = fila.cells[2].textContent.trim();
+    const rolesTexto = fila.cells[3].textContent.trim();
+    const roles = rolesTexto === "" ? [] : rolesTexto.split(",").map(r => r.trim());
+
+    formulario.reset();
+    limpiarCheckboxesRol();
+
+    inputCI.value = cedula;
+    inputNombre.value = nombre;
+    inputApellido.value = apellido;
+    inputContrasenia.value = "";
+
+    for (const checkbox of checkboxesRol) {
+        checkbox.checked = roles.includes(checkbox.value);
+    }
+
     inputCI.readOnly = true;
     modoEdicion = true;
     dialog.showModal();
 }
 
-function gestion (eventoGestion) {
-    if(modoEdicion === false) {
+function gestion(eventoGestion) {
+    if (modoEdicion === false) {
         formulario.action = "procesarAltaUsuario.php";
-    }
-    if(modoEdicion === true) {
+    } else {
         formulario.action = "procesarEditarUsuario.php";
     }
-
 }
 
-btnCrear.addEventListener("click", abrirDialogCrear);
+btnAbrirDialog.addEventListener("click", abrirDialogCrear);
 btnCerrarDialog.addEventListener("click", cerrarDialog);
 cuerpoTablaUsuarios.addEventListener("click", editarUsuario);
 formulario.addEventListener("submit", gestion);
 
-for (const formulario of formularios) {
+for (const formulario of formulariosDesactivar) {
     formulario.addEventListener("submit", confirmarDesactivarUsuario);
 }
 for (const formulario of formulariosActivar) {
     formulario.addEventListener("submit", confirmarActivarUsuario);
 }
-    function aplicarFiltroUsuarios() {
-    const rolFiltro = filtroPorRol.value;
-    const estadoFiltro = filtroPorEstado.value;
-    cuerpoTablaUsuarios.replaceChildren();
-    const usuarios = cargarUsuariosGuardadosLocal();
-   const filtrados = usuarios.filter(u =>
-    (rolFiltro === "" || (u.roles && u.roles.includes(rolFiltro))) &&
-    (estadoFiltro === "" || u.activo === (estadoFiltro === "activo"))
-);
-        agregarFilaUsuario(usuario);
-    }
-
-
 
