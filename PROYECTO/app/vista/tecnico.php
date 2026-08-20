@@ -1,17 +1,55 @@
-<?php
+<!DOCTYPE html>
+<html lang="es">
 
-header("Cache-Control: no-store, no-cache, must-revalidate");
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tecnico</title>
+    <link rel="stylesheet" href="<?= URL_BASE ?>/public/assets/css/barraNavegacion.css">
+    <link rel="stylesheet" href="<?= URL_BASE ?>/public/assets/css/style.css">
+</head>
 
-session_start();
+<body>
+    <header class="BarraNavegacion">
 
-if (!isset($_SESSION["cedula"])) {
-    header("Location: Login.php?error=" . urlencode("Debe iniciar sesión para acceder a esa página."));
-    exit;
-}
+        <nav>
+            <button class="btnMenu" id="btnMenu" type="button"><img class="menu"
+                    src="<?= URL_BASE ?>/public/assets/img/Bootstrap/list.svg" alt="menu" width="40" height="40px"></button>
 
-if (!isset($_SESSION["tecnico"]) || $_SESSION["tecnico"] !== true) {
-    header("Location: Login.php?error=" . urlencode("No tiene autorización para acceder a ese panel."));
-    exit;
-}
+            <button class="btnMenuC" id="btnMenuC" type="button">
+                <img src="<?= URL_BASE ?>/public/assets/img/Bootstrap/x.svg" alt="X" class="menu" width="40" height="40px">
+            </button>
 
-?>
+            <ul class="listaNavegacion">
+                <li><a href="VistaDeLaboratorio.html">Solicitudes de laboratorio</a></li>
+                <li><a href="VistaDeTickets.php">Tickets</a></li>
+                <li><a href="SolucionTicket.html">Solucionar ticket</a></li>
+                <li><a href="RegistrarDiagnostico.php">Registrar diagnostico</a></li>
+                <li><a href="RegistrarIntervencion.html">Registrar intervencion</a></li>
+                <li><a href="RegistrarReemplazo.html">Registrar reemplazo</a></li>
+                <li><a href="RegistrarReparacion.html">Registrar reparacion</a></li>
+                <li><a href="RegistrarSolucion.php">Registrar solucion</a></li>
+                <li><a href="ConsultarDiagnostico.php">Consultar diagnosticos</a></li>
+                <li><a href="ConsultaEstados.html">Consultar Estados</a></li>
+                <li><a href="Equipos.html">Consultar y registrar estado de equipos</a></li>
+                <li><a href="ConsultarMovimientos.html">Consultar movimientos</a></li>
+                <li><a href="CambioUbicacion.html">Registrar cambio de ubicacion de dispositivos</a></li>
+                <li><a href="HistorialTecnico.html">Historial Tecnico</a></li>
+                <li><a href="Dashboard.html">Dashboards</a></li>
+                <li><a href="cerrarSesion.php" class="cerrarSesion">Cerrar sesion</a></li>
+            </ul>
+        </nav>
+        <h1>S.G.R.S.I</h1>
+        <img src="<?= URL_BASE ?>/public/assets/img/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo-Utu" width="75px">
+    </header>
+
+    <section class="encabezado">
+        <h1>Bienvendio, <?= htmlspecialchars($usuario->getNombre()) ?> <?= htmlspecialchars($usuario->getApellido()) ?> (Tecnico)</h1>
+         <p>Haga uso del menu para comenzar.</p>
+    </section>
+    <section class="modulo-imagen"> 
+        <img src="<?= URL_BASE ?>/public/assets/img/Servidores.jpg" alt="UTU_9296-1024x614" width="500px">
+    </section>
+    </body>
+    <script src="<?= URL_BASE ?>/public/assets/js/barraNavegacion.js"></script>
+    </html>
