@@ -38,11 +38,11 @@
     <?php endif; ?>
 
     <?php if ($_SESSION["tecnico"]): ?>
-        <button class="boton-principal" type="button" onclick="location.href='<?= URL_BASE ?>/public/Tecnico.html'">Técnico</button>
+        <button class="boton-principal" type="button" onclick="location.href='<?= URL_BASE ?>/public/Tecnico.php'">Técnico</button>
     <?php endif; ?>
 
     <?php if ($_SESSION["docente"]): ?>
-        <button class="boton-principal" type="button" onclick="location.href='<?= URL_BASE ?>/public/Docente.html'">Docente</button>
+        <button class="boton-principal" type="button" onclick="location.href='<?= URL_BASE ?>/public/Docente.php'">Docente</button>
     <?php endif; ?>
 </section>
 </body>
