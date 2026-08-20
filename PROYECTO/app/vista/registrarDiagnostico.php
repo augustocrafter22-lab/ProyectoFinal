@@ -21,7 +21,7 @@
 
             <ul class="listaNavegacion">
                 <li><a href="Tecnico.html">Regresar</a></li>
-                <li><a href="ModificarDiagnostico.html">Modificar Diagnostico</a></li>
+                <li><a href="ModificarDiagnostico.php">Modificar Diagnostico</a></li>
                 <li><a href="ConsultarDiagnostico.php">Consultar diagnosticos</a></li>
                 <li><a href="RegistrarIntervencion.html">Registrar intervencion</a></li>
                 <li><a href="RegistrarReemplazo.html">Registrar reemplazo</a></li>
