@@ -97,6 +97,27 @@ class AccesoDatosDiagnostico {
 
         return $diagnostico === false ? null : $diagnostico;
     }
+        /**
+     * Actualiza el texto de un diagnóstico ya registrado.
+     *
+     * @param int $idDiagnostico El identificador del diagnóstico a modificar.
+     * @param string $diagnostico El nuevo texto del diagnóstico técnico.
+     * @return bool true si se actualizó correctamente.
+     */
+    public function actualizarDiagnostico(int $idDiagnostico, string $diagnostico): bool {
+        $sql = "
+            UPDATE DIAGNOSTICO
+            SET diagnostico = :diagnostico
+            WHERE idDiagnostico = :idDiagnostico
+        ";
+
+        $consulta = $this->conexion->prepare($sql);
+
+        return $consulta->execute([
+            ":diagnostico" => $diagnostico,
+            ":idDiagnostico" => $idDiagnostico
+        ]);
+    }
 }
 
 ?>
