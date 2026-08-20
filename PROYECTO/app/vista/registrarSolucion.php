@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8">
@@ -23,7 +23,8 @@
 
             <ul class="listaNavegacion">
                 <li><a href="Tecnico.html">Regresar</a></li>
-                <li><a href="RegistrarDiagnostico.html">Registrar diagnostico</a></li>
+                <li><a href="RegistrarDiagnostico.php">Registrar diagnostico</a></li>
+                <li><a href="ConsultarDiagnostico.php">Consultar diagnosticos</a></li>
                 <li><a href="RegistrarIntervencion.html">Registrar intervencion</a></li>
                 <li><a href="RegistrarReemplazo.html">Registrar reemplazo</a></li>
                 <li><a href="RegistrarReparacion.html">Registrar reparacion</a></li>
@@ -36,33 +37,41 @@
 <header class="encabezado">
 
 <h1>Registro de Soluciones</h1>
-<p>Aqui se podran registrar las soluciones técnicas en base al ticket.</p>
+<p>Aqui se podran registrar las soluciones técnicas en base al diagnóstico realizado.</p>
 </header>
+
+    <?php if (isset($_GET["error"])) { ?>
+        <p class="mensaje-error"><?= htmlspecialchars($_GET["error"]) ?></p>
+    <?php } ?>
+
+    <?php if (isset($_GET["exito"])) { ?>
+        <p class="mensaje-exito"><?= htmlspecialchars($_GET["exito"]) ?></p>
+    <?php } ?>
 
 <section class="modulo" id="Solucion">
   <h2>Registre su resolucion</h2>
-  <form class="formulario" id="formRegistrarSolucion">
-    <label for="registrarSolucionTicket">Ticket</label>
-    <select id="registrarSolucionTicket" required>
-      <option value="INC-2026-0001">INC-2026-0001</option>
-      <option value="INC-2026-0002">INC-2026-0002</option>
-      <option value="INC-2026-0003">INC-2026-0003</option>
-      <option value="INC-2026-0004">INC-2026-0004</option>
-      <option value="INC-2026-0005">INC-2026-0005</option>
-      <option value="INC-2026-0006">INC-2026-0006</option>
-      <option value="INC-2026-0007">INC-2026-0007</option>
-      <option value="INC-2026-0008">INC-2026-0008</option>
-      <option value="INC-2026-0009">INC-2026-0009</option>
+
+  <?php if (empty($diagnosticos)) { ?>
+    <p>No hay diagnósticos registrados todavía. Registre un diagnóstico antes de cargar una solución.</p>
+  <?php } else { ?>
+  <form class="formulario" id="formRegistrarSolucion" action="<?= URL_BASE ?>/app/controlador/procesarRegistrarSolucion.php" method="POST">
+    <label for="registrarSolucionDiagnostico">Diagnóstico</label>
+    <select id="registrarSolucionDiagnostico" name="idDiagnostico" required>
+      <option value="">Seleccione un diagnóstico</option>
+      <?php foreach ($diagnosticos as $diagnostico) { ?>
+        <option value="<?= htmlspecialchars($diagnostico["idDiagnostico"]) ?>">
+            Ticket <?= htmlspecialchars($diagnostico["idTicket"]) ?> - <?= htmlspecialchars($diagnostico["diagnostico"]) ?>
+        </option>
+      <?php } ?>
     </select>
 
     <label for="registrarSolucionSolucion">Solución tecnica aplicada</label>
-    <textarea id="registrarSolucionSolucion" rows="4" minlength="10" required></textarea>
+    <textarea id="registrarSolucionSolucion" name="solucion" rows="4" minlength="10" required></textarea>
 
     <button class="boton-principal" type="submit">Registrar solución</button>
   </form>
+  <?php } ?>
 </section>
-<script src="../Assets/js/RegistraSolucion.js"></script>
-<script src="../Assets/Js/barraNavegacion.js"></script>
-<script src="../Assets/JS/Verificador.js"></script>
+<script src="../Assets/JS/barraNavegacion.js"></script>
 </body>
 </html>
