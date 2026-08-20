@@ -44,7 +44,7 @@
     </header>
 
     <section class="encabezado">
-        <h1>Bienvendio, Tecnico</h1>
+        <h1>Bienvendio, <?= htmlspecialchars($usuario->getNombre()) ?> <?= htmlspecialchars($usuario->getApellido()) ?> (Tecnico)</h1>
          <p>Haga uso del menu para comenzar.</p>
     </section>
     <section class="modulo-imagen"> 

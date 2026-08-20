@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consultar Diagnósticos</title>
-    <link rel="stylesheet" href="<?= $URL_BASE ?>public/assets/Css/style.css">
-    <link rel="stylesheet" href="<?= $URL_BASE ?>public/assets/Css/barraNavegación.css">
+    <link rel="stylesheet" href="<?= URL_BASE ?>/public/assets/Css/style.css">
+    <link rel="stylesheet" href="<?= URL_BASE ?>/public/assets/Css/barraNavegación.css">
 </head>
 <body>
     <header class="BarraNavegacion">
 
         <nav>
             <button class="btnMenu" id="btnMenu" type="button"><img class="menu"
-                    src="<?= $URL_BASE ?>public/assets/Imagenes/Bootstrap/list.svg" alt="menu" width="40" height="40px"></button>
+                    src="<?= URL_BASE ?>public/assets/Imagenes/Bootstrap/list.svg" alt="menu" width="40" height="40px"></button>
 
             <button class="btnMenuC" id="btnMenuC" type="button">
                 <img src="<?= $URL_BASE ?>public/assets/Imagenes/Bootstrap/x.svg" alt="X" class="menu" width="40" height="40px">
