@@ -16,3 +16,22 @@ CREATE TABLE DIAGNOSTICO (
         FOREIGN KEY (cedulaTecnico)
         REFERENCES TECNICO (cedula)
 );
+
+CREATE TABLE SOLUCION (
+    idSolucion INT NOT NULL AUTO_INCREMENT,
+    idDiagnostico INT NOT NULL,
+    cedulaTecnico CHAR(8) NOT NULL,
+    solucion TEXT NOT NULL,
+    fechaSolucion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT pk_solucion
+        PRIMARY KEY (idSolucion),
+
+    CONSTRAINT fk_solucion_diagnostico
+        FOREIGN KEY (idDiagnostico)
+        REFERENCES DIAGNOSTICO (idDiagnostico),
+
+    CONSTRAINT fk_solucion_tecnico
+        FOREIGN KEY (cedulaTecnico)
+        REFERENCES TECNICO (cedula)
+);
