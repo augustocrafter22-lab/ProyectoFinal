@@ -103,7 +103,7 @@
 
                 <section class="ticketInfo">
                     <h3>
-                        <a href="ConsultarDiagnostico.html?ticket=<?= htmlspecialchars($ticket["idTicket"]) ?>" class="ticket-enlace">
+                        <a href="ConsultarDiagnostico.php?ticket=<?= htmlspecialchars($ticket["idTicket"]) ?>" class="ticket-enlace">
                             <?= htmlspecialchars($ticket["idTicket"]) ?>
                         </a>
                     </h3>
