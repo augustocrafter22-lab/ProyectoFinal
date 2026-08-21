@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . "/../config/config.php";
+
 session_start();
 
 if (!isset($_SESSION["cedula"])) {
@@ -14,6 +16,6 @@ if (!isset($_SESSION["tecnico"]) || $_SESSION["tecnico"] !== true) {
     exit;
 }
 
-require_once __DIR__ . "/../Assets/app/vista/controlador/cargarTickets.php";
+require_once RUTA_CONTROLADOR . "/cargarTickets.php";
 
 ?>
