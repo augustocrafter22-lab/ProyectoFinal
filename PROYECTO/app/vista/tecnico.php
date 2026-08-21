@@ -21,7 +21,7 @@
             </button>
 
             <ul class="listaNavegacion">
-                <li><a href="VistaDeLaboratorio.html">Solicitudes de laboratorio</a></li>
+                <li><a href="VistaLab.php">Solicitudes de laboratorio</a></li>
                 <li><a href="VistaDeTickets.php">Tickets</a></li>
                 <li><a href="SolucionTicket.html">Solucionar ticket</a></li>
                 <li><a href="RegistrarDiagnostico.php">Registrar diagnostico</a></li>

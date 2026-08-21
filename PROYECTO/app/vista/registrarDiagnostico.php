@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registro de Diagnostico</title>
-  <link rel="stylesheet" href="../assets/Css/style.css">
-  <link rel="stylesheet" href="../Assets/Css/barraNavegación.css">
+  <link rel="stylesheet" href="<?= URL_BASE ?>/public/assets/css/style.css">
+  <link rel="stylesheet" href="<?= URL_BASE ?>/public/assets/css/barraNavegacion.css">
 </head>
 <body>
 
@@ -13,30 +13,30 @@
 
         <nav>
             <button class="btnMenu" id="btnMenu" type="button"><img class="menu"
-                    src="../Assets/Imagenes/Bootstrap/list.svg" alt="menu" width="40" height="40px"></button>
+                    src="<?= URL_BASE ?>/public/assets/img/Bootstrap/list.svg" alt="menu" width="40" height="40px"></button>
 
             <button class="btnMenuC" id="btnMenuC" type="button">
-                <img src="../Assets/Imagenes/Bootstrap/x.svg" alt="X" class="menu" width="40" height="40px">
+                <img src="<?= URL_BASE ?>/public/assets/img/Bootstrap/x.svg" alt="X" class="menu" width="40" height="40px">
             </button>
 
             <ul class="listaNavegacion">
-                <li><a href="Tecnico.html">Regresar</a></li>
+                <li><a href="Tecnico.php">Regresar</a></li>
                 <li><a href="ModificarDiagnostico.php">Modificar Diagnostico</a></li>
                 <li><a href="ConsultarDiagnostico.php">Consultar diagnosticos</a></li>
-                <li><a href="RegistrarIntervencion.html">Registrar intervencion</a></li>
-                <li><a href="RegistrarReemplazo.html">Registrar reemplazo</a></li>
-                <li><a href="RegistrarReparacion.html">Registrar reparacion</a></li>
+                <li><a href="RegistrarIntervencion.php">Registrar intervencion</a></li>
+                <li><a href="RegistrarReemplazo.php">Registrar reemplazo</a></li>
+                <li><a href="RegistrarReparacion.php">Registrar reparacion</a></li>
                 <li><a href="RegistrarSolucion.php">Registrar solucion</a></li>
-                <li><a href="cerrarSesion.php">Cerrar sesion</a></li>
+                <li><a class="cerrarSesion" href="cerrarSesion.php">Cerrar sesion</a></li>
             </ul>
         </nav>
         <h1>S.G.R.S.I</h1>
-        <img src="../Assets/Imagenes/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo-Utu" width="75px">
+        <img src="<?= URL_BASE ?>/public/assets/img/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo-Utu" width="75px">
     </header>
-
+<section class="encabezado">
 <h1>Registro de Diagnostico</h1>
     <p>Aqui se podran registrar los diagnósticos técnicos en base al ticket.</p>
-
+</section>
     <?php if (isset($_GET["error"])) { ?>
         <p class="mensaje-error"><?= htmlspecialchars($_GET["error"]) ?></p>
     <?php } ?>
@@ -50,7 +50,7 @@
 
   <form class="formulario" id="formregistrarDiagnostico" action="<?= URL_BASE ?>/app/controlador/procesarRegistrarDiagnostico.php" method="POST">
     <label for="registrarDiagnosticoTicket">Ticket</label>
-    <select id="registrarDiagnosticoTicket" name="idTicket" required>
+    <select id="registrarDiagnosticoTicket" name="idTicket" class="eligeTicket" required>
         <option value="">Seleccione un ticket</option>
         <?php foreach ($tickets as $ticket) { ?>
             <option value="<?= htmlspecialchars($ticket["idTicket"]) ?>">
@@ -65,6 +65,6 @@
     <button class="boton-principal" type="submit">Registrar diagnóstico</button>
   </form>
 </section>
-    <script src="../Assets/JS/barraNavegacion.js"></script>
+    <script src="<?= URL_BASE ?>/public/assets/js/barraNavegacion.js"></script>
     </body>
 </html>

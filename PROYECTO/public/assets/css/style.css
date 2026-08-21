@@ -101,9 +101,9 @@ form.formulario label {
 form.formulario select,
 form.formulario textarea,
 form.formulario input {
-  width: 100%;
+  width: 65%;
   padding: 10px 14px;
-  border: 1px solid var(--color-borde);
+  border: 1px solid black;
   border-radius: var(--radio);
   background-color: var(--color-input-bg);
   font-size: 14px;
@@ -114,9 +114,7 @@ form.formulario input {
 .formulario select:focus,
 .formulario textarea:focus,
 .formulario input:focus {
-  outline: none;
   border-color: var(--color-azul);
-  box-shadow: 0 0 0 3px rgba(25, 86, 192, 0.15);
 }
 
 .formulario textarea {
@@ -126,7 +124,7 @@ form.formulario input {
 
 .boton-principal {
   margin-top: 22px;
-  width: 50%;
+  width: 50vh;
   padding: 12px 20px;
   border: none;
   border-radius: var(--radio);
@@ -147,7 +145,7 @@ form.formulario input {
 
 .boton-secundario {
   margin-top: 22px;
-  width: 100%;
+  width: 75%;
   padding: 12px 20px;
   border: 1px solid var(--color-borde);
   border-radius: var(--radio);
@@ -205,4 +203,10 @@ caption {
   font-size: 14px;
   color: var(--color-texto-suave);
   margin-top: 8px;
+}
+.eligeTicket {
+  border: 2px solid black;
+  color: black;
+  border-radius: 5px;
+  max-width: 75vw;
 }
