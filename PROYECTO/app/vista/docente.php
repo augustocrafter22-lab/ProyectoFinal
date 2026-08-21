@@ -21,9 +21,9 @@
             </button>
 
             <ul class="listaNavegacion">
-                <li><a href="<?= URL_BASE ?>/public/SolicitudesLaboratorio.php">Solicitar laboratorio</a></li>
+                <li><a href="<?= URL_BASE ?>/public/SolicitarLab.php">Solicitar laboratorio</a></li>
                 <li><a href="<?= URL_BASE ?>/public/IngresoDeTickets.php">Ingresar Ticket</a></li>
-                <li><a href="<?= URL_BASE ?>/public/Login.php" class="cerrarSesion">Cerrar sesion</a></li>
+                <li><a class="cerrarSesion" href="<?= URL_BASE ?>/public/Login.php" class="cerrarSesion">Cerrar sesion</a></li>
             </ul>
         </nav>
         <h1>S.G.R.S.I</h1>
