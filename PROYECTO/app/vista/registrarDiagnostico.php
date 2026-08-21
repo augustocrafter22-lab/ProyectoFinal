@@ -23,10 +23,6 @@
                 <li><a href="Tecnico.php">Regresar</a></li>
                 <li><a href="ModificarDiagnostico.php">Modificar Diagnostico</a></li>
                 <li><a href="ConsultarDiagnostico.php">Consultar diagnosticos</a></li>
-                <li><a href="RegistrarIntervencion.php">Registrar intervencion</a></li>
-                <li><a href="RegistrarReemplazo.php">Registrar reemplazo</a></li>
-                <li><a href="RegistrarReparacion.php">Registrar reparacion</a></li>
-                <li><a href="RegistrarSolucion.php">Registrar solucion</a></li>
                 <li><a class="cerrarSesion" href="cerrarSesion.php">Cerrar sesion</a></li>
             </ul>
         </nav>

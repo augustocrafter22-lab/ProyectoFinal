@@ -1,8 +1,6 @@
 <?php
 
 require_once RUTA_MODELO . "/ConectorPDO.php";
-require_once RUTA_MODELO . "/AccesoDatosUsuario.php";
-require_once RUTA_MODELO . "/Usuario.php";
 require_once RUTA_MODELO . "/AccesoDatosDashboard.php";
 
 try {
@@ -11,15 +9,6 @@ try {
 
     if ($conexion === null) {
         throw new Exception("No se pudo conectar a la base de datos");
-    }
-
-    $accesoDatosUsuario = new AccesoDatosUsuario($conexion);
-    $usuario = $accesoDatosUsuario->buscarUsuario($_SESSION["cedula"]);
-
-    if ($usuario === null) {
-        $conectorPDO->desconectar();
-        header("Location: " . URL_BASE . "/public/login.php?error=" . urlencode("Usuario no encontrado"));
-        exit;
     }
 
     $accesoDatosDashboard = new AccesoDatosDashboard($conexion);
@@ -36,6 +25,6 @@ try {
     exit;
 }
 
-require_once RUTA_VISTA . "/tecnico.php";
+require_once RUTA_VISTA . "/Dashboard.php";
 
 ?>

@@ -12,21 +12,21 @@
 
         <nav>
             <button class="btnMenu" id="btnMenu" type="button"><img class="menu"
-                    src="<?= URL_BASE ?>public/assets/img/Bootstrap/list.svg" alt="menu" width="40" height="40px"></button>
+                    src="<?= URL_BASE ?>/public/assets/img/Bootstrap/list.svg" alt="menu" width="40" height="40px"></button>
 
             <button class="btnMenuC" id="btnMenuC" type="button">
-                <img src="<?= URL_BASE ?>public/assets/img/Bootstrap/x.svg" alt="X" class="menu" width="40" height="40px">
+                <img src="<?= URL_BASE ?>/public/assets/img/Bootstrap/x.svg" alt="X" class="menu" width="40" height="40px">
             </button>
 
             <ul class="listaNavegacion">
-                <li><a href="<?= URL_BASE ?>public/Tecnico.php">Regresar</a></li>
-                <li><a href="<?= URL_BASE ?>public/RegistrarDiagnostico.php">Registrar diagnostico</a></li>
-                <li><a href="<?= URL_BASE ?>public/RegistrarSolucion.php">Registrar solucion</a></li>
-                <li><a href="<?= URL_BASE ?>public/cerrarSesion.php">Cerrar sesion</a></li>
+                <li><a href="<?= URL_BASE ?>/public/Tecnico.php">Regresar</a></li>
+                <li><a href="<?= URL_BASE ?>/public/RegistrarDiagnostico.php">Registrar diagnostico</a></li>
+                <li><a href="<?= URL_BASE ?>/public/RegistrarSolucion.php">Registrar solucion</a></li>
+                <li><a href="<?= URL_BASE ?>/public/cerrarSesion.php" class="cerrarSesion">Cerrar sesion</a></li>
             </ul>
         </nav>
         <h1>S.G.R.S.I</h1>
-        <img src="<?= URL_BASE ?>public/assets/img/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo-Utu" width="75px">
+        <img src="<?= URL_BASE ?>/public/assets/img/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo-Utu" width="75px">
     </header>
 
 

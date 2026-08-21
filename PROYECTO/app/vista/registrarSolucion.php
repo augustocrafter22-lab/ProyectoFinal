@@ -23,7 +23,6 @@
 
             <ul class="listaNavegacion">
                 <li><a href="Tecnico.php">Regresar</a></li>
-                <li><a href="RegistrarDiagnostico.php">Registrar diagnostico</a></li>
                 <li><a href="ConsultarDiagnostico.php">Consultar diagnosticos</a></li>
                 <li><a href="RegistrarIntervencion.php">Registrar intervencion</a></li>
                 <li><a href="RegistrarReemplazo.php">Registrar reemplazo</a></li>
