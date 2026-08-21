@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ingreso de Tickets</title>
-  <link rel="stylesheet" href="../Assets/Css/style.css" />
-  <link rel="stylesheet" href="../Assets/Css/barraNavegación.css">
+  <link rel="stylesheet" href="<?= URL_BASE ?>/public/assets/css/style.css" />
+  <link rel="stylesheet" href="<?= URL_BASE ?>/public/assets/css/barraNavegacion.css">
 </head>
 <body>
 
@@ -13,19 +13,19 @@
 
         <nav>
             <button class="btnMenu" id="btnMenu" type="button"><img class="menu"
-                    src="../Assets/Imagenes/Bootstrap/list.svg" alt="menu" width="40" height="40px"></button>
+                    src="<?= URL_BASE ?>/public/assets/img/Bootstrap/list.svg" alt="menu" width="40" height="40px"></button>
 
             <button class="btnMenuC" id="btnMenuC" type="button">
-                <img src="../Assets/Imagenes/Bootstrap/x.svg" alt="X" class="menu" width="40" height="40px">
+                <img src="<?= URL_BASE ?>/public/assets/img/Bootstrap/x.svg" alt="X" class="menu" width="40" height="40px">
             </button>
 
             <ul class="listaNavegacion">
-                <li><a href="Solicitante.html">Regresar</a></li>
-                <li><a href="cerrarSesion.php">Cerrar sesion</a></li>
+                <li><a href="<?= URL_BASE ?>/public/Docente.php">Regresar</a></li>
+                <li><a href="<?= URL_BASE ?>/public/cerrarSesion.php">Cerrar sesion</a></li>
             </ul>
         </nav>
         <h1>S.G.R.S.I</h1>
-        <img src="../Assets/Imagenes/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo-Utu" width="75px">
+        <img src="<?= URL_BASE ?>/public/assets/img/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo-Utu" width="75px">
     </header>
 
   <section class="encabezado">
@@ -33,11 +33,19 @@
     <p>¡Hola! Este espacio es para ingresar nuevos tickets sobre incidencias que hayan en los equipos de los laboratorios</p>
   </section>
 
+  <?php if (isset($_GET["error"])) { ?>
+      <p class="mensaje-error"><?= htmlspecialchars($_GET["error"]) ?></p>
+  <?php } ?>
+
+  <?php if (isset($_GET["exito"])) { ?>
+      <p class="mensaje-exito"><?= htmlspecialchars($_GET["exito"]) ?></p>
+  <?php } ?>
+
   <section class="modulo" id="ingresoTickets">
-    <form class="formulario" id="ticketForm">
+    <form class="formulario" id="ticketForm" action="<?= URL_BASE ?>/app/controlador/procesarIngresoTickets.php" method="POST">
 
       <label for="laboratorioTaller">Espacio de Trabajo</label>
-      <select name="Laboratorio" id="laboratorioTaller" required>
+      <select name="laboratorio" id="laboratorioTaller" required>
         <option value="">Seleccione un espacio</option>
         <option value="Laboratorio 1">Laboratorio 1</option>
         <option value="Laboratorio 2">Laboratorio 2</option>
@@ -51,7 +59,7 @@
       </select>
 
       <label for="equipo">Equipos</label>
-      <select name="Equipos" id="equipo" required>
+      <select name="equipo" id="equipo" required>
         <option value="">Seleccione un equipo</option>
         <option value="PC-01">PC-01</option>
         <option value="PC-02">PC-02</option>
@@ -95,8 +103,6 @@
 
     </form>
   </section>
-  <script src="../Assets/js/Tickets.js"></script>
-  <script src="../Assets/JS/barraNavegacion.js"></script>
-  <script src="../Assets/JS/Verificador.js"></script>
+  <script src="<?= URL_BASE ?>/public/assets/js/barraNavegacion.js"></script>
 </body>
 </html>
