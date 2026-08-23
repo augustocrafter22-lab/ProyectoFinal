@@ -6,9 +6,6 @@
     <title>Equipos</title>
     <link rel="stylesheet" href="<?= URL_BASE ?>/public/assets/css/barraNavegacion.css" />
     <link rel="stylesheet" href="<?= URL_BASE ?>/public/assets/css/style.css" />
-    <link rel="stylesheet" href="<?= URL_BASE ?>/public/assets/css/equipos.css" />
-    <link rel="stylesheet" href="<?= URL_BASE ?>/public/assets/css/Formulario.css" />
-    <link rel="stylesheet" href="<?= URL_BASE ?>/public/assets/css/globalSistema.css" />
   </head>
   <body>
     <header class="BarraNavegacion">
@@ -21,7 +18,7 @@
         </button>
         <ul class="listaNavegacion">
           <li><a href="<?= URL_BASE ?>/public/Tecnico.php">Regresar</a></li>
-          <li><a href="<?= URL_BASE ?>/public/cerrarSesion.php">Cerrar sesion</a></li>
+          <li><a href="<?= URL_BASE ?>/public/cerrarSesion.php" class="cerrarSesion">Cerrar sesion</a></li>
         </ul>
       </nav>
       <h1>S.G.R.S.I</h1>

@@ -14,9 +14,7 @@
       <button class="btnMenuC" id="btnMenuC" type="button"><img src="<?= URL_BASE ?>/public/assets/img/Bootstrap/x.svg" alt="X" class="menu" width="40" height="40"></button>
       <ul class="listaNavegacion">
         <li><a href="Tecnico.php">Regresar</a></li>
-        <li><a href="RegistrarDiagnostico.php">Registrar diagnostico</a></li>
-        <li><a href="RegistrarSolucion.php">Registrar solucion</a></li>
-        <li><a href="cerrarSesion.php">Cerrar sesion</a></li>
+        <li><a href="cerrarSesion.php" class="cerrarSesion">Cerrar sesion</a></li>
       </ul>
     </nav>
     <h1>S.G.R.S.I</h1>

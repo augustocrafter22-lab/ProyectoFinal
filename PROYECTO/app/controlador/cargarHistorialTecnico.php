@@ -25,4 +25,4 @@ $conectorPDO->desconectar();
 require_once RUTA_VISTA . "/historialTecnico.php";
 
 ?>
-?>
+

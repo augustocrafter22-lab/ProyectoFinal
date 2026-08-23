@@ -210,3 +210,32 @@ caption {
   border-radius: 5px;
   max-width: 75vw;
 }
+.filtrosBarra {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--blancoPuro);
+    border-radius: 12px;
+    border: 0.5px solid var(--blancoCristal);
+    margin-bottom: 1rem;
+}
+
+.filtroContenedor {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--medio);
+    flex: 1 1 180px; /* crece/encoge, con un mínimo cómodo antes de saltar de línea */
+}
+
+.filtroInput {
+    padding: 0.5rem 0.75rem;
+    font-size: 14px;
+    border: 1px solid var(--gris);
+    border-radius: 8px;
+    color: var(--negro);
+}
+

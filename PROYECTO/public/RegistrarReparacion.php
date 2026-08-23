@@ -18,13 +18,9 @@ if (!isset($_SESSION["tecnico"]) || $_SESSION["tecnico"] !== true) {
 }
 
 $modoReparacion = true;
-require_once RUTA_CONTROLADOR . "/cargarRegistrarSolucion.php";
-
-?>
-    header("Location: " . URL_BASE . "/public/Login.php?error=" . urlencode("No tiene autorización para acceder a ese panel."));
-    exit;
-}
-
 require_once RUTA_CONTROLADOR . "/cargarRegistrarReparacion.php";
 
 ?>
+
+
+

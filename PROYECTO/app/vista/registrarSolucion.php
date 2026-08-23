@@ -27,7 +27,7 @@
                 <li><a href="RegistrarIntervencion.php">Registrar intervencion</a></li>
                 <li><a href="RegistrarReemplazo.php">Registrar reemplazo</a></li>
                 <li><a href="RegistrarReparacion.php">Registrar reparacion</a></li>
-                <li><a href="cerrarSesion.php">Cerrar sesion</a></li>
+                <li><a href="cerrarSesion.php" class="cerrarSesion">Cerrar sesion</a></li>
             </ul>
         </nav>
         <h1>S.G.R.S.I</h1>

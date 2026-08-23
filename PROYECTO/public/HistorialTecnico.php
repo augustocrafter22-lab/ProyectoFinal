@@ -19,6 +19,3 @@ if (!isset($_SESSION["tecnico"]) || $_SESSION["tecnico"] !== true) {
 }
 
 require_once RUTA_CONTROLADOR . "/cargarHistorialTecnico.php";
-
-?>
-?>
