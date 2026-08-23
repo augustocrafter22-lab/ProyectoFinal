@@ -61,6 +61,27 @@ class AccesoDatosSolucion {
 
         return $consulta->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function listarSolucionesConEquipo(): array {
+        $sql = "
+            SELECT
+                s.idSolucion,
+                d.idTicket,
+                t.equipo,
+                s.cedulaTecnico,
+                s.solucion,
+                s.fechaSolucion
+            FROM SOLUCION AS s
+            INNER JOIN DIAGNOSTICO AS d ON d.idDiagnostico = s.idDiagnostico
+            INNER JOIN TICKET AS t ON t.idTicket = d.idTicket
+            ORDER BY s.fechaSolucion DESC
+        ";
+
+        $consulta = $this->conexion->prepare($sql);
+        $consulta->execute();
+
+        return $consulta->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 
 ?>

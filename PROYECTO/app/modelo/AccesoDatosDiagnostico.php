@@ -49,10 +49,12 @@ class AccesoDatosDiagnostico {
             SELECT
                 d.idDiagnostico,
                 d.idTicket,
+                t.equipo,
                 d.cedulaTecnico,
                 d.diagnostico,
                 d.fechaDiagnostico
             FROM DIAGNOSTICO AS d
+            INNER JOIN TICKET AS t ON t.idTicket = d.idTicket
         ";
 
         if ($idTicket !== null && $idTicket !== "") {
@@ -83,10 +85,12 @@ class AccesoDatosDiagnostico {
             SELECT
                 d.idDiagnostico,
                 d.idTicket,
+                t.equipo,
                 d.cedulaTecnico,
                 d.diagnostico,
                 d.fechaDiagnostico
             FROM DIAGNOSTICO AS d
+            INNER JOIN TICKET AS t ON t.idTicket = d.idTicket
             WHERE d.idDiagnostico = :idDiagnostico
         ";
 

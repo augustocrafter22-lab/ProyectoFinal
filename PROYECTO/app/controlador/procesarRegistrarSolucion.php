@@ -19,10 +19,12 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 $idDiagnostico = trim($_POST["idDiagnostico"] ?? "");
 $solucion = trim($_POST["solucion"] ?? "");
 $cedulaTecnico = $_SESSION["cedula"];
+$esReparacion = ($_POST["modo"] ?? "") === "reparacion";
+$paginaRegistro = $esReparacion ? "RegistrarReparacion.php" : "RegistrarSolucion.php";
 
 if ($idDiagnostico === "" || !ctype_digit($idDiagnostico) || strlen($solucion) < 10) {
     $mensaje = "Debe seleccionar el diagnóstico e ingresar una solución de al menos 10 caracteres.";
-    header("Location: " . URL_BASE . "/public/RegistrarSolucion.php?error=" . urlencode($mensaje));
+    header("Location: " . URL_BASE . "/public/" . $paginaRegistro . "?error=" . urlencode($mensaje));
     exit;
 }
 
@@ -39,11 +41,12 @@ try {
 
     $conectorPDO->desconectar();
 
-    header("Location: " . URL_BASE . "/public/RegistrarSolucion.php?exito=" . urlencode("Solución registrada correctamente."));
+    $mensajeExito = $esReparacion ? "Reparación registrada correctamente." : "Solución registrada correctamente.";
+    header("Location: " . URL_BASE . "/public/" . $paginaRegistro . "?exito=" . urlencode($mensajeExito));
     exit;
 
 } catch (Exception $e) {
-    header("Location: " . URL_BASE . "/public/RegistrarSolucion.php?error=" . urlencode("Error: " . $e->getMessage()));
+    header("Location: " . URL_BASE . "/public/" . $paginaRegistro . "?error=" . urlencode("Error: " . $e->getMessage()));
     exit;
 }
 
