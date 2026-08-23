@@ -1,89 +1,111 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registrar Reemplazo de Componente</title>
-  <link rel="stylesheet" href="../Assets/Css/style.css">
-  <link rel="stylesheet" href="../Assets/Css/barraNavegación.css">
-</head>
-<body>
-  <header class="BarraNavegacion">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registrar Reemplazo de Componente</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/barraNavegacion.css" />
+  </head>
+  <body>
+    <header class="BarraNavegacion">
+      <nav>
+        <button class="btnMenu" id="btnMenu" type="button">
+          <img
+            class="menu"
+            src="assets/img/Bootstrap/list.svg"
+            alt="menu"
+            width="40"
+            height="40px"
+          />
+        </button>
 
-        <nav>
-            <button class="btnMenu" id="btnMenu" type="button"><img class="menu"
-                    src="../Assets/Imagenes/Bootstrap/list.svg" alt="menu" width="40" height="40px"></button>
+        <button class="btnMenuC" id="btnMenuC" type="button">
+          <img
+            src="assets/img/Bootstrap/x.svg"
+            alt="X"
+            class="menu"
+            width="40"
+            height="40px"
+          />
+        </button>
 
-            <button class="btnMenuC" id="btnMenuC" type="button">
-                <img src="../Assets/Imagenes/Bootstrap/x.svg" alt="X" class="menu" width="40" height="40px">
-            </button>
-
-            <ul class="listaNavegacion">
-                <li><a href="Tecnico.html">Regresar</a></li>
-                <li><a href="RegistrarDiagnostico.html">Registrar diagnostico</a></li>
-                <li><a href="RegistrarIntervencion.html">Registrar intervencion</a></li>
-                <li><a href="RegistrarReparacion.html">Registrar reparacion</a></li>
-                <li><a href="RegistrarSolucion.html">Registrar solucion</a></li>
-                <li><a href="cerrarSesion.php">Cerrar sesion</a></li>
-            </ul>
-        </nav>
-        <h1>S.G.R.S.I</h1>
-        <img src="../Assets/Imagenes/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo-Utu" width="75px">
+        <ul class="listaNavegacion">
+          <li><a href="Tecnico.html">Regresar</a></li>
+          <li><a href="RegistrarDiagnostico.html">Registrar diagnostico</a></li>
+          <li>
+            <a href="RegistrarIntervencion.html">Registrar intervencion</a>
+          </li>
+          <li><a href="RegistrarReparacion.php">Registrar reparacion</a></li>
+          <li><a href="RegistrarSolucion.html">Registrar solucion</a></li>
+          <li><a href="cerrarSesion.php">Cerrar sesion</a></li>
+        </ul>
+      </nav>
+      <h1>S.G.R.S.I</h1>
+      <img
+        src="assets/img/Isotipo-UTU-Color-Dorado-PNG.png"
+        alt="Logo-Utu"
+        width="75px"
+      />
     </header>
 
-<header class="encabezado">
-  <h1>Registrar Reemplazo de Componente</h1>
-  <p>Registrá el reemplazo de un componente en un equipo.</p>
-</header>
+    <header class="encabezado">
+      <h1>Registrar Reemplazo de Componente</h1>
+      <p>Registrá el reemplazo de un componente en un equipo.</p>
+    </header>
 
-<section class="modulo" id="registrarReemplazo">
-  <h2>Nuevo reemplazo</h2>
+    <section class="modulo" id="registrarReemplazo">
+      <h2>Nuevo reemplazo</h2>
 
-  <form class="formulario" id="formRegistrarReemplazo">
+      <form class="formulario" id="formRegistrarReemplazo">
+        <label for="reemplazoEquipoSelect">Equipo</label>
+        <select id="reemplazoEquipoSelect" required>
+          <option value="">Seleccioná un equipo</option>
+          <option value="PC-01">PC-01</option>
+          <option value="PC-02">PC-02</option>
+          <option value="PC-03">PC-03</option>
+          <option value="PC-04">PC-04</option>
+          <option value="PC-05">PC-05</option>
+          <option value="PC-06">PC-06</option>
+          <option value="PC-07">PC-07</option>
+          <option value="PC-08">PC-08</option>
+          <option value="PC-09">PC-09</option>
+          <option value="PC-10">PC-10</option>
+        </select>
 
-    <label for="reemplazoEquipoSelect">Equipo</label>
-    <select id="reemplazoEquipoSelect" required>
-      <option value=""> Seleccioná un equipo </option>
-      <option value="PC-01">PC-01</option>
-      <option value="PC-02">PC-02</option>
-      <option value="PC-03">PC-03</option>
-      <option value="PC-04">PC-04</option>
-      <option value="PC-05">PC-05</option>
-      <option value="PC-06">PC-06</option>
-      <option value="PC-07">PC-07</option>
-      <option value="PC-08">PC-08</option>
-      <option value="PC-09">PC-09</option>
-      <option value="PC-10">PC-10</option>
-    </select>
+        <label for="reemplazoComponente">Componente reemplazado</label>
+        <select id="reemplazoComponente" required>
+          <option value="">Seleccioná el cambio</option>
+          <option value="Disco duro">Disco duro</option>
+          <option value="Memoria RAM">Memoria RAM</option>
+          <option value="Teclado">Teclado</option>
+          <option value="Mouse">Mouse</option>
+          <option value="Monitor">Monitor</option>
+          <option value="Fuente de poder">PSU</option>
+          <option value="Placa de video">Placa de video</option>
+          <option value="Placa madre">Placa madre</option>
+          <option value="Procesador">CPU</option>
+          <option value="Ventilador">Fan</option>
+          <option value="Cable de red">Cable de Ethernet</option>
+          <option value="Otro">Otro</option>
+        </select>
 
-    <label for="reemplazoComponente">Componente reemplazado</label>
-    <select id="reemplazoComponente" required>
-      <option value=""> Seleccioná el cambio </option>
-      <option value="Disco duro">Disco duro</option>
-      <option value="Memoria RAM">Memoria RAM</option>
-      <option value="Teclado">Teclado</option>
-      <option value="Mouse">Mouse</option>
-      <option value="Monitor">Monitor</option>
-      <option value="Fuente de poder">PSU</option>
-      <option value="Placa de video">Placa de video</option>
-      <option value="Placa madre">Placa madre</option>
-      <option value="Procesador">CPU</option>
-      <option value="Ventilador">Fan</option>
-      <option value="Cable de red">Cable de Ethernet</option>
-      <option value="Otro">Otro</option>
-    </select>
+        <label for="reemplazoDescripcion">Descripción del reemplazo</label>
+        <textarea
+          id="reemplazoDescripcion"
+          rows="4"
+          minlength="10"
+          required
+        ></textarea>
 
-    <label for="reemplazoDescripcion">Descripción del reemplazo</label>
-    <textarea id="reemplazoDescripcion" rows="4" minlength="10" required></textarea>
+        <button class="boton-principal" type="submit">
+          Registrar reemplazo
+        </button>
+      </form>
+    </section>
 
-    <button class="boton-principal" type="submit">Registrar reemplazo</button>
-
-  </form>
-</section>
-
-<script src="../Assets/js/RegistrarReemplazo.js"></script>
-<script src="../Assets/JS/barraNavegacion.js"></script>
-<script src="../Assets/JS/Verificador.js"></script>
-
-</body>
+    <script src="assets/js/RegistrarReemplazo.js"></script>
+    <script src="assets/js/barraNavegacion.js"></script>
+    <script src="assets/js/Verificador.js"></script>
+  </body>
 </html>

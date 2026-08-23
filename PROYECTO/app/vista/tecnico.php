@@ -28,14 +28,14 @@
                 <li><a href="<?= URL_BASE ?>/public/RegistrarDiagnostico.php">Registrar diagnostico</a></li>
                 <li><a href="<?= URL_BASE ?>/public/RegistrarIntervencion.html">Registrar intervencion</a></li>
                 <li><a href="<?= URL_BASE ?>/public/RegistrarReemplazo.html">Registrar reemplazo</a></li>
-                <li><a href="<?= URL_BASE ?>/public/RegistrarReparacion.html">Registrar reparacion</a></li>
+                <li><a href="<?= URL_BASE ?>/public/RegistrarReparacion.php">Registrar reparacion</a></li>
                 <li><a href="<?= URL_BASE ?>/public/RegistrarSolucion.php">Registrar solucion</a></li>
                 <li><a href="<?= URL_BASE ?>/public/ConsultarDiagnostico.php">Consultar diagnosticos</a></li>
                 <li><a href="<?= URL_BASE ?>/public/ConsultaEstados.html">Consultar Estados</a></li>
                 <li><a href="<?= URL_BASE ?>/public/Equipos.php">Consultar equipos</a></li>
                 <li><a href="<?= URL_BASE ?>/public/ConsultarMovimientos.html">Consultar movimientos</a></li>
                 <li><a href="<?= URL_BASE ?>/public/CambioUbicacion.html">Registrar cambio de ubicacion de dispositivos</a></li>
-                <li><a href="<?= URL_BASE ?>/public/HistorialTecnico.html">Historial Tecnico</a></li>
+                <li><a href="<?= URL_BASE ?>/public/HistorialTecnico.php">Historial Tecnico</a></li>
                 <li><a href="<?= URL_BASE ?>/public/cerrarSesion.php" class="cerrarSesion">Cerrar sesion</a></li>
             </ul>
         </nav>

@@ -1,6 +1,7 @@
 # Credenciales y BD
 .env
 .env.local
+credenciales.local.txt
 
 Reseteador.php
 
