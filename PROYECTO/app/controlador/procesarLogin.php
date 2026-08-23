@@ -65,9 +65,9 @@ try {
     } elseif ($usuario->esCoordinador()) {
         header("Location: " . URL_BASE . "/public/Administrador.php");
     } elseif ($usuario->esTecnico()) {
-        header("Location: " . URL_BASE . "/public/Tecnico.html");
+        header("Location: " . URL_BASE . "/public/Tecnico.php");
     } elseif ($usuario->esDocente()) {
-        header("Location: " . URL_BASE . "/public/Docente.html");
+        header("Location: " . URL_BASE . "/public/Docente.php");
     } else {
         header("Location: " . URL_BASE . "/public/login.php?error=" . urlencode("No tiene permisos"));
     }

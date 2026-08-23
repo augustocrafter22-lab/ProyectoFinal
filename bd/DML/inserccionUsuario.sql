@@ -1,43 +1,19 @@
-INSERT INTO USUARIO (cedula, clave, activo)
-VALUES ('11111111', 'clave123', TRUE);
+INSERT INTO USUARIO (cedula, nombre, apellido, clave, activo)
+VALUES ('11111111', 'Administrador', 'Prueba', '$2y$12$LfM4s0M9fwK9lWdE1N/s.eBOACQ67SaAwAloGq.nL1dKZqHUSIOse', TRUE);
 
-INSERT INTO USUARIO (cedula, clave, activo)
-VALUES ('22222222', 'clave456', TRUE);
+INSERT INTO USUARIO (cedula, nombre, apellido, clave, activo)
+VALUES ('22222222', 'Tecnico', 'Prueba', '$2y$12$pzEl5G4MdFVjxIRoJRslH.T7NPFNybFuktfm66vTs74VTaLJv2vnG', TRUE);
 
-INSERT INTO USUARIO (cedula, clave, activo)
-VALUES ('33333333', 'clave789', TRUE);
+INSERT INTO USUARIO (cedula, nombre, apellido, clave, activo)
+VALUES ('33333333', 'Usuario', 'Prueba', '$2y$12$M/JJqXkOl4j70iqWBBE9k.f7YK7sTeI6jEh6.BAlAD6Aj0Nuchh7K', TRUE);
 
-INSERT INTO USUARIO (cedula, clave, activo)
-VALUES ('44444444', 'clave444', TRUE);
-
--- Administrador
-INSERT INTO ADMINISTRADOR (cedula)
-VALUES ('11111111');
+INSERT INTO USUARIO (cedula, nombre, apellido, clave, activo)
+VALUES ('44444444', 'Docente', 'Prueba', '$2y$12$TNZLc7hRixyWKnv7ntOc9eWVrZ8kVxzXpLpipHBNXGUfDvBLtlzLS', TRUE);
 
 -- Técnico
 INSERT INTO TECNICO (cedula)
-VALUES ('22222222');
+VALUES ('11111111');
 
 -- Docente
 INSERT INTO DOCENTE (cedula)
 VALUES ('44444444');
-
--- Usuario con ambos roles (Administrador y Técnico)
-INSERT INTO TECNICO (cedula)
-VALUES ('11111111');
-
-DELETE FROM ADMINISTRADOR
-WHERE cedula = '11111111';
-
-DELETE FROM TECNICO
-WHERE cedula = '22222222';
-
-DELETE FROM DOCENTE
-WHERE cedula = '44444444';
-
-DELETE FROM USUARIO
-WHERE cedula = '33333333';
-
-UPDATE USUARIO
-SET clave = 'nuevaClave'
-WHERE cedula = '11111111';

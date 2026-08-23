@@ -27,7 +27,9 @@
                     <label for="clave">Contraseña:</label>
                     <input type="password" id="clave" name="clave" autocomplete="current-password" minlength="1" required />
 
-                    <p id="errorMessage" style="color: red"></p>
+                    <?php if (isset($_GET["error"])): ?>
+                        <p id="errorMessage" style="color: red"><?= htmlspecialchars($_GET["error"]) ?></p>
+                    <?php endif; ?>
                     <button type="submit" class="boton-principal">Ingresar</button>
                 </fieldset>
             </form>
