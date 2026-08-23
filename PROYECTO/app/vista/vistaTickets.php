@@ -99,7 +99,7 @@
 
         <?php foreach ($tickets as $ticket) { ?>
 
-            <article class="ticket" data-fecha="<?= htmlspecialchars($ticket["fechaCreacion"]) ?>">
+            <article class="ticket" data-id="<?= htmlspecialchars($ticket["idTicket"]) ?>" data-fecha="<?= htmlspecialchars($ticket["fechaCreacion"]) ?>">
 
                 <section class="ticketInfo">
                     <h3>
@@ -133,7 +133,6 @@
 
                     <p class="laboratorio"><?= htmlspecialchars($ticket["laboratorio"]) ?></p>
 
-                    <button type="button" class="btn-finalizar">Finalizar Ticket</button>
 
                     <?php if (!empty($ticket["fechaFinalizacion"])) { ?>
                         <p>Finalizado: <?= htmlspecialchars($ticket["fechaFinalizacion"]) ?></p>
@@ -147,7 +146,7 @@
 
     </section>
 
-    <script src="<?= URL_BASE ?>/public/assets/js/IngresoTickets.js"></script>
+    <script src="<?= URL_BASE ?>/public/assets/js/actualizarTicket.js"></script>
     <script src="<?= URL_BASE ?>/public/assets/js/filtros.js"></script>
     <script src="<?= URL_BASE ?>/public/assets/js/buscadorDeTickets.js"></script>
     <script src="<?= URL_BASE ?>/public/assets/js/filtroDeFechas.js"></script>

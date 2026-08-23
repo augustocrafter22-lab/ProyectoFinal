@@ -1,15 +1,17 @@
 const buscadorDeTickets = document.getElementById("buscadorDeTickets");
 const buscarTicket = document.getElementById("buscarTicket");
 
-buscarTicket.addEventListener("click", function() {
+function filtrarPorIdTicket() {
 
-    const textoBuscado = buscadorDeTickets.value.trim();
+    const textoBuscado = buscadorDeTickets.value.trim().toLowerCase();
+
+    const ticketsVista = document.querySelectorAll(".ticket");
 
     ticketsVista.forEach(function(ticket) {
 
-        const idIncidencia = ticket.querySelector("h3").textContent.trim();
+        const idIncidencia = ticket.dataset.id.toLowerCase();
 
-        if (textoBuscado === "" || idIncidencia === textoBuscado) {
+        if (textoBuscado === "" || idIncidencia.includes(textoBuscado)) {
             ticket.style.display = "flex";
         } else {
             ticket.style.display = "none";
@@ -17,4 +19,6 @@ buscarTicket.addEventListener("click", function() {
 
     });
 
-});
+}
+
+buscarTicket.addEventListener("click", filtrarPorIdTicket);
