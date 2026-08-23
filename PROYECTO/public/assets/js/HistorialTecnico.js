@@ -6,7 +6,9 @@ function iniciarHistorialTecnico() {
 }
 
 function renderizarHistorialTecnico() {
-  const equipoId = document.getElementById("historialTecnicoEquipoSelect").value;
+  const equipoId = document.getElementById(
+    "historialTecnicoEquipoSelect",
+  ).value;
   const tabla = document.getElementById("tablaHistorialTecnico");
 
   if (!equipoId) {
@@ -15,35 +17,41 @@ function renderizarHistorialTecnico() {
   }
 
   const reparaciones = obtenerReparaciones()
-    .filter(function (r) { return r.equipoId === equipoId; })
+    .filter(function (r) {
+      return r.equipoId === equipoId;
+    })
     .map(function (r) {
       return {
         tipo: "Reparación",
         detalle: r.descripcion,
         fecha: r.fecha,
-        tecnico: r.tecnico
+        tecnico: r.tecnico,
       };
     });
 
   const intervenciones = obtenerIntervenciones()
-    .filter(function (r) { return r.equipoId === equipoId; })
+    .filter(function (r) {
+      return r.equipoId === equipoId;
+    })
     .map(function (r) {
       return {
         tipo: "Intervención (" + r.tipo + ")",
         detalle: r.descripcion,
         fecha: r.fecha,
-        tecnico: r.tecnico
+        tecnico: r.tecnico,
       };
     });
 
   const reemplazos = obtenerReemplazos()
-    .filter(function (r) { return r.equipoId === equipoId; })
+    .filter(function (r) {
+      return r.equipoId === equipoId;
+    })
     .map(function (r) {
       return {
         tipo: "Reemplazo (" + r.componente + ")",
         detalle: r.descripcion,
         fecha: r.fecha,
-        tecnico: r.tecnico
+        tecnico: r.tecnico,
       };
     });
 
@@ -95,7 +103,7 @@ function renderizarHistorialTecnico() {
       registro.tipo,
       registro.detalle,
       registro.fecha,
-      registro.tecnico || "-"
+      registro.tecnico || "-",
     ];
 
     valores.forEach(function (valor) {
@@ -115,7 +123,10 @@ function renderizarHistorialTecnico() {
 
 function obtenerReparaciones() {
   const datos = localStorage.getItem("historialReparaciones");
-  return datos === null ? [] : JSON.parse(datos);
+  const reparacionesLocales = datos === null ? [] : JSON.parse(datos);
+  const reparacionesPersistidas = window.reparacionesPersistidas || [];
+
+  return reparacionesPersistidas.concat(reparacionesLocales);
 }
 
 function obtenerIntervenciones() {

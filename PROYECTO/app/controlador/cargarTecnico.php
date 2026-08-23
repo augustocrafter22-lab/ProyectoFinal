@@ -4,6 +4,7 @@ require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosUsuario.php";
 require_once RUTA_MODELO . "/Usuario.php";
 require_once RUTA_MODELO . "/AccesoDatosDashboard.php";
+require_once RUTA_MODELO . "/AccesoDatosSolucion.php";
 
 try {
     $conectorPDO = new ConectorPDO($_ENV['BD_HOST'], $_ENV['BD_USER'], $_ENV['BD_PASS'], $_ENV['BD_NAME']);
@@ -23,11 +24,13 @@ try {
     }
 
     $accesoDatosDashboard = new AccesoDatosDashboard($conexion);
+    $accesoDatosSolucion = new AccesoDatosSolucion($conexion);
 
     $totalReportes = $accesoDatosDashboard->contarTotal();
     $porEstado = $accesoDatosDashboard->contarPorEstado();
     $tiemposResolucion = $accesoDatosDashboard->obtenerTiemposResolucion();
     $incidenciasPorSalon = $accesoDatosDashboard->obtenerIncidenciasPorSalon();
+    $reparaciones = $accesoDatosSolucion->listarSolucionesConEquipo();
 
     $conectorPDO->desconectar();
 
