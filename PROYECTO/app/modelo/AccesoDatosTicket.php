@@ -78,6 +78,35 @@ class AccesoDatosTicket {
     }
 
     /**
+     * Actualiza el estado y la prioridad de un ticket existente.
+     * Si el estado pasa a "Resuelto" o "Cerrado" se registra la fecha de finalización.
+     *
+     * @return bool true si la actualización se ejecutó correctamente.
+     */
+    public function actualizarEstadoYPrioridad(string $idTicket, string $estado, string $prioridad): bool {
+        $estadosFinalizados = ["Resuelto", "Cerrado"];
+        $fechaFinalizacion = in_array($estado, $estadosFinalizados, true) ? date("Y-m-d H:i:s") : null;
+
+        $sql = "
+            UPDATE TICKET
+            SET
+                estado = :estado,
+                prioridad = :prioridad,
+                fechaFinalizacion = :fechaFinalizacion
+            WHERE idTicket = :idTicket
+        ";
+
+        $consulta = $this->conexion->prepare($sql);
+
+        return $consulta->execute([
+            ":estado" => $estado,
+            ":prioridad" => $prioridad,
+            ":fechaFinalizacion" => $fechaFinalizacion,
+            ":idTicket" => $idTicket
+        ]);
+    }
+
+    /**
      * Genera un idTicket único con el formato INC-{año}-{secuencia}.
      */
     private function generarIdTicket(): string {
