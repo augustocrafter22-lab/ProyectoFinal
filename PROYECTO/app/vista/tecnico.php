@@ -32,7 +32,7 @@
                 <li><a href="<?= URL_BASE ?>/public/RegistrarSolucion.php">Registrar solucion</a></li>
                 <li><a href="<?= URL_BASE ?>/public/ConsultarDiagnostico.php">Consultar diagnosticos</a></li>
                 <li><a href="<?= URL_BASE ?>/public/ConsultaEstados.html">Consultar Estados</a></li>
-                <li><a href="<?= URL_BASE ?>/public/Equipos.html">Consultar y registrar estado de equipos</a></li>
+                <li><a href="<?= URL_BASE ?>/public/Equipos.php">Consultar equipos</a></li>
                 <li><a href="<?= URL_BASE ?>/public/ConsultarMovimientos.html">Consultar movimientos</a></li>
                 <li><a href="<?= URL_BASE ?>/public/CambioUbicacion.html">Registrar cambio de ubicacion de dispositivos</a></li>
                 <li><a href="<?= URL_BASE ?>/public/HistorialTecnico.html">Historial Tecnico</a></li>
