@@ -54,3 +54,52 @@
   <script src="<?= URL_BASE ?>/public/assets/js/barraNavegacion.js"></script>
 </body>
 </html>
+    <img src="<?= URL_BASE ?>/public/assets/img/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo-Utu" width="75">
+  </header>
+
+  <section class="encabezado">
+    <h1>Historial Técnico</h1>
+    <p>Consultá las reparaciones registradas para un equipo.</p>
+  </section>
+
+  <section class="modulo" id="historialTecnico" style="max-width: 780px;">
+    <h2>Reparaciones del equipo</h2>
+    <form method="GET">
+      <label for="historialTecnicoEquipoSelect">Equipo</label>
+      <select id="historialTecnicoEquipoSelect" name="equipo" required onchange="this.form.submit()">
+        <option value="">Seleccione un equipo</option>
+        <?php foreach ($equipos as $equipo) { ?>
+          <option value="<?= htmlspecialchars($equipo["idEquipo"]) ?>" <?= $idEquipo === $equipo["idEquipo"] ? "selected" : "" ?>>
+            <?= htmlspecialchars($equipo["idEquipo"]) ?>
+          </option>
+        <?php } ?>
+      </select>
+    </form>
+
+    <?php if ($idEquipo !== "" && empty($reparaciones)) { ?>
+      <p>No hay reparaciones registradas para este equipo.</p>
+    <?php } elseif ($idEquipo !== "") { ?>
+      <table style="width:100%; border-collapse:collapse; font-size:14px;">
+        <thead>
+          <tr>
+            <th>Ticket</th>
+            <th>Descripción</th>
+            <th>Fecha</th>
+            <th>Técnico</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($reparaciones as $reparacion) { ?>
+            <tr>
+              <td><?= htmlspecialchars($reparacion["idTicket"]) ?></td>
+              <td><?= htmlspecialchars($reparacion["reparacion"]) ?></td>
+              <td><?= htmlspecialchars($reparacion["fechaReparacion"]) ?></td>
+              <td><?= htmlspecialchars($reparacion["cedulaTecnico"]) ?></td>
+            </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+    <?php } ?>
+  </section>
+</body>
+</html>
