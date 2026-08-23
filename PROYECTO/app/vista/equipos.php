@@ -40,6 +40,25 @@
           <p style="color: green"><?= htmlspecialchars($_GET["exito"]) ?></p>
         <?php endif; ?>
 
+        <section class="filtrosBarra" aria-label="Filtros de equipos">
+          <label class="filtroContenedor" for="filtroID">
+            ID
+            <input class="filtroInput" type="text" id="filtroID" placeholder="Buscar por ID" />
+          </label>
+          <label class="filtroContenedor" for="filtroLab">
+            Laboratorio
+            <input class="filtroInput" type="text" id="filtroLab" placeholder="Buscar por laboratorio" />
+          </label>
+          <label class="filtroContenedor" for="filtroEstado">
+            Estado
+            <input class="filtroInput" type="text" id="filtroEstado" placeholder="Buscar por estado" />
+          </label>
+          <label class="filtroContenedor" for="filtroDisponibilidad">
+            Disponibilidad
+            <input class="filtroInput" type="text" id="filtroDisponibilidad" placeholder="Buscar por disponibilidad" />
+          </label>
+        </section>
+
         <form action="<?= URL_BASE ?>/public/procesarEquipo.php" method="POST">
           <fieldset>
             <legend><?= $equipoEditar === null ? "Alta de equipo" : "Modificar equipo" ?></legend>
@@ -101,7 +120,7 @@
               <th>Acciones</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="cuerpoTablaPc">
             <?php foreach ($equipos as $equipo): ?>
               <tr>
                 <td><?= htmlspecialchars($equipo["idEquipo"]) ?></td>
@@ -126,5 +145,6 @@
     </main>
 
     <script src="<?= URL_BASE ?>/public/assets/js/barraNavegacion.js"></script>
+    <script src="<?= URL_BASE ?>/public/assets/js/filtrosEquipos.js"></script>
   </body>
 </html>
