@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Controlador que carga la vista de consulta de diagnósticos.
+ *
+ * Admite un filtro opcional por ticket vía GET ("ticket") y muestra
+ * el listado de diagnósticos correspondiente en la vista.
+ */
+
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosDiagnostico.php";
 

@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Controlador que carga el panel de técnico.
+ *
+ * Busca al usuario autenticado (por su cédula en sesión), y si existe
+ * carga las métricas del dashboard y las reparaciones/soluciones
+ * registradas para mostrarlas en la vista de técnico.
+ */
+
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosUsuario.php";
 require_once RUTA_MODELO . "/Usuario.php";

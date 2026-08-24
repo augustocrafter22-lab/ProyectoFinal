@@ -4,11 +4,20 @@ class AltaDatosUsuario
 {
     private PDO $conexion;
 
+    /**
+     * @param PDO $conexion Conexión activa a la base de datos.
+     */
     public function __construct(PDO $conexion)
     {
         $this->conexion = $conexion;
     }
 
+    /**
+     * Verifica si ya existe un usuario registrado con la cédula indicada.
+     *
+     * @param string $cedula Cédula a verificar.
+     * @return bool true si el usuario existe, false en caso contrario.
+     */
     public function usuarioExiste(string $cedula): bool
     {
         $sql = "SELECT cedula FROM USUARIO WHERE cedula = :cedula";
@@ -17,6 +26,17 @@ class AltaDatosUsuario
         return $consulta->fetch() !== false;
     }
 
+    /**
+     * Crea un nuevo usuario con sus roles asociados, validando los datos ingresados.
+     *
+     * @param string $cedula Cédula del nuevo usuario.
+     * @param string $claveHasheada Contraseña ya hasheada a almacenar.
+     * @param string $nombre Nombre del usuario.
+     * @param string $apellido Apellido del usuario.
+     * @param int $activo Estado inicial del usuario (1 activo, 0 inactivo).
+     * @param array $roles Roles a asignar al usuario.
+     * @return bool true si el usuario fue creado correctamente.
+     */
     public function crearUsuario(string $cedula, string $claveHasheada, string $nombre, string $apellido, int $activo, array $roles): bool
     {
         $rolesValidos = [
@@ -75,6 +95,17 @@ class AltaDatosUsuario
         }
     }
 
+    /**
+     * Actualiza los datos y/o roles de un usuario existente, actualizando solo los campos no nulos.
+     *
+     * @param string $cedula Cédula del usuario a actualizar.
+     * @param string|null $nombre Nuevo nombre, o null para no modificarlo.
+     * @param string|null $apellido Nuevo apellido, o null para no modificarlo.
+     * @param string|null $clave Nueva contraseña en texto plano, o null para no modificarla.
+     * @param array|null $roles Nuevos roles a asignar, o null para no modificarlos.
+     * @param int|null $activo Nuevo estado del usuario, o null para no modificarlo.
+     * @return bool true si la actualización fue exitosa.
+     */
     public function actualizarUsuario(string $cedula, string $nombre = null, string $apellido = null, string $clave = null, array $roles = null, int $activo = null): bool
     {
         $rolesValidos = [
@@ -166,12 +197,25 @@ class AltaDatosUsuario
         }
     }
 
+    /**
+     * Desactiva un usuario existente marcándolo como inactivo.
+     *
+     * @param string $cedula Cédula del usuario a desactivar.
+     * @return bool true si la operación fue exitosa.
+     */
     public function desactivarUsuario(string $cedula): bool
     {
         $sql = "UPDATE USUARIO SET activo = 0 WHERE cedula = :cedula";
         $consulta = $this->conexion->prepare($sql);
         return $consulta->execute([":cedula" => $cedula]);
     }
+
+    /**
+     * Activa un usuario existente marcándolo como activo.
+     *
+     * @param string $cedula Cédula del usuario a activar.
+     * @return bool true si la operación fue exitosa.
+     */
     public function activarUsuario(string $cedula): bool
     {
         $sql = "UPDATE USUARIO SET activo = 1 WHERE cedula = :cedula";

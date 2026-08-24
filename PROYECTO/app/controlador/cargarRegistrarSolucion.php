@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Controlador que carga la vista para registrar una solución.
+ *
+ * Obtiene el listado de diagnósticos existentes para que el técnico
+ * seleccione a cuál asociar la nueva solución.
+ */
+
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosDiagnostico.php";
 

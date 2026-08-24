@@ -4,11 +4,21 @@ class AccesoDatosEquipo
 {
     private PDO $conexion;
 
+    /**
+     * Crea una nueva instancia de acceso a datos de equipos.
+     *
+     * @param PDO $conexion Conexión activa a la base de datos.
+     */
     public function __construct(PDO $conexion)
     {
         $this->conexion = $conexion;
     }
 
+    /**
+     * Obtiene el listado completo de equipos junto con su laboratorio asociado.
+     *
+     * @return array Lista de equipos con sus datos y laboratorio.
+     */
     public function obtenerEquipos(): array
     {
         $sql = "
@@ -30,6 +40,12 @@ class AccesoDatosEquipo
         return $consulta->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Busca un equipo por su identificador, incluyendo su laboratorio asociado.
+     *
+     * @param string $idEquipo Identificador del equipo a buscar.
+     * @return array|null Los datos del equipo si existe, null en caso contrario.
+     */
     public function obtenerEquipo(string $idEquipo): ?array
     {
         $sql = "
@@ -53,6 +69,11 @@ class AccesoDatosEquipo
         return $equipo === false ? null : $equipo;
     }
 
+    /**
+     * Obtiene el listado de laboratorios disponibles.
+     *
+     * @return array Lista de laboratorios con su identificador y número.
+     */
     public function obtenerLaboratorios(): array
     {
         $sql = "SELECT idLaboratorio, numeroLaboratorio FROM LABORATORIO ORDER BY numeroLaboratorio ASC";
@@ -62,6 +83,17 @@ class AccesoDatosEquipo
         return $consulta->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Registra un nuevo equipo en la base de datos.
+     *
+     * @param string $idEquipo Identificador del nuevo equipo.
+     * @param string $idLaboratorio Identificador del laboratorio al que pertenece.
+     * @param string $marca Marca del equipo.
+     * @param string $estado Estado del equipo.
+     * @param string $disponibilidad Disponibilidad del equipo.
+     * @param string $informacion Información adicional del equipo.
+     * @return bool true si la inserción fue exitosa, false en caso contrario.
+     */
     public function crearEquipo(string $idEquipo, string $idLaboratorio, string $marca, string $estado, string $disponibilidad, string $informacion): bool
     {
         $sql = "
@@ -81,6 +113,17 @@ class AccesoDatosEquipo
         ]);
     }
 
+    /**
+     * Actualiza los datos de un equipo existente.
+     *
+     * @param string $idEquipo Identificador del equipo a actualizar.
+     * @param string $idLaboratorio Identificador del laboratorio al que pertenece.
+     * @param string $marca Marca del equipo.
+     * @param string $estado Estado del equipo.
+     * @param string $disponibilidad Disponibilidad del equipo.
+     * @param string $informacion Información adicional del equipo.
+     * @return bool true si la actualización fue exitosa, false en caso contrario.
+     */
     public function actualizarEquipo(string $idEquipo, string $idLaboratorio, string $marca, string $estado, string $disponibilidad, string $informacion): bool
     {
         $sql = "
@@ -105,6 +148,12 @@ class AccesoDatosEquipo
         ]);
     }
 
+    /**
+     * Elimina un equipo de la base de datos.
+     *
+     * @param string $idEquipo Identificador del equipo a eliminar.
+     * @return bool true si la eliminación fue exitosa, false en caso contrario.
+     */
     public function eliminarEquipo(string $idEquipo): bool
     {
         $consulta = $this->conexion->prepare("DELETE FROM EQUIPO WHERE idEquipo = :idEquipo");

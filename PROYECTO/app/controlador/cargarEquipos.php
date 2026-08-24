@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Controlador que carga la vista de gestión de equipos.
+ *
+ * Obtiene el listado de equipos y laboratorios; si llega "editar" por
+ * GET, también carga los datos del equipo puntual a editar.
+ */
+
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosEquipo.php";
 

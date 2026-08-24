@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Controlador que carga la vista para modificar diagnósticos.
+ *
+ * Obtiene el listado completo de diagnósticos y lo pasa a la vista
+ * correspondiente para que el técnico seleccione cuál modificar.
+ */
+
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosDiagnostico.php";
 

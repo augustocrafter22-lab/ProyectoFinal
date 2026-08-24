@@ -7,15 +7,17 @@ class AccesoDatosTicket {
     private PDO $conexion;
 
     /**
-     * 
-     * @param PDO $conexion La conexion a la base de datos. 
+     * Inicializa el acceso a datos con la conexión a la base de datos.
+     *
+     * @param PDO $conexion La conexion a la base de datos.
      */
     public function __construct(PDO $conexion) {
         $this->conexion = $conexion;
     }
 
     /**
-     * Recuperalos tickets registrados.
+     * Recupera los tickets registrados.
+     *
      * @return array Un arreglo con los datos de cada ticket.
      */
     public function listarTickets(): array {
@@ -49,6 +51,13 @@ class AccesoDatosTicket {
     /**
      * Registra un nuevo ticket reportado por un docente.
      *
+     * @param string $laboratorio Laboratorio donde se encuentra el equipo.
+     * @param string $equipo Equipo afectado por la incidencia.
+     * @param string $asunto Asunto o título breve del ticket.
+     * @param string $descripcion Descripción detallada de la incidencia.
+     * @param string $turno Turno en el que se reporta la incidencia.
+     * @param string $grupo Grupo asociado al reporte.
+     * @param string $profesor Profesor que reporta la incidencia.
      * @return string El idTicket generado para el nuevo registro.
      */
     public function registrarTicket(string $laboratorio, string $equipo, string $asunto,
@@ -81,11 +90,14 @@ class AccesoDatosTicket {
      * Actualiza el estado y la prioridad de un ticket existente.
      * Si el estado pasa a "Resuelto" o "Cerrado" se registra la fecha de finalización.
      *
+     * @param string $idTicket Identificador del ticket a actualizar.
+     * @param string $estado Nuevo estado del ticket.
+     * @param string $prioridad Nueva prioridad del ticket.
      * @return bool true si la actualización se ejecutó correctamente.
      */
     public function actualizarEstadoYPrioridad(string $idTicket, string $estado, string $prioridad): bool {
         $estadosFinalizados = ["Resuelto", "Cerrado"];
-        $fechaFinalizacion = in_array($estado, $estadosFinalizados, true) ? date("Y-m-d H:i:s") : null;
+        $fechaFinalizacion = in_array($estado, $estadosFinalizados, true) ? date("Y-m-d") : null;
 
         $sql = "
             UPDATE TICKET
@@ -108,6 +120,8 @@ class AccesoDatosTicket {
 
     /**
      * Genera un idTicket único con el formato INC-{año}-{secuencia}.
+     *
+     * @return string El idTicket generado.
      */
     private function generarIdTicket(): string {
         $anio = date("Y");
