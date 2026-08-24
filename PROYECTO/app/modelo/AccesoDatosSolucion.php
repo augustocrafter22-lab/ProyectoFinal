@@ -62,6 +62,11 @@ class AccesoDatosSolucion {
         return $consulta->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Recupera todas las soluciones registradas junto con el ticket y el equipo asociados.
+     *
+     * @return array Un arreglo con los datos de cada solución, incluyendo el ticket y el equipo.
+     */
     public function listarSolucionesConEquipo(): array {
         $sql = "
             SELECT

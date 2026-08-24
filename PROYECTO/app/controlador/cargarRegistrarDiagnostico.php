@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Controlador que carga la vista para registrar un diagnóstico.
+ *
+ * Obtiene el listado de tickets disponibles para que el técnico
+ * seleccione a cuál asociar el nuevo diagnóstico.
+ */
+
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosTicket.php";
 

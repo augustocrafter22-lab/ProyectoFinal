@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Controlador que carga el panel de administrador.
+ *
+ * Obtiene el listado completo de usuarios registrados y lo pasa
+ * a la vista de administración para su despliegue.
+ */
+
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosUsuario.php";
 

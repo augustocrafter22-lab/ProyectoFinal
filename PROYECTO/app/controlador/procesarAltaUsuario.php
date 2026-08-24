@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Controlador que procesa el alta de un nuevo usuario.
+ *
+ * Requiere una solicitud POST con "ci", "nombre", "apellido", "contrasenia"
+ * y "roles". Valida los datos, verifica que el usuario no exista, hashea
+ * la contraseña y crea el usuario, redirigiendo con éxito o error.
+ */
+
 require_once __DIR__ . "/../../config/config.php";
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AltaDatosUsuario.php";

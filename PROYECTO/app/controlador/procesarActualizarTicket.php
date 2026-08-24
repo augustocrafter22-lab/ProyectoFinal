@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Controlador que actualiza estado y prioridad de un ticket.
+ *
+ * Requiere sesión de técnico activa y una solicitud POST con "idTicket",
+ * "estado" (uno de Pendiente/En Proceso/Resuelto/Cerrado) y "prioridad"
+ * (uno de Indefinida/Alta/Media/Baja). Responde con un JSON indicando
+ * éxito o el error correspondiente.
+ */
+
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosTicket.php";
 

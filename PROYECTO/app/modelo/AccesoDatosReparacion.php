@@ -3,10 +3,21 @@
 class AccesoDatosReparacion {
     private PDO $conexion;
 
+    /**
+     * Inicializa el acceso a datos con la conexión PDO a utilizar.
+     *
+     * @param PDO $conexion Conexión activa a la base de datos.
+     * @return void
+     */
     public function __construct(PDO $conexion) {
         $this->conexion = $conexion;
     }
 
+    /**
+     * Lista los diagnósticos disponibles junto con su ticket y equipo asociado.
+     *
+     * @return array Listado de diagnósticos con idDiagnostico, idTicket, idEquipo y diagnostico.
+     */
     public function listarDiagnosticosDisponibles(): array {
         $sql = "
             SELECT
@@ -23,6 +34,14 @@ class AccesoDatosReparacion {
         return $this->conexion->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Registra una reparación a partir de un diagnóstico existente.
+     *
+     * @param int $idDiagnostico Identificador del diagnóstico sobre el que se registra la reparación.
+     * @param string $cedulaTecnico Cédula del técnico que realiza la reparación.
+     * @param string $reparacion Descripción de la reparación realizada.
+     * @return bool true si la reparación fue registrada correctamente, false en caso contrario.
+     */
     public function registrarReparacion(int $idDiagnostico, string $cedulaTecnico, string $reparacion): bool {
         $sql = "
             INSERT INTO REPARACION
@@ -50,6 +69,12 @@ class AccesoDatosReparacion {
         return $consulta->rowCount() === 1;
     }
 
+    /**
+     * Lista las reparaciones registradas, opcionalmente filtradas por equipo.
+     *
+     * @param string|null $idEquipo Identificador del equipo a filtrar, o null para listar todas.
+     * @return array Listado de reparaciones ordenadas por fecha de reparación descendente.
+     */
     public function listarReparaciones(?string $idEquipo = null): array {
         $sql = "
             SELECT

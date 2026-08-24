@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Controlador que procesa la edición de un usuario existente.
+ *
+ * Requiere una solicitud POST con "ci" y "roles" (nombre, apellido y
+ * contrasenia son opcionales; se actualizan solo si vienen no vacíos).
+ * Redirige al panel de administrador con un mensaje de éxito o error.
+ */
+
 require_once __DIR__ . "/../../config/config.php";
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AltaDatosUsuario.php";

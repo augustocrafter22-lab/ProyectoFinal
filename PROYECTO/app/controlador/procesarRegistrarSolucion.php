@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Controlador que procesa el registro de una solución.
+ *
+ * Requiere sesión de técnico activa y una solicitud POST con
+ * "idDiagnostico" (numérico) y "solucion" (mínimo 10 caracteres).
+ * El "modo" ("reparacion" u otro) determina a qué vista se redirige
+ * tras el registro, con un mensaje de éxito o error.
+ */
+
 require_once __DIR__ . "/../../config/config.php";
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosSolucion.php";
