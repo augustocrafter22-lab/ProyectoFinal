@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Controlador (endpoint JSON) que actualiza estado y prioridad de un ticket.
+ * Controlador que actualiza estado y prioridad de un ticket.
  *
  * Requiere sesión de técnico activa y una solicitud POST con "idTicket",
  * "estado" (uno de Pendiente/En Proceso/Resuelto/Cerrado) y "prioridad"
