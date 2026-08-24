@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Controlador que procesa el inicio de sesión.
+ *
+ * Requiere una solicitud POST con "username" (cédula) y "clave".
+ * Autentica al usuario, inicia sesión con sus roles y lo redirige
+ * al panel correspondiente según los roles que tenga habilitados.
+ */
+
 require_once __DIR__ . "/../../config/config.php";
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosUsuario.php";

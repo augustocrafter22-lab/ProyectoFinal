@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Controlador que procesa el ingreso de un nuevo ticket.
+ *
+ * Requiere sesión de docente activa y una solicitud POST con
+ * "laboratorio", "equipo", "asunto", "descripcion", "turno", "grupo"
+ * y "profesor". Registra el ticket y redirige con éxito o error.
+ */
+
 require_once __DIR__ . "/../../config/config.php";
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosTicket.php";

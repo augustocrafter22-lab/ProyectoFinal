@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Controlador que procesa la modificación de un diagnóstico existente.
+ *
+ * Requiere sesión de técnico activa y una solicitud POST con
+ * "idDiagnostico" y "diagnostico" (mínimo 10 caracteres). Redirige a
+ * la vista de modificación con un mensaje de éxito o error.
+ */
+
 require_once __DIR__ . "/../../config/config.php";
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosDiagnostico.php";

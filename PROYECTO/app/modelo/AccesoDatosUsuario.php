@@ -5,10 +5,22 @@ require_once __DIR__ . "/Usuario.php";
 class AccesoDatosUsuario {
     private PDO $conexion;
 
+    /**
+     * Inicializa el acceso a datos con la conexión PDO a utilizar.
+     *
+     * @param PDO $conexion Conexión activa a la base de datos.
+     * @return void
+     */
     public function __construct(PDO $conexion) {
         $this->conexion = $conexion;
     }
 
+    /**
+     * Busca un usuario por su cédula junto con sus roles asociados.
+     *
+     * @param string $cedula Cédula del usuario a buscar.
+     * @return Usuario|null El usuario encontrado con sus roles, o null si no existe.
+     */
     public function buscarUsuario(string $cedula): ?Usuario {
         $sql = "
             SELECT
@@ -76,6 +88,12 @@ class AccesoDatosUsuario {
             $roles
         );
     }
+
+    /**
+     * Obtiene todos los usuarios registrados junto con sus roles.
+     *
+     * @return array Lista de usuarios, cada uno con cedula, nombre, apellido, activo y roles.
+     */
     public function obtenerTodos(): array {
         $sql = "
             SELECT

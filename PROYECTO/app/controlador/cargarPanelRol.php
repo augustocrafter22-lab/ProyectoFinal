@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Controlador que carga el panel de selección de roles.
+ *
+ * Busca al usuario autenticado (por su cédula en sesión) y lo redirige
+ * al login si no existe; en caso contrario muestra la vista con sus roles.
+ */
+
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosUsuario.php";
 require_once RUTA_MODELO . "/Usuario.php";

@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Controlador que procesa el registro de una reparación.
+ *
+ * Requiere sesión de técnico activa y una solicitud POST con
+ * "idDiagnostico" (numérico) y "reparacion" (mínimo 10 caracteres).
+ * El técnico se toma de la sesión. Redirige con éxito o error.
+ */
+
 require_once __DIR__ . "/../../config/config.php";
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosReparacion.php";

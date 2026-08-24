@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Controlador que carga el dashboard de reportes.
+ *
+ * Obtiene el total de reportes, su distribución por estado, los
+ * tiempos de resolución y las incidencias por salón, y los pasa
+ * a la vista del dashboard.
+ */
+
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosDashboard.php";
 

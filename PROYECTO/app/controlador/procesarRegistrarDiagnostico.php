@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Controlador que procesa el registro de un nuevo diagnóstico.
+ *
+ * Requiere sesión de técnico activa y una solicitud POST con "idTicket"
+ * y "diagnostico" (mínimo 10 caracteres). El técnico se toma de la
+ * sesión. Redirige a la vista de registro con éxito o error.
+ */
+
 require_once __DIR__ . "/../../config/config.php";
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosDiagnostico.php";

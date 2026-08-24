@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Controlador que carga la vista general de tickets.
+ *
+ * Obtiene el listado completo de tickets y lo pasa a la vista
+ * correspondiente para su despliegue.
+ */
+
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosTicket.php";
 

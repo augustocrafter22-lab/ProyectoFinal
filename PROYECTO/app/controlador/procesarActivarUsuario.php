@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Controlador que procesa la activación de un usuario.
+ *
+ * Requiere una solicitud POST con "cedula". Activa al usuario indicado
+ * y redirige al panel de administrador con un mensaje de éxito o error.
+ */
+
 require_once __DIR__ . "/../../config/config.php";
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AltaDatosUsuario.php";

@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Controlador que carga el panel de docente.
+ *
+ * Busca al usuario autenticado (por su cédula en sesión) y lo redirige
+ * al login si no existe; en caso contrario muestra la vista de docente.
+ */
 
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosUsuario.php";

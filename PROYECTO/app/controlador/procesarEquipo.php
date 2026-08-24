@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Controlador que procesa el alta, modificación o baja de un equipo.
+ *
+ * Requiere una solicitud POST con "accion" ("alta", "modificar" o "baja")
+ * e "idEquipo"; para alta/modificar además requiere "idLaboratorio",
+ * "marca", "estado" y "disponibilidad". Redirige al listado de equipos
+ * con un mensaje de éxito o error.
+ */
+
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosEquipo.php";
 

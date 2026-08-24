@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Controlador que carga el historial de reparaciones por equipo.
+ *
+ * Admite un filtro opcional por equipo vía GET ("equipo") y muestra
+ * el listado de equipos junto con las reparaciones correspondientes.
+ */
+
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosSolucion.php";
 require_once RUTA_MODELO . "/AccesoDatosEquipo.php";

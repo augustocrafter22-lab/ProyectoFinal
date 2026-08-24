@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Controlador que carga la vista de solicitud de laboratorio.
+ *
+ * Obtiene el listado de laboratorios disponibles y lo pasa a la
+ * vista correspondiente para su despliegue.
+ */
+
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosSolicitudLaboratorio.php";
 
