@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 class AltaDatosUsuario
 {
@@ -37,7 +37,7 @@ class AltaDatosUsuario
      * @param array $roles Roles a asignar al usuario.
      * @return bool true si el usuario fue creado correctamente.
      */
-    public function crearUsuario(string $cedula, string $claveHasheada, string $nombre, string $apellido, int $activo, array $roles): bool
+    public function crearUsuario(string $cedula, string $nombre, string $apellido, string $claveHasheada, int $activo, array $roles): bool
     {
         $rolesValidos = [
             "coordinador" => "administrador",
@@ -47,22 +47,22 @@ class AltaDatosUsuario
         // Validaciones
 
         // Valida que el nombre no este vacio
-        if(trim($nombre) === ""){
-            throw new Exception("El nombre no puede estar vacío");
+        if (trim($nombre) === "") {
+            throw new Exception("El nombre no puede estar vaci­o");
         }
 
         // Valida que el apellido no este vacio
-        if(trim($apellido) === ""){
-            throw new Exception("El apellido no puede estar vacío");
+        if (trim($apellido) === "") {
+            throw new Exception("El apellido no puede estar vac­io");
         }
-        // Vlida que la contraseña no tenga espacios al final
-        if(trim($claveHasheada) === chop($claveHasheada)) {
-            throw new Exception("La contraseña no puede tener espacios al final");
+        // Valida que la contraseÃ±a no tenga espacios al final
+        if (trim($claveHasheada) === "") {
+            throw new Exception("La contraseña no puede estar vacía");
         }
 
-        foreach ($roles as $rol => $value) {
+        foreach ($roles as $rol) {
             if (!isset($rolesValidos[$rol])) {
-                throw new Exception("Rol no válido");
+                throw new Exception("Rol no válido: " . $rol);
             }
         }
 
@@ -114,26 +114,26 @@ class AltaDatosUsuario
             "docente" => "docente"
         ];
 
-    // Si se está actualizando nombre, no puede quedar vacío
-    if ($nombre !== null && trim($nombre) === "") {
-        throw new Exception("El nombre es obligatorio");
-    }
-    // Si se está actualizando apellido, no puede quedar vacío
-    if ($apellido !== null && trim($apellido) === "") {
-        throw new Exception("El apellido es obligatorio");
-    }
-
-    // Si se está actualizando roles, tiene que quedar al menos uno
-    if ($roles !== null) {
-        if (empty($roles)) {
-            throw new Exception("Debe seleccionar al menos un rol");
+        // Si se está actualizando nombre, no puede quedar vacío
+        if ($nombre !== null && trim($nombre) === "") {
+            throw new Exception("El nombre es obligatorio");
         }
-        foreach ($roles as $rol) {
-            if (!isset($rolesValidos[$rol])) {
-                throw new Exception("Rol no válido: " . $rol);
+        // Si se está actualizando apellido, no puede quedar vacío
+        if ($apellido !== null && trim($apellido) === "") {
+            throw new Exception("El apellido es obligatorio");
+        }
+
+        // Si se está actualizando roles, tiene que quedar al menos uno
+        if ($roles !== null) {
+            if (empty($roles)) {
+                throw new Exception("Debe seleccionar al menos un rol");
+            }
+            foreach ($roles as $rol) {
+                if (!isset($rolesValidos[$rol])) {
+                    throw new Exception("Rol no válido: " . $rol);
+                }
             }
         }
-    }
 
         if ($roles !== null) {
             foreach ($roles as $rol) {
@@ -182,9 +182,9 @@ class AltaDatosUsuario
 
                 // Insertar en nuevos roles
                 foreach ($roles as $rol) {
-                 $tablaRol = $rolesValidos[$rol];
-                $sql = "INSERT INTO $tablaRol (cedula) VALUES (:cedula)";
-                $this->conexion->prepare($sql)->execute([":cedula" => $cedula]);
+                    $tablaRol = $rolesValidos[$rol];
+                    $sql = "INSERT INTO $tablaRol (cedula) VALUES (:cedula)";
+                    $this->conexion->prepare($sql)->execute([":cedula" => $cedula]);
                 }
             }
 
@@ -223,5 +223,6 @@ class AltaDatosUsuario
         return $consulta->execute([":cedula" => $cedula]);
     }
 }
+
 
 
