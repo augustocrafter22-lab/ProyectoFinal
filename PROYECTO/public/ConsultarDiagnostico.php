@@ -16,6 +16,9 @@ if (!isset($_SESSION["tecnico"]) || $_SESSION["tecnico"] !== true) {
     exit;
 }
 
-require_once RUTA_CONTROLADOR . "/cargarConsultarDiagnostico.php";
+require_once RUTA_MODELO . "/Traductor.php";
+Traductor::iniciar();
+
+require_once RUTA_VISTA . "/consultarDiagnostico.php";
 
 ?>
