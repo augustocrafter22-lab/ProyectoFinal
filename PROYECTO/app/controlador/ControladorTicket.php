@@ -2,6 +2,7 @@
 
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/DAOTicket.php";
+require_once RUTA_MODELO . "/Validador.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
 
 /**
@@ -127,18 +128,15 @@ class ControladorTicket
     {
         $datosEnviados = $this->obtenerDatosEnviados();
 
-        $campos = ["laboratorio", "equipo", "asunto", "descripcion", "turno", "grupo", "profesor"];
-        $datos = [];
-
-        foreach ($campos as $campo) {
-            $valor = trim($datosEnviados[$campo] ?? "");
-
-            if ($valor === "") {
-                throw new Exception("El campo $campo es obligatorio.", 400);
-            }
-
-            $datos[$campo] = $valor;
-        }
+        $datos = [
+            "laboratorio" => Validador::longitud($datosEnviados["laboratorio"] ?? "", 1, 20, "laboratorio"),
+            "equipo" => Validador::longitud($datosEnviados["equipo"] ?? "", 1, 10, "equipo"),
+            "asunto" => Validador::longitud($datosEnviados["asunto"] ?? "", 1, 100, "asunto"),
+            "descripcion" => Validador::requerido($datosEnviados["descripcion"] ?? "", "descripcion"),
+            "turno" => Validador::longitud($datosEnviados["turno"] ?? "", 1, 15, "turno"),
+            "grupo" => Validador::longitud($datosEnviados["grupo"] ?? "", 1, 10, "grupo"),
+            "profesor" => Validador::longitud($datosEnviados["profesor"] ?? "", 1, 50, "profesor")
+        ];
 
         $idTicket = $this->dao->crear($datos);
 
@@ -159,21 +157,9 @@ class ControladorTicket
     {
         $datosEnviados = $this->obtenerDatosEnviados();
 
-        $idTicket = trim($_GET["id"] ?? ($datosEnviados["idTicket"] ?? ""));
-        $estado = trim($datosEnviados["estado"] ?? "");
-        $prioridad = trim($datosEnviados["prioridad"] ?? "");
-
-        if ($idTicket === "") {
-            throw new Exception("Debe indicar el identificador del ticket.", 400);
-        }
-
-        if (!in_array($estado, $this->estadosValidos, true)) {
-            throw new Exception("El estado indicado no es válido.", 400);
-        }
-
-        if (!in_array($prioridad, $this->prioridadesValidas, true)) {
-            throw new Exception("La prioridad indicada no es válida.", 400);
-        }
+        $idTicket = Validador::requerido($_GET["id"] ?? ($datosEnviados["idTicket"] ?? ""), "identificador del ticket");
+        $estado = Validador::enLista($datosEnviados["estado"] ?? "", $this->estadosValidos, "estado");
+        $prioridad = Validador::enLista($datosEnviados["prioridad"] ?? "", $this->prioridadesValidas, "prioridad");
 
         if ($this->dao->obtener($idTicket) === null) {
             throw new Exception("No existe un ticket con el identificador $idTicket.", 404);

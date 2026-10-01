@@ -12,6 +12,7 @@
 require_once __DIR__ . "/../../config/config.php";
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosSolucion.php";
+require_once RUTA_MODELO . "/Validador.php";
 
 session_start();
 
@@ -25,19 +26,14 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit;
 }
 
-$idDiagnostico = trim($_POST["idDiagnostico"] ?? "");
-$solucion = trim($_POST["solucion"] ?? "");
-$cedulaTecnico = $_SESSION["cedula"];
 $esReparacion = ($_POST["modo"] ?? "") === "reparacion";
 $paginaRegistro = $esReparacion ? "RegistrarReparacion.php" : "RegistrarSolucion.php";
 
-if ($idDiagnostico === "" || !ctype_digit($idDiagnostico) || strlen($solucion) < 10) {
-    $mensaje = "Debe seleccionar el diagnóstico e ingresar una solución de al menos 10 caracteres.";
-    header("Location: " . URL_BASE . "/public/" . $paginaRegistro . "?error=" . urlencode($mensaje));
-    exit;
-}
-
 try {
+    $idDiagnostico = Validador::numerico($_POST["idDiagnostico"] ?? "", "diagnóstico");
+    $solucion = Validador::longitud($_POST["solucion"] ?? "", 10, 2000, "solución");
+    $cedulaTecnico = $_SESSION["cedula"];
+
     $conectorPDO = new ConectorPDO($_ENV['BD_HOST'], $_ENV['BD_USER'], $_ENV['BD_PASS'], $_ENV['BD_NAME']);
     $conexion = $conectorPDO->establecerConexion();
 

@@ -11,6 +11,7 @@
 
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosTicket.php";
+require_once RUTA_MODELO . "/Validador.php";
 
 header("Content-Type: application/json");
 
@@ -26,20 +27,11 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit;
 }
 
-$idTicket = trim($_POST["idTicket"] ?? "");
-$estado = trim($_POST["estado"] ?? "");
-$prioridad = trim($_POST["prioridad"] ?? "");
-
-$estadosValidos = ["Pendiente", "En Proceso", "Resuelto", "Cerrado"];
-$prioridadesValidas = ["Indefinida", "Alta", "Media", "Baja"];
-
-if ($idTicket === "" || !in_array($estado, $estadosValidos, true) || !in_array($prioridad, $prioridadesValidas, true)) {
-    http_response_code(400);
-    echo json_encode(["exito" => false, "mensaje" => "Datos inválidos."]);
-    exit;
-}
-
 try {
+    $idTicket = Validador::requerido($_POST["idTicket"] ?? "", "ticket");
+    $estado = Validador::enLista($_POST["estado"] ?? "", ["Pendiente", "En Proceso", "Resuelto", "Cerrado"], "estado");
+    $prioridad = Validador::enLista($_POST["prioridad"] ?? "", ["Indefinida", "Alta", "Media", "Baja"], "prioridad");
+
     $conectorPDO = new ConectorPDO($_ENV['BD_HOST'], $_ENV['BD_USER'], $_ENV['BD_PASS'], $_ENV['BD_NAME']);
     $conexion = $conectorPDO->establecerConexion();
 
@@ -59,9 +51,15 @@ try {
     http_response_code(500);
     echo json_encode(["exito" => false, "mensaje" => "Ocurrió un error, intente nuevamente."]);
 } catch (Exception $e) {
-    RegistradorErrores::registrar($e);
-    http_response_code(500);
-    echo json_encode(["exito" => false, "mensaje" => $e->getMessage()]);
+    $codigo = $e->getCode() >= 400 && $e->getCode() <= 599 ? (int) $e->getCode() : 500;
+    http_response_code($codigo);
+
+    if ($codigo === 500) {
+        RegistradorErrores::registrar($e);
+        echo json_encode(["exito" => false, "mensaje" => "Ocurrió un error, intente nuevamente."]);
+    } else {
+        echo json_encode(["exito" => false, "mensaje" => $e->getMessage()]);
+    }
 }
 
 ?>

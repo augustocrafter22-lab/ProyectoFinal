@@ -3,6 +3,7 @@
 require_once __DIR__ . "/../config/config.php";
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosSolicitudLaboratorio.php";
+require_once RUTA_MODELO . "/Validador.php";
 
 session_start();
 
@@ -16,24 +17,18 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit;
 }
 
-$idLaboratorio = trim($_POST["idLaboratorio"] ?? "");
-$solicitaSoftware = ($_POST["solicitaSoftware"] ?? "No") === "Si";
-$detalle = trim($_POST["detalle"] ?? "");
-$restricciones = trim($_POST["restricciones"] ?? "");
-$fechaEstimada = trim($_POST["fechaEstimada"] ?? "");
-$horaEstimada = trim($_POST["horaEstimada"] ?? "");
-
-if (empty($idLaboratorio) || empty($fechaEstimada) || empty($horaEstimada)) {
-    header("Location: " . URL_BASE . "/public/SolicitudLaboratorio.php?error=" . urlencode("Faltan campos obligatorios"));
-    exit;
-}
-
-if ($solicitaSoftware && empty($detalle)) {
-    header("Location: " . URL_BASE . "/public/SolicitudLaboratorio.php?error=" . urlencode("Debe indicar el detalle del software solicitado"));
-    exit;
-}
-
 try {
+    $idLaboratorio = Validador::requerido($_POST["idLaboratorio"] ?? "", "laboratorio");
+    $solicitaSoftware = ($_POST["solicitaSoftware"] ?? "No") === "Si";
+    $detalle = trim($_POST["detalle"] ?? "");
+    $restricciones = trim($_POST["restricciones"] ?? "");
+    $fechaEstimada = Validador::requerido($_POST["fechaEstimada"] ?? "", "fecha estimada");
+    $horaEstimada = Validador::requerido($_POST["horaEstimada"] ?? "", "hora estimada");
+
+    if ($solicitaSoftware) {
+        $detalle = Validador::requerido($detalle, "detalle del software");
+    }
+
     $conectorPDO = new ConectorPDO($_ENV['BD_HOST'], $_ENV['BD_USER'], $_ENV['BD_PASS'], $_ENV['BD_NAME']);
     $conexion = $conectorPDO->establecerConexion();
 

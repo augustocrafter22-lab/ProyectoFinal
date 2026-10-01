@@ -2,6 +2,7 @@
 
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/DAOEquipo.php";
+require_once RUTA_MODELO . "/Validador.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
 
 /**
@@ -206,18 +207,12 @@ class ControladorEquipo
      */
     private function validarDatos(array $datosEnviados): array
     {
-        $campos = ["idLaboratorio", "marca", "estado", "disponibilidad"];
-        $datos = [];
-
-        foreach ($campos as $campo) {
-            $valor = trim($datosEnviados[$campo] ?? "");
-
-            if ($valor === "") {
-                throw new Exception("El campo $campo es obligatorio.", 400);
-            }
-
-            $datos[$campo] = $valor;
-        }
+        $datos = [
+            "idLaboratorio" => Validador::requerido($datosEnviados["idLaboratorio"] ?? "", "idLaboratorio"),
+            "marca" => Validador::longitud($datosEnviados["marca"] ?? "", 1, 30, "marca"),
+            "estado" => Validador::enLista($datosEnviados["estado"] ?? "", ["Dañado", "Funcionando", "En mantenimiento", "No funciona"], "estado"),
+            "disponibilidad" => Validador::enLista($datosEnviados["disponibilidad"] ?? "", ["Disponible", "No disponible"], "disponibilidad")
+        ];
 
         if (!$this->dao->existeLaboratorio($datos["idLaboratorio"])) {
             throw new Exception("No existe el laboratorio " . $datos["idLaboratorio"] . ".", 400);
