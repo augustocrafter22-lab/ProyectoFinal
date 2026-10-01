@@ -16,6 +16,9 @@ if (!($_SESSION["docente"] ?? false)) {
     exit;
 }
 
-require_once RUTA_CONTROLADOR . "/cargarIngresoTickets.php";
+require_once RUTA_MODELO . "/Traductor.php";
+Traductor::iniciar();
+
+require_once RUTA_VISTA . "/ingresoTickets.php";
 
 ?>

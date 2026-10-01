@@ -18,7 +18,10 @@ if (!isset($_SESSION["tecnico"]) || $_SESSION["tecnico"] !== true) {
 }
 
 $modoReparacion = true;
-require_once RUTA_CONTROLADOR . "/cargarRegistrarReparacion.php";
+require_once RUTA_MODELO . "/Traductor.php";
+Traductor::iniciar();
+
+require_once RUTA_VISTA . "/registrarReparacion.php";
 
 ?>
 
