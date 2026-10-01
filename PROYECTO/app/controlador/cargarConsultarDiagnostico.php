@@ -3,34 +3,10 @@
 /**
  * Controlador que carga la vista de consulta de diagnósticos.
  *
- * Admite un filtro opcional por ticket vía GET ("ticket") y muestra
- * el listado de diagnósticos correspondiente en la vista.
+ * El listado (y el filtro opcional por ticket, vía "?ticket=") ahora se
+ * maneja con fetch contra la API (public/api/diagnosticos.php) desde
+ * consultarDiagnostico.js.
  */
-
-require_once RUTA_MODELO . "/ConectorPDO.php";
-require_once RUTA_MODELO . "/AccesoDatosDiagnostico.php";
-
-// El filtro por ticket viaja por GET, como antes lo solia hacer ConsultarDiagnostico.js
-// leyendo "?ticket=" desde la URL, solo que ahora se resuelve contra la BD.
-$ticketFiltro = isset($_GET["ticket"]) ? trim($_GET["ticket"]) : "";
-
-try {
-    $conectorPDO = new ConectorPDO($_ENV['BD_HOST'], $_ENV['BD_USER'], $_ENV['BD_PASS'], $_ENV['BD_NAME']);
-    $conexion = $conectorPDO->establecerConexion();
-
-    if ($conexion === null) {
-        throw new Exception("No se pudo conectar a la base de datos");
-    }
-
-    $accesoDatosDiagnostico = new AccesoDatosDiagnostico($conexion);
-    $diagnosticos = $accesoDatosDiagnostico->listarDiagnosticos($ticketFiltro !== "" ? $ticketFiltro : null);
-
-    $conectorPDO->desconectar();
-} catch (Exception $e) {
-    RegistradorErrores::registrar($e);
-    echo "Ocurrió un error, intente nuevamente.";
-    exit;
-}
 
 require_once RUTA_VISTA . "/consultarDiagnostico.php";
 

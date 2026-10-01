@@ -33,26 +33,15 @@
 <h1>Registro de Diagnostico</h1>
     <p>Aqui se podran registrar los diagnósticos técnicos en base al ticket.</p>
 </section>
-    <?php if (isset($_GET["error"])) { ?>
-        <p class="mensaje-error"><?= htmlspecialchars($_GET["error"]) ?></p>
-    <?php } ?>
-
-    <?php if (isset($_GET["exito"])) { ?>
-        <p class="mensaje-exito"><?= htmlspecialchars($_GET["exito"]) ?></p>
-    <?php } ?>
+    <p id="mensajeRegistrarDiagnostico" role="status"></p>
 
 <section class="modulo" id="registrarDiagnostico">
   <h2>Registrar diagnósticos</h2>
 
-  <form class="formulario" id="formregistrarDiagnostico" action="<?= URL_BASE ?>/app/controlador/procesarRegistrarDiagnostico.php" method="POST">
+  <form class="formulario" id="formregistrarDiagnostico">
     <label for="registrarDiagnosticoTicket">Ticket</label>
     <select id="registrarDiagnosticoTicket" name="idTicket" class="eligeTicket" required>
         <option value="">Seleccione un ticket</option>
-        <?php foreach ($tickets as $ticket) { ?>
-            <option value="<?= htmlspecialchars($ticket["idTicket"]) ?>">
-                <?= htmlspecialchars($ticket["idTicket"]) ?> - <?= htmlspecialchars($ticket["asunto"]) ?>
-            </option>
-        <?php } ?>
     </select>
 
     <label for="registrarDiagnosticoDiagnostico">Diagnóstico técnico</label>
@@ -61,6 +50,10 @@
     <button class="boton-principal" type="submit">Registrar diagnóstico</button>
   </form>
 </section>
+    <script>
+        window.cedulaTecnico = <?= json_encode($_SESSION["cedula"]) ?>;
+    </script>
+    <script src="<?= URL_BASE ?>/public/assets/js/registrarDiagnostico.js"></script>
     <script src="<?= URL_BASE ?>/public/assets/js/barraNavegacion.js"></script>
     </body>
 </html>

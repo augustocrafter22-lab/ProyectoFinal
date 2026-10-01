@@ -21,22 +21,6 @@
     <img src="<?= URL_BASE ?>/public/assets/img/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo-Utu" width="75">
   </header>
 
-  
-  <script>
-    window.reparacionesPersistidas = <?= json_encode(array_map(function ($reparacion) {
-        return [
-            "equipoId" => $reparacion["equipo"],
-            "descripcion" => $reparacion["solucion"],
-            "fecha" => $reparacion["fechaSolucion"],
-            "tecnico" => $reparacion["cedulaTecnico"]
-        ];
-    }, $reparaciones), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
-  </script>
-
-</html>
-    
-  </header>
-
   <section class="encabezado">
     <h1>Historial Técnico</h1>
     <p>Consultá las reparaciones registradas para un equipo.</p>
@@ -44,42 +28,12 @@
 
   <section class="modulo" id="historialTecnico" style="max-width: 780px;">
     <h2>Reparaciones del equipo</h2>
-    <form method="GET">
-      <label for="historialTecnicoEquipoSelect">Equipo</label>
-      <select id="historialTecnicoEquipoSelect" name="equipo" required onchange="this.form.submit()">
-        <option value="">Seleccione un equipo</option>
-        <?php foreach ($equipos as $equipo) { ?>
-          <option value="<?= htmlspecialchars($equipo["idEquipo"]) ?>" <?= $idEquipo === $equipo["idEquipo"] ? "selected" : "" ?>>
-            <?= htmlspecialchars($equipo["idEquipo"]) ?>
-          </option>
-        <?php } ?>
-      </select>
-    </form>
+    <label for="historialTecnicoEquipoSelect">Equipo</label>
+    <select id="historialTecnicoEquipoSelect" required>
+      <option value="">Seleccione un equipo</option>
+    </select>
 
-    <?php if ($idEquipo !== "" && empty($reparaciones)) { ?>
-      <p>No hay reparaciones registradas para este equipo.</p>
-    <?php } elseif ($idEquipo !== "") { ?>
-      <table style="width:100%; border-collapse:collapse; font-size:14px;">
-        <thead>
-          <tr>
-            <th>Ticket</th>
-            <th>Descripción</th>
-            <th>Fecha</th>
-            <th>Técnico</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($reparaciones as $reparacion) { ?>
-            <tr>
-              <td><?= htmlspecialchars($reparacion["idTicket"]) ?></td>
-              <td><?= htmlspecialchars($reparacion["reparacion"]) ?></td>
-              <td><?= htmlspecialchars($reparacion["fechaReparacion"]) ?></td>
-              <td><?= htmlspecialchars($reparacion["cedulaTecnico"]) ?></td>
-            </tr>
-          <?php } ?>
-        </tbody>
-      </table>
-    <?php } ?>
+    <table id="tablaHistorialTecnico" style="width:100%; border-collapse:collapse; font-size:14px;"></table>
   </section>
 </body>
   <script src="<?= URL_BASE ?>/public/assets/js/HistorialTecnico.js"></script>

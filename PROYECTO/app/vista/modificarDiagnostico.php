@@ -32,31 +32,16 @@
         <p>Seleccioná un diagnóstico registrado para modificar su contenido.</p>
     </header>
 
-    <?php if (isset($_GET["error"])) { ?>
-        <p class="mensaje-error"><?= htmlspecialchars($_GET["error"]) ?></p>
-    <?php } ?>
-
-    <?php if (isset($_GET["exito"])) { ?>
-        <p class="mensaje-exito"><?= htmlspecialchars($_GET["exito"]) ?></p>
-    <?php } ?>
+    <p id="mensajeModificarDiagnostico" role="status"></p>
 
     <section class="modulo" id="modificarDiagnostico">
         <h2>Editar diagnóstico</h2>
 
-        <form class="formulario" id="formModificarDiagnostico" action="<?= URL_BASE ?>/app/controlador/procesarModificarDiagnostico.php" method="POST">
+        <form class="formulario" id="formModificarDiagnostico">
 
             <label for="modificarDiagnosticoSelect">Diagnóstico a modificar</label>
-            <select id="modificarDiagnosticoSelect" name="idDiagnostico" required
-                onchange="this.form.diagnostico.value = this.options[this.selectedIndex].dataset.texto || '';">
+            <select id="modificarDiagnosticoSelect" name="idDiagnostico" required>
                 <option value="">Seleccione un diagnóstico</option>
-                <?php foreach ($diagnosticos as $diagnostico) { ?>
-                    <option value="<?= htmlspecialchars($diagnostico["idDiagnostico"]) ?>"
-                        data-texto="<?= htmlspecialchars($diagnostico["diagnostico"]) ?>">
-                        <?= htmlspecialchars($diagnostico["idDiagnostico"]) ?> |
-                        <?= htmlspecialchars($diagnostico["idTicket"]) ?> |
-                        <?= htmlspecialchars($diagnostico["fechaDiagnostico"]) ?>
-                    </option>
-                <?php } ?>
             </select>
 
             <label for="modificarDiagnosticoTexto">Diagnóstico técnico</label>
@@ -66,6 +51,7 @@
         </form>
     </section>
 
+    <script src="<?= URL_BASE ?>/public/assets/js/modificarDiagnostico.js"></script>
     <script src="<?= URL_BASE ?>/public/assets/js/barraNavegacion.js"></script>
 </body>
 </html>

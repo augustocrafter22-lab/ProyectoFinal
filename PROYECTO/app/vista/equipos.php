@@ -31,12 +31,6 @@
           <h2>Datos de Equipos</h2>
         </header>
 
-        <?php if (isset($_GET["error"])): ?>
-          <p style="color: red"><?= htmlspecialchars($_GET["error"]) ?></p>
-        <?php elseif (isset($_GET["exito"])): ?>
-          <p style="color: green"><?= htmlspecialchars($_GET["exito"]) ?></p>
-        <?php endif; ?>
-
         <section class="filtrosBarra" aria-label="Filtros de equipos">
           <label class="filtroContenedor" for="filtroID">
             ID
@@ -56,19 +50,21 @@
           </label>
         </section>
 
-        <form action="<?= URL_BASE ?>/public/procesarEquipo.php" method="POST">
+        <p id="mensajeEquipos" role="status"></p>
+
+        <form id="formularioEquipo">
           <fieldset>
-            <legend><?= $equipoEditar === null ? "Alta de equipo" : "Modificar equipo" ?></legend>
-            <input type="hidden" name="accion" value="<?= $equipoEditar === null ? "alta" : "modificar" ?>" />
+            <legend id="leyendaFormularioEquipo">Alta de equipo</legend>
+            <input type="hidden" id="modoFormularioEquipo" value="alta" />
 
             <label for="idEquipo">ID</label>
-            <input type="text" id="idEquipo" name="idEquipo" value="<?= htmlspecialchars($equipoEditar["idEquipo"] ?? "") ?>" required <?= $equipoEditar !== null ? "readonly" : "" ?> />
+            <input type="text" id="idEquipo" name="idEquipo" required />
 
             <label for="idLaboratorio">Laboratorio</label>
             <select id="idLaboratorio" name="idLaboratorio" required>
               <option value="">Seleccione un laboratorio</option>
               <?php foreach ($laboratorios as $laboratorio): ?>
-                <option value="<?= htmlspecialchars($laboratorio["idLaboratorio"]) ?>" <?= ($equipoEditar["idLaboratorio"] ?? "") === $laboratorio["idLaboratorio"] ? "selected" : "" ?>>
+                <option value="<?= htmlspecialchars($laboratorio["idLaboratorio"]) ?>">
                   <?= htmlspecialchars($laboratorio["numeroLaboratorio"]) ?>
                 </option>
               <?php endforeach; ?>
@@ -77,30 +73,28 @@
             <label for="marca">Marca</label>
             <select id="marca" name="marca" required>
               <?php foreach (["Dell", "HP", "Lenovo", "Asus", "Acer"] as $marca): ?>
-                <option value="<?= $marca ?>" <?= ($equipoEditar["marca"] ?? "") === $marca ? "selected" : "" ?>><?= $marca ?></option>
+                <option value="<?= $marca ?>"><?= $marca ?></option>
               <?php endforeach; ?>
             </select>
 
             <label for="estado">Estado</label>
             <select id="estado" name="estado" required>
               <?php foreach (["Dañado", "Funcionando", "En mantenimiento", "No funciona"] as $estado): ?>
-                <option value="<?= $estado ?>" <?= ($equipoEditar["estado"] ?? "") === $estado ? "selected" : "" ?>><?= $estado ?></option>
+                <option value="<?= $estado ?>"><?= $estado ?></option>
               <?php endforeach; ?>
             </select>
 
             <label for="disponibilidad">Disponibilidad</label>
             <select id="disponibilidad" name="disponibilidad" required>
               <?php foreach (["Disponible", "No disponible"] as $disponibilidad): ?>
-                <option value="<?= $disponibilidad ?>" <?= ($equipoEditar["disponibilidad"] ?? "") === $disponibilidad ? "selected" : "" ?>><?= $disponibilidad ?></option>
+                <option value="<?= $disponibilidad ?>"><?= $disponibilidad ?></option>
               <?php endforeach; ?>
             </select>
 
             <label for="informacion">Información</label>
-            <input type="text" id="informacion" name="informacion" value="<?= htmlspecialchars($equipoEditar["informacion"] ?? "") ?>" />
+            <input type="text" id="informacion" name="informacion" />
             <button type="submit">Guardar equipo</button>
-            <?php if ($equipoEditar !== null): ?>
-              <a href="<?= URL_BASE ?>/public/Equipos.php">Cancelar</a>
-            <?php endif; ?>
+            <button type="button" id="btnCancelarEdicionEquipo" hidden>Cancelar</button>
           </fieldset>
         </form>
 
@@ -117,31 +111,13 @@
               <th>Acciones</th>
             </tr>
           </thead>
-          <tbody id="cuerpoTablaPc">
-            <?php foreach ($equipos as $equipo): ?>
-              <tr>
-                <td><?= htmlspecialchars($equipo["idEquipo"]) ?></td>
-                <td><?= htmlspecialchars($equipo["laboratorio"]) ?></td>
-                <td><?= htmlspecialchars($equipo["marca"]) ?></td>
-                <td><?= htmlspecialchars($equipo["estado"]) ?></td>
-                <td><?= htmlspecialchars($equipo["disponibilidad"]) ?></td>
-                <td><?= htmlspecialchars($equipo["informacion"] ?? "") ?></td>
-                <td>
-                  <a href="<?= URL_BASE ?>/public/Equipos.php?editar=<?= urlencode($equipo["idEquipo"]) ?>">Modificar</a>
-                  <form action="<?= URL_BASE ?>/public/procesarEquipo.php" method="POST">
-                    <input type="hidden" name="accion" value="baja" />
-                    <input type="hidden" name="idEquipo" value="<?= htmlspecialchars($equipo["idEquipo"]) ?>" />
-                    <button type="submit">Eliminar</button>
-                  </form>
-                </td>
-              </tr>
-            <?php endforeach; ?>
-          </tbody>
+          <tbody id="cuerpoTablaPc"></tbody>
         </table>
       </section>
     </main>
 
     <script src="<?= URL_BASE ?>/public/assets/js/barraNavegacion.js"></script>
+    <script src="<?= URL_BASE ?>/public/assets/js/gestionPCs.js"></script>
     <script src="<?= URL_BASE ?>/public/assets/js/filtrosEquipos.js"></script>
   </body>
 </html>

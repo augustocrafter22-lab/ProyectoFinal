@@ -14,7 +14,7 @@ Los scripts de `bd/DDL/` tienen que ejecutarse en este orden, porque cada uno de
 6. `creacionReparacion.sql`
 7. `creacionPrestamo.sql`
 
-Antes de este issue, `creacionTicket.sql` no tenía ninguna clave foránea declarada, así que su orden no importaba. Al agregarle las FK hacia `LABORATORIO` y `EQUIPO` (ver más abajo), ahora sí es necesario ejecutarlo después de esos dos scripts.
+Antes de este issue, `creacionTicket.sql` no tenía ninguna clave foránea declarada, así que su orden no importaba. Al agregarle la FK hacia `EQUIPO` (ver más abajo), ahora sí es necesario ejecutarlo después de `creacionEquipo.sql` (que a su vez depende de `creacionLaboratorio.sql`).
 
 ## USUARIO, ADMINISTRADOR, TECNICO, DOCENTE
 
@@ -34,11 +34,6 @@ Antes de este issue, `creacionTicket.sql` no tenía ninguna clave foránea decla
 
 * **TICKET** (`idTicket` PK): `asunto`, `descripcion`, `turno`, `grupo`, `estado`, `prioridad`, `fechaCreacion` y `fechaFinalizacion` dependen solo de `idTicket`.
 * `equipo` es FK a `EQUIPO`. Antes no tenía la restricción `FOREIGN KEY` declarada en el DDL aunque el código la trataba como tal (joins en `AccesoDatosDashboard`, `AccesoDatosReparacion`, etc.) — se agregó la constraint `fk_ticket_equipo` para que la base de datos la garantice, no solo el código PHP.
-* `laboratorio` también se agregó como FK a `LABORATORIO` (`fk_ticket_laboratorio`) por el mismo motivo.
-
-**Denormalización deliberada #1 — `TICKET.laboratorio`:** este dato es técnicamente derivable desde `EQUIPO.idLaboratorio` (siguiendo `TICKET.equipo → EQUIPO.idLaboratorio`), por lo que en una 3FN estricta no debería repetirse en `TICKET`. Se mantiene así a propósito: representa el laboratorio donde ocurrió la incidencia *en el momento del ticket*, que puede no coincidir con el laboratorio actual del equipo si este se reubica después. Sacarlo de `TICKET` obligaría a reescribir todas las consultas que lo usan (fuera del alcance de este issue) y perdería ese dato histórico.
-
-**Denormalización deliberada #2 — `TICKET.profesor`:** se guarda como texto libre (`VARCHAR(50)`) en vez de una FK a `DOCENTE`/`USUARIO.cedula`. Lo correcto en 3FN sería una FK, tal como ya hace `SOLICITUD_LABORATORIO.cedulaSolicitante`. Se documenta como deuda técnica conocida y no se corrige acá porque cambiarlo implica modificar el formulario de ingreso de tickets y todos los controladores que lo usan, lo cual excede el alcance de este issue (que pide documentar la normalización, no rediseñar el flujo de tickets).
 
 ## DIAGNOSTICO y SOLUCION
 
@@ -48,8 +43,6 @@ Antes de este issue, `creacionTicket.sql` no tenía ninguna clave foránea decla
 ## REPARACION
 
 * **REPARACION** (`idReparacion` PK): `cedulaTecnico`, `reparacion` y `fechaReparacion` dependen solo de `idReparacion`.
-
-**Denormalización deliberada #3 — `REPARACION.idTicket` e `idEquipo`:** ambos son derivables siguiendo `idDiagnostico → DIAGNOSTICO.idTicket → TICKET.equipo`, por lo que en 3FN estricta no deberían estar en `REPARACION`. Se mantienen como copia porque `AccesoDatosReparacion::registrarReparacion()` ya los completa automáticamente con un `INSERT...SELECT` desde esa misma cadena al crear el registro, evitando así un join de 3 tablas cada vez que se necesita filtrar reparaciones por ticket o por equipo (como hace `historialTecnico.php`). Es una denormalización típica para optimizar lectura, común cuando el dato de origen no cambia una vez creado el registro.
 
 ## PRESTAMO (nueva)
 
