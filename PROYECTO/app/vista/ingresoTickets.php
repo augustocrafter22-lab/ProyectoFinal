@@ -43,15 +43,11 @@
       <label for="laboratorioTaller"><?= Traductor::t("ingresoTickets.labelEspacio") ?></label>
       <select name="laboratorio" id="laboratorioTaller" required>
         <option value=""><?= Traductor::t("ingresoTickets.opcionSeleccioneEspacio") ?></option>
-        <option value="Laboratorio 1">Laboratorio 1</option>
-        <option value="Laboratorio 2">Laboratorio 2</option>
-        <option value="Laboratorio 3">Laboratorio 3</option>
-        <option value="Laboratorio 4">Laboratorio 4</option>
-        <option value="Laboratorio 5">Laboratorio 5</option>
-        <option value="Laboratorio 6">Laboratorio 6</option>
-        <option value="Taller 1">Taller 1</option>
-        <option value="Taller 2">Taller 2</option>
-        <option value="Taller 3">Taller 3</option>
+        <?php foreach ($laboratorios as $laboratorio): ?>
+          <option value="<?= htmlspecialchars($laboratorio["idLaboratorio"]) ?>">
+            <?= htmlspecialchars($laboratorio["numeroLaboratorio"]) ?>
+          </option>
+        <?php endforeach; ?>
       </select>
 
       <label for="equipo"><?= Traductor::t("ingresoTickets.labelEquipos") ?></label>

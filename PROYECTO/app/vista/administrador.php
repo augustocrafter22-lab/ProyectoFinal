@@ -38,6 +38,14 @@
         <h1><?= Traductor::t("administrador.bienvenida") ?></h1>
         <p><?= Traductor::t("administrador.subtitulo") ?></p>
     </section>
+
+    <?php if (isset($_GET["exito"])): ?>
+        <p id="mensajeExitoAdministrador" role="status" style="color: green"><?= htmlspecialchars($_GET["exito"]) ?></p>
+    <?php endif; ?>
+    <?php if (isset($_GET["error"])): ?>
+        <p id="mensajeErrorAdministrador" role="status" style="color: red"><?= htmlspecialchars($_GET["error"]) ?></p>
+    <?php endif; ?>
+
     <table id="tablaUsuarios">
         <caption><?= Traductor::t("administrador.captionTabla") ?></caption>
         <thead>

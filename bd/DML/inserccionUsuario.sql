@@ -1,5 +1,5 @@
 INSERT INTO USUARIO (cedula, nombre, apellido, clave, activo)
-VALUES ('11111111', 'Administrador', 'Prueba', '$2y$12$RtiPb6CJM8ILirtlLLBXqu1Dr7gf6kvQutl3JQLh0ZfHisabM5YnS', TRUE);
+VALUES ('11111111', 'Coordinador', 'Prueba', '$2y$12$RtiPb6CJM8ILirtlLLBXqu1Dr7gf6kvQutl3JQLh0ZfHisabM5YnS', TRUE);
 
 INSERT INTO USUARIO (cedula, nombre, apellido, clave, activo)
 VALUES ('22222222', 'Tecnico', 'Prueba', '$2y$12$pzEl5G4MdFVjxIRoJRslH.T7NPFNybFuktfm66vTs74VTaLJv2vnG', TRUE);

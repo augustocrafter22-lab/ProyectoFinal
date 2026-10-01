@@ -38,6 +38,13 @@
         <p><?= Traductor::t("solicitarLab.subtitulo") ?></p>
     </section>
 
+    <?php if (isset($_GET["exito"])): ?>
+        <p id="mensajeExitoSolicitarLab" role="status" style="color: green"><?= htmlspecialchars($_GET["exito"]) ?></p>
+    <?php endif; ?>
+    <?php if (isset($_GET["error"])): ?>
+        <p id="mensajeErrorSolicitarLab" role="status" style="color: red"><?= htmlspecialchars($_GET["error"]) ?></p>
+    <?php endif; ?>
+
     <section class="modulo" id="ingresoLaboratorio">
 
         <form class="formulario" id="LabForm" method="POST" action="procesarSolicitudLaboratorio.php">

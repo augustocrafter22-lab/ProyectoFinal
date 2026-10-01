@@ -51,6 +51,11 @@ class ControladorDiagnostico
 
             RespuestaJson::exito($resultado["datos"], $resultado["mensaje"], $resultado["codigo"]);
 
+        } catch (PDOException $e) {
+            // Los errores de la base de datos traen un código SQLSTATE (por ejemplo "42S02"),
+            // que no es un código HTTP, por eso siempre se responde con un 500.
+            RegistradorErrores::registrar($e);
+            RespuestaJson::error("Ocurrió un error, intente nuevamente.", 500);
         } catch (Exception $e) {
             $codigo = $e->getCode() >= 400 && $e->getCode() <= 599 ? (int) $e->getCode() : 500;
 

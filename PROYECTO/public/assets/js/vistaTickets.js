@@ -19,6 +19,9 @@ function crearSelect(clase, opciones, valorSeleccionado, prefijoTexto) {
     select.appendChild(option);
   }
 
+  // Último valor guardado en la base, para volver a él si falla la actualización.
+  select.dataset.valorGuardado = select.value;
+
   return select;
 }
 
@@ -27,6 +30,7 @@ function crearArticuloTicket(ticket) {
   articulo.classList.add("ticket");
   articulo.dataset.id = ticket.idTicket;
   articulo.dataset.fecha = ticket.fechaCreacion;
+  articulo.dataset.equipo = ticket.equipo;
 
   const infoSeccion = document.createElement("section");
   infoSeccion.classList.add("ticketInfo");

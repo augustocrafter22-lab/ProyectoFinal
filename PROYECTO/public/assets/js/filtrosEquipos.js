@@ -2,14 +2,14 @@ const filtroID = document.getElementById("filtroID");
 const filtroEstado = document.getElementById("filtroEstado");
 const filtroLab = document.getElementById("filtroLab");
 const filtroDisponibilidad = document.getElementById("filtroDisponibilidad");
-const cuerpoTablaPc = document.getElementById("cuerpoTablaPc");
+const tablaEquiposFiltrada = document.getElementById("cuerpoTablaPc");
 
 function aplicarFiltrosEquipos() {
   const idBuscado = filtroID.value.trim().toUpperCase();
   const estadoBuscado = filtroEstado.value.trim().toUpperCase();
   const laboratorioBuscado = filtroLab.value.trim().toUpperCase();
   const disponibilidadBuscada = filtroDisponibilidad.value.trim().toUpperCase();
-  const filas = cuerpoTablaPc.querySelectorAll("tr");
+  const filas = tablaEquiposFiltrada.querySelectorAll("tr");
 
   filas.forEach(function (fila) {
     const celdas = fila.querySelectorAll("td");

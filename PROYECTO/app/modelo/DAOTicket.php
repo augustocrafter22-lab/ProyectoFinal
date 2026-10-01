@@ -154,7 +154,8 @@ class DAOTicket
 
     /**
      * Actualiza el estado y la prioridad de un ticket existente.
-     * Si el estado pasa a "Resuelto" o "Cerrado" se registra la fecha de finalizado.
+     * Si el estado pasa a "Resuelto" o "Cerrado" se registra la fecha de finalizado,
+     * conservando la fecha original si el ticket ya estaba finalizado.
      *
      * @param string $idTicket Id del ticket a actualizar.
      * @param array $datos Arreglo con las claves estado y prioridad.
@@ -163,7 +164,13 @@ class DAOTicket
     public function actualizar(string $idTicket, array $datos): bool
     {
         $estadosFinalizados = ["Resuelto", "Cerrado"];
-        $fechaFinalizacion = in_array($datos["estado"], $estadosFinalizados, true) ? date("Y-m-d H:i:s") : null;
+        $fechaFinalizacion = null;
+
+        if (in_array($datos["estado"], $estadosFinalizados, true)) {
+            // Si el ticket ya tenía fecha de finalizado se conserva, si no se usa la fecha actual.
+            $ticketActual = $this->obtener($idTicket);
+            $fechaFinalizacion = $ticketActual["fechaFinalizacion"] ?? date("Y-m-d H:i:s");
+        }
 
         $sql = "
             UPDATE TICKET
@@ -209,9 +216,17 @@ class DAOTicket
         $consulta = $this->conexion->prepare("SELECT COUNT(*) FROM TICKET WHERE idTicket LIKE :patron");
         $consulta->execute([":patron" => "INC-$anio-%"]);
 
-        $cantidad = (int) $consulta->fetchColumn();
+        $numero = (int) $consulta->fetchColumn() + 1;
+        $idTicket = "INC-$anio-" . str_pad((string) $numero, 4, "0", STR_PAD_LEFT);
 
-        return "INC-$anio-" . str_pad((string) ($cantidad + 1), 4, "0", STR_PAD_LEFT);
+        // Si se eliminó un ticket, el conteo puede dar un id que ya existe,
+        // entonces se avanza hasta encontrar uno libre.
+        while ($this->obtener($idTicket) !== null) {
+            $numero = $numero + 1;
+            $idTicket = "INC-$anio-" . str_pad((string) $numero, 4, "0", STR_PAD_LEFT);
+        }
+
+        return $idTicket;
     }
 }
 

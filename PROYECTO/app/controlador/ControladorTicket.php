@@ -67,6 +67,11 @@ class ControladorTicket
 
             RespuestaJson::exito($resultado["datos"], $resultado["mensaje"], $resultado["codigo"]);
 
+        } catch (PDOException $e) {
+            // Los errores de la base de datos traen un código SQLSTATE (por ejemplo "42S02"),
+            // que no es un código HTTP, por eso siempre se responde con un 500.
+            RegistradorErrores::registrar($e);
+            RespuestaJson::error("Ocurrió un error, intente nuevamente.", 500);
         } catch (Exception $e) {
             // Si el código de la excepción es un código HTTP válido se usa ese,
             // en cualquier otro caso se responde con un 500 (error del servidor).

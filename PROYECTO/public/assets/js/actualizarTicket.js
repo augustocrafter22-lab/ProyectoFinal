@@ -1,10 +1,19 @@
 const listaTicketsParaActualizar = document.getElementById("listaTickets");
 
+// Deja los selects del ticket en el último valor guardado en la base.
+function restaurarValoresGuardados(selects) {
+    for (const select of selects) {
+        select.value = select.dataset.valorGuardado;
+    }
+}
+
 function actualizarTicket(articulo) {
 
     const idTicket = articulo.dataset.id;
-    const estado = articulo.querySelector(".select-estado").value;
-    const prioridad = articulo.querySelector(".select-prioridad").value;
+    const selectEstado = articulo.querySelector(".select-estado");
+    const selectPrioridad = articulo.querySelector(".select-prioridad");
+    const estado = selectEstado.value;
+    const prioridad = selectPrioridad.value;
 
     fetch(`api/tickets.php?id=${encodeURIComponent(idTicket)}`, {
         method: "PUT",
@@ -14,10 +23,16 @@ function actualizarTicket(articulo) {
         .then(respuesta => respuesta.json())
         .then(datos => {
             if (!datos.exito) {
+                restaurarValoresGuardados([selectEstado, selectPrioridad]);
                 alert(datos.mensaje || "No se pudo actualizar el ticket.");
+                return;
             }
+
+            selectEstado.dataset.valorGuardado = estado;
+            selectPrioridad.dataset.valorGuardado = prioridad;
         })
         .catch(() => {
+            restaurarValoresGuardados([selectEstado, selectPrioridad]);
             alert("Error de conexión al actualizar el ticket.");
         });
 }
