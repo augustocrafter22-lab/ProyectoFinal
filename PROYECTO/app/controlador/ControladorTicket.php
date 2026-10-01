@@ -39,6 +39,10 @@ class ControladorTicket
      */
     public function gestionar(): void
     {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
         try {
             $this->conectar();
 
@@ -115,7 +119,38 @@ class ControladorTicket
             return ["datos" => $ticket, "mensaje" => "Ticket encontrado.", "codigo" => 200];
         }
 
-        return ["datos" => $this->dao->listar(), "mensaje" => "Listado de tickets.", "codigo" => 200];
+        $filtros = $this->obtenerFiltros();
+
+        return ["datos" => $this->dao->listar($filtros), "mensaje" => "Listado de tickets.", "codigo" => 200];
+    }
+
+    /**
+     * Lee y valida los filtros opcionales enviados por GET.
+     *
+     * @return array Arreglo con las claves estado, prioridad, fechaDesde,
+     *               fechaHasta y busqueda.
+     * @throws Exception Si estado o prioridad traen un valor no permitido.
+     */
+    private function obtenerFiltros(): array
+    {
+        $estado = trim($_GET["estado"] ?? "");
+        $prioridad = trim($_GET["prioridad"] ?? "");
+
+        if ($estado !== "" && !in_array($estado, $this->estadosValidos, true)) {
+            throw new Exception("El filtro estado tiene un valor no permitido.", 400);
+        }
+
+        if ($prioridad !== "" && !in_array($prioridad, $this->prioridadesValidas, true)) {
+            throw new Exception("El filtro prioridad tiene un valor no permitido.", 400);
+        }
+
+        return [
+            "estado" => $estado,
+            "prioridad" => $prioridad,
+            "fechaDesde" => trim($_GET["fechaDesde"] ?? ""),
+            "fechaHasta" => trim($_GET["fechaHasta"] ?? ""),
+            "busqueda" => trim($_GET["q"] ?? "")
+        ];
     }
 
     /**
@@ -182,6 +217,8 @@ class ControladorTicket
      */
     private function eliminar(): array
     {
+        $this->verificarPermisoEliminar();
+
         $datosEnviados = $this->obtenerDatosEnviados();
 
         $idTicket = trim($_GET["id"] ?? ($datosEnviados["idTicket"] ?? ""));
@@ -197,6 +234,23 @@ class ControladorTicket
         $this->dao->eliminar($idTicket);
 
         return ["datos" => null, "mensaje" => "Ticket $idTicket eliminado correctamente.", "codigo" => 200];
+    }
+
+    /**
+     * Verifica que el usuario autenticado tenga un rol habilitado para
+     * eliminar tickets (coordinador o técnico).
+     *
+     * @return void
+     * @throws Exception Si el usuario no tiene sesión iniciada o no tiene el rol requerido.
+     */
+    private function verificarPermisoEliminar(): void
+    {
+        $esCoordinador = $_SESSION["coordinador"] ?? false;
+        $esTecnico = $_SESSION["tecnico"] ?? false;
+
+        if (!$esCoordinador && !$esTecnico) {
+            throw new Exception("No tiene permisos para eliminar tickets.", 403);
+        }
     }
 
     /**

@@ -60,3 +60,14 @@
   cursor: pointer;
   margin-bottom: 6px;
 }
+
+.btn-eliminar-ticket {
+  background-color: #c0152e;
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 6px;
+}
