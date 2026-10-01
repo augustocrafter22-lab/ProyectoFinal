@@ -22,12 +22,42 @@ class DAOTicket
     }
 
     /**
-     * Recupera todos los tickets registrados.
+     * Recupera los tickets registrados, opcionalmente filtrados.
      *
+     * @param array $filtros Claves opcionales: estado, prioridad, fechaDesde,
+     *                        fechaHasta y busqueda (palabra clave).
      * @return array Arreglo asociativo con los datos de cada ticket.
      */
-    public function listar(): array
+    public function listar(array $filtros = []): array
     {
+        $condiciones = [];
+        $parametros = [];
+
+        if (!empty($filtros["estado"])) {
+            $condiciones[] = "estado = :estado";
+            $parametros[":estado"] = $filtros["estado"];
+        }
+
+        if (!empty($filtros["prioridad"])) {
+            $condiciones[] = "prioridad = :prioridad";
+            $parametros[":prioridad"] = $filtros["prioridad"];
+        }
+
+        if (!empty($filtros["fechaDesde"])) {
+            $condiciones[] = "fechaCreacion >= :fechaDesde";
+            $parametros[":fechaDesde"] = $filtros["fechaDesde"] . " 00:00:00";
+        }
+
+        if (!empty($filtros["fechaHasta"])) {
+            $condiciones[] = "fechaCreacion <= :fechaHasta";
+            $parametros[":fechaHasta"] = $filtros["fechaHasta"] . " 23:59:59";
+        }
+
+        if (!empty($filtros["busqueda"])) {
+            $condiciones[] = "(idTicket LIKE :busqueda OR asunto LIKE :busqueda OR descripcion LIKE :busqueda)";
+            $parametros[":busqueda"] = "%" . $filtros["busqueda"] . "%";
+        }
+
         $sql = "
             SELECT
                 idTicket,
@@ -43,11 +73,16 @@ class DAOTicket
                 fechaCreacion,
                 fechaFinalizacion
             FROM TICKET
-            ORDER BY fechaCreacion DESC
         ";
 
+        if (!empty($condiciones)) {
+            $sql .= " WHERE " . implode(" AND ", $condiciones);
+        }
+
+        $sql .= " ORDER BY fechaCreacion DESC";
+
         $consulta = $this->conexion->prepare($sql);
-        $consulta->execute();
+        $consulta->execute($parametros);
 
         return $consulta->fetchAll(PDO::FETCH_ASSOC);
     }

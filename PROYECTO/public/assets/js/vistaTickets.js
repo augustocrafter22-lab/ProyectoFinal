@@ -64,9 +64,44 @@ function crearArticuloTicket(ticket) {
     estadoSeccion.appendChild(finalizado);
   }
 
-  articulo.append(infoSeccion, estadoSeccion);
+  const accionesSeccion = document.createElement("section");
+  accionesSeccion.classList.add("ticketAcciones");
+
+  const btnEliminar = document.createElement("button");
+  btnEliminar.type = "button";
+  btnEliminar.classList.add("btn-eliminar-ticket");
+  btnEliminar.textContent = "Eliminar";
+  btnEliminar.addEventListener("click", () => eliminarTicket(articulo));
+
+  accionesSeccion.appendChild(btnEliminar);
+
+  articulo.append(infoSeccion, estadoSeccion, accionesSeccion);
 
   return articulo;
+}
+
+async function eliminarTicket(articulo) {
+  const idTicket = articulo.dataset.id;
+
+  if (!confirm(`¿Eliminar el ticket ${idTicket}?`)) {
+    return;
+  }
+
+  try {
+    const respuesta = await fetch(`${URL_API_TICKETS}?id=${encodeURIComponent(idTicket)}`, {
+      method: "DELETE"
+    });
+    const cuerpo = await respuesta.json();
+
+    if (!cuerpo.exito) {
+      alert(cuerpo.mensaje || "No se pudo eliminar el ticket.");
+      return;
+    }
+
+    articulo.remove();
+  } catch (error) {
+    alert("Error de conexión al eliminar el ticket.");
+  }
 }
 
 async function cargarTickets() {
