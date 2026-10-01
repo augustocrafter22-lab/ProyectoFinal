@@ -14,4 +14,4 @@ require_once RUTA_CONTROLADOR . "/ControladorTicket.php";
 $controladorTicket = new ControladorTicket();
 $controladorTicket->gestionar();
 
-?>
+?> 
