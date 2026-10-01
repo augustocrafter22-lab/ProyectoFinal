@@ -13,21 +13,17 @@ require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosUsuario.php";
 require_once RUTA_MODELO . "/Usuario.php";
 require_once RUTA_MODELO . "/Login.php";
+require_once RUTA_MODELO . "/Validador.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     header("Location: " . URL_BASE . "/public/login.php");
     exit;
 }
 
-$cedula = trim($_POST["username"] ?? "");
-$clave = $_POST["clave"] ?? "";
-
-if (empty($cedula) || empty($clave)) {
-    header("Location: " . URL_BASE . "/public/login.php?error=" . urlencode("Ingrese cédula y contraseña"));
-    exit;
-}
-
 try {
+    $cedula = Validador::requerido($_POST["username"] ?? "", "cédula");
+    $clave = Validador::requerido($_POST["clave"] ?? "", "contraseña");
+
     $conectorPDO = new ConectorPDO($_ENV['BD_HOST'], $_ENV['BD_USER'], $_ENV['BD_PASS'], $_ENV['BD_NAME']);
     $conexion = $conectorPDO->establecerConexion();
 

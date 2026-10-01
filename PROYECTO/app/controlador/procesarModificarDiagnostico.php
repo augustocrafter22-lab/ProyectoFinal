@@ -11,6 +11,7 @@
 require_once __DIR__ . "/../../config/config.php";
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosDiagnostico.php";
+require_once RUTA_MODELO . "/Validador.php";
 
 session_start();
 
@@ -24,16 +25,10 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit;
 }
 
-$idDiagnostico = trim($_POST["idDiagnostico"] ?? "");
-$diagnostico = trim($_POST["diagnostico"] ?? "");
-
-if ($idDiagnostico === "" || strlen($diagnostico) < 10) {
-    $mensaje = "Debe seleccionar un diagnóstico e ingresar un texto de al menos 10 caracteres.";
-    header("Location: " . URL_BASE . "/public/ModificarDiagnostico.php?error=" . urlencode($mensaje));
-    exit;
-}
-
 try {
+    $idDiagnostico = Validador::numerico($_POST["idDiagnostico"] ?? "", "diagnóstico");
+    $diagnostico = Validador::longitud($_POST["diagnostico"] ?? "", 10, 2000, "diagnóstico");
+
     $conectorPDO = new ConectorPDO($_ENV['BD_HOST'], $_ENV['BD_USER'], $_ENV['BD_PASS'], $_ENV['BD_NAME']);
     $conexion = $conectorPDO->establecerConexion();
 

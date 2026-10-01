@@ -11,24 +11,30 @@
 require_once __DIR__ . "/../../config/config.php";
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AltaDatosUsuario.php";
+require_once RUTA_MODELO . "/Validador.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     header("Location: " . URL_BASE . "/public/Administrador.php?error=" . urlencode("Método no permitido"));
     exit;
 }
 
-$cedula = trim($_POST["ci"] ?? "");
-$nombre = trim($_POST["nombre"] ?? "");
-$apellido = trim($_POST["apellido"] ?? "");
-$clave = trim($_POST["contrasenia"] ?? "");
-$roles = $_POST["roles"] ?? [];
-
-if (empty($cedula) || empty($roles)) {
-    header("Location: " . URL_BASE . "/public/Administrador.php?error=" . urlencode("CI y al menos un rol son requeridos"));
-    exit;
-}
-
 try {
+    $cedula = Validador::cedula($_POST["ci"] ?? "");
+    $nombre = trim($_POST["nombre"] ?? "");
+    $apellido = trim($_POST["apellido"] ?? "");
+    $clave = trim($_POST["contrasenia"] ?? "");
+    $roles = $_POST["roles"] ?? [];
+
+    if ($nombre !== "") {
+        $nombre = Validador::longitud($nombre, 1, 12, "nombre");
+    }
+    if ($apellido !== "") {
+        $apellido = Validador::longitud($apellido, 1, 16, "apellido");
+    }
+    if (empty($roles)) {
+        throw new Exception("Debe seleccionar al menos un rol.", 400);
+    }
+
     $conectorPDO = new ConectorPDO($_ENV['BD_HOST'], $_ENV['BD_USER'], $_ENV['BD_PASS'], $_ENV['BD_NAME']);
     $conexion = $conectorPDO->establecerConexion();
 

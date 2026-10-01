@@ -11,6 +11,7 @@
 require_once __DIR__ . "/../../config/config.php";
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosTicket.php";
+require_once RUTA_MODELO . "/Validador.php";
 
 session_start();
 
@@ -24,22 +25,15 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit;
 }
 
-$laboratorio = trim($_POST["laboratorio"] ?? "");
-$equipo = trim($_POST["equipo"] ?? "");
-$asunto = trim($_POST["asunto"] ?? "");
-$descripcion = trim($_POST["descripcion"] ?? "");
-$turno = trim($_POST["turno"] ?? "");
-$grupo = trim($_POST["grupo"] ?? "");
-$profesor = trim($_POST["profesor"] ?? "");
-
-if ($laboratorio === "" || $equipo === "" || $asunto === "" || $descripcion === ""
-    || $turno === "" || $grupo === "" || $profesor === "") {
-    $mensaje = "Debe completar todos los campos del ticket.";
-    header("Location: " . URL_BASE . "/public/IngresoDeTickets.php?error=" . urlencode($mensaje));
-    exit;
-}
-
 try {
+    $laboratorio = Validador::longitud($_POST["laboratorio"] ?? "", 1, 20, "laboratorio");
+    $equipo = Validador::longitud($_POST["equipo"] ?? "", 1, 10, "equipo");
+    $asunto = Validador::longitud($_POST["asunto"] ?? "", 1, 100, "asunto");
+    $descripcion = Validador::requerido($_POST["descripcion"] ?? "", "descripción");
+    $turno = Validador::longitud($_POST["turno"] ?? "", 1, 15, "turno");
+    $grupo = Validador::longitud($_POST["grupo"] ?? "", 1, 10, "grupo");
+    $profesor = Validador::longitud($_POST["profesor"] ?? "", 1, 50, "profesor");
+
     $conectorPDO = new ConectorPDO($_ENV['BD_HOST'], $_ENV['BD_USER'], $_ENV['BD_PASS'], $_ENV['BD_NAME']);
     $conexion = $conectorPDO->establecerConexion();
 
