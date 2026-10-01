@@ -33,16 +33,10 @@
     <p>¡Hola! Este espacio es para ingresar nuevos tickets sobre incidencias que hayan en los equipos de los laboratorios</p>
   </section>
 
-  <?php if (isset($_GET["error"])) { ?>
-      <p class="mensaje-error"><?= htmlspecialchars($_GET["error"]) ?></p>
-  <?php } ?>
-
-  <?php if (isset($_GET["exito"])) { ?>
-      <p class="mensaje-exito"><?= htmlspecialchars($_GET["exito"]) ?></p>
-  <?php } ?>
+  <p id="mensajeIngresoTickets" role="status"></p>
 
   <section class="modulo" id="ingresoTickets">
-    <form class="formulario" id="ticketForm" action="<?= URL_BASE ?>/app/controlador/procesarIngresoTickets.php" method="POST">
+    <form class="formulario" id="ticketForm">
 
       <label for="laboratorioTaller">Espacio de Trabajo</label>
       <select name="laboratorio" id="laboratorioTaller" required>
@@ -61,22 +55,6 @@
       <label for="equipo">Equipos</label>
       <select name="equipo" id="equipo" required>
         <option value="">Seleccione un equipo</option>
-        <option value="PC-01">PC-01</option>
-        <option value="PC-02">PC-02</option>
-        <option value="PC-03">PC-03</option>
-        <option value="PC-04">PC-04</option>
-        <option value="PC-05">PC-05</option>
-        <option value="PC-06">PC-06</option>
-        <option value="PC-07">PC-07</option>
-        <option value="PC-08">PC-08</option>
-        <option value="PC-09">PC-09</option>
-        <option value="PC-10">PC-10</option>
-        <option value="PC-11">PC-11</option>
-        <option value="PC-12">PC-12</option>
-        <option value="PC-13">PC-13</option>
-        <option value="PC-14">PC-14</option>
-        <option value="PC-15">PC-15</option>
-        <option value="PC-16">PC-16</option>
       </select>
 
       <label for="asunto">Asunto:</label>
@@ -103,6 +81,7 @@
 
     </form>
   </section>
+  <script src="<?= URL_BASE ?>/public/assets/js/ingresoTickets.js"></script>
   <script src="<?= URL_BASE ?>/public/assets/js/barraNavegacion.js"></script>
 </body>
 </html>

@@ -36,59 +36,36 @@
 </header>
 
 <section class="modulo" id="filtroDiagnosticos">
-    <form class="formulario" id="formFiltroDiagnosticos" method="GET" action="ConsultarDiagnostico.php">
+    <form class="formulario" id="formFiltroDiagnosticos">
         <label for="filtroTicket">Filtrar por ticket</label>
-        <input type="text" id="filtroTicket" name="ticket" value="<?= htmlspecialchars($ticketFiltro) ?>" placeholder="Ej: INC-2026-0001">
+        <input type="text" id="filtroTicket" name="ticket" placeholder="Ej: INC-2026-0001">
         <button class="boton-principal" type="submit">Filtrar</button>
-        <?php if ($ticketFiltro !== "") { ?>
-            <a href="ConsultarDiagnostico.php">Quitar filtro</a>
-        <?php } ?>
+        <button class="boton-principal" type="button" id="btnQuitarFiltroTicket" hidden>Quitar filtro</button>
     </form>
 </section>
 
 <section class="modulo" id="consultarDiagnostico">
-    <h2>
-        <?= $ticketFiltro !== ""
-            ? "Diagnósticos del ticket " . htmlspecialchars($ticketFiltro)
-            : "Diagnósticos registrados" ?>
-    </h2>
+    <h2 id="tituloConsultarDiagnosticos">Diagnósticos registrados</h2>
 
     <table id="tablaDiagnosticos" class="tabla">
-        <?php if (empty($diagnosticos)) { ?>
-            <tbody>
-                <tr>
-                    <td colspan="5" class="tabla-vacia">
-                        <?= $ticketFiltro !== ""
-                            ? "No hay diagnósticos registrados para el ticket " . htmlspecialchars($ticketFiltro) . "."
-                            : "No hay diagnósticos registrados." ?>
-                    </td>
-                </tr>
-            </tbody>
-        <?php } else { ?>
-            <thead>
-                <tr>
-                    <th class="tabla-th">ID</th>
-                    <th class="tabla-th">Ticket</th>
-                    <th class="tabla-th">Diagnóstico</th>
-                    <th class="tabla-th">Fecha</th>
-                    <th class="tabla-th">Técnico</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($diagnosticos as $indice => $diagnostico) { ?>
-                    <tr class="<?= $indice % 2 === 0 ? "tabla-fila-par" : "tabla-fila-impar" ?>">
-                        <td class="tabla-td"><?= htmlspecialchars($diagnostico["idDiagnostico"]) ?></td>
-                        <td class="tabla-td"><?= htmlspecialchars($diagnostico["idTicket"]) ?></td>
-                        <td class="tabla-td"><?= htmlspecialchars($diagnostico["diagnostico"]) ?></td>
-                        <td class="tabla-td"><?= htmlspecialchars($diagnostico["fechaDiagnostico"]) ?></td>
-                        <td class="tabla-td"><?= htmlspecialchars($diagnostico["cedulaTecnico"]) ?></td>
-                    </tr>
-                <?php } ?>
-            </tbody>
-        <?php } ?>
+        <thead hidden>
+            <tr>
+                <th class="tabla-th">ID</th>
+                <th class="tabla-th">Ticket</th>
+                <th class="tabla-th">Diagnóstico</th>
+                <th class="tabla-th">Fecha</th>
+                <th class="tabla-th">Técnico</th>
+            </tr>
+        </thead>
+        <tbody id="cuerpoTablaDiagnosticos">
+            <tr>
+                <td colspan="5" class="tabla-vacia">Cargando diagnósticos...</td>
+            </tr>
+        </tbody>
     </table>
 </section>
 
+<script src="<?= URL_BASE ?>/public/assets/js/consultarDiagnostico.js"></script>
 <script src="<?= URL_BASE ?>/public/assets/js/barraNavegacion.js"></script>
 </body>
 </html>

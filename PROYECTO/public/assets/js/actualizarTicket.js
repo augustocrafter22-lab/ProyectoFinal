@@ -1,13 +1,15 @@
+const listaTicketsParaActualizar = document.getElementById("listaTickets");
+
 function actualizarTicket(articulo) {
 
     const idTicket = articulo.dataset.id;
     const estado = articulo.querySelector(".select-estado").value;
     const prioridad = articulo.querySelector(".select-prioridad").value;
 
-    fetch("procesarActualizarTicket.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ idTicket, estado, prioridad })
+    fetch(`api/tickets.php?id=${encodeURIComponent(idTicket)}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ estado, prioridad })
     })
         .then(respuesta => respuesta.json())
         .then(datos => {
@@ -20,9 +22,8 @@ function actualizarTicket(articulo) {
         });
 }
 
-document.querySelectorAll(".ticket").forEach(articulo => {
-
-    articulo.querySelector(".select-estado").addEventListener("change", () => actualizarTicket(articulo));
-    articulo.querySelector(".select-prioridad").addEventListener("change", () => actualizarTicket(articulo));
-
+listaTicketsParaActualizar.addEventListener("change", evento => {
+    if (evento.target.matches(".select-estado, .select-prioridad")) {
+        actualizarTicket(evento.target.closest(".ticket"));
+    }
 });

@@ -15,10 +15,6 @@ CREATE TABLE TICKET (
     CONSTRAINT pk_ticket
         PRIMARY KEY (idTicket),
 
-    CONSTRAINT fk_ticket_laboratorio
-        FOREIGN KEY (laboratorio)
-        REFERENCES LABORATORIO (idLaboratorio),
-
     CONSTRAINT fk_ticket_equipo
         FOREIGN KEY (equipo)
         REFERENCES EQUIPO (idEquipo)

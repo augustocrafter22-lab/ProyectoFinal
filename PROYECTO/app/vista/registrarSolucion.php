@@ -35,45 +35,33 @@
     </header>
 <header class="encabezado">
 
-<h1><?= isset($modoReparacion) && $modoReparacion ? "Registro de Reparación" : "Registro de Soluciones" ?></h1>
-<p><?= isset($modoReparacion) && $modoReparacion ? "Registre la reparación realizada a partir de una incidencia." : "Aqui se podran registrar las soluciones técnicas en base al diagnóstico realizado." ?></p>
+<h1>Registro de Soluciones</h1>
+<p>Aqui se podran registrar las soluciones técnicas en base al diagnóstico realizado.</p>
 </header>
 
-    <?php if (isset($_GET["error"])) { ?>
-        <p class="mensaje-error"><?= htmlspecialchars($_GET["error"]) ?></p>
-    <?php } ?>
-
-    <?php if (isset($_GET["exito"])) { ?>
-        <p class="mensaje-exito"><?= htmlspecialchars($_GET["exito"]) ?></p>
-    <?php } ?>
+    <p id="mensajeRegistrarSolucion" role="status"></p>
 
 <section class="modulo" id="Solucion">
-  <h2><?= isset($modoReparacion) && $modoReparacion ? "Registrar reparación" : "Registre su resolucion" ?></h2>
+  <h2>Registre su resolucion</h2>
 
-  <?php if (empty($diagnosticos)) { ?>
-    <p>No hay diagnósticos registrados todavía. Registre un diagnóstico antes de cargar una solución.</p>
-  <?php } else { ?>
-  <form class="formulario" id="formRegistrarSolucion" action="<?= URL_BASE ?>/app/controlador/procesarRegistrarSolucion.php" method="POST">
-    <?php if (isset($modoReparacion) && $modoReparacion) { ?>
-      <input type="hidden" name="modo" value="reparacion">
-    <?php } ?>
+  <p id="avisoSinDiagnosticos" hidden>No hay diagnósticos registrados todavía. Registre un diagnóstico antes de cargar una solución.</p>
+
+  <form class="formulario" id="formRegistrarSolucion">
     <label for="registrarSolucionDiagnostico">Diagnóstico</label>
     <select id="registrarSolucionDiagnostico" name="idDiagnostico" required>
       <option value="">Seleccione un diagnóstico</option>
-      <?php foreach ($diagnosticos as $diagnostico) { ?>
-        <option value="<?= htmlspecialchars($diagnostico["idDiagnostico"]) ?>">
-            Ticket <?= htmlspecialchars($diagnostico["idTicket"]) ?> - Equipo <?= htmlspecialchars($diagnostico["equipo"]) ?> - <?= htmlspecialchars($diagnostico["diagnostico"]) ?>
-        </option>
-      <?php } ?>
     </select>
 
-    <label for="registrarSolucionSolucion"><?= isset($modoReparacion) && $modoReparacion ? "Descripción de la reparación" : "Solución tecnica aplicada" ?></label>
+    <label for="registrarSolucionSolucion">Solución tecnica aplicada</label>
     <textarea id="registrarSolucionSolucion" name="solucion" rows="4" minlength="10" required></textarea>
 
-    <button class="boton-principal" type="submit"><?= isset($modoReparacion) && $modoReparacion ? "Registrar reparación" : "Registrar solución" ?></button>
+    <button class="boton-principal" type="submit">Registrar solución</button>
   </form>
-  <?php } ?>
 </section>
+<script>
+    window.cedulaTecnico = <?= json_encode($_SESSION["cedula"]) ?>;
+</script>
+<script src="<?= URL_BASE ?>/public/assets/js/registrarSolucion.js"></script>
 <script src="<?= URL_BASE ?>/public/assets/js/barraNavegacion.js"></script>
 </body>
 </html>

@@ -1,69 +1,65 @@
-document.addEventListener("DOMContentLoaded", iniciarRegistrarReparacion);
+const URL_API_DIAGNOSTICOS = "api/diagnosticos.php";
+const URL_API_REPARACIONES = "api/reparaciones.php";
 
-function iniciarRegistrarReparacion() {
-  const formulario = document.getElementById("formRegistrarReparacion");
+const formRegistrarReparacion = document.getElementById("formRegistrarReparacion");
+const mensajeRegistrarReparacion = document.getElementById("mensajeRegistrarReparacion");
+const avisoSinDiagnosticosReparacion = document.getElementById("avisoSinDiagnosticosReparacion");
+const selectDiagnosticoReparacion = document.getElementById("registrarReparacionDiagnostico");
+const campoTextoReparacion = document.getElementById("registrarReparacionTexto");
 
-  if (!formulario) {
-    return;
-  }
-
-  formulario.addEventListener("submit", registrarReparacion);
+function mostrarMensaje(texto, esError) {
+  mensajeRegistrarReparacion.textContent = texto;
+  mensajeRegistrarReparacion.className = esError ? "mensaje-error" : "mensaje-exito";
 }
 
-function registrarReparacion(evento) {
-  evento.preventDefault();
+async function cargarDiagnosticosEnFormulario() {
+  try {
+    const respuesta = await fetch(URL_API_DIAGNOSTICOS);
+    const cuerpo = await respuesta.json();
 
-  const equipoId = document.getElementById("reparacionEquipoSelect").value;
-  const descripcion = document.getElementById("reparacionDescripcion").value.trim();
+    if (!cuerpo.exito || cuerpo.datos.length === 0) {
+      avisoSinDiagnosticosReparacion.hidden = false;
+      formRegistrarReparacion.hidden = true;
+      return;
+    }
 
-  if (!equipoId) {
-    mostrarMensaje("Seleccioná un equipo.");
-    return;
+    for (const diagnostico of cuerpo.datos) {
+      const option = document.createElement("option");
+      option.value = diagnostico.idDiagnostico;
+      option.textContent = `Ticket ${diagnostico.idTicket} - Equipo ${diagnostico.equipo} - ${diagnostico.diagnostico}`;
+      selectDiagnosticoReparacion.appendChild(option);
+    }
+  } catch (error) {
+    mostrarMensaje("No se pudo conectar con el servidor.", true);
   }
+}
 
-  if (!validarMinimo(descripcion, 10)) {
-    mostrarMensaje("La descripción debe tener al menos 10 caracteres.");
-    return;
-  }
+async function registrarReparacion(eventoFormulario) {
+  eventoFormulario.preventDefault();
 
-  const reparaciones = obtenerDatos();
-
-  const nuevaReparacion = {
-    id: crearId("REP"),
-    equipoId: equipoId,
-    descripcion: descripcion,
-    fecha: obtenerFechaActual(),
-    tecnico: localStorage.getItem("CI")
+  const datosReparacion = {
+    idDiagnostico: selectDiagnosticoReparacion.value,
+    cedulaTecnico: window.cedulaTecnico,
+    reparacion: campoTextoReparacion.value.trim(),
   };
 
-  reparaciones.push(nuevaReparacion);
-  guardarDatos(reparaciones);
+  try {
+    const respuesta = await fetch(URL_API_REPARACIONES, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(datosReparacion),
+    });
+    const cuerpo = await respuesta.json();
 
-  document.getElementById("formRegistrarReparacion").reset();
-  mostrarMensaje("Reparación registrada correctamente.");
+    mostrarMensaje(cuerpo.mensaje, !cuerpo.exito);
+
+    if (cuerpo.exito) {
+      formRegistrarReparacion.reset();
+    }
+  } catch (error) {
+    mostrarMensaje("No se pudo conectar con el servidor.", true);
+  }
 }
 
-function obtenerDatos() {
-  const datosGuardados = localStorage.getItem("historialReparaciones");
-  return datosGuardados === null ? [] : JSON.parse(datosGuardados);
-}
-
-function guardarDatos(reparaciones) {
-  localStorage.setItem("historialReparaciones", JSON.stringify(reparaciones));
-}
-
-function validarMinimo(texto, minimo) {
-  return texto.length >= minimo;
-}
-
-function crearId(prefijo) {
-  return prefijo + "-" + Date.now();
-}
-
-function obtenerFechaActual() {
-  return new Date().toLocaleDateString("es-UY");
-}
-
-function mostrarMensaje(mensaje) {
-  alert(mensaje);
-}
+formRegistrarReparacion.addEventListener("submit", registrarReparacion);
+cargarDiagnosticosEnFormulario();

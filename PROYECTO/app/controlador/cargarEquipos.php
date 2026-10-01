@@ -3,8 +3,9 @@
 /**
  * Controlador que carga la vista de gestión de equipos.
  *
- * Obtiene el listado de equipos y laboratorios; si llega "editar" por
- * GET, también carga los datos del equipo puntual a editar.
+ * El listado de equipos y el alta/modificación/baja ahora se manejan
+ * con fetch contra la API (public/api/equipos.php) desde gestionPCs.js.
+ * Acá solo se carga el listado de laboratorios.
  */
 
 require_once RUTA_MODELO . "/ConectorPDO.php";
@@ -19,13 +20,7 @@ try {
     }
 
     $accesoDatosEquipo = new AccesoDatosEquipo($conexion);
-    $equipos = $accesoDatosEquipo->obtenerEquipos();
     $laboratorios = $accesoDatosEquipo->obtenerLaboratorios();
-    $equipoEditar = null;
-
-    if (isset($_GET["editar"])) {
-        $equipoEditar = $accesoDatosEquipo->obtenerEquipo(trim($_GET["editar"]));
-    }
 
     $conectorPDO->desconectar();
 } catch (Exception $e) {

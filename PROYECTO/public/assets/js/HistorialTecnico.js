@@ -1,86 +1,33 @@
-document.addEventListener("DOMContentLoaded", iniciarHistorialTecnico);
+const URL_API_EQUIPOS = "api/equipos.php";
+const URL_API_REPARACIONES = "api/reparaciones.php";
 
-function iniciarHistorialTecnico() {
-  const selectEquipo = document.getElementById("historialTecnicoEquipoSelect");
-  selectEquipo.addEventListener("change", renderizarHistorialTecnico);
+const selectEquipo = document.getElementById("historialTecnicoEquipoSelect");
+const tablaHistorialTecnico = document.getElementById("tablaHistorialTecnico");
+
+function mostrarTablaVacia(mensaje) {
+  const cuerpo = document.createElement("tbody");
+  const fila = document.createElement("tr");
+  const celda = document.createElement("td");
+  celda.textContent = mensaje;
+  celda.colSpan = 4;
+  celda.style.textAlign = "center";
+  celda.style.padding = "16px";
+  celda.style.color = "#6b7280";
+  fila.appendChild(celda);
+  cuerpo.appendChild(fila);
+  tablaHistorialTecnico.replaceChildren(cuerpo);
 }
 
-function renderizarHistorialTecnico() {
-  const equipoId = document.getElementById(
-    "historialTecnicoEquipoSelect",
-  ).value;
-  const tabla = document.getElementById("tablaHistorialTecnico");
-
-  if (!equipoId) {
-    tabla.replaceChildren();
-    return;
-  }
-
-  const reparaciones = obtenerReparaciones()
-    .filter(function (r) {
-      return r.equipoId === equipoId;
-    })
-    .map(function (r) {
-      return {
-        tipo: "Reparación",
-        detalle: r.descripcion,
-        fecha: r.fecha,
-        tecnico: r.tecnico,
-      };
-    });
-
-  const intervenciones = obtenerIntervenciones()
-    .filter(function (r) {
-      return r.equipoId === equipoId;
-    })
-    .map(function (r) {
-      return {
-        tipo: "Intervención (" + r.tipo + ")",
-        detalle: r.descripcion,
-        fecha: r.fecha,
-        tecnico: r.tecnico,
-      };
-    });
-
-  const reemplazos = obtenerReemplazos()
-    .filter(function (r) {
-      return r.equipoId === equipoId;
-    })
-    .map(function (r) {
-      return {
-        tipo: "Reemplazo (" + r.componente + ")",
-        detalle: r.descripcion,
-        fecha: r.fecha,
-        tecnico: r.tecnico,
-      };
-    });
-
-  const registros = reparaciones.concat(intervenciones).concat(reemplazos);
-
-  registros.sort(function (a, b) {
-    return new Date(b.fecha) - new Date(a.fecha);
-  });
-
-  if (registros.length === 0) {
-    const cuerpo = document.createElement("tbody");
-    const fila = document.createElement("tr");
-    const celda = document.createElement("td");
-    celda.textContent = "No hay registros técnicos para este equipo.";
-    celda.setAttribute("colspan", "4");
-    celda.style.textAlign = "center";
-    celda.style.padding = "16px";
-    celda.style.color = "#6b7280";
-    fila.appendChild(celda);
-    cuerpo.appendChild(fila);
-    tabla.replaceChildren(cuerpo);
+function mostrarReparaciones(reparaciones) {
+  if (reparaciones.length === 0) {
+    mostrarTablaVacia("No hay reparaciones registradas para este equipo.");
     return;
   }
 
   const encabezado = document.createElement("thead");
   const filaEncabezado = document.createElement("tr");
-  const columnas = ["Tipo", "Descripción", "Fecha", "Técnico"];
 
-  columnas.forEach(function (nombre) {
+  for (const nombre of ["Ticket", "Descripción", "Fecha", "Técnico"]) {
     const th = document.createElement("th");
     th.textContent = nombre;
     th.style.textAlign = "left";
@@ -89,52 +36,90 @@ function renderizarHistorialTecnico() {
     th.style.color = "#153894";
     th.style.fontSize = "13px";
     filaEncabezado.appendChild(th);
-  });
+  }
 
   encabezado.appendChild(filaEncabezado);
 
   const cuerpo = document.createElement("tbody");
 
-  registros.forEach(function (registro, indice) {
+  reparaciones.forEach((reparacion, indice) => {
     const fila = document.createElement("tr");
     fila.style.backgroundColor = indice % 2 === 0 ? "#f6f7fc" : "#ffffff";
 
-    const valores = [
-      registro.tipo,
-      registro.detalle,
-      registro.fecha,
-      registro.tecnico || "-",
-    ];
+    const valores = [reparacion.idTicket, reparacion.reparacion, reparacion.fechaReparacion, reparacion.cedulaTecnico];
 
-    valores.forEach(function (valor) {
+    for (const valor of valores) {
       const td = document.createElement("td");
       td.textContent = valor || "-";
       td.style.padding = "8px 10px";
       td.style.borderBottom = "1px solid #d7dbe8";
       td.style.fontSize = "13px";
       fila.appendChild(td);
-    });
+    }
 
     cuerpo.appendChild(fila);
   });
 
-  tabla.replaceChildren(encabezado, cuerpo);
+  tablaHistorialTecnico.replaceChildren(encabezado, cuerpo);
 }
 
-function obtenerReparaciones() {
-  const datos = localStorage.getItem("historialReparaciones");
-  const reparacionesLocales = datos === null ? [] : JSON.parse(datos);
-  const reparacionesPersistidas = window.reparacionesPersistidas || [];
+async function cargarHistorialTecnico() {
+  const idEquipo = selectEquipo.value;
 
-  return reparacionesPersistidas.concat(reparacionesLocales);
+  const url = new URL(window.location.href);
+  if (idEquipo !== "") {
+    url.searchParams.set("equipo", idEquipo);
+  } else {
+    url.searchParams.delete("equipo");
+  }
+  window.history.replaceState({}, "", url);
+
+  if (idEquipo === "") {
+    tablaHistorialTecnico.replaceChildren();
+    return;
+  }
+
+  try {
+    const respuesta = await fetch(`${URL_API_REPARACIONES}?idEquipo=${encodeURIComponent(idEquipo)}`);
+    const cuerpo = await respuesta.json();
+
+    if (!cuerpo.exito) {
+      mostrarTablaVacia(cuerpo.mensaje);
+      return;
+    }
+
+    mostrarReparaciones(cuerpo.datos);
+  } catch (error) {
+    mostrarTablaVacia("No se pudo conectar con el servidor.");
+  }
 }
 
-function obtenerIntervenciones() {
-  const datos = localStorage.getItem("historialIntervenciones");
-  return datos === null ? [] : JSON.parse(datos);
+async function cargarEquiposEnSelect() {
+  try {
+    const respuesta = await fetch(URL_API_EQUIPOS);
+    const cuerpo = await respuesta.json();
+
+    if (!cuerpo.exito) {
+      return;
+    }
+
+    const idEquipoInicial = new URLSearchParams(window.location.search).get("equipo") || "";
+
+    for (const equipo of cuerpo.datos) {
+      const option = document.createElement("option");
+      option.value = equipo.idEquipo;
+      option.textContent = equipo.idEquipo;
+      option.selected = equipo.idEquipo === idEquipoInicial;
+      selectEquipo.appendChild(option);
+    }
+
+    if (idEquipoInicial !== "") {
+      cargarHistorialTecnico();
+    }
+  } catch (error) {
+    // Si no se pueden cargar los equipos, el select queda solo con la opción por defecto.
+  }
 }
 
-function obtenerReemplazos() {
-  const datos = localStorage.getItem("historialReemplazos");
-  return datos === null ? [] : JSON.parse(datos);
-}
+selectEquipo.addEventListener("change", cargarHistorialTecnico);
+cargarEquiposEnSelect();

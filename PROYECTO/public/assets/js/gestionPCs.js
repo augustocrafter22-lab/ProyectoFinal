@@ -1,382 +1,185 @@
-/**
- * CONSTANTES Y VARIABLES NECESARIAS
- */
+const URL_API_EQUIPOS = "api/equipos.php";
 
-const btnAltaPc = document.getElementById("btnAltaPc");
-const btnCerrarGestionarPc = document.getElementById("btnCerrarGestionarPc");
-const btnMasInformacion = document.getElementById("btnMasInformacion");
-const dialogGestionarPc = document.querySelector(".dialogGestionarPc");
+const formularioEquipo = document.getElementById("formularioEquipo");
 const cuerpoTablaPc = document.getElementById("cuerpoTablaPc");
-const formularioGestionarPc = document.getElementById("formularioGestionarPc");
-const filtroID = document.getElementById("filtroID");
-const filtroEstado = document.getElementById("filtroEstado");
-const filtroLab = document.getElementById("filtroLab");
-const filtroDisponibilidad = document.getElementById("filtroDisponibilidad");
+const mensajeEquipos = document.getElementById("mensajeEquipos");
+const leyendaFormularioEquipo = document.getElementById("leyendaFormularioEquipo");
+const modoFormularioEquipo = document.getElementById("modoFormularioEquipo");
+const btnCancelarEdicionEquipo = document.getElementById("btnCancelarEdicionEquipo");
 
-// Campos del formulario
-const entradaID = document.getElementById("ID");
-const entradaLab = document.getElementById("Lab");
-const entradaEstado = document.getElementById("Estado");
-const entradaMarca = document.getElementById("Marca");
-const entradaInfo = document.getElementById("Info");
-const entradaDisponibilidad = document.getElementById("Disponibilidad");
+const campoIdEquipo = document.getElementById("idEquipo");
+const campoIdLaboratorio = document.getElementById("idLaboratorio");
+const campoMarca = document.getElementById("marca");
+const campoEstado = document.getElementById("estado");
+const campoDisponibilidad = document.getElementById("disponibilidad");
+const campoInformacion = document.getElementById("informacion");
 
-// Auxiliar para guardar datos vinculados a la modificacion de una PC
-let pcEnEdicion = false;
-let pcMasInformacion = false;
-let pcMostrarInfo = false;
-
-/**
- * GESTION DEL ESTADO DEL FORMULARIO/MODAL
- */
-
-function limpiarEstadoGestionarPc() {
-  pcEnEdicion = false;
-  pcMostrarInfo = false;
-  entradaID.readOnly = false;
-  entradaLab.readOnly = false;
-  entradaMarca.readOnly = false;
-  entradaEstado.readOnly = false;
-  entradaInfo.readOnly = false;
-  entradaDisponibilidad.readOnly = false;
-  formularioGestionarPc.reset();
+function mostrarMensaje(texto, esError) {
+  mensajeEquipos.textContent = texto;
+  mensajeEquipos.style.color = esError ? "red" : "green";
 }
 
-function abrirAltaPc() {
-  limpiarEstadoGestionarPc();
-  dialogGestionarPc.showModal();
-}
-
-function abrirMasInfo(id) {
-  pcMostrarInfo = true;
-
-  const pcs = cargarPcsGuardadasLocal();
-  const pcAMostrar = pcs.find((pc) => {
-    return pc.id === id;
-  });
-
-  if (pcAMostrar === undefined) {
-    return;
-  }
-
-  entradaID.value = pcAMostrar.id;
-  entradaLab.value = pcAMostrar.lab;
-  entradaEstado.value = pcAMostrar.estado;
-  entradaMarca.value = pcAMostrar.marca;
-  entradaDisponibilidad.value = pcAMostrar.disponibilidad;
-  entradaInfo.value = pcAMostrar.info || "";
-  entradaDisponibilidad.value = pcAMostrar.disponibilidad;
-
-  entradaID.readOnly = true;
-  entradaLab.readOnly = true;
-  entradaMarca.readOnly = true;
-  entradaEstado.readOnly = true;
-  entradaDisponibilidad.readOnly = true;
-  entradaInfo.readOnly = true;
-  entradaDisponibilidad.readOnly = true;
-
-  dialogGestionarPc.showModal();
-}
-
-function cerrarGestionarPc() {
-  limpiarEstadoGestionarPc();
-  dialogGestionarPc.close();
-}
-
-function abrirModificarPc(id) {
-  pcEnEdicion = true;
-
-  const pcs = cargarPcsGuardadasLocal();
-  const pcAModificar = pcs.find((pc) => {
-    return pc.id === id;
-  });
-
-  if (pcAModificar === undefined) {
-    return;
-  }
-
-  // Cargar los datos al formulario
-  entradaID.value = pcAModificar.id;
-  entradaLab.value = pcAModificar.lab;
-  entradaEstado.value = pcAModificar.estado;
-  entradaMarca.value = pcAModificar.marca;
-  entradaDisponibilidad.value = pcAModificar.disponibilidad;
-
-  // Proteger el ID para que no se modifique
-  entradaID.readOnly = true;
-
-  dialogGestionarPc.showModal();
-}
-
-/**
- * OBTENCION Y RECUPERACION DE DATOS
- */
-
-function cargarPcsGuardadasLocal() {
-  const pcsGuardadas = localStorage.getItem("pcs");
-  if (pcsGuardadas === null) return [];
-  return JSON.parse(pcsGuardadas);
-}
-
-function obtenerDatosFormularioPc() {
-  const pc = {
-    id: entradaID.value.trim(),
-    lab: entradaLab.value.trim(),
-    estado: entradaEstado.value.trim(),
-    marca: entradaMarca.value.trim(),
-    disponibilidad: entradaDisponibilidad.value.trim(),
-    info: entradaInfo.value.trim(),
-    disponibilidad: entradaDisponibilidad.value.trim(),
-  };
-  return pc;
-}
-
-/**
- * GESTION DE FILAS DE LA TABLA
- */
-
-function agregarFilaPc(pc) {
+function crearFilaEquipo(equipo) {
   const fila = document.createElement("tr");
 
-  // Creación de celdas
-  const campoID = document.createElement("td");
-  campoID.textContent = pc.id;
+  const celdaId = document.createElement("td");
+  celdaId.textContent = equipo.idEquipo;
 
-  const campoLab = document.createElement("td");
-  campoLab.textContent = pc.lab;
+  const celdaLaboratorio = document.createElement("td");
+  celdaLaboratorio.textContent = equipo.laboratorio;
 
-  const campoMarca = document.createElement("td");
-  campoMarca.textContent = pc.marca;
+  const celdaMarca = document.createElement("td");
+  celdaMarca.textContent = equipo.marca;
 
-  const campoEstado = document.createElement("td");
-  campoEstado.textContent = pc.estado;
+  const celdaEstado = document.createElement("td");
+  celdaEstado.textContent = equipo.estado;
 
-  const campoDisponibilidad = document.createElement("td");
-  campoDisponibilidad.textContent = pc.disponibilidad;
+  const celdaDisponibilidad = document.createElement("td");
+  celdaDisponibilidad.textContent = equipo.disponibilidad;
 
-  // Espacio para colocar los botones de operaciones
-  const campoOperaciones = document.createElement("td");
-  const cajaOperaciones = document.createElement("section");
-  cajaOperaciones.classList.add("cajaOperaciones");
+  const celdaInformacion = document.createElement("td");
+  celdaInformacion.textContent = equipo.informacion || "";
 
-  // Botón Modificar
+  const celdaAcciones = document.createElement("td");
+
   const btnModificar = document.createElement("button");
   btnModificar.type = "button";
   btnModificar.textContent = "Modificar";
-  btnModificar.classList.add("btnOperacion");
-  btnModificar.addEventListener("click", () => {
-    abrirModificarPc(pc.id);
-  });
+  btnModificar.addEventListener("click", () => abrirEdicionEquipo(equipo.idEquipo));
 
-  // Botón Eliminar
   const btnEliminar = document.createElement("button");
   btnEliminar.type = "button";
   btnEliminar.textContent = "Eliminar";
-  btnEliminar.classList.add("btnOperacion");
-  btnEliminar.addEventListener("click", () => {
-    eliminarPcLocal(pc.id);
-  });
+  btnEliminar.addEventListener("click", () => eliminarEquipo(equipo.idEquipo));
 
-  //Boton mas info
-  const btnMasInformacion = document.createElement("button");
-  btnMasInformacion.type = "button";
-  btnMasInformacion.textContent = "Mas Informacion";
-  btnMasInformacion.classList.add("btnOperacion");
-  btnMasInformacion.addEventListener("click", () => {
-    abrirMasInfo(pc.id);
-  });
+  celdaAcciones.appendChild(btnModificar);
+  celdaAcciones.appendChild(btnEliminar);
 
-  // Armado de la estructura DOM
-  cajaOperaciones.appendChild(btnModificar);
-  cajaOperaciones.appendChild(btnEliminar);
-  cajaOperaciones.appendChild(btnMasInformacion);
-  campoOperaciones.appendChild(cajaOperaciones);
+  fila.append(celdaId, celdaLaboratorio, celdaMarca, celdaEstado, celdaDisponibilidad, celdaInformacion, celdaAcciones);
 
-  fila.appendChild(campoID);
-  fila.appendChild(campoLab);
-  fila.appendChild(campoMarca);
-  fila.appendChild(campoEstado);
-  fila.appendChild(campoDisponibilidad);
-  fila.appendChild(campoOperaciones);
-
-  cuerpoTablaPc.appendChild(fila);
+  return fila;
 }
 
-function actualizarTabla() {
-  cuerpoTablaPc.replaceChildren();
-  const pcs = cargarPcsGuardadasLocal();
-  for (const pc of pcs) {
-    agregarFilaPc(pc);
+async function cargarEquipos() {
+  try {
+    const respuesta = await fetch(URL_API_EQUIPOS);
+    const cuerpo = await respuesta.json();
+
+    if (!cuerpo.exito) {
+      mostrarMensaje(cuerpo.mensaje, true);
+      return;
+    }
+
+    cuerpoTablaPc.replaceChildren();
+    for (const equipo of cuerpo.datos) {
+      cuerpoTablaPc.appendChild(crearFilaEquipo(equipo));
+    }
+  } catch (error) {
+    mostrarMensaje("No se pudo conectar con el servidor.", true);
   }
 }
 
-function eliminarPcLocal(id) {
-  const pcs = cargarPcsGuardadasLocal();
-  const pcsActualizadas = pcs.filter((pc) => {
-    return pc.id !== id;
-  });
+function limpiarFormularioEquipo() {
+  formularioEquipo.reset();
+  modoFormularioEquipo.value = "alta";
+  leyendaFormularioEquipo.textContent = "Alta de equipo";
+  campoIdEquipo.readOnly = false;
+  btnCancelarEdicionEquipo.hidden = true;
 
-  actualizarPcsLocal(pcsActualizadas);
-  actualizarTabla();
+  const url = new URL(window.location.href);
+  url.searchParams.delete("editar");
+  window.history.replaceState({}, "", url);
 }
 
-function modificarPcLocal(pcEnFormulario) {
-  const pcs = cargarPcsGuardadasLocal();
-  const pcAModificar = pcs.find((pc) => {
-    return pc.id === pcEnFormulario.id;
-  });
+async function abrirEdicionEquipo(idEquipo) {
+  try {
+    const respuesta = await fetch(`${URL_API_EQUIPOS}?id=${encodeURIComponent(idEquipo)}`);
+    const cuerpo = await respuesta.json();
 
-  if (pcAModificar === undefined) {
-    return;
+    if (!cuerpo.exito) {
+      mostrarMensaje(cuerpo.mensaje, true);
+      return;
+    }
+
+    const equipo = cuerpo.datos;
+
+    modoFormularioEquipo.value = "modificar";
+    leyendaFormularioEquipo.textContent = "Modificar equipo";
+    campoIdEquipo.value = equipo.idEquipo;
+    campoIdEquipo.readOnly = true;
+    campoIdLaboratorio.value = equipo.idLaboratorio;
+    campoMarca.value = equipo.marca;
+    campoEstado.value = equipo.estado;
+    campoDisponibilidad.value = equipo.disponibilidad;
+    campoInformacion.value = equipo.informacion || "";
+    btnCancelarEdicionEquipo.hidden = false;
+
+    const url = new URL(window.location.href);
+    url.searchParams.set("editar", idEquipo);
+    window.history.replaceState({}, "", url);
+  } catch (error) {
+    mostrarMensaje("No se pudo conectar con el servidor.", true);
   }
-
-  pcAModificar.lab = pcEnFormulario.lab;
-  pcAModificar.estado = pcEnFormulario.estado;
-  pcAModificar.marca = pcEnFormulario.marca;
-  pcAModificar.disponibilidad = pcEnFormulario.disponibilidad;
-  pcAModificar.info = pcEnFormulario.info;
-  pcAModificar.disponibilidad = pcEnFormulario.disponibilidad;
-
-  actualizarPcsLocal(pcs);
 }
 
-/**
- * FUNCIONALIDADES PRINCIPALES
- */
+async function eliminarEquipo(idEquipo) {
+  try {
+    const respuesta = await fetch(`${URL_API_EQUIPOS}?id=${encodeURIComponent(idEquipo)}`, {
+      method: "DELETE",
+    });
+    const cuerpo = await respuesta.json();
 
-function actualizarPcsLocal(pcs) {
-  localStorage.setItem("pcs", JSON.stringify(pcs));
+    mostrarMensaje(cuerpo.mensaje, !cuerpo.exito);
+
+    if (cuerpo.exito) {
+      cargarEquipos();
+    }
+  } catch (error) {
+    mostrarMensaje("No se pudo conectar con el servidor.", true);
+  }
 }
 
-function guardarPcLocal(pc) {
-  const pcs = cargarPcsGuardadasLocal();
-  const idExistente = pcs.some((pcGuardada) => {
-    return pcGuardada.id === pc.id;
-  });
-
-  pcs.push(pc);
-  actualizarPcsLocal(pcs);
-}
-
-function gestionarPc(eventoFormulario) {
+async function guardarEquipo(eventoFormulario) {
   eventoFormulario.preventDefault();
 
-  // No hacer nada si solo se está mostrando información
-  if (pcMostrarInfo) {
-    cerrarGestionarPc();
-    return;
+  const datosEquipo = {
+    idEquipo: campoIdEquipo.value.trim(),
+    idLaboratorio: campoIdLaboratorio.value,
+    marca: campoMarca.value,
+    estado: campoEstado.value,
+    disponibilidad: campoDisponibilidad.value,
+    informacion: campoInformacion.value.trim(),
+  };
+
+  const esModificacion = modoFormularioEquipo.value === "modificar";
+  const url = esModificacion ? `${URL_API_EQUIPOS}?id=${encodeURIComponent(datosEquipo.idEquipo)}` : URL_API_EQUIPOS;
+
+  try {
+    const respuesta = await fetch(url, {
+      method: esModificacion ? "PUT" : "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(datosEquipo),
+    });
+    const cuerpo = await respuesta.json();
+
+    mostrarMensaje(cuerpo.mensaje, !cuerpo.exito);
+
+    if (cuerpo.exito) {
+      limpiarFormularioEquipo();
+      cargarEquipos();
+    }
+  } catch (error) {
+    mostrarMensaje("No se pudo conectar con el servidor.", true);
   }
-
-  const pc = obtenerDatosFormularioPc();
-
-  if (!pcEnEdicion) {
-    guardarPcLocal(pc);
-  } else {
-    modificarPcLocal(pc);
-  }
-
-  cerrarGestionarPc();
-  actualizarTabla();
 }
 
-/**
- * FILTROS
- */
+formularioEquipo.addEventListener("submit", guardarEquipo);
+btnCancelarEdicionEquipo.addEventListener("click", limpiarFormularioEquipo);
 
-function aplicarFiltroID() {
-  const idBuscado = filtroID.value.trim().toUpperCase();
-  const filas = cuerpoTablaPc.querySelectorAll("tr");
+const idEquipoParaEditar = new URLSearchParams(window.location.search).get("editar");
 
-  filas.forEach(function (fila) {
-    const celdaID = fila.querySelector("td");
-    const idFila = celdaID.textContent.trim().toUpperCase();
+cargarEquipos();
 
-    if (idBuscado === "" || idFila.includes(idBuscado)) {
-      fila.style.display = "table-row";
-    } else {
-      fila.style.display = "none";
-    }
-  });
+if (idEquipoParaEditar) {
+  abrirEdicionEquipo(idEquipoParaEditar);
 }
-function aplicarFiltroEstado() {
-  const estadoBuscado = filtroEstado.value.trim().toUpperCase();
-  const filas = cuerpoTablaPc.querySelectorAll("tr");
-
-  filas.forEach(function (fila) {
-    const celdas = fila.querySelectorAll("td");
-    const celdaEstado = celdas[3];
-
-    if (celdaEstado) {
-      const estadoFila = celdaEstado.textContent.trim().toUpperCase();
-
-      if (estadoBuscado === "" || estadoFila.includes(estadoBuscado)) {
-        fila.style.display = "table-row";
-      } else {
-        fila.style.display = "none";
-      }
-    }
-  });
-}
-
-function aplicarFiltroLab() {
-  const laboratorioBuscado = filtroLab.value.trim().toUpperCase();
-  const filas = cuerpoTablaPc.querySelectorAll("tr");
-
-  filas.forEach(function (fila) {
-    const celdas = fila.querySelectorAll("td");
-    const celdaLaboratorio = celdas[1];
-
-    if (celdaLaboratorio) {
-      const laboratorioFila = celdaLaboratorio.textContent.trim().toUpperCase();
-
-      if (
-        laboratorioBuscado === "" ||
-        laboratorioFila.includes(laboratorioBuscado)
-      ) {
-        fila.style.display = "table-row";
-      } else {
-        fila.style.display = "none";
-      }
-    }
-  });
-}
-
-function aplicarFiltroDisponibilidad() {
-  const disponibilidadBuscado = filtroDisponibilidad.value.trim().toUpperCase();
-  const filas = cuerpoTablaPc.querySelectorAll("tr");
-
-  filas.forEach(function (fila) {
-    const celdas = fila.querySelectorAll("td");
-    const celdaDisponibilidad = celdas[4];
-
-    if (celdaDisponibilidad) {
-      const disponibilidadFila = celdaDisponibilidad.textContent
-        .trim()
-        .toUpperCase();
-
-      if (
-        disponibilidadBuscado === "" ||
-        disponibilidadFila.includes(disponibilidadBuscado)
-      ) {
-        fila.style.display = "table-row";
-      } else {
-        fila.style.display = "none";
-      }
-    }
-  });
-}
-/**
- * EVENTOS
- */
-
-formularioGestionarPc.addEventListener("submit", gestionarPc);
-btnAltaPc.addEventListener("click", abrirAltaPc);
-btnCerrarGestionarPc.addEventListener("click", cerrarGestionarPc);
-dialogGestionarPc.addEventListener("cancel", limpiarEstadoGestionarPc);
-filtroID.addEventListener("input", aplicarFiltroID);
-filtroEstado.addEventListener("input", aplicarFiltroEstado);
-filtroLab.addEventListener("input", aplicarFiltroLab);
-filtroDisponibilidad.addEventListener("input", aplicarFiltroDisponibilidad);
-
-// Inicializar tabla al cargar la vista
-actualizarTabla();

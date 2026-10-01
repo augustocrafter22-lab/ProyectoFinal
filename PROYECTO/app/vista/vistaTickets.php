@@ -46,23 +46,6 @@
 
         <select id="filtroDeEquipos">
             <option value="">Todos los equipos</option>
-            <option value="PC-01">PC-01</option>
-            <option value="PC-02">PC-02</option>
-            <option value="PC-03">PC-03</option>
-            <option value="PC-04">PC-04</option>
-            <option value="PC-05">PC-05</option>
-            <option value="PC-06">PC-06</option>
-            <option value="PC-07">PC-07</option>
-            <option value="PC-08">PC-08</option>
-            <option value="PC-09">PC-09</option>
-            <option value="PC-10">PC-10</option>
-            <option value="PC-11">PC-11</option>
-            <option value="PC-12">PC-12</option>
-            <option value="PC-13">PC-13</option>
-            <option value="PC-14">PC-14</option>
-            <option value="PC-15">PC-15</option>
-            <option value="PC-16">PC-16</option>
-
         </select>
 
         <select id="filtroPrioridad">
@@ -95,57 +78,9 @@
 
     </section>
 
-    <section id="listaTickets">
+    <section id="listaTickets"></section>
 
-        <?php foreach ($tickets as $ticket) { ?>
-
-            <article class="ticket" data-id="<?= htmlspecialchars($ticket["idTicket"]) ?>" data-fecha="<?= htmlspecialchars($ticket["fechaCreacion"]) ?>">
-
-                <section class="ticketInfo">
-                    <h3>
-                        <a href="ConsultarDiagnostico.php?ticket=<?= htmlspecialchars($ticket["idTicket"]) ?>" class="ticket-enlace">
-                            <?= htmlspecialchars($ticket["idTicket"]) ?>
-                        </a>
-                    </h3>
-
-                    <p><?= htmlspecialchars($ticket["asunto"]) ?></p>
-
-                    <p><?= htmlspecialchars($ticket["equipo"]) ?></p>
-                </section>
-
-                <section class="ticketEstado">
-
-                    <select class="select-estado">
-                        <?php foreach (["Pendiente", "En Proceso", "Resuelto", "Cerrado"] as $opcion) { ?>
-                            <option value="<?= htmlspecialchars($opcion) ?>" <?= $ticket["estado"] === $opcion ? "selected" : "" ?>>
-                                <?= htmlspecialchars($opcion) ?>
-                            </option>
-                        <?php } ?>
-                    </select>
-
-                    <select class="select-prioridad">
-                        <?php foreach (["Indefinida", "Alta", "Media", "Baja"] as $opcion) { ?>
-                            <option value="<?= htmlspecialchars($opcion) ?>" <?= $ticket["prioridad"] === $opcion ? "selected" : "" ?>>
-                                Prioridad: <?= htmlspecialchars($opcion) ?>
-                            </option>
-                        <?php } ?>
-                    </select>
-
-                    <p class="laboratorio"><?= htmlspecialchars($ticket["laboratorio"]) ?></p>
-
-
-                    <?php if (!empty($ticket["fechaFinalizacion"])) { ?>
-                        <p>Finalizado: <?= htmlspecialchars($ticket["fechaFinalizacion"]) ?></p>
-                    <?php } ?>
-
-                </section>
-
-            </article>
-
-        <?php } ?>
-
-    </section>
-
+    <script src="<?= URL_BASE ?>/public/assets/js/vistaTickets.js"></script>
     <script src="<?= URL_BASE ?>/public/assets/js/actualizarTicket.js"></script>
     <script src="<?= URL_BASE ?>/public/assets/js/filtros.js"></script>
     <script src="<?= URL_BASE ?>/public/assets/js/buscadorDeTickets.js"></script>

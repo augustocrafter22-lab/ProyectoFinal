@@ -26,33 +26,28 @@
     <p>Registrá una reparación realizada sobre un equipo.</p>
   </section>
 
-  <?php if (isset($_GET["error"])) { ?>
-    <p class="mensaje-error"><?= htmlspecialchars($_GET["error"]) ?></p>
-  <?php } ?>
-  <?php if (isset($_GET["exito"])) { ?>
-    <p class="mensaje-exito"><?= htmlspecialchars($_GET["exito"]) ?></p>
-  <?php } ?>
+  <p id="mensajeRegistrarReparacion" role="status"></p>
 
   <section class="modulo" id="registrarReparacion">
     <h2>Nueva reparación</h2>
-    <?php if (empty($diagnosticos)) { ?>
-      <p>No hay diagnósticos registrados para asociar una reparación.</p>
-    <?php } else { ?>
-      <form class="formulario" action="<?= URL_BASE ?>/app/controlador/procesarRegistrarReparacion.php" method="POST">
-        <label for="registrarReparacionDiagnostico">Diagnóstico</label>
-        <select id="registrarReparacionDiagnostico" name="idDiagnostico" required>
-          <option value="">Seleccione un diagnóstico</option>
-          <?php foreach ($diagnosticos as $diagnostico) { ?>
-            <option value="<?= htmlspecialchars($diagnostico["idDiagnostico"]) ?>">
-              Ticket <?= htmlspecialchars($diagnostico["idTicket"]) ?> - Equipo <?= htmlspecialchars($diagnostico["idEquipo"]) ?> - <?= htmlspecialchars($diagnostico["diagnostico"]) ?>
-            </option>
-          <?php } ?>
-        </select>
-        <label for="registrarReparacionTexto">Descripción de la reparación</label>
-        <textarea id="registrarReparacionTexto" name="reparacion" rows="4" minlength="10" required></textarea>
-        <button class="boton-principal" type="submit">Registrar reparación</button>
-      </form>
-    <?php } ?>
+
+    <p id="avisoSinDiagnosticosReparacion" hidden>No hay diagnósticos registrados para asociar una reparación.</p>
+
+    <form class="formulario" id="formRegistrarReparacion">
+      <label for="registrarReparacionDiagnostico">Diagnóstico</label>
+      <select id="registrarReparacionDiagnostico" name="idDiagnostico" required>
+        <option value="">Seleccione un diagnóstico</option>
+      </select>
+      <label for="registrarReparacionTexto">Descripción de la reparación</label>
+      <textarea id="registrarReparacionTexto" name="reparacion" rows="4" minlength="10" required></textarea>
+      <button class="boton-principal" type="submit">Registrar reparación</button>
+    </form>
   </section>
+
+  <script>
+    window.cedulaTecnico = <?= json_encode($_SESSION["cedula"]) ?>;
+  </script>
+  <script src="<?= URL_BASE ?>/public/assets/js/RegistrarReparacion.js"></script>
+  <script src="<?= URL_BASE ?>/public/assets/js/barraNavegacion.js"></script>
 </body>
 </html>
