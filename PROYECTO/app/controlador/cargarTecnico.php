@@ -4,15 +4,13 @@
  * Controlador que carga el panel de técnico.
  *
  * Busca al usuario autenticado (por su cédula en sesión), y si existe
- * carga las métricas del dashboard y las reparaciones/soluciones
- * registradas para mostrarlas en la vista de técnico.
+ * carga las métricas del dashboard para mostrarlas en la vista de técnico.
  */
 
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosUsuario.php";
 require_once RUTA_MODELO . "/Usuario.php";
 require_once RUTA_MODELO . "/AccesoDatosDashboard.php";
-require_once RUTA_MODELO . "/AccesoDatosSolucion.php";
 require_once RUTA_MODELO . "/Traductor.php";
 Traductor::iniciar();
 
@@ -29,18 +27,16 @@ try {
 
     if ($usuario === null) {
         $conectorPDO->desconectar();
-        header("Location: " . URL_BASE . "/public/login.php?error=" . urlencode(Traductor::t("common.usuarioNoEncontrado")));
+        header("Location: " . URL_BASE . "/public/Login.php?error=" . urlencode(Traductor::t("common.usuarioNoEncontrado")));
         exit;
     }
 
     $accesoDatosDashboard = new AccesoDatosDashboard($conexion);
-    $accesoDatosSolucion = new AccesoDatosSolucion($conexion);
 
     $totalReportes = $accesoDatosDashboard->contarTotal();
     $porEstado = $accesoDatosDashboard->contarPorEstado();
     $tiemposResolucion = $accesoDatosDashboard->obtenerTiemposResolucion();
     $incidenciasPorSalon = $accesoDatosDashboard->obtenerIncidenciasPorSalon();
-    $reparaciones = $accesoDatosSolucion->listarSolucionesConEquipo();
 
     $conectorPDO->desconectar();
 

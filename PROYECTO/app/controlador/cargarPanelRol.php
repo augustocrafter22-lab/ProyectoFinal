@@ -28,7 +28,7 @@ try {
     $conectorPDO->desconectar();
 
     if ($usuario === null) {
-        header("Location: " . URL_BASE . "/public/login.php?error=" . urlencode(Traductor::t("common.usuarioNoEncontrado")));
+        header("Location: " . URL_BASE . "/public/Login.php?error=" . urlencode(Traductor::t("common.usuarioNoEncontrado")));
         exit;
     }
 

@@ -23,7 +23,7 @@
                 |
                 <a href="<?= URL_BASE ?>/public/cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a>
             </p>
-            <form action="<?= URL_BASE ?>/app/controlador/procesarLogin.php" method="POST" class="login-form" id="loginForm">
+            <form action="<?= URL_BASE ?>/public/procesarLogin.php" method="POST" class="login-form" id="loginForm">
                 <h2><?= Traductor::t("login.titulo") ?></h2>
                 <fieldset>
                     <label for="username"><?= Traductor::t("login.labelCi") ?></label>

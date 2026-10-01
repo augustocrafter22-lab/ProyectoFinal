@@ -4,8 +4,8 @@ require_once __DIR__ . "/../config/config.php";
 
 session_start();
 
-require_once RUTA_CONTROLADOR . "/verificarSesion.php";
-verificarSesion();
+require_once RUTA_MODELO . "/Sesion.php";
+Sesion::verificarSesion();
 
 // Verificar que tenga más de un rol (si no, no necesita seleccionar)
 $cantidadRoles = (int) $_SESSION["coordinador"] + (int) $_SESSION["tecnico"] + (int) $_SESSION["docente"];

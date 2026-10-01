@@ -2,10 +2,7 @@
 
 /**
  * DAO Data Access Object que agrupa toda la comunicación con la base
- * de datos sobre EQUIPO.
- *
- * Reemplaza y agrupa lo que antes estaba en AccesoDatosEquipo:
- * listar, obtener, crear, actualizar y eliminar.
+ * de datos sobre EQUIPO: listar, obtener, crear, actualizar y eliminar.
  */
 class DAOEquipo
 {
