@@ -31,7 +31,10 @@ class AccesoDatosReparacion {
             ORDER BY d.fechaDiagnostico DESC
         ";
 
-        return $this->conexion->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        $consulta = $this->conexion->prepare($sql);
+        $consulta->execute();
+
+        return $consulta->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
