@@ -54,9 +54,14 @@ try {
 
     echo json_encode(["exito" => true, "mensaje" => "Ticket actualizado correctamente."]);
 
-} catch (Exception $e) {
+} catch (PDOException $e) {
+    RegistradorErrores::registrar($e);
     http_response_code(500);
-    echo json_encode(["exito" => false, "mensaje" => "Error: " . $e->getMessage()]);
+    echo json_encode(["exito" => false, "mensaje" => "Ocurrió un error, intente nuevamente."]);
+} catch (Exception $e) {
+    RegistradorErrores::registrar($e);
+    http_response_code(500);
+    echo json_encode(["exito" => false, "mensaje" => $e->getMessage()]);
 }
 
 ?>

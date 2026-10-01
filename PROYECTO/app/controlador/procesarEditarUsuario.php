@@ -55,8 +55,12 @@ try {
         header("Location: " . URL_BASE . "/public/Administrador.php?error=" . urlencode("Error al actualizar el usuario"));
     }
 
+} catch (PDOException $e) {
+    RegistradorErrores::registrar($e);
+    header("Location: " . URL_BASE . "/public/Administrador.php?error=" . urlencode("Ocurrió un error, intente nuevamente."));
 } catch (Exception $e) {
-    header("Location: " . URL_BASE . "/public/Administrador.php?error=" . urlencode("Error: " . $e->getMessage()));
+    RegistradorErrores::registrar($e);
+    header("Location: " . URL_BASE . "/public/Administrador.php?error=" . urlencode($e->getMessage()));
 }
 exit;
 ?>

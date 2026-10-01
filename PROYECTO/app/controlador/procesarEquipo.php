@@ -60,7 +60,11 @@ try {
 
     $conectorPDO->desconectar();
     header("Location: " . URL_BASE . "/public/Equipos.php?exito=" . urlencode($mensaje));
+} catch (PDOException $e) {
+    RegistradorErrores::registrar($e);
+    header("Location: " . URL_BASE . "/public/Equipos.php?error=" . urlencode("Ocurrió un error, intente nuevamente."));
 } catch (Exception $e) {
+    RegistradorErrores::registrar($e);
     header("Location: " . URL_BASE . "/public/Equipos.php?error=" . urlencode($e->getMessage()));
 }
 exit;

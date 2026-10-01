@@ -66,7 +66,13 @@ class ControladorTicket
             // Si el código de la excepción es un código HTTP válido se usa ese,
             // en cualquier otro caso se responde con un 500 (error del servidor).
             $codigo = $e->getCode() >= 400 && $e->getCode() <= 599 ? (int) $e->getCode() : 500;
-            RespuestaJson::error($e->getMessage(), $codigo);
+
+            if ($codigo === 500) {
+                RegistradorErrores::registrar($e);
+                RespuestaJson::error("Ocurrió un error, intente nuevamente.", 500);
+            } else {
+                RespuestaJson::error($e->getMessage(), $codigo);
+            }
         }
     }
 

@@ -55,8 +55,13 @@ try {
     header("Location: " . URL_BASE . "/public/IngresoDeTickets.php?exito=" . urlencode("Ticket $idTicket registrado correctamente."));
     exit;
 
+} catch (PDOException $e) {
+    RegistradorErrores::registrar($e);
+    header("Location: " . URL_BASE . "/public/IngresoDeTickets.php?error=" . urlencode("Ocurrió un error, intente nuevamente."));
+    exit;
 } catch (Exception $e) {
-    header("Location: " . URL_BASE . "/public/IngresoDeTickets.php?error=" . urlencode("Error: " . $e->getMessage()));
+    RegistradorErrores::registrar($e);
+    header("Location: " . URL_BASE . "/public/IngresoDeTickets.php?error=" . urlencode($e->getMessage()));
     exit;
 }
 

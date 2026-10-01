@@ -58,7 +58,13 @@ class ControladorEquipo
 
         } catch (Exception $e) {
             $codigo = $e->getCode() >= 400 && $e->getCode() <= 599 ? (int) $e->getCode() : 500;
-            RespuestaJson::error($e->getMessage(), $codigo);
+
+            if ($codigo === 500) {
+                RegistradorErrores::registrar($e);
+                RespuestaJson::error("Ocurrió un error, intente nuevamente.", 500);
+            } else {
+                RespuestaJson::error($e->getMessage(), $codigo);
+            }
         }
     }
 

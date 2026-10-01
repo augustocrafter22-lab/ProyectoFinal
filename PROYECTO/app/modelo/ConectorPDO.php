@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . "/RegistradorErrores.php";
+
 class ConectorPDO {
     private string $servername;
     private string $username;
@@ -36,7 +38,7 @@ class ConectorPDO {
             $this->conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $this->conexion;
         } catch (PDOException $e) {
-            echo "Error al conectar: " . $e->getMessage();
+            RegistradorErrores::registrar($e);
             return null;
         }
     }

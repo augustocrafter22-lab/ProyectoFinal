@@ -51,8 +51,13 @@ try {
 
     header("Location: " . URL_BASE . "/public/RegistrarReparacion.php?exito=" . urlencode("Reparación registrada correctamente."));
     exit;
+} catch (PDOException $e) {
+    RegistradorErrores::registrar($e);
+    header("Location: " . URL_BASE . "/public/RegistrarReparacion.php?error=" . urlencode("Ocurrió un error, intente nuevamente."));
+    exit;
 } catch (Exception $e) {
-    header("Location: " . URL_BASE . "/public/RegistrarReparacion.php?error=" . urlencode("Error: " . $e->getMessage()));
+    RegistradorErrores::registrar($e);
+    header("Location: " . URL_BASE . "/public/RegistrarReparacion.php?error=" . urlencode($e->getMessage()));
     exit;
 }
 

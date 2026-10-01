@@ -31,7 +31,8 @@ try {
     }
 
 } catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
+    RegistradorErrores::registrar($e);
+    echo "Ocurrió un error, intente nuevamente.";
     exit;
 }
 
