@@ -9,7 +9,7 @@
  */
 
 require_once RUTA_MODELO . "/ConectorPDO.php";
-require_once RUTA_MODELO . "/AccesoDatosEquipo.php";
+require_once RUTA_MODELO . "/AccesoDatosSolicitudLaboratorio.php";
 require_once RUTA_MODELO . "/Traductor.php";
 Traductor::iniciar();
 
@@ -21,8 +21,8 @@ try {
         throw new Exception("No se pudo conectar a la base de datos");
     }
 
-    $accesoDatosEquipo = new AccesoDatosEquipo($conexion);
-    $laboratorios = $accesoDatosEquipo->obtenerLaboratorios();
+    $accesoDatosSolicitudLaboratorio = new AccesoDatosSolicitudLaboratorio($conexion);
+    $laboratorios = $accesoDatosSolicitudLaboratorio->obtenerLaboratorios();
 
     $conectorPDO->desconectar();
 } catch (Exception $e) {

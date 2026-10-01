@@ -13,7 +13,7 @@ require_once RUTA_MODELO . "/AltaDatosUsuario.php";
 require_once RUTA_MODELO . "/Validador.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    header("Location: " . URL_BASE . "/app/vista/administrador.php?error=" . urlencode("Método no permitido"));
+    header("Location: " . URL_BASE . "/public/Administrador.php?error=" . urlencode("Método no permitido"));
     exit;
 }
 

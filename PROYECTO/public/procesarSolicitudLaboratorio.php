@@ -7,13 +7,11 @@ require_once RUTA_MODELO . "/Validador.php";
 
 session_start();
 
-if (!isset($_SESSION["cedula"])) {
-    header("Location: " . URL_BASE . "/public/Login.php");
-    exit;
-}
+require_once RUTA_MODELO . "/Sesion.php";
+Sesion::verificarRol("docente");
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    header("Location: " . URL_BASE . "/public/SolicitudLaboratorio.php?error=" . urlencode("Método no permitido"));
+    header("Location: " . URL_BASE . "/public/SolicitarLab.php?error=" . urlencode("Método no permitido"));
     exit;
 }
 

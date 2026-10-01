@@ -24,7 +24,7 @@
 
             <ul class="listaNavegacion">
                 <li><a href="Docente.php"><?= Traductor::t("common.regresar") ?></a></li>
-                <li><a class="cerrarSesion" href="Login.php"><?= Traductor::t("common.cerrarSesion") ?></a></li>
+                <li><a class="cerrarSesion" href="cerrarSesion.php"><?= Traductor::t("common.cerrarSesion") ?></a></li>
                 <li><a href="cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a></li>
                 <li><a href="cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a></li>
             </ul>

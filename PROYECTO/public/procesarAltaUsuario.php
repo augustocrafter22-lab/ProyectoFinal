@@ -4,18 +4,7 @@ require_once __DIR__ . "/../config/config.php";
 
 session_start();
 
-if (!isset($_SESSION["cedula"])) {
-    $mensaje = "Acceso Denegado: Sesión no iniciada";
-    header("Location: " . URL_BASE . "/public/login.php?error=" . urlencode($mensaje));
-    exit;
-}
-
-if (!($_SESSION["coordinador"] ?? false)) {
-    $mensaje = "Acceso Denegado: Rol incorrecto";
-    header("Location: " . URL_BASE . "/public/login.php?error=" . urlencode($mensaje));
-    exit;
-}
+require_once RUTA_MODELO . "/Sesion.php";
+Sesion::verificarRol("coordinador");
 
 require_once RUTA_CONTROLADOR . "/procesarAltaUsuario.php";
-
-?>
