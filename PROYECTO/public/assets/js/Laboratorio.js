@@ -2,7 +2,16 @@ const form = document.getElementById("LabForm");
 const solicitudSoftware = document.getElementById("SolicitudDeSoftware");
 const detalleSoftware = document.getElementById("DetalleSoftware");
 const ahora = new Date();
-const hoy = ahora.toISOString().split("T")[0];
+// Fecha de hoy en hora local (toISOString usa UTC y después de las 21:00 en Uruguay da el día siguiente).
+let mesActual = ahora.getMonth() + 1;
+let diaActual = ahora.getDate();
+if (mesActual < 10) {
+    mesActual = "0" + mesActual;
+}
+if (diaActual < 10) {
+    diaActual = "0" + diaActual;
+}
+const hoy = `${ahora.getFullYear()}-${mesActual}-${diaActual}`;
 const horaActual = ahora.toTimeString().slice(0, 5);
 const fecha = document.getElementById("FechaEstimada");
 const hora = document.getElementById("HoraEstimada");

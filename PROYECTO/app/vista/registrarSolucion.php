@@ -24,8 +24,6 @@
             <ul class="listaNavegacion">
                 <li><a href="Tecnico.php"><?= Traductor::t("common.regresar") ?></a></li>
                 <li><a href="ConsultarDiagnostico.php"><?= Traductor::t("nav.consultarDiagnosticos") ?></a></li>
-                <li><a href="RegistrarIntervencion.php">Registrar intervencion</a></li>
-                <li><a href="RegistrarReemplazo.php">Registrar reemplazo</a></li>
                 <li><a href="RegistrarReparacion.php"><?= Traductor::t("nav.registrarReparacion") ?></a></li>
                 <li><a href="cerrarSesion.php" class="cerrarSesion"><?= Traductor::t("common.cerrarSesion") ?></a></li>
                 <li><a href="cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a></li>

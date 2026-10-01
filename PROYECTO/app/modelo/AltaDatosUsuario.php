@@ -40,9 +40,9 @@ class AltaDatosUsuario
     public function crearUsuario(string $cedula, string $nombre, string $apellido, string $claveHasheada, int $activo, array $roles): bool
     {
         $rolesValidos = [
-            "coordinador" => "administrador",
-            "tecnico" => "tecnico",
-            "docente" => "docente"
+            "coordinador" => "ADMINISTRADOR",
+            "tecnico" => "TECNICO",
+            "docente" => "DOCENTE"
         ];
         // Validaciones
 
@@ -109,9 +109,9 @@ class AltaDatosUsuario
     public function actualizarUsuario(string $cedula, string $nombre = null, string $apellido = null, string $clave = null, array $roles = null, int $activo = null): bool
     {
         $rolesValidos = [
-            "coordinador" => "administrador",
-            "tecnico" => "tecnico",
-            "docente" => "docente"
+            "coordinador" => "ADMINISTRADOR",
+            "tecnico" => "TECNICO",
+            "docente" => "DOCENTE"
         ];
 
         // Si se está actualizando nombre, no puede quedar vacío

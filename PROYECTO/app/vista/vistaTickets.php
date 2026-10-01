@@ -85,8 +85,6 @@
     <script src="<?= URL_BASE ?>/public/assets/js/vistaTickets.js"></script>
     <script src="<?= URL_BASE ?>/public/assets/js/actualizarTicket.js"></script>
     <script src="<?= URL_BASE ?>/public/assets/js/filtros.js"></script>
-    <script src="<?= URL_BASE ?>/public/assets/js/buscadorDeTickets.js"></script>
-    <script src="<?= URL_BASE ?>/public/assets/js/filtroDeFechas.js"></script>
     <script src="<?= URL_BASE ?>/public/assets/js/barraNavegacion.js"></script>
 </body>
 </html>

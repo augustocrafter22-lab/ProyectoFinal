@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consultar Diagnósticos</title>
-    <link rel="stylesheet" href="<?= URL_BASE ?>/public/assets/Css/style.css">
-    <link rel="stylesheet" href="<?= URL_BASE ?>/public/assets/Css/barraNavegacion.css">
+    <link rel="stylesheet" href="<?= URL_BASE ?>/public/assets/css/style.css">
+    <link rel="stylesheet" href="<?= URL_BASE ?>/public/assets/css/barraNavegacion.css">
 </head>
 <body>
     <header class="BarraNavegacion">
