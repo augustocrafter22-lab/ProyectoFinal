@@ -4,16 +4,7 @@ require_once __DIR__ . "/../config/config.php";
 
 session_start();
 
-if (!isset($_SESSION["cedula"])) {
-    $mensaje = "acceso denegado: sesion no iniciada";
-    header("Location: " . URL_BASE . "/public/Login.php?error=" . urlencode($mensaje));
-    exit;
-}
-
-if (!isset($_SESSION["docente"]) || $_SESSION["docente"] !== true) {
-    $mensaje = "No tiene autorización para acceder a ese panel.";
-    header("Location: " . URL_BASE . "/public/Login.php?error=" . urlencode($mensaje));
-    exit;
-}
+require_once RUTA_CONTROLADOR . "/verificarSesion.php";
+verificarSesion("docente");
 
 require_once RUTA_CONTROLADOR . "/cargarDocente.php";
