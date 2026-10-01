@@ -50,8 +50,13 @@ try {
     header("Location: " . URL_BASE . "/public/RegistrarDiagnostico.php?exito=" . urlencode("Diagnóstico registrado correctamente."));
     exit;
 
+} catch (PDOException $e) {
+    RegistradorErrores::registrar($e);
+    header("Location: " . URL_BASE . "/public/RegistrarDiagnostico.php?error=" . urlencode("Ocurrió un error, intente nuevamente."));
+    exit;
 } catch (Exception $e) {
-    header("Location: " . URL_BASE . "/public/RegistrarDiagnostico.php?error=" . urlencode("Error: " . $e->getMessage()));
+    RegistradorErrores::registrar($e);
+    header("Location: " . URL_BASE . "/public/RegistrarDiagnostico.php?error=" . urlencode($e->getMessage()));
     exit;
 }
 

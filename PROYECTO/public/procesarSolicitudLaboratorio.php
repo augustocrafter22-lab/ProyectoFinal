@@ -61,8 +61,12 @@ try {
         header("Location: " . URL_BASE . "/public/SolicitarLab.php?error=" . urlencode("Error al enviar la solicitud"));
     }
 
+} catch (PDOException $e) {
+    RegistradorErrores::registrar($e);
+    header("Location: " . URL_BASE . "/public/SolicitarLab.php?error=" . urlencode("Ocurrió un error, intente nuevamente."));
 } catch (Exception $e) {
-    header("Location: " . URL_BASE . "/public/SolicitarLab.php?error=" . urlencode("Error: " . $e->getMessage()));
+    RegistradorErrores::registrar($e);
+    header("Location: " . URL_BASE . "/public/SolicitarLab.php?error=" . urlencode($e->getMessage()));
 }
 exit;
 ?>

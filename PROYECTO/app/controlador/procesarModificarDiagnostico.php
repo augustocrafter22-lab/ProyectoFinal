@@ -49,8 +49,13 @@ try {
     header("Location: " . URL_BASE . "/public/ModificarDiagnostico.php?exito=" . urlencode("Diagnóstico modificado correctamente."));
     exit;
 
+} catch (PDOException $e) {
+    RegistradorErrores::registrar($e);
+    header("Location: " . URL_BASE . "/public/ModificarDiagnostico.php?error=" . urlencode("Ocurrió un error, intente nuevamente."));
+    exit;
 } catch (Exception $e) {
-    header("Location: " . URL_BASE . "/public/ModificarDiagnostico.php?error=" . urlencode("Error: " . $e->getMessage()));
+    RegistradorErrores::registrar($e);
+    header("Location: " . URL_BASE . "/public/ModificarDiagnostico.php?error=" . urlencode($e->getMessage()));
     exit;
 }
 

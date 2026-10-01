@@ -14,13 +14,23 @@ require_once RUTA_MODELO . "/AccesoDatosDiagnostico.php";
 // leyendo "?ticket=" desde la URL, solo que ahora se resuelve contra la BD.
 $ticketFiltro = isset($_GET["ticket"]) ? trim($_GET["ticket"]) : "";
 
-$conectorPDO = new ConectorPDO($_ENV['BD_HOST'], $_ENV['BD_USER'], $_ENV['BD_PASS'], $_ENV['BD_NAME']);
-$conexion = $conectorPDO->establecerConexion();
+try {
+    $conectorPDO = new ConectorPDO($_ENV['BD_HOST'], $_ENV['BD_USER'], $_ENV['BD_PASS'], $_ENV['BD_NAME']);
+    $conexion = $conectorPDO->establecerConexion();
 
-$accesoDatosDiagnostico = new AccesoDatosDiagnostico($conexion);
-$diagnosticos = $accesoDatosDiagnostico->listarDiagnosticos($ticketFiltro !== "" ? $ticketFiltro : null);
+    if ($conexion === null) {
+        throw new Exception("No se pudo conectar a la base de datos");
+    }
 
-$conectorPDO->desconectar();
+    $accesoDatosDiagnostico = new AccesoDatosDiagnostico($conexion);
+    $diagnosticos = $accesoDatosDiagnostico->listarDiagnosticos($ticketFiltro !== "" ? $ticketFiltro : null);
+
+    $conectorPDO->desconectar();
+} catch (Exception $e) {
+    RegistradorErrores::registrar($e);
+    echo "Ocurrió un error, intente nuevamente.";
+    exit;
+}
 
 require_once RUTA_VISTA . "/consultarDiagnostico.php";
 

@@ -54,8 +54,13 @@ try {
     header("Location: " . URL_BASE . "/public/" . $paginaRegistro . "?exito=" . urlencode($mensajeExito));
     exit;
 
+} catch (PDOException $e) {
+    RegistradorErrores::registrar($e);
+    header("Location: " . URL_BASE . "/public/" . $paginaRegistro . "?error=" . urlencode("Ocurrió un error, intente nuevamente."));
+    exit;
 } catch (Exception $e) {
-    header("Location: " . URL_BASE . "/public/" . $paginaRegistro . "?error=" . urlencode("Error: " . $e->getMessage()));
+    RegistradorErrores::registrar($e);
+    header("Location: " . URL_BASE . "/public/" . $paginaRegistro . "?error=" . urlencode($e->getMessage()));
     exit;
 }
 
