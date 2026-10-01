@@ -8,6 +8,9 @@
  * public/api/reparaciones.php) desde HistorialTecnico.js.
  */
 
+require_once RUTA_MODELO . "/Traductor.php";
+Traductor::iniciar();
+
 require_once RUTA_VISTA . "/historialTecnico.php";
 
 ?>

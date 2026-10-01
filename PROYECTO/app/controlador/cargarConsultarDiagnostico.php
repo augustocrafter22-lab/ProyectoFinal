@@ -8,6 +8,9 @@
  * consultarDiagnostico.js.
  */
 
+require_once RUTA_MODELO . "/Traductor.php";
+Traductor::iniciar();
+
 require_once RUTA_VISTA . "/consultarDiagnostico.php";
 
 ?>

@@ -24,8 +24,10 @@
             </button>
 
             <ul class="listaNavegacion">
-                <li><a href="<?= URL_BASE ?>/public/Administrador.php">Inicio</a></li>
-                <li><a href="<?= URL_BASE ?>/public/cerrarSesion.php">Cerrar sesion</a></li>
+                <li><a href="<?= URL_BASE ?>/public/Administrador.php"><?= Traductor::t("common.inicio") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/cerrarSesion.php"><?= Traductor::t("common.cerrarSesion") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a></li>
             </ul>
         </nav>
         <h1>S.G.R.S.I</h1>
@@ -33,19 +35,19 @@
     </header>
 
     <section class="encabezado">
-        <h1>Bienvenido, coordinador</h1>
-        <p>Este es el administrador de usuarios</p>
+        <h1><?= Traductor::t("administrador.bienvenida") ?></h1>
+        <p><?= Traductor::t("administrador.subtitulo") ?></p>
     </section>
     <table id="tablaUsuarios">
-        <caption>Listado de usuarios registrados</caption>
+        <caption><?= Traductor::t("administrador.captionTabla") ?></caption>
         <thead>
             <tr>
-                <th>CI</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Roles</th>
-                <th>Estado</th>
-                <th>Acciones</th>
+                <th><?= Traductor::t("administrador.thCi") ?></th>
+                <th><?= Traductor::t("administrador.thNombre") ?></th>
+                <th><?= Traductor::t("administrador.thApellido") ?></th>
+                <th><?= Traductor::t("administrador.thRoles") ?></th>
+                <th><?= Traductor::t("administrador.thEstado") ?></th>
+                <th><?= Traductor::t("administrador.thAcciones") ?></th>
             </tr>
         </thead>
         <tbody id="cuerpoTablaUsuarios">
@@ -55,20 +57,20 @@
                     <td><?= htmlspecialchars($usuario["nombre"]) ?></td>
                     <td><?= htmlspecialchars($usuario["apellido"]) ?></td>
                     <td><?= htmlspecialchars(implode(", ", $usuario["roles"])) ?></td>
-                    <td><?= $usuario["activo"] ? "Activo" : "Inactivo" ?></td>
+                    <td><?= $usuario["activo"] ? Traductor::t("administrador.activo") : Traductor::t("administrador.inactivo") ?></td>
                     <td>
                         <div class="Operaciones">
-                            <button type="button" class="btnEditar">Editar</button>
+                            <button type="button" class="btnEditar"><?= Traductor::t("administrador.btnEditar") ?></button>
 
                             <?php if ($usuario["activo"]): ?>
                                 <form action="procesarDesactivarUsuario.php" method="POST" class="formularioDesactivarUsuario">
                                     <input type="hidden" name="cedula" value="<?= htmlspecialchars($usuario["cedula"]) ?>">
-                                    <button type="submit" class="btnEliminar">Desactivar</button>
+                                    <button type="submit" class="btnEliminar"><?= Traductor::t("administrador.btnDesactivar") ?></button>
                                 </form>
                             <?php else: ?>
                                 <form action="procesarActivarUsuario.php" method="POST" class="formularioActivarUsuario">
                                     <input type="hidden" name="cedula" value="<?= htmlspecialchars($usuario["cedula"]) ?>">
-                                    <button type="submit" class="btnActivar">Activar</button>
+                                    <button type="submit" class="btnActivar"><?= Traductor::t("administrador.btnActivar") ?></button>
                                 </form>
                             <?php endif; ?>
                         </div>
@@ -80,7 +82,7 @@
     </table>
 
     <section class="botonera">
-        <button class="boton-principal" id="btnCrear" type="button">Agregar usuario</button>
+        <button class="boton-principal" id="btnCrear" type="button"><?= Traductor::t("administrador.btnAgregarUsuario") ?></button>
     </section>
 
 
@@ -90,40 +92,40 @@
         </button>
         <form id="formularioGestionarUsuario" method="POST">
             <fieldset>
-                <legend>Gestión de usuario</legend>
+                <legend><?= Traductor::t("administrador.dialogTitulo") ?></legend>
                 <fieldset>
-                    <legend>Datos del usuario</legend>
+                    <legend><?= Traductor::t("administrador.dialogSubtitulo") ?></legend>
                     <div class="cajaEntradaDeDatos">
-                        <label for="ci">CI</label>
-                        <input type="text" id="ci" name="ci" placeholder="Ingrese la CI" inputmode="numeric"
+                        <label for="ci"><?= Traductor::t("administrador.labelCi") ?></label>
+                        <input type="text" id="ci" name="ci" placeholder="<?= Traductor::t("administrador.placeholderCi") ?>" inputmode="numeric"
                             maxlength="8">
                     </div>
                     <div class="cajaEntradaDeDatos">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" placeholder="Ingrese el nombre">
+                        <label for="nombre"><?= Traductor::t("administrador.labelNombre") ?></label>
+                        <input type="text" id="nombre" name="nombre" placeholder="<?= Traductor::t("administrador.placeholderNombre") ?>">
                     </div>
                     <div class="cajaEntradaDeDatos">
-                        <label for="apellido">Apellido</label>
-                        <input type="text" id="apellido" name="apellido" placeholder="Ingrese el apellido">
+                        <label for="apellido"><?= Traductor::t("administrador.labelApellido") ?></label>
+                        <input type="text" id="apellido" name="apellido" placeholder="<?= Traductor::t("administrador.placeholderApellido") ?>">
                     </div>
                     <div class="cajaEntradaDeDatos">
-                        <label for="contrasenia">Contraseña</label>
-                        <input type="password" id="contrasenia" name="contrasenia" placeholder="Ingrese la contraseña">
+                        <label for="contrasenia"><?= Traductor::t("administrador.labelContrasenia") ?></label>
+                        <input type="password" id="contrasenia" name="contrasenia" placeholder="<?= Traductor::t("administrador.placeholderContrasenia") ?>">
                     </div>
                     <fieldset class="roles">
-                        <legend>Roles</legend>
+                        <legend><?= Traductor::t("administrador.legendRoles") ?></legend>
                         <label>
-                            <input type="checkbox" name="roles[]" value="coordinador"> Coordinador
+                            <input type="checkbox" name="roles[]" value="coordinador"> <?= Traductor::t("common.coordinador") ?>
                         </label>
                         <label>
-                            <input type="checkbox" name="roles[]" value="tecnico"> Técnico
+                            <input type="checkbox" name="roles[]" value="tecnico"> <?= Traductor::t("common.tecnico") ?>
                         </label>
                         <label>
-                            <input type="checkbox" name="roles[]" value="docente"> Docente
+                            <input type="checkbox" name="roles[]" value="docente"> <?= Traductor::t("common.docente") ?>
                         </label>
                     </fieldset>
                 </fieldset>
-                <button class="boton-secundario" type="submit">Guardar usuario</button>
+                <button class="boton-secundario" type="submit"><?= Traductor::t("administrador.btnGuardarUsuario") ?></button>
             </fieldset>
         </form>
     </dialog>

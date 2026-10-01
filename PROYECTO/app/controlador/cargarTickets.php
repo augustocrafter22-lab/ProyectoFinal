@@ -8,6 +8,9 @@
  * hace falta consultar la base de datos.
  */
 
+require_once RUTA_MODELO . "/Traductor.php";
+Traductor::iniciar();
+
 require_once RUTA_VISTA . "/vistaTickets.php";
 
 ?>

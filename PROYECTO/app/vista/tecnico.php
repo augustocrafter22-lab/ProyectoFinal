@@ -23,15 +23,17 @@
             </button>
 
             <ul class="listaNavegacion">
-                <li><a href="<?= URL_BASE ?>/public/VistaLab.php">Solicitudes de laboratorio</a></li>
-                <li><a href="<?= URL_BASE ?>/public/VistaDeTickets.php">Tickets</a></li>
-                <li><a href="<?= URL_BASE ?>/public/RegistrarDiagnostico.php">Registrar diagnostico</a></li>
-                <li><a href="<?= URL_BASE ?>/public/RegistrarReparacion.php">Registrar reparacion</a></li>
-                <li><a href="<?= URL_BASE ?>/public/RegistrarSolucion.php">Registrar solucion</a></li>
-                <li><a href="<?= URL_BASE ?>/public/ConsultarDiagnostico.php">Consultar diagnosticos</a></li>
-                <li><a href="<?= URL_BASE ?>/public/Equipos.php">Consultar equipos</a></li>
-                <li><a href="<?= URL_BASE ?>/public/HistorialTecnico.php">Historial Tecnico</a></li>
-                <li><a href="<?= URL_BASE ?>/public/cerrarSesion.php" class="cerrarSesion">Cerrar sesion</a></li>
+                <li><a href="<?= URL_BASE ?>/public/VistaLab.php"><?= Traductor::t("nav.solicitudesLab") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/VistaDeTickets.php"><?= Traductor::t("nav.tickets") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/RegistrarDiagnostico.php"><?= Traductor::t("nav.registrarDiagnostico") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/RegistrarReparacion.php"><?= Traductor::t("nav.registrarReparacion") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/RegistrarSolucion.php"><?= Traductor::t("nav.registrarSolucion") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/ConsultarDiagnostico.php"><?= Traductor::t("nav.consultarDiagnosticos") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/Equipos.php"><?= Traductor::t("nav.consultarEquipos") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/HistorialTecnico.php"><?= Traductor::t("nav.historialTecnico") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/cerrarSesion.php" class="cerrarSesion"><?= Traductor::t("common.cerrarSesion") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a></li>
             </ul>
         </nav>
         <h1>S.G.R.S.I</h1>
@@ -39,8 +41,8 @@
     </header>
 
     <section class="encabezado">
-        <h1>Bienvenido, <?= htmlspecialchars($usuario->getNombre()) ?> <?= htmlspecialchars($usuario->getApellido()) ?> (Tecnico)</h1>
-        <p>Haga uso del menu para comenzar.</p>
+        <h1><?= Traductor::t("tecnico.bienvenida") ?> <?= htmlspecialchars($usuario->getNombre()) ?> <?= htmlspecialchars($usuario->getApellido()) ?> <?= Traductor::t("tecnico.rolSufijo") ?></h1>
+        <p><?= Traductor::t("tecnico.instruccion") ?></p>
     </section>
 
     <main>
@@ -48,55 +50,55 @@
             <article class="CartaEstadistica">
                 <p class="Puntito1"><img src="<?= URL_BASE ?>/public/assets/img/Bootstrap/circle-fill.svg" width="12" alt=""></p>
                 <p class="CantidadEstadistica" id="cantReportes"><?= htmlspecialchars($totalReportes) ?></p>
-                <p class="EtiquetaEstadistica">Reportes</p>
+                <p class="EtiquetaEstadistica"><?= Traductor::t("tecnico.reportes") ?></p>
             </article>
             <article class="CartaEstadistica">
                 <p class="Puntito2"><img src="<?= URL_BASE ?>/public/assets/img/Bootstrap/circle-fill.svg" width="12" alt=""></p>
                 <p class="CantidadEstadistica" id="canIncidenciasAbiertas"><?= htmlspecialchars($porEstado["Pendiente"]) ?></p>
-                <p class="EtiquetaEstadistica">Incidencias sin atender</p>
+                <p class="EtiquetaEstadistica"><?= Traductor::t("tecnico.incidenciasSinAtender") ?></p>
             </article>
             <article class="CartaEstadistica">
                 <p class="Puntito3"><img src="<?= URL_BASE ?>/public/assets/img/Bootstrap/circle-fill.svg" width="12" alt=""></p>
                 <p class="CantidadEstadistica" id="cantEnProceso"><?= htmlspecialchars($porEstado["En Proceso"]) ?></p>
-                <p class="EtiquetaEstadistica">En Proceso</p>
+                <p class="EtiquetaEstadistica"><?= Traductor::t("tecnico.enProceso") ?></p>
             </article>
             <article class="CartaEstadistica">
                 <p class="Puntito4"><img src="<?= URL_BASE ?>/public/assets/img/Bootstrap/circle-fill.svg" width="12" alt=""></p>
                 <p class="CantidadEstadistica" id="cantResueltas"><?= htmlspecialchars($porEstado["Resuelto"]) ?></p>
-                <p class="EtiquetaEstadistica">Resueltas</p>
+                <p class="EtiquetaEstadistica"><?= Traductor::t("tecnico.resueltas") ?></p>
             </article>
         </section>
 
         <section class="PanelGrafico">
-            <h2>Incidencias por estado</h2>
+            <h2><?= Traductor::t("tecnico.panelIncidenciasPorEstado") ?></h2>
             <table class="tablaEstado">
                 <thead>
                     <tr>
-                        <th>Estado</th>
-                        <th>Cantidad</th>
+                        <th><?= Traductor::t("tecnico.thEstado") ?></th>
+                        <th><?= Traductor::t("tecnico.thCantidad") ?></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><span class="etiqueta-estado"><span class="puntoA"></span> Pendiente</span></td>
+                        <td><span class="etiqueta-estado"><span class="puntoA"></span> <?= Traductor::t("tecnico.estadoPendiente") ?></span></td>
                         <td class="contador" id="contador-Abiertas"><?= htmlspecialchars($porEstado["Pendiente"]) ?></td>
                     </tr>
                     <tr>
-                        <td><span class="etiqueta-estado"><span class="puntoB"></span> En Proceso</span></td>
+                        <td><span class="etiqueta-estado"><span class="puntoB"></span> <?= Traductor::t("tecnico.estadoEnProceso") ?></span></td>
                         <td class="contador" id="contador-enProceso"><?= htmlspecialchars($porEstado["En Proceso"]) ?></td>
                     </tr>
                     <tr>
-                        <td><span class="etiqueta-estado"><span class="puntoC"></span> Resuelto</span></td>
+                        <td><span class="etiqueta-estado"><span class="puntoC"></span> <?= Traductor::t("tecnico.estadoResuelto") ?></span></td>
                         <td class="contador" id="contador-resueltas"><?= htmlspecialchars($porEstado["Resuelto"]) ?></td>
                     </tr>
                     <tr>
-                        <td><span class="etiqueta-estado"><span class="puntoD"></span> Cerrado</span></td>
+                        <td><span class="etiqueta-estado"><span class="puntoD"></span> <?= Traductor::t("tecnico.estadoCerrado") ?></span></td>
                         <td class="contador" id="contador-Cerradas"><?= htmlspecialchars($porEstado["Cerrado"]) ?></td>
                     </tr>
                 </tbody>
                 <tfoot class="total-estado">
                     <tr>
-                        <td>Total</td>
+                        <td><?= Traductor::t("tecnico.total") ?></td>
                         <td id="cuentaTotal"><?= htmlspecialchars($totalReportes) ?></td>
                     </tr>
                 </tfoot>
@@ -104,18 +106,18 @@
         </section>
 
         <section class="PanelGrafico">
-            <h2>Tiempos de Resolución</h2>
+            <h2><?= Traductor::t("tecnico.panelTiempos") ?></h2>
             <table class="tablaEstado">
                 <thead>
                     <tr>
-                        <th>Ticket</th>
-                        <th>Días</th>
+                        <th><?= Traductor::t("tecnico.thTicket") ?></th>
+                        <th><?= Traductor::t("tecnico.thDias") ?></th>
                     </tr>
                 </thead>
                 <tbody id="tbodyTiempos">
                     <?php if (empty($tiemposResolucion)): ?>
                         <tr>
-                            <td colspan="2">Todavía no hay tickets resueltos</td>
+                            <td colspan="2"><?= Traductor::t("tecnico.sinTicketsResueltos") ?></td>
                         </tr>
                     <?php else: ?>
                         <?php foreach ($tiemposResolucion as $t): ?>
@@ -130,12 +132,12 @@
         </section>
 
         <section class="PanelGrafico">
-            <h2>Incidencias por salón</h2>
+            <h2><?= Traductor::t("tecnico.panelIncidenciasPorSalon") ?></h2>
             <table class="tablaEstado">
                 <thead>
                     <tr>
-                        <th>Salón</th>
-                        <th>Incidencias</th>
+                        <th><?= Traductor::t("tecnico.thSalon") ?></th>
+                        <th><?= Traductor::t("tecnico.thIncidencias") ?></th>
                     </tr>
                 </thead>
                 <tbody id="tbodySalones">

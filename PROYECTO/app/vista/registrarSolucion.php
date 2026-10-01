@@ -22,12 +22,14 @@
             </button>
 
             <ul class="listaNavegacion">
-                <li><a href="Tecnico.php">Regresar</a></li>
-                <li><a href="ConsultarDiagnostico.php">Consultar diagnosticos</a></li>
+                <li><a href="Tecnico.php"><?= Traductor::t("common.regresar") ?></a></li>
+                <li><a href="ConsultarDiagnostico.php"><?= Traductor::t("nav.consultarDiagnosticos") ?></a></li>
                 <li><a href="RegistrarIntervencion.php">Registrar intervencion</a></li>
                 <li><a href="RegistrarReemplazo.php">Registrar reemplazo</a></li>
-                <li><a href="RegistrarReparacion.php">Registrar reparacion</a></li>
-                <li><a href="cerrarSesion.php" class="cerrarSesion">Cerrar sesion</a></li>
+                <li><a href="RegistrarReparacion.php"><?= Traductor::t("nav.registrarReparacion") ?></a></li>
+                <li><a href="cerrarSesion.php" class="cerrarSesion"><?= Traductor::t("common.cerrarSesion") ?></a></li>
+                <li><a href="cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a></li>
+                <li><a href="cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a></li>
             </ul>
         </nav>
         <h1>S.G.R.S.I</h1>
@@ -35,27 +37,27 @@
     </header>
 <header class="encabezado">
 
-<h1>Registro de Soluciones</h1>
-<p>Aqui se podran registrar las soluciones técnicas en base al diagnóstico realizado.</p>
+<h1><?= Traductor::t("registrarSolucion.titulo") ?></h1>
+<p><?= Traductor::t("registrarSolucion.subtitulo") ?></p>
 </header>
 
     <p id="mensajeRegistrarSolucion" role="status"></p>
 
 <section class="modulo" id="Solucion">
-  <h2>Registre su resolucion</h2>
+  <h2><?= Traductor::t("registrarSolucion.tituloModulo") ?></h2>
 
-  <p id="avisoSinDiagnosticos" hidden>No hay diagnósticos registrados todavía. Registre un diagnóstico antes de cargar una solución.</p>
+  <p id="avisoSinDiagnosticos" hidden><?= Traductor::t("registrarSolucion.avisoSinDiagnosticos") ?></p>
 
   <form class="formulario" id="formRegistrarSolucion">
-    <label for="registrarSolucionDiagnostico">Diagnóstico</label>
+    <label for="registrarSolucionDiagnostico"><?= Traductor::t("registrarSolucion.labelDiagnostico") ?></label>
     <select id="registrarSolucionDiagnostico" name="idDiagnostico" required>
-      <option value="">Seleccione un diagnóstico</option>
+      <option value=""><?= Traductor::t("registrarSolucion.opcionSeleccioneDiagnostico") ?></option>
     </select>
 
-    <label for="registrarSolucionSolucion">Solución tecnica aplicada</label>
+    <label for="registrarSolucionSolucion"><?= Traductor::t("registrarSolucion.labelSolucion") ?></label>
     <textarea id="registrarSolucionSolucion" name="solucion" rows="4" minlength="10" required></textarea>
 
-    <button class="boton-principal" type="submit">Registrar solución</button>
+    <button class="boton-principal" type="submit"><?= Traductor::t("registrarSolucion.btnRegistrar") ?></button>
   </form>
 </section>
 <script>

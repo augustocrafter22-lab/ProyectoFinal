@@ -13,8 +13,10 @@
       <button class="btnMenu" id="btnMenu" type="button"><img class="menu" src="<?= URL_BASE ?>/public/assets/img/Bootstrap/list.svg" alt="menu" width="40" height="40"></button>
       <button class="btnMenuC" id="btnMenuC" type="button"><img src="<?= URL_BASE ?>/public/assets/img/Bootstrap/x.svg" alt="X" class="menu" width="40" height="40"></button>
       <ul class="listaNavegacion">
-        <li><a href="Tecnico.php">Regresar</a></li>
-        <li><a href="cerrarSesion.php" class="cerrarSesion">Cerrar sesion</a></li>
+        <li><a href="Tecnico.php"><?= Traductor::t("common.regresar") ?></a></li>
+        <li><a href="cerrarSesion.php" class="cerrarSesion"><?= Traductor::t("common.cerrarSesion") ?></a></li>
+        <li><a href="cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a></li>
+        <li><a href="cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a></li>
       </ul>
     </nav>
     <h1>S.G.R.S.I</h1>
@@ -22,25 +24,25 @@
   </header>
 
   <section class="encabezado">
-    <h1>Registrar Reparación</h1>
-    <p>Registrá una reparación realizada sobre un equipo.</p>
+    <h1><?= Traductor::t("registrarReparacion.titulo") ?></h1>
+    <p><?= Traductor::t("registrarReparacion.subtitulo") ?></p>
   </section>
 
   <p id="mensajeRegistrarReparacion" role="status"></p>
 
   <section class="modulo" id="registrarReparacion">
-    <h2>Nueva reparación</h2>
+    <h2><?= Traductor::t("registrarReparacion.tituloModulo") ?></h2>
 
-    <p id="avisoSinDiagnosticosReparacion" hidden>No hay diagnósticos registrados para asociar una reparación.</p>
+    <p id="avisoSinDiagnosticosReparacion" hidden><?= Traductor::t("registrarReparacion.avisoSinDiagnosticos") ?></p>
 
     <form class="formulario" id="formRegistrarReparacion">
-      <label for="registrarReparacionDiagnostico">Diagnóstico</label>
+      <label for="registrarReparacionDiagnostico"><?= Traductor::t("registrarReparacion.labelDiagnostico") ?></label>
       <select id="registrarReparacionDiagnostico" name="idDiagnostico" required>
-        <option value="">Seleccione un diagnóstico</option>
+        <option value=""><?= Traductor::t("registrarReparacion.opcionSeleccioneDiagnostico") ?></option>
       </select>
-      <label for="registrarReparacionTexto">Descripción de la reparación</label>
+      <label for="registrarReparacionTexto"><?= Traductor::t("registrarReparacion.labelTexto") ?></label>
       <textarea id="registrarReparacionTexto" name="reparacion" rows="4" minlength="10" required></textarea>
-      <button class="boton-principal" type="submit">Registrar reparación</button>
+      <button class="boton-principal" type="submit"><?= Traductor::t("registrarReparacion.btnRegistrar") ?></button>
     </form>
   </section>
 

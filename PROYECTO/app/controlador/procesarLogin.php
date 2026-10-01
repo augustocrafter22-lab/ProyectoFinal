@@ -14,11 +14,15 @@ require_once RUTA_MODELO . "/AccesoDatosUsuario.php";
 require_once RUTA_MODELO . "/Usuario.php";
 require_once RUTA_MODELO . "/Login.php";
 require_once RUTA_MODELO . "/Validador.php";
+require_once RUTA_MODELO . "/Traductor.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     header("Location: " . URL_BASE . "/public/login.php");
     exit;
 }
+
+session_start();
+Traductor::iniciar();
 
 try {
     $cedula = Validador::requerido($_POST["username"] ?? "", "cédula");
@@ -43,11 +47,10 @@ try {
     }
 
     if (!$usuario->tieneAlgunRol()) {
-        header("Location: " . URL_BASE . "/public/login.php?error=" . urlencode("Usuario sin roles habilitados"));
+        header("Location: " . URL_BASE . "/public/login.php?error=" . urlencode(Traductor::t("login.sinRoles")));
         exit;
     }
 
-    session_start();
     session_regenerate_id(true);
 
     $_SESSION["cedula"] = $usuario->getCedula();
@@ -73,13 +76,13 @@ try {
     } elseif ($usuario->esDocente()) {
         header("Location: " . URL_BASE . "/public/Docente.php");
     } else {
-        header("Location: " . URL_BASE . "/public/login.php?error=" . urlencode("No tiene permisos"));
+        header("Location: " . URL_BASE . "/public/login.php?error=" . urlencode(Traductor::t("login.sinPermisos")));
     }
     exit;
 
 } catch (PDOException $e) {
     RegistradorErrores::registrar($e);
-    header("Location: " . URL_BASE . "/public/login.php?error=" . urlencode("Ocurrió un error, intente nuevamente."));
+    header("Location: " . URL_BASE . "/public/login.php?error=" . urlencode(Traductor::t("common.errorGenerico")));
     exit;
 } catch (Exception $e) {
     RegistradorErrores::registrar($e);

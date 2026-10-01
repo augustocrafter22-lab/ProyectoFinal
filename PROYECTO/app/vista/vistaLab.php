@@ -21,8 +21,10 @@
             </button>
 
             <ul class="listaNavegacion">
-                <li><a href="<?= URL_BASE ?>/public/Tecnico.php">Regresar</a></li>
-                <li><a href="<?= URL_BASE ?>/public/cerrarSesion.php" class="cerrarSesion">Cerrar sesion</a></li>
+                <li><a href="<?= URL_BASE ?>/public/Tecnico.php"><?= Traductor::t("common.regresar") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/cerrarSesion.php" class="cerrarSesion"><?= Traductor::t("common.cerrarSesion") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a></li>
             </ul>
         </nav>
         <h1>S.G.R.S.I</h1>
@@ -30,20 +32,20 @@
     </header>
 
     <section class="encabezado">
-        <h1>Vista de Laboratorio</h1>
-        <p>¡Hola! Esta seccion es para visualizar la solicitudes de preparacion de laboratorios</p>
+        <h1><?= Traductor::t("vistaLab.titulo") ?></h1>
+        <p><?= Traductor::t("vistaLab.subtitulo") ?></p>
     </section>
 
     <section class="modulo" id="VisualizacionLaboratorio">
         <fieldset class="controles">
-            <legend>Filtros</legend>
+            <legend><?= Traductor::t("vistaLab.legendFiltros") ?></legend>
 
-            <label for="filtroPorFecha">Fecha:</label>
+            <label for="filtroPorFecha"><?= Traductor::t("vistaLab.labelFecha") ?></label>
             <input type="date" id="filtroPorFecha">
 
-            <label for="filtroPorLaboratorio">Laboratorio:</label>
+            <label for="filtroPorLaboratorio"><?= Traductor::t("vistaLab.labelLaboratorio") ?></label>
             <select id="filtroPorLaboratorio">
-                <option value="">Todos</option>
+                <option value=""><?= Traductor::t("vistaLab.opcionTodos") ?></option>
                 <?php foreach ($laboratorios as $lab): ?>
                     <option value="<?= htmlspecialchars($lab["numeroLaboratorio"]) ?>">
                         <?= htmlspecialchars($lab["numeroLaboratorio"]) ?>
@@ -51,19 +53,19 @@
                 <?php endforeach; ?>
             </select>
 
-            <button id="btnLimpiarFiltro" type="button">Limpiar filtros</button>
+            <button id="btnLimpiarFiltro" type="button"><?= Traductor::t("vistaLab.btnLimpiarFiltros") ?></button>
         </fieldset>
 
         <table id="tablaLaboratorio">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Laboratorio</th>
-                    <th>Software</th>
-                    <th>Detalle</th>
-                    <th>Restricciones</th>
-                    <th>Fecha</th>
-                    <th>Hora</th>
+                    <th><?= Traductor::t("vistaLab.thId") ?></th>
+                    <th><?= Traductor::t("vistaLab.thLaboratorio") ?></th>
+                    <th><?= Traductor::t("vistaLab.thSoftware") ?></th>
+                    <th><?= Traductor::t("vistaLab.thDetalle") ?></th>
+                    <th><?= Traductor::t("vistaLab.thRestricciones") ?></th>
+                    <th><?= Traductor::t("vistaLab.thFecha") ?></th>
+                    <th><?= Traductor::t("vistaLab.thHora") ?></th>
                 </tr>
             </thead>
             <tbody id="cuerpoTabla">
@@ -71,7 +73,7 @@
                     <tr>
                         <td><?= htmlspecialchars($s["idSolicitud"]) ?></td>
                         <td><?= htmlspecialchars($s["numeroLaboratorio"]) ?></td>
-                        <td><?= $s["solicitaSoftware"] ? "Sí" : "No" ?></td>
+                        <td><?= $s["solicitaSoftware"] ? Traductor::t("vistaLab.si") : Traductor::t("vistaLab.no") ?></td>
                         <td><?= htmlspecialchars($s["detalle"] ?? "") ?></td>
                         <td><?= htmlspecialchars($s["restricciones"] ?? "") ?></td>
                         <td><?= htmlspecialchars($s["fechaEstimada"]) ?></td>

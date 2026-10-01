@@ -7,6 +7,9 @@
  * (public/api/diagnosticos.php) desde RegistrarReparacion.js.
  */
 
+require_once RUTA_MODELO . "/Traductor.php";
+Traductor::iniciar();
+
 require_once RUTA_VISTA . "/registrarReparacion.php";
 
 ?>

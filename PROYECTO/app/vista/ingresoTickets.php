@@ -20,8 +20,10 @@
             </button>
 
             <ul class="listaNavegacion">
-                <li><a href="<?= URL_BASE ?>/public/Docente.php">Regresar</a></li>
-                <li><a href="<?= URL_BASE ?>/public/cerrarSesion.php">Cerrar sesion</a></li>
+                <li><a href="<?= URL_BASE ?>/public/Docente.php"><?= Traductor::t("common.regresar") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/cerrarSesion.php"><?= Traductor::t("common.cerrarSesion") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a></li>
             </ul>
         </nav>
         <h1>S.G.R.S.I</h1>
@@ -29,8 +31,8 @@
     </header>
 
   <section class="encabezado">
-    <h1>Nuevo Ticket</h1>
-    <p>¡Hola! Este espacio es para ingresar nuevos tickets sobre incidencias que hayan en los equipos de los laboratorios</p>
+    <h1><?= Traductor::t("ingresoTickets.titulo") ?></h1>
+    <p><?= Traductor::t("ingresoTickets.subtitulo") ?></p>
   </section>
 
   <p id="mensajeIngresoTickets" role="status"></p>
@@ -38,9 +40,9 @@
   <section class="modulo" id="ingresoTickets">
     <form class="formulario" id="ticketForm">
 
-      <label for="laboratorioTaller">Espacio de Trabajo</label>
+      <label for="laboratorioTaller"><?= Traductor::t("ingresoTickets.labelEspacio") ?></label>
       <select name="laboratorio" id="laboratorioTaller" required>
-        <option value="">Seleccione un espacio</option>
+        <option value=""><?= Traductor::t("ingresoTickets.opcionSeleccioneEspacio") ?></option>
         <option value="Laboratorio 1">Laboratorio 1</option>
         <option value="Laboratorio 2">Laboratorio 2</option>
         <option value="Laboratorio 3">Laboratorio 3</option>
@@ -52,32 +54,32 @@
         <option value="Taller 3">Taller 3</option>
       </select>
 
-      <label for="equipo">Equipos</label>
+      <label for="equipo"><?= Traductor::t("ingresoTickets.labelEquipos") ?></label>
       <select name="equipo" id="equipo" required>
-        <option value="">Seleccione un equipo</option>
+        <option value=""><?= Traductor::t("ingresoTickets.opcionSeleccioneEquipo") ?></option>
       </select>
 
-      <label for="asunto">Asunto:</label>
-      <input type="text" id="asunto" name="asunto" placeholder="Ej: La computadora no enciende" required>
+      <label for="asunto"><?= Traductor::t("ingresoTickets.labelAsunto") ?></label>
+      <input type="text" id="asunto" name="asunto" placeholder="<?= Traductor::t("ingresoTickets.placeholderAsunto") ?>" required>
 
-      <label for="descripcion">Descripción:</label>
-      <textarea id="descripcion" name="descripcion" rows="5" placeholder="Describa la incidencia detectada:" required></textarea>
+      <label for="descripcion"><?= Traductor::t("ingresoTickets.labelDescripcion") ?></label>
+      <textarea id="descripcion" name="descripcion" rows="5" placeholder="<?= Traductor::t("ingresoTickets.placeholderDescripcion") ?>" required></textarea>
 
-      <label for="turno">Turno donde fue registrada la incidencia:</label>
+      <label for="turno"><?= Traductor::t("ingresoTickets.labelTurno") ?></label>
       <select id="turno" name="turno" required>
-        <option value="">Seleccione un turno</option>
+        <option value=""><?= Traductor::t("ingresoTickets.opcionSeleccioneTurno") ?></option>
         <option value="Matutino">Matutino</option>
         <option value="Vespertino">Vespertino</option>
         <option value="Nocturno">Nocturno</option>
       </select>
 
-      <label for="grupo">Grupo:</label>
-      <input type="text" id="grupo" name="grupo" placeholder="Ej: 3MB" required>
+      <label for="grupo"><?= Traductor::t("ingresoTickets.labelGrupo") ?></label>
+      <input type="text" id="grupo" name="grupo" placeholder="<?= Traductor::t("ingresoTickets.placeholderGrupo") ?>" required>
 
-      <label for="profesor">Profesor que reporta la incidencia:</label>
-      <input type="text" id="profesor" name="profesor" placeholder="Ej: Augusto Lopéz" required>
+      <label for="profesor"><?= Traductor::t("ingresoTickets.labelProfesor") ?></label>
+      <input type="text" id="profesor" name="profesor" placeholder="<?= Traductor::t("ingresoTickets.placeholderProfesor") ?>" required>
 
-      <button class="boton-principal" type="submit">Enviar Ticket</button>
+      <button class="boton-principal" type="submit"><?= Traductor::t("ingresoTickets.btnEnviar") ?></button>
 
     </form>
   </section>

@@ -21,28 +21,30 @@
             </button>
 
             <ul class="listaNavegacion">
-                <li><a href="<?= URL_BASE ?>/public/cerrarSesion.php">Cerrar sesion</a></li>
+                <li><a href="<?= URL_BASE ?>/public/cerrarSesion.php"><?= Traductor::t("common.cerrarSesion") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a></li>
             </ul>
         </nav>
         <h1>S.G.R.S.I</h1>
         <img src="<?= URL_BASE ?>/public/assets/img/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo-Utu" width="75px">
     </header>
 <section class="encabezado">
-    <h1>Bienvenido, <?= htmlspecialchars($usuario->getNombre()) ?> <?= htmlspecialchars($usuario->getApellido()) ?></h1>
-    <p>Seleccione el rol con el que desea ingresar</p>
+    <h1><?= Traductor::t("panelRoles.bienvenida") ?> <?= htmlspecialchars($usuario->getNombre()) ?> <?= htmlspecialchars($usuario->getApellido()) ?></h1>
+    <p><?= Traductor::t("panelRoles.instruccion") ?></p>
 </section>
 
 <section class="botonera">
     <?php if ($_SESSION["coordinador"]): ?>
-        <button class="boton-principal" type="button" onclick="location.href='<?= URL_BASE ?>/public/Administrador.php'">Coordinador</button>
+        <button class="boton-principal" type="button" onclick="location.href='<?= URL_BASE ?>/public/Administrador.php'"><?= Traductor::t("common.coordinador") ?></button>
     <?php endif; ?>
 
     <?php if ($_SESSION["tecnico"]): ?>
-        <button class="boton-principal" type="button" onclick="location.href='<?= URL_BASE ?>/public/Tecnico.php'">Técnico</button>
+        <button class="boton-principal" type="button" onclick="location.href='<?= URL_BASE ?>/public/Tecnico.php'"><?= Traductor::t("common.tecnico") ?></button>
     <?php endif; ?>
 
     <?php if ($_SESSION["docente"]): ?>
-        <button class="boton-principal" type="button" onclick="location.href='<?= URL_BASE ?>/public/Docente.php'">Docente</button>
+        <button class="boton-principal" type="button" onclick="location.href='<?= URL_BASE ?>/public/Docente.php'"><?= Traductor::t("common.docente") ?></button>
     <?php endif; ?>
 </section>
 </body>

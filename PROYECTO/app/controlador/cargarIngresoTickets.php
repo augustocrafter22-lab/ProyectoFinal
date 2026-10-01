@@ -7,6 +7,9 @@
  * de formulario de ingreso de tickets.
  */
 
+require_once RUTA_MODELO . "/Traductor.php";
+Traductor::iniciar();
+
 require_once RUTA_VISTA . "/ingresoTickets.php";
 
 ?>

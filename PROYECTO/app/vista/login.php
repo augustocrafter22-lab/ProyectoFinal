@@ -15,22 +15,27 @@
         <section class="SGRSI">
             <img src="<?= URL_BASE ?>/public/assets/img/Isotipo-UTU-Color-Dorado-PNG.png" alt="DeKlan Enterprise" class="logo" width="200px" height="200px" />
             <h1>S.G.R.S.I.</h1>
-            <p>Sistema de Gestión de Recursos y Soporte de Informática</p>
+            <p><?= Traductor::t("login.subtitulo") ?></p>
         </section>
         <section class="seccionLogin">
+            <p class="selectorIdioma">
+                <a href="<?= URL_BASE ?>/public/cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a>
+                |
+                <a href="<?= URL_BASE ?>/public/cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a>
+            </p>
             <form action="<?= URL_BASE ?>/app/controlador/procesarLogin.php" method="POST" class="login-form" id="loginForm">
-                <h2>Iniciar Sesión</h2>
+                <h2><?= Traductor::t("login.titulo") ?></h2>
                 <fieldset>
-                    <label for="username">CI:</label>
+                    <label for="username"><?= Traductor::t("login.labelCi") ?></label>
                     <input type="text" id="username" name="username" minlength="7" maxlength="8" required />
 
-                    <label for="clave">Contraseña:</label>
+                    <label for="clave"><?= Traductor::t("login.labelClave") ?></label>
                     <input type="password" id="clave" name="clave" autocomplete="current-password" minlength="1" required />
 
                     <?php if (isset($_GET["error"])): ?>
                         <p id="errorMessage" style="color: red"><?= htmlspecialchars($_GET["error"]) ?></p>
                     <?php endif; ?>
-                    <button type="submit" class="boton-principal">Ingresar</button>
+                    <button type="submit" class="boton-principal"><?= Traductor::t("login.botonIngresar") ?></button>
                 </fieldset>
             </form>
         </section>
