@@ -23,8 +23,10 @@
             </button>
 
             <ul class="listaNavegacion">
-                <li><a href="Docente.php">Regresar</a></li>
-                <li><a class="cerrarSesion" href="Login.php">Cerrar sesion</a></li>
+                <li><a href="Docente.php"><?= Traductor::t("common.regresar") ?></a></li>
+                <li><a class="cerrarSesion" href="Login.php"><?= Traductor::t("common.cerrarSesion") ?></a></li>
+                <li><a href="cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a></li>
+                <li><a href="cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a></li>
             </ul>
         </nav>
         <h1>S.G.R.S.I</h1>
@@ -32,17 +34,17 @@
     </header>
 
     <section class="encabezado">
-        <h1>Solicitud de Laboratorio</h1>
-        <p>¡Hola! Esta seccion es para solicitar la preparación de un laboratorio</p>
+        <h1><?= Traductor::t("solicitarLab.titulo") ?></h1>
+        <p><?= Traductor::t("solicitarLab.subtitulo") ?></p>
     </section>
 
     <section class="modulo" id="ingresoLaboratorio">
 
         <form class="formulario" id="LabForm" method="POST" action="procesarSolicitudLaboratorio.php">
 
-            <label for="laboratorioSolicitud">Laboratorios</label>
+            <label for="laboratorioSolicitud"><?= Traductor::t("solicitarLab.labelLaboratorios") ?></label>
             <select name="idLaboratorio" id="laboratorioSolicitud" required>
-                <option value="">Seleccione un espacio</option>
+                <option value=""><?= Traductor::t("solicitarLab.opcionSeleccioneEspacio") ?></option>
                 <?php foreach ($laboratorios as $lab): ?>
                     <option value="<?= htmlspecialchars($lab["idLaboratorio"]) ?>">
                         <?= htmlspecialchars($lab["numeroLaboratorio"]) ?>
@@ -50,27 +52,25 @@
                 <?php endforeach; ?>
             </select>
 
-            <label for="SolicitudDeSoftware">Solicitud de software (En caso de ser necesaria, por favor aclarar el
-                nombre
-                y version del software solicitado en el Detalle)</label>
+            <label for="SolicitudDeSoftware"><?= Traductor::t("solicitarLab.labelSolicitudSoftware") ?></label>
             <select name="solicitaSoftware" id="SolicitudDeSoftware">
-                <option value="No">No</option>
-                <option value="Si">Si</option>
+                <option value="No"><?= Traductor::t("solicitarLab.opcionNo") ?></option>
+                <option value="Si"><?= Traductor::t("solicitarLab.opcionSi") ?></option>
             </select>
 
-            <label for="DetalleSoftware">Detalle (Escribir cualquier requerimiento adicional en el detalle)</label>
+            <label for="DetalleSoftware"><?= Traductor::t("solicitarLab.labelDetalle") ?></label>
             <textarea name="detalle" id="DetalleSoftware" rows="4" minlength="2"></textarea>
 
-            <label for="Restricciones">Restricciones para los alumnos</label>
+            <label for="Restricciones"><?= Traductor::t("solicitarLab.labelRestricciones") ?></label>
             <textarea name="restricciones" id="Restricciones"></textarea>
 
-            <label for="FechaEstimada">Fecha Estimada</label>
+            <label for="FechaEstimada"><?= Traductor::t("solicitarLab.labelFechaEstimada") ?></label>
             <input type="date" name="fechaEstimada" id="FechaEstimada" required>
 
-            <label for="HoraEstimada">Hora estimada</label>
+            <label for="HoraEstimada"><?= Traductor::t("solicitarLab.labelHoraEstimada") ?></label>
             <input type="time" name="horaEstimada" id="HoraEstimada" required>
 
-            <button class="boton-principal" type="submit">Publicar Solicitud</button>
+            <button class="boton-principal" type="submit"><?= Traductor::t("solicitarLab.btnPublicar") ?></button>
 
         </form>
 

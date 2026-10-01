@@ -18,9 +18,11 @@
             </button>
 
             <ul class="listaNavegacion">
-                <li><a href="Tecnico.php">Regresar</a></li>
-                <li><a href="ConsultarDiagnostico.php">Ver Diagnostico</a></li>
-                <li><a class="cerrarSesion" href="cerrarSesion.php">Cerrar sesion</a></li>
+                <li><a href="Tecnico.php"><?= Traductor::t("common.regresar") ?></a></li>
+                <li><a href="ConsultarDiagnostico.php"><?= Traductor::t("nav.verDiagnostico") ?></a></li>
+                <li><a class="cerrarSesion" href="cerrarSesion.php"><?= Traductor::t("common.cerrarSesion") ?></a></li>
+                <li><a href="cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a></li>
+                <li><a href="cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a></li>
             </ul>
         </nav>
         <h1>S.G.R.S.I</h1>
@@ -28,26 +30,26 @@
     </header>
 
     <header class="encabezado">
-        <h1>Modificar Diagnóstico</h1>
-        <p>Seleccioná un diagnóstico registrado para modificar su contenido.</p>
+        <h1><?= Traductor::t("modificarDiagnostico.titulo") ?></h1>
+        <p><?= Traductor::t("modificarDiagnostico.subtitulo") ?></p>
     </header>
 
     <p id="mensajeModificarDiagnostico" role="status"></p>
 
     <section class="modulo" id="modificarDiagnostico">
-        <h2>Editar diagnóstico</h2>
+        <h2><?= Traductor::t("modificarDiagnostico.tituloModulo") ?></h2>
 
         <form class="formulario" id="formModificarDiagnostico">
 
-            <label for="modificarDiagnosticoSelect">Diagnóstico a modificar</label>
+            <label for="modificarDiagnosticoSelect"><?= Traductor::t("modificarDiagnostico.labelSelect") ?></label>
             <select id="modificarDiagnosticoSelect" name="idDiagnostico" required>
-                <option value="">Seleccione un diagnóstico</option>
+                <option value=""><?= Traductor::t("modificarDiagnostico.opcionSeleccione") ?></option>
             </select>
 
-            <label for="modificarDiagnosticoTexto">Diagnóstico técnico</label>
+            <label for="modificarDiagnosticoTexto"><?= Traductor::t("modificarDiagnostico.labelTexto") ?></label>
             <textarea id="modificarDiagnosticoTexto" name="diagnostico" rows="4" minlength="10" required></textarea>
 
-            <button class="boton-principal" type="submit">Guardar cambios</button>
+            <button class="boton-principal" type="submit"><?= Traductor::t("modificarDiagnostico.btnGuardar") ?></button>
         </form>
     </section>
 

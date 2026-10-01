@@ -44,10 +44,9 @@ Antes de este issue, `creacionTicket.sql` no tenía ninguna clave foránea decla
 
 * **REPARACION** (`idReparacion` PK): `cedulaTecnico`, `reparacion` y `fechaReparacion` dependen solo de `idReparacion`.
 
-## PRESTAMO (nueva)
+## PRESTAMO 
 
 El DER del proyecto incluye una tabla `PRESTAMO` que no existía en el DDL. Se agrega en `bd/DDL/creacionPrestamo.sql`:
 
-* **PRESTAMO** (`idPrestamo` PK): `idEquipo` y `cedulaSolicitante` son FK (a `EQUIPO` y `USUARIO` respectivamente); `fechaPrestamo`, `fechaDevolucionEstimada`, `fechaDevolucionReal` y `estado` dependen solo de `idPrestamo`. Sin dependencias transitivas.
-
+* **PRESTAMO** (`idPrestamo` PK): `idEquipo` y `cedulaSolicitante` son FK (a `EQUIPO` y `USUARIO` respectivamente); `fechaPrestamo`, `fechaDevolucionEstimada`, `fechaDevolucionReal` y `estado` dependen solo de `idPrestamo`. 
 

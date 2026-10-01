@@ -25,8 +25,10 @@
             </button>
 
             <ul class="listaNavegacion">
-                <li><a href="Tecnico.php">Regresar</a></li>
-                <li><a class="cerrarSesion" href="cerrarSesion.php">Cerrar sesion</a></li>
+                <li><a href="Tecnico.php"><?= Traductor::t("common.regresar") ?></a></li>
+                <li><a class="cerrarSesion" href="cerrarSesion.php"><?= Traductor::t("common.cerrarSesion") ?></a></li>
+                <li><a href="cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a></li>
+                <li><a href="cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a></li>
             </ul>
         </nav>
         <h1>S.G.R.S.I</h1>
@@ -37,43 +39,43 @@
 
     <section class="VistaDeTickets">
 
-        <h1>Vista de Tickets</h1>
+        <h1><?= Traductor::t("vistaTickets.titulo") ?></h1>
 
-        <input type="text" id="buscadorDeTickets" placeholder="Buscar por número de ticket...">
-        <button id="buscarTicket">Buscar</button>
+        <input type="text" id="buscadorDeTickets" placeholder="<?= Traductor::t("vistaTickets.placeholderBuscador") ?>">
+        <button id="buscarTicket"><?= Traductor::t("vistaTickets.btnBuscar") ?></button>
 
-        <p>Aquí se podrán visualizar los tickets ingresados, su estado actual y prioridad. Además, se podrán actualizar los estados de los tickets a medida que se vayan resolviendo las incidencias.</p>
+        <p><?= Traductor::t("vistaTickets.subtitulo") ?></p>
 
         <select id="filtroDeEquipos">
-            <option value="">Todos los equipos</option>
+            <option value=""><?= Traductor::t("vistaTickets.opcionTodosEquipos") ?></option>
         </select>
 
         <select id="filtroPrioridad">
 
-            <option value="">Todas las prioridades</option>
+            <option value=""><?= Traductor::t("vistaTickets.opcionTodasPrioridades") ?></option>
 
-            <option value="Indefinida">Indefinida</option>
+            <option value="Indefinida"><?= Traductor::t("vistaTickets.prioridadIndefinida") ?></option>
 
-            <option value="Alta">Alta</option>
+            <option value="Alta"><?= Traductor::t("vistaTickets.prioridadAlta") ?></option>
 
-            <option value="Media">Media</option>
+            <option value="Media"><?= Traductor::t("vistaTickets.prioridadMedia") ?></option>
 
-            <option value="Baja">Baja</option>
+            <option value="Baja"><?= Traductor::t("vistaTickets.prioridadBaja") ?></option>
         </select>
 
         <select id="filtroEstado">
 
-            <option value="">Todos los estados</option>
-            <option value="Pendiente">Pendiente</option>
-            <option value="En Proceso">En Proceso</option>
-            <option value="Resuelto">Resuelto</option>
-            <option value="Cerrado">Cerrado</option>
+            <option value=""><?= Traductor::t("vistaTickets.opcionTodosEstados") ?></option>
+            <option value="Pendiente"><?= Traductor::t("vistaTickets.estadoPendiente") ?></option>
+            <option value="En Proceso"><?= Traductor::t("vistaTickets.estadoEnProceso") ?></option>
+            <option value="Resuelto"><?= Traductor::t("vistaTickets.estadoResuelto") ?></option>
+            <option value="Cerrado"><?= Traductor::t("vistaTickets.estadoCerrado") ?></option>
 
         </select>
 
         <input type="date" id="fechaDesde">
         <input type="date" id="fechaHasta">
-        <button id="filtrarFechas">Filtrar fechas</button>
+        <button id="filtrarFechas"><?= Traductor::t("vistaTickets.btnFiltrarFechas") ?></button>
 
 
     </section>

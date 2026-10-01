@@ -21,9 +21,11 @@
             </button>
 
             <ul class="listaNavegacion">
-                <li><a href="<?= URL_BASE ?>/public/SolicitarLab.php">Solicitar laboratorio</a></li>
-                <li><a href="<?= URL_BASE ?>/public/IngresoDeTickets.php">Ingresar Ticket</a></li>
-                <li><a class="cerrarSesion" href="<?= URL_BASE ?>/public/Login.php" class="cerrarSesion">Cerrar sesion</a></li>
+                <li><a href="<?= URL_BASE ?>/public/SolicitarLab.php"><?= Traductor::t("nav.solicitarLab") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/IngresoDeTickets.php"><?= Traductor::t("nav.ingresarTicket") ?></a></li>
+                <li><a class="cerrarSesion" href="<?= URL_BASE ?>/public/Login.php" class="cerrarSesion"><?= Traductor::t("common.cerrarSesion") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a></li>
             </ul>
         </nav>
         <h1>S.G.R.S.I</h1>
@@ -31,10 +33,10 @@
     </header>
 
     <section class="encabezado">
-        <h1>Bienvendio, <?= htmlspecialchars($usuario->getNombre()) ?> <?= htmlspecialchars($usuario->getApellido()) ?> (Docente)</h1>
+        <h1><?= Traductor::t("docente.bienvenida") ?> <?= htmlspecialchars($usuario->getNombre()) ?> <?= htmlspecialchars($usuario->getApellido()) ?> <?= Traductor::t("docente.rolSufijo") ?></h1>
     </section>
     <section class="modulo-imagen">
-        <p>Haga uso del menu para comenzar.</p> 
+        <p><?= Traductor::t("docente.instruccion") ?></p>
         <img src="<?= URL_BASE ?>/public/assets/img/UTU_9296-1024x614.jpg" alt="UTU_9296-1024x614" width="500px">
     </section>
     </body>

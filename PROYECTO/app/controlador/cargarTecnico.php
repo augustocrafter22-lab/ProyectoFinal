@@ -13,6 +13,8 @@ require_once RUTA_MODELO . "/AccesoDatosUsuario.php";
 require_once RUTA_MODELO . "/Usuario.php";
 require_once RUTA_MODELO . "/AccesoDatosDashboard.php";
 require_once RUTA_MODELO . "/AccesoDatosSolucion.php";
+require_once RUTA_MODELO . "/Traductor.php";
+Traductor::iniciar();
 
 try {
     $conectorPDO = new ConectorPDO($_ENV['BD_HOST'], $_ENV['BD_USER'], $_ENV['BD_PASS'], $_ENV['BD_NAME']);
@@ -27,7 +29,7 @@ try {
 
     if ($usuario === null) {
         $conectorPDO->desconectar();
-        header("Location: " . URL_BASE . "/public/login.php?error=" . urlencode("Usuario no encontrado"));
+        header("Location: " . URL_BASE . "/public/login.php?error=" . urlencode(Traductor::t("common.usuarioNoEncontrado")));
         exit;
     }
 
@@ -44,7 +46,7 @@ try {
 
 } catch (Exception $e) {
     RegistradorErrores::registrar($e);
-    echo "Ocurrió un error, intente nuevamente.";
+    echo Traductor::t("common.errorGenerico");
     exit;
 }
 
