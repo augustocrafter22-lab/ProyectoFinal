@@ -39,7 +39,8 @@ class AccesoDatosTicket {
             ORDER BY fechaCreacion DESC
         ";
 
-        $consulta = $this->conexion->query($sql);
+        $consulta = $this->conexion->prepare($sql);
+        $consulta->execute();
 
         $tickets = $consulta->fetchAll(PDO::FETCH_ASSOC);
 
