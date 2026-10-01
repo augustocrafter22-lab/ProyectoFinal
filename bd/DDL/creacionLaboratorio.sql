@@ -7,7 +7,7 @@ CREATE TABLE LABORATORIO (
         PRIMARY KEY (idLaboratorio)
 );
 
-// Solicitudes de laboratorio
+-- Solicitudes de laboratorio
 
 CREATE TABLE SOLICITUD_LABORATORIO (
     idSolicitud INT NOT NULL AUTO_INCREMENT,
