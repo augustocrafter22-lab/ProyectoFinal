@@ -94,7 +94,7 @@ async function eliminarTicket(articulo) {
   try {
     const respuesta = await fetch(`${URL_API_TICKETS}?id=${encodeURIComponent(idTicket)}`, {
       method: "DELETE",
-      headers: { "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')?.content ?? "" }
+      headers: { "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content }
     });
     const cuerpo = await respuesta.json();
 
