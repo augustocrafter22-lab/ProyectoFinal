@@ -83,6 +83,7 @@
 
     <section id="listaTickets"></section>
 
+    <script src="<?= URL_BASE ?>/public/assets/js/respuestaAPI.js"></script>
     <script src="<?= URL_BASE ?>/public/assets/js/vistaTickets.js"></script>
     <script src="<?= URL_BASE ?>/public/assets/js/actualizarTicket.js"></script>
     <script src="<?= URL_BASE ?>/public/assets/js/filtros.js"></script>
