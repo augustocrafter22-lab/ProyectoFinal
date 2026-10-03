@@ -120,6 +120,7 @@
     </main>
 
     <script src="<?= URL_BASE ?>/public/assets/js/barraNavegacion.js"></script>
+    <script src="<?= URL_BASE ?>/public/assets/js/respuestaAPI.js"></script>
     <script src="<?= URL_BASE ?>/public/assets/js/gestionPCs.js"></script>
     <script src="<?= URL_BASE ?>/public/assets/js/filtrosEquipos.js"></script>
   </body>

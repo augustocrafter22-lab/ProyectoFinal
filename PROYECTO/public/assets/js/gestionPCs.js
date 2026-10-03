@@ -60,22 +60,30 @@ function crearFilaEquipo(equipo) {
   return fila;
 }
 
+// GET - Obtiene todos los equipos.
+async function obtenerEquipos() {
+  const respuesta = await fetch(URL_API_EQUIPOS);
+
+  return await leerRespuestaAPI(respuesta);
+}
+
+// GET - Obtiene un equipo específico mediante su id.
+async function obtenerEquipo(idEquipo) {
+  const respuesta = await fetch(`${URL_API_EQUIPOS}?id=${encodeURIComponent(idEquipo)}`);
+
+  return await leerRespuestaAPI(respuesta);
+}
+
 async function cargarEquipos() {
   try {
-    const respuesta = await fetch(URL_API_EQUIPOS);
-    const cuerpo = await respuesta.json();
-
-    if (!cuerpo.exito) {
-      mostrarMensaje(cuerpo.mensaje, true);
-      return;
-    }
+    const equipos = await obtenerEquipos();
 
     cuerpoTablaPc.replaceChildren();
-    for (const equipo of cuerpo.datos) {
+    for (const equipo of equipos) {
       cuerpoTablaPc.appendChild(crearFilaEquipo(equipo));
     }
   } catch (error) {
-    mostrarMensaje("No se pudo conectar con el servidor.", true);
+    mostrarMensaje(error.message, true);
   }
 }
 
@@ -93,15 +101,7 @@ function limpiarFormularioEquipo() {
 
 async function abrirEdicionEquipo(idEquipo) {
   try {
-    const respuesta = await fetch(`${URL_API_EQUIPOS}?id=${encodeURIComponent(idEquipo)}`);
-    const cuerpo = await respuesta.json();
-
-    if (!cuerpo.exito) {
-      mostrarMensaje(cuerpo.mensaje, true);
-      return;
-    }
-
-    const equipo = cuerpo.datos;
+    const equipo = await obtenerEquipo(idEquipo);
 
     modoFormularioEquipo.value = "modificar";
     leyendaFormularioEquipo.textContent = "Modificar equipo";
@@ -118,7 +118,7 @@ async function abrirEdicionEquipo(idEquipo) {
     url.searchParams.set("editar", idEquipo);
     window.history.replaceState({}, "", url);
   } catch (error) {
-    mostrarMensaje("No se pudo conectar con el servidor.", true);
+    mostrarMensaje(error.message, true);
   }
 }
 

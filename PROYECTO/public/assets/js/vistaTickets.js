@@ -109,35 +109,45 @@ async function eliminarTicket(articulo) {
   }
 }
 
+// GET - Obtiene todos los tickets.
+async function obtenerTickets() {
+  const respuesta = await fetch(URL_API_TICKETS);
+
+  return await leerRespuestaAPI(respuesta);
+}
+
+// GET - Obtiene un ticket específico mediante su id.
+async function obtenerTicket(idTicket) {
+  const respuesta = await fetch(`${URL_API_TICKETS}?id=${encodeURIComponent(idTicket)}`);
+
+  return await leerRespuestaAPI(respuesta);
+}
+
+// GET - Obtiene todos los equipos.
+async function obtenerEquipos() {
+  const respuesta = await fetch(URL_API_EQUIPOS);
+
+  return await leerRespuestaAPI(respuesta);
+}
+
 async function cargarTickets() {
   try {
-    const respuesta = await fetch(URL_API_TICKETS);
-    const cuerpo = await respuesta.json();
-
-    if (!cuerpo.exito) {
-      alert(cuerpo.mensaje);
-      return;
-    }
+    const tickets = await obtenerTickets();
 
     listaTickets.replaceChildren();
-    for (const ticket of cuerpo.datos) {
+    for (const ticket of tickets) {
       listaTickets.appendChild(crearArticuloTicket(ticket));
     }
   } catch (error) {
-    alert("No se pudo conectar con el servidor.");
+    alert("No se pudieron cargar los tickets: " + error.message);
   }
 }
 
 async function cargarEquiposEnFiltro() {
   try {
-    const respuesta = await fetch(URL_API_EQUIPOS);
-    const cuerpo = await respuesta.json();
+    const equipos = await obtenerEquipos();
 
-    if (!cuerpo.exito) {
-      return;
-    }
-
-    for (const equipo of cuerpo.datos) {
+    for (const equipo of equipos) {
       const option = document.createElement("option");
       option.value = equipo.idEquipo;
       option.textContent = equipo.idEquipo;
