@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<?= Token::generarTokenCSRF() ?>">
     <title>Administrador de usuarios</title>
     <link rel="stylesheet" href="<?= URL_BASE ?>/public/assets/css/barraNavegacion.css">
     <link rel="stylesheet" href="<?= URL_BASE ?>/public/assets/css/style.css">
     <link rel="stylesheet" href="<?= URL_BASE ?>/public/assets/css/Editor.css">
 </head>
 
-<body>
+<body data-cedula-sesion="<?= htmlspecialchars($_SESSION["cedula"]) ?>">
     <header class="BarraNavegacion">
 
         <nav>
@@ -39,12 +40,7 @@
         <p><?= Traductor::t("administrador.subtitulo") ?></p>
     </section>
 
-    <?php if (isset($_GET["exito"])): ?>
-        <p id="mensajeExitoAdministrador" role="status" style="color: green"><?= htmlspecialchars($_GET["exito"]) ?></p>
-    <?php endif; ?>
-    <?php if (isset($_GET["error"])): ?>
-        <p id="mensajeErrorAdministrador" role="status" style="color: red"><?= htmlspecialchars($_GET["error"]) ?></p>
-    <?php endif; ?>
+    <p id="mensajeAdministrador" role="status"></p>
 
     <table id="tablaUsuarios">
         <caption><?= Traductor::t("administrador.captionTabla") ?></caption>
@@ -58,35 +54,7 @@
                 <th><?= Traductor::t("administrador.thAcciones") ?></th>
             </tr>
         </thead>
-        <tbody id="cuerpoTablaUsuarios">
-            <?php foreach ($usuarios as $usuario): ?>
-                <tr>
-                    <td><?= htmlspecialchars($usuario["cedula"]) ?></td>
-                    <td><?= htmlspecialchars($usuario["nombre"]) ?></td>
-                    <td><?= htmlspecialchars($usuario["apellido"]) ?></td>
-                    <td><?= htmlspecialchars(implode(", ", $usuario["roles"])) ?></td>
-                    <td><?= $usuario["activo"] ? Traductor::t("administrador.activo") : Traductor::t("administrador.inactivo") ?></td>
-                    <td>
-                        <div class="Operaciones">
-                            <button type="button" class="btnEditar"><?= Traductor::t("administrador.btnEditar") ?></button>
-
-                            <?php if ($usuario["activo"]): ?>
-                                <form action="procesarDesactivarUsuario.php" method="POST" class="formularioDesactivarUsuario">
-                                    <input type="hidden" name="cedula" value="<?= htmlspecialchars($usuario["cedula"]) ?>">
-                                    <button type="submit" class="btnEliminar"><?= Traductor::t("administrador.btnDesactivar") ?></button>
-                                </form>
-                            <?php else: ?>
-                                <form action="procesarActivarUsuario.php" method="POST" class="formularioActivarUsuario">
-                                    <input type="hidden" name="cedula" value="<?= htmlspecialchars($usuario["cedula"]) ?>">
-                                    <button type="submit" class="btnActivar"><?= Traductor::t("administrador.btnActivar") ?></button>
-                                </form>
-                            <?php endif; ?>
-                        </div>
-
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
+        <tbody id="cuerpoTablaUsuarios"></tbody>
     </table>
 
     <section class="botonera">
@@ -98,7 +66,7 @@
         <button id="btnCerrarGestionarUsuario" type="button">
             <img src="<?= URL_BASE ?>/public/assets/img/Bootstrap/x.svg" alt="Cerrar" width="24" height="24">
         </button>
-        <form id="formularioGestionarUsuario" method="POST">
+        <form id="formularioGestionarUsuario">
             <fieldset>
                 <legend><?= Traductor::t("administrador.dialogTitulo") ?></legend>
                 <fieldset>
@@ -118,7 +86,7 @@
                     </div>
                     <div class="cajaEntradaDeDatos">
                         <label for="contrasenia"><?= Traductor::t("administrador.labelContrasenia") ?></label>
-                        <input type="password" id="contrasenia" name="contrasenia" placeholder="<?= Traductor::t("administrador.placeholderContrasenia") ?>">
+                        <input type="password" id="contrasenia" name="contrasenia" autocomplete="new-password" placeholder="<?= Traductor::t("administrador.placeholderContrasenia") ?>">
                     </div>
                     <fieldset class="roles">
                         <legend><?= Traductor::t("administrador.legendRoles") ?></legend>
@@ -133,10 +101,42 @@
                         </label>
                     </fieldset>
                 </fieldset>
-                <button class="boton-secundario" type="submit"><?= Traductor::t("administrador.btnGuardarUsuario") ?></button>
+                <p id="mensajeDialogoUsuario" role="alert"></p>
+                <button class="boton-secundario" type="submit" id="btnGuardarUsuario"><?= Traductor::t("administrador.btnGuardarUsuario") ?></button>
             </fieldset>
         </form>
     </dialog>
+
+    <?php
+    // Textos que usa administrador.js, ya traducidos al idioma de la sesión.
+    $textosAdministrador = [
+        "roles" => [
+            "coordinador" => Traductor::t("common.coordinador"),
+            "tecnico" => Traductor::t("common.tecnico"),
+            "docente" => Traductor::t("common.docente")
+        ],
+        "activo" => Traductor::t("administrador.activo"),
+        "inactivo" => Traductor::t("administrador.inactivo"),
+        "btnEditar" => Traductor::t("administrador.btnEditar"),
+        "btnActivar" => Traductor::t("administrador.btnActivar"),
+        "btnDesactivar" => Traductor::t("administrador.btnDesactivar"),
+        "btnEliminar" => Traductor::t("administrador.btnEliminar"),
+        "placeholderContrasenia" => Traductor::t("administrador.placeholderContrasenia"),
+        "placeholderContraseniaEditar" => Traductor::t("administrador.placeholderContraseniaEditar"),
+        "cargando" => Traductor::t("administrador.cargando"),
+        "sinUsuarios" => Traductor::t("administrador.sinUsuarios"),
+        "errorConexion" => Traductor::t("administrador.errorConexion"),
+        "confirmarActivar" => Traductor::t("administrador.confirmarActivar"),
+        "confirmarDesactivar" => Traductor::t("administrador.confirmarDesactivar"),
+        "confirmarEliminar" => Traductor::t("administrador.confirmarEliminar"),
+        "exitoCreado" => Traductor::t("administrador.exitoCreado"),
+        "exitoActualizado" => Traductor::t("administrador.exitoActualizado"),
+        "exitoActivado" => Traductor::t("administrador.exitoActivado"),
+        "exitoDesactivado" => Traductor::t("administrador.exitoDesactivado"),
+        "exitoEliminado" => Traductor::t("administrador.exitoEliminado")
+    ];
+    ?>
+    <script type="application/json" id="textosAdministrador"><?= json_encode($textosAdministrador, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP) ?></script>
 
     <script src="<?= URL_BASE ?>/public/assets/js/barraNavegacion.js"></script>
     <script src="<?= URL_BASE ?>/public/assets/js/administrador.js"></script>

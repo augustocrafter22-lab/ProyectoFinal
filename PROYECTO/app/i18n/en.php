@@ -1,5 +1,5 @@
 <?php
-
+ 
 return [
     "common.regresar" => "Back",
     "common.cerrarSesion" => "Log out",
@@ -11,7 +11,7 @@ return [
     "common.usuarioNoEncontrado" => "User not found",
     "common.idiomaEs" => "ES",
     "common.idiomaEn" => "EN",
-
+ 
     "nav.solicitarLab" => "Request lab",
     "nav.ingresarTicket" => "Submit Ticket",
     "nav.solicitudesLab" => "Lab requests",
@@ -24,7 +24,7 @@ return [
     "nav.historialTecnico" => "Technical History",
     "nav.verDiagnostico" => "View Diagnosis",
     "nav.modificarDiagnostico" => "Edit Diagnosis",
-
+ 
     "login.subtitulo" => "Information Resources and Support Management System",
     "login.titulo" => "Log In",
     "login.labelCi" => "ID:",
@@ -32,7 +32,7 @@ return [
     "login.botonIngresar" => "Log in",
     "login.sinRoles" => "User has no roles enabled",
     "login.sinPermisos" => "You do not have permission",
-
+ 
     "administrador.bienvenida" => "Welcome, coordinator",
     "administrador.subtitulo" => "This is the user administration panel",
     "administrador.captionTabla" => "List of registered users",
@@ -60,14 +60,27 @@ return [
     "administrador.placeholderContrasenia" => "Enter the password",
     "administrador.legendRoles" => "Roles",
     "administrador.btnGuardarUsuario" => "Save user",
-
+    "administrador.btnEliminar" => "Delete",
+    "administrador.placeholderContraseniaEditar" => "Leave empty to keep it",
+    "administrador.cargando" => "Loading users...",
+    "administrador.sinUsuarios" => "There are no registered users.",
+    "administrador.errorConexion" => "Could not connect to the server.",
+    "administrador.confirmarActivar" => "Are you sure you want to activate this user?",
+    "administrador.confirmarDesactivar" => "Are you sure you want to deactivate this user?",
+    "administrador.confirmarEliminar" => "Are you sure you want to delete this user? This action cannot be undone.",
+    "administrador.exitoCreado" => "User created successfully",
+    "administrador.exitoActualizado" => "User updated successfully",
+    "administrador.exitoActivado" => "User activated successfully",
+    "administrador.exitoDesactivado" => "User deactivated successfully",
+    "administrador.exitoEliminado" => "User deleted successfully",
+ 
     "docente.bienvenida" => "Welcome,",
     "docente.rolSufijo" => "(Teacher)",
     "docente.instruccion" => "Use the menu to get started.",
-
+ 
     "panelRoles.bienvenida" => "Welcome,",
     "panelRoles.instruccion" => "Select the role you want to log in with",
-
+ 
     "solicitarLab.titulo" => "Lab Request",
     "solicitarLab.subtitulo" => "Hi! This section is for requesting lab preparation",
     "solicitarLab.labelLaboratorios" => "Labs",
@@ -80,7 +93,7 @@ return [
     "solicitarLab.labelFechaEstimada" => "Estimated Date",
     "solicitarLab.labelHoraEstimada" => "Estimated Time",
     "solicitarLab.btnPublicar" => "Publish Request",
-
+ 
     "tecnico.bienvenida" => "Welcome,",
     "tecnico.rolSufijo" => "(Technician)",
     "tecnico.instruccion" => "Use the menu to get started.",
@@ -103,7 +116,7 @@ return [
     "tecnico.panelIncidenciasPorSalon" => "Incidents by room",
     "tecnico.thSalon" => "Room",
     "tecnico.thIncidencias" => "Incidents",
-
+ 
     "vistaLab.titulo" => "Lab View",
     "vistaLab.subtitulo" => "Hi! This section is for viewing lab preparation requests",
     "vistaLab.legendFiltros" => "Filters",
@@ -120,7 +133,7 @@ return [
     "vistaLab.thHora" => "Time",
     "vistaLab.si" => "Yes",
     "vistaLab.no" => "No",
-
+ 
     "equipos.titulo" => "Equipment Data",
     "equipos.filtroId" => "ID",
     "equipos.filtroPlaceholderId" => "Search by ID",
@@ -148,7 +161,7 @@ return [
     "equipos.thDisponibilidad" => "Availability",
     "equipos.thInformacion" => "Information",
     "equipos.thAcciones" => "Actions",
-
+ 
     "consultarDiagnostico.titulo" => "View Diagnoses",
     "consultarDiagnostico.subtitulo" => "List of all technical diagnoses registered in the system.",
     "consultarDiagnostico.labelFiltrarTicket" => "Filter by ticket",
@@ -161,13 +174,13 @@ return [
     "consultarDiagnostico.thFecha" => "Date",
     "consultarDiagnostico.thTecnico" => "Technician",
     "consultarDiagnostico.cargando" => "Loading diagnoses...",
-
+ 
     "historialTecnico.titulo" => "Technical History",
     "historialTecnico.subtitulo" => "View the repairs recorded for a piece of equipment.",
     "historialTecnico.tituloModulo" => "Equipment repairs",
     "historialTecnico.labelEquipo" => "Equipment",
     "historialTecnico.opcionSeleccioneEquipo" => "Select equipment",
-
+ 
     "ingresoTickets.titulo" => "New Ticket",
     "ingresoTickets.subtitulo" => "Hi! This space is for submitting new tickets about incidents with lab equipment",
     "ingresoTickets.labelEspacio" => "Work Space",
@@ -185,7 +198,7 @@ return [
     "ingresoTickets.labelProfesor" => "Teacher reporting the incident:",
     "ingresoTickets.placeholderProfesor" => "E.g.: Augusto Lopéz",
     "ingresoTickets.btnEnviar" => "Submit Ticket",
-
+ 
     "modificarDiagnostico.titulo" => "Edit Diagnosis",
     "modificarDiagnostico.subtitulo" => "Select a registered diagnosis to edit its content.",
     "modificarDiagnostico.tituloModulo" => "Edit diagnosis",
@@ -193,7 +206,7 @@ return [
     "modificarDiagnostico.opcionSeleccione" => "Select a diagnosis",
     "modificarDiagnostico.labelTexto" => "Technical diagnosis",
     "modificarDiagnostico.btnGuardar" => "Save changes",
-
+ 
     "registrarDiagnostico.titulo" => "Diagnosis Registration",
     "registrarDiagnostico.subtitulo" => "Here you can register technical diagnoses based on the ticket.",
     "registrarDiagnostico.tituloModulo" => "Register diagnoses",
@@ -201,7 +214,7 @@ return [
     "registrarDiagnostico.opcionSeleccioneTicket" => "Select a ticket",
     "registrarDiagnostico.labelDiagnostico" => "Technical diagnosis",
     "registrarDiagnostico.btnRegistrar" => "Register diagnosis",
-
+ 
     "registrarReparacion.titulo" => "Register Repair",
     "registrarReparacion.subtitulo" => "Register a repair performed on a piece of equipment.",
     "registrarReparacion.tituloModulo" => "New repair",
@@ -210,7 +223,7 @@ return [
     "registrarReparacion.opcionSeleccioneDiagnostico" => "Select a diagnosis",
     "registrarReparacion.labelTexto" => "Repair description",
     "registrarReparacion.btnRegistrar" => "Register repair",
-
+ 
     "registrarSolucion.titulo" => "Solution Registration",
     "registrarSolucion.subtitulo" => "Here you can register technical solutions based on the diagnosis made.",
     "registrarSolucion.tituloModulo" => "Register your resolution",
@@ -219,7 +232,7 @@ return [
     "registrarSolucion.opcionSeleccioneDiagnostico" => "Select a diagnosis",
     "registrarSolucion.labelSolucion" => "Applied technical solution",
     "registrarSolucion.btnRegistrar" => "Register solution",
-
+ 
     "vistaTickets.titulo" => "Ticket View",
     "vistaTickets.placeholderBuscador" => "Search by ticket number...",
     "vistaTickets.btnBuscar" => "Search",
