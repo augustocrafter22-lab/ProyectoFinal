@@ -4,6 +4,7 @@
 <head>
 
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="<?= Token::generarTokenCSRF() ?>">
     <title>Vista de Tickets</title>
     <link rel="stylesheet" href="<?= URL_BASE ?>/public/assets/css/style.css">
     <link rel="stylesheet" href="<?= URL_BASE ?>/public/assets/css/vistaTicket.css">

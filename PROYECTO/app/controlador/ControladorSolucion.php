@@ -5,6 +5,7 @@ require_once RUTA_MODELO . "/DAOSolucion.php";
 require_once RUTA_MODELO . "/Validador.php";
 require_once RUTA_MODELO . "/RegistradorErrores.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
+require_once RUTA_MODELO . "/Sesion.php";
 
 /**
  * Controlador unificado de SOLUCION.
@@ -27,10 +28,19 @@ class ControladorSolucion
      */
     public function gestionar(): void
     {
+        $metodo = $_SERVER["REQUEST_METHOD"];
+
+        Sesion::verificarRolApi(["coordinador", "tecnico"]);
+
+        // GET no modifica datos, por eso solo se pide el token en POST, PUT y DELETE.
+        if (in_array($metodo, ["POST", "PUT", "DELETE"], true)) {
+            Token::verificarCSRF();
+        }
+
         try {
             $this->conectar();
 
-            switch ($_SERVER["REQUEST_METHOD"]) {
+            switch ($metodo) {
                 case "GET":
                     $resultado = $this->listar();
                     break;

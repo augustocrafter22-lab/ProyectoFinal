@@ -44,7 +44,10 @@ async function modificarDiagnostico(eventoFormulario) {
   try {
     const respuesta = await fetch(`${URL_API_DIAGNOSTICOS}?id=${encodeURIComponent(idDiagnostico)}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')?.content ?? "",
+      },
       body: JSON.stringify({ diagnostico: campoTextoDiagnostico.value.trim() }),
     });
     const cuerpo = await respuesta.json();

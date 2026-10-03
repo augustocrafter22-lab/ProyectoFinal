@@ -4,6 +4,7 @@ require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/DAOTicket.php";
 require_once RUTA_MODELO . "/Validador.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
+require_once RUTA_MODELO . "/Sesion.php";
 
 /**
  * Controlador unificado de TICKET.
@@ -39,14 +40,24 @@ class ControladorTicket
      */
     public function gestionar(): void
     {
-        if (session_status() !== PHP_SESSION_ACTIVE) {
-            session_start();
+        $metodo = $_SERVER["REQUEST_METHOD"];
+
+        // El docente solo puede ingresar tickets, el resto lo hace el técnico.
+        if ($metodo === "POST") {
+            Sesion::verificarRolApi(["coordinador", "tecnico", "docente"]);
+        } else {
+            Sesion::verificarRolApi(["coordinador", "tecnico"]);
+        }
+
+        // GET no modifica datos, por eso solo se pide el token en POST, PUT y DELETE.
+        if (in_array($metodo, ["POST", "PUT", "DELETE"], true)) {
+            Token::verificarCSRF();
         }
 
         try {
             $this->conectar();
 
-            switch ($_SERVER["REQUEST_METHOD"]) {
+            switch ($metodo) {
                 case "GET":
                     $resultado = $this->listar();
                     break;
@@ -222,8 +233,6 @@ class ControladorTicket
      */
     private function eliminar(): array
     {
-        $this->verificarPermisoEliminar();
-
         $datosEnviados = $this->obtenerDatosEnviados();
 
         $idTicket = trim($_GET["id"] ?? ($datosEnviados["idTicket"] ?? ""));
@@ -239,23 +248,6 @@ class ControladorTicket
         $this->dao->eliminar($idTicket);
 
         return ["datos" => null, "mensaje" => "Ticket $idTicket eliminado correctamente.", "codigo" => 200];
-    }
-
-    /**
-     * Verifica que el usuario autenticado tenga un rol habilitado para
-     * eliminar tickets (coordinador o técnico).
-     *
-     * @return void
-     * @throws Exception Si el usuario no tiene sesión iniciada o no tiene el rol requerido.
-     */
-    private function verificarPermisoEliminar(): void
-    {
-        $esCoordinador = $_SESSION["coordinador"] ?? false;
-        $esTecnico = $_SESSION["tecnico"] ?? false;
-
-        if (!$esCoordinador && !$esTecnico) {
-            throw new Exception("No tiene permisos para eliminar tickets.", 403);
-        }
     }
 
     /**

@@ -4,6 +4,7 @@ require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/DAOEquipo.php";
 require_once RUTA_MODELO . "/Validador.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
+require_once RUTA_MODELO . "/Sesion.php";
 
 /**
  * Controlador unificado de EQUIPO.
@@ -33,10 +34,24 @@ class ControladorEquipo
      */
     public function gestionar(): void
     {
+        $metodo = $_SERVER["REQUEST_METHOD"];
+
+        // El docente solo consulta los equipos al ingresar un ticket.
+        if ($metodo === "GET") {
+            Sesion::verificarRolApi(["coordinador", "tecnico", "docente"]);
+        } else {
+            Sesion::verificarRolApi(["coordinador", "tecnico"]);
+        }
+
+        // GET no modifica datos, por eso solo se pide el token en POST, PUT y DELETE.
+        if (in_array($metodo, ["POST", "PUT", "DELETE"], true)) {
+            Token::verificarCSRF();
+        }
+
         try {
             $this->conectar();
 
-            switch ($_SERVER["REQUEST_METHOD"]) {
+            switch ($metodo) {
                 case "GET":
                     $resultado = $this->listar();
                     break;
