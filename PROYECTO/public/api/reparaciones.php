@@ -12,6 +12,8 @@
 require_once __DIR__ . "/../../config/config.php";
 require_once RUTA_CONTROLADOR . "/ControladorReparacion.php";
 
+session_start();
+
 $controladorReparacion = new ControladorReparacion();
 $controladorReparacion->gestionar();
 

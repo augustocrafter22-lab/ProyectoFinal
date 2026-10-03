@@ -46,7 +46,10 @@ async function registrarSolucion(eventoFormulario) {
   try {
     const respuesta = await fetch(URL_API_SOLUCIONES, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')?.content ?? "",
+      },
       body: JSON.stringify(datosSolucion),
     });
     const cuerpo = await respuesta.json();

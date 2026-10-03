@@ -46,7 +46,10 @@ async function registrarReparacion(eventoFormulario) {
   try {
     const respuesta = await fetch(URL_API_REPARACIONES, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')?.content ?? "",
+      },
       body: JSON.stringify(datosReparacion),
     });
     const cuerpo = await respuesta.json();

@@ -1,5 +1,8 @@
 <?php
 
+require_once RUTA_VISTA . "/RespuestaJson.php";
+require_once RUTA_MODELO . "/Token.php";
+
 /**
  * Agrupa las verificaciones de sesión para que todas las páginas
  * protegidas controlen el acceso de la misma manera.
@@ -36,6 +39,28 @@ class Sesion
             header("Location: " . URL_BASE . "/public/Login.php?error=" . urlencode($mensaje));
             exit;
         }
+    }
+
+    /**
+     * Igual que verificarRol pero para la API, responde JSON 401 si no hay
+     * sesión y 403 si el usuario no tiene ninguno de los roles.
+     *
+     * @param array $roles Roles permitidos (coordinador, tecnico o docente).
+     * @return void
+     */
+    public static function verificarRolApi(array $roles): void
+    {
+        if (!isset($_SESSION["cedula"])) {
+            RespuestaJson::error("Acceso denegado: sesión no iniciada.", 401);
+        }
+
+        foreach ($roles as $rol) {
+            if ($_SESSION[$rol] ?? false) {
+                return;
+            }
+        }
+
+        RespuestaJson::error("Acceso denegado: rol incorrecto.", 403);
     }
 }
 

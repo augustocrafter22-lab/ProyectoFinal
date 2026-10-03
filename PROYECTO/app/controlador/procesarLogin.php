@@ -15,6 +15,7 @@ require_once RUTA_MODELO . "/Usuario.php";
 require_once RUTA_MODELO . "/Login.php";
 require_once RUTA_MODELO . "/Validador.php";
 require_once RUTA_MODELO . "/Traductor.php";
+require_once RUTA_MODELO . "/Token.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     header("Location: " . URL_BASE . "/public/Login.php");
@@ -58,6 +59,10 @@ try {
     $_SESSION["tecnico"] = $usuario->esTecnico();
     $_SESSION["docente"] = $usuario->esDocente();
     $_SESSION["roles"] = $usuario->getRoles();
+
+    // Se genera un token nuevo en cada inicio de sesión.
+    unset($_SESSION["csrfToken"]);
+    Token::generarTokenCSRF();
 
     $cantidadRoles = (int) $usuario->esCoordinador() + (int) $usuario->esTecnico() + (int) $usuario->esDocente();
 

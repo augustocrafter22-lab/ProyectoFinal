@@ -17,7 +17,10 @@ function actualizarTicket(articulo) {
 
     fetch(`api/tickets.php?id=${encodeURIComponent(idTicket)}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')?.content ?? ""
+        },
         body: JSON.stringify({ estado, prioridad })
     })
         .then(respuesta => respuesta.json())

@@ -43,7 +43,10 @@ async function registrarDiagnostico(eventoFormulario) {
   try {
     const respuesta = await fetch(URL_API_DIAGNOSTICOS, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')?.content ?? "",
+      },
       body: JSON.stringify(datosDiagnostico),
     });
     const cuerpo = await respuesta.json();
