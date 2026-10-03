@@ -45,7 +45,7 @@ async function registrarDiagnostico(eventoFormulario) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')?.content ?? "",
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
       },
       body: JSON.stringify(datosDiagnostico),
     });

@@ -126,7 +126,7 @@ async function eliminarEquipo(idEquipo) {
   try {
     const respuesta = await fetch(`${URL_API_EQUIPOS}?id=${encodeURIComponent(idEquipo)}`, {
       method: "DELETE",
-      headers: { "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')?.content ?? "" },
+      headers: { "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content },
     });
     const cuerpo = await respuesta.json();
 
@@ -160,7 +160,7 @@ async function guardarEquipo(eventoFormulario) {
       method: esModificacion ? "PUT" : "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')?.content ?? "",
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
       },
       body: JSON.stringify(datosEquipo),
     });
