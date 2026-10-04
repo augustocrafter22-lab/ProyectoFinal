@@ -18,6 +18,7 @@ require_once RUTA_MODELO . "/Sesion.php";
  *
  *   GET    /public/api/equipos.php            lista todos los equipos
  *   GET    /public/api/equipos.php?id=PC-01   devuelve un equipo puntual
+ *   GET    /public/api/equipos.php?estado=Funcionando&laboratorio=101&disponibilidad=Disponible
  *   POST   /public/api/equipos.php            registra un equipo nuevo
  *   PUT    /public/api/equipos.php?id=PC-01   modifica un equipo existente
  *   DELETE /public/api/equipos.php?id=PC-01   elimina un equipo
@@ -73,9 +74,12 @@ class ControladorEquipo
             RespuestaJson::exito($resultado["datos"], $resultado["mensaje"], $resultado["codigo"]);
 
         } catch (PDOException $e) {
-            // Los errores de la base de datos traen un código SQLSTATE (por ejemplo "42S02"),
-            // que no es un código HTTP, por eso siempre se responde con un 500.
             RegistradorErrores::registrar($e);
+
+            if ($metodo === "DELETE" && (string) $e->getCode() === "23000") {
+                RespuestaJson::error("No se puede eliminar el equipo porque tiene registros relacionados.", 409);
+            }
+
             RespuestaJson::error("Ocurrió un error, intente nuevamente.", 500);
         } catch (Exception $e) {
             $codigo = $e->getCode() >= 400 && $e->getCode() <= 599 ? (int) $e->getCode() : 500;
@@ -127,7 +131,45 @@ class ControladorEquipo
             return ["datos" => $equipo, "mensaje" => "Equipo encontrado.", "codigo" => 200];
         }
 
-        return ["datos" => $this->dao->listar(), "mensaje" => "Listado de equipos.", "codigo" => 200];
+        return [
+            "datos" => $this->dao->listar($this->obtenerFiltros()),
+            "mensaje" => "Listado de equipos.",
+            "codigo" => 200
+        ];
+    }
+
+    /**
+     * Lee y valida los filtros opcionales enviados por GET.
+     *
+     * @return array Arreglo con las claves estado, laboratorio y disponibilidad.
+     * @throws Exception Si estado o disponibilidad traen un valor no permitido.
+     */
+    private function obtenerFiltros(): array
+    {
+        $estado = trim($_GET["estado"] ?? "");
+        $laboratorio = trim($_GET["laboratorio"] ?? ($_GET["idLaboratorio"] ?? ""));
+        $disponibilidad = trim($_GET["disponibilidad"] ?? "");
+
+        $estadosValidos = ["Dañado", "Funcionando", "En mantenimiento", "No funciona"];
+        $disponibilidadesValidas = ["Disponible", "No disponible"];
+
+        if ($estado !== "" && !in_array($estado, $estadosValidos, true)) {
+            throw new Exception("El filtro estado tiene un valor no permitido.", 400);
+        }
+
+        if ($disponibilidad !== "" && !in_array($disponibilidad, $disponibilidadesValidas, true)) {
+            throw new Exception("El filtro disponibilidad tiene un valor no permitido.", 400);
+        }
+
+        if ($laboratorio !== "") {
+            $laboratorio = Validador::longitud($laboratorio, 1, 20, "laboratorio");
+        }
+
+        return [
+            "estado" => $estado,
+            "laboratorio" => $laboratorio,
+            "disponibilidad" => $disponibilidad
+        ];
     }
 
     /**
@@ -140,11 +182,8 @@ class ControladorEquipo
     {
         $datosEnviados = $this->obtenerDatosEnviados();
 
-        $idEquipo = trim($datosEnviados["idEquipo"] ?? "");
-
-        if ($idEquipo === "") {
-            throw new Exception("El campo idEquipo es obligatorio.", 400);
-        }
+        $idEquipo = Validador::requerido($datosEnviados["idEquipo"] ?? "", "idEquipo");
+        $idEquipo = Validador::longitud($idEquipo, 1, 10, "idEquipo");
 
         if ($this->dao->obtener($idEquipo) !== null) {
             throw new Exception("Ya existe un equipo con el identificador $idEquipo.", 409);
@@ -178,6 +217,8 @@ class ControladorEquipo
             throw new Exception("Debe indicar el identificador del equipo.", 400);
         }
 
+        $idEquipo = Validador::longitud($idEquipo, 1, 10, "idEquipo");
+
         if ($this->dao->obtener($idEquipo) === null) {
             throw new Exception("No existe un equipo con el identificador $idEquipo.", 404);
         }
@@ -209,6 +250,8 @@ class ControladorEquipo
             throw new Exception("Debe indicar el identificador del equipo.", 400);
         }
 
+        $idEquipo = Validador::longitud($idEquipo, 1, 10, "idEquipo");
+
         if ($this->dao->obtener($idEquipo) === null) {
             throw new Exception("No existe un equipo con el identificador $idEquipo.", 404);
         }
@@ -228,7 +271,12 @@ class ControladorEquipo
     private function validarDatos(array $datosEnviados): array
     {
         $datos = [
-            "idLaboratorio" => Validador::requerido($datosEnviados["idLaboratorio"] ?? "", "idLaboratorio"),
+            "idLaboratorio" => Validador::longitud(
+                Validador::requerido($datosEnviados["idLaboratorio"] ?? "", "idLaboratorio"),
+                1,
+                20,
+                "idLaboratorio"
+            ),
             "marca" => Validador::longitud($datosEnviados["marca"] ?? "", 1, 30, "marca"),
             "estado" => Validador::enLista($datosEnviados["estado"] ?? "", ["Dañado", "Funcionando", "En mantenimiento", "No funciona"], "estado"),
             "disponibilidad" => Validador::enLista($datosEnviados["disponibilidad"] ?? "", ["Disponible", "No disponible"], "disponibilidad")
