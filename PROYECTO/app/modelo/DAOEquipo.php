@@ -23,8 +23,28 @@ class DAOEquipo
      *
      * @return array Arreglo asociativo con los datos de cada equipo.
      */
-    public function listar(): array
+    public function listar(array $filtros = []): array
     {
+        $condiciones = [];
+        $parametros = [];
+
+        if (($filtros["estado"] ?? "") !== "") {
+            $condiciones[] = "e.estado = :estado";
+            $parametros[":estado"] = $filtros["estado"];
+        }
+
+        if (($filtros["laboratorio"] ?? "") !== "") {
+            $condiciones[] = "(e.idLaboratorio LIKE :idLaboratorio OR l.numeroLaboratorio LIKE :numeroLaboratorio)";
+            $busquedaLaboratorio = "%" . $filtros["laboratorio"] . "%";
+            $parametros[":idLaboratorio"] = $busquedaLaboratorio;
+            $parametros[":numeroLaboratorio"] = $busquedaLaboratorio;
+        }
+
+        if (($filtros["disponibilidad"] ?? "") !== "") {
+            $condiciones[] = "e.disponibilidad = :disponibilidad";
+            $parametros[":disponibilidad"] = $filtros["disponibilidad"];
+        }
+
         $sql = "
             SELECT
                 e.idEquipo,
@@ -36,11 +56,16 @@ class DAOEquipo
                 e.informacion
             FROM EQUIPO AS e
             INNER JOIN LABORATORIO AS l ON l.idLaboratorio = e.idLaboratorio
-            ORDER BY e.idEquipo ASC
         ";
 
+        if (!empty($condiciones)) {
+            $sql .= " WHERE " . implode(" AND ", $condiciones);
+        }
+
+        $sql .= " ORDER BY e.idEquipo ASC";
+
         $consulta = $this->conexion->prepare($sql);
-        $consulta->execute();
+        $consulta->execute($parametros);
 
         return $consulta->fetchAll(PDO::FETCH_ASSOC);
     }
