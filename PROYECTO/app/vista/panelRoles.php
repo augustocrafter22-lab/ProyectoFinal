@@ -21,9 +21,9 @@
             </button>
 
             <ul class="listaNavegacion">
-                <li><a href="<?= URL_BASE ?>/public/cerrarSesion.php"><?= Traductor::t("common.cerrarSesion") ?></a></li>
-                <li><a href="<?= URL_BASE ?>/public/cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a></li>
-                <li><a href="<?= URL_BASE ?>/public/cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/cerrarSesion.php"><?= Traductor::t("common.cerrarSesion") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a></li>
             </ul>
         </nav>
         <h1>S.G.R.S.I</h1>
@@ -36,15 +36,15 @@
 
 <section class="botonera">
     <?php if ($_SESSION["coordinador"]): ?>
-        <button class="boton-principal" type="button" onclick="location.href='<?= URL_BASE ?>/public/Administrador.php'"><?= Traductor::t("common.coordinador") ?></button>
+        <button class="boton-principal" type="button" onclick="location.href='<?= URL_BASE ?>/public/paginas/Administrador.php'"><?= Traductor::t("common.coordinador") ?></button>
     <?php endif; ?>
 
     <?php if ($_SESSION["tecnico"]): ?>
-        <button class="boton-principal" type="button" onclick="location.href='<?= URL_BASE ?>/public/Tecnico.php'"><?= Traductor::t("common.tecnico") ?></button>
+        <button class="boton-principal" type="button" onclick="location.href='<?= URL_BASE ?>/public/paginas/Tecnico.php'"><?= Traductor::t("common.tecnico") ?></button>
     <?php endif; ?>
 
     <?php if ($_SESSION["docente"]): ?>
-        <button class="boton-principal" type="button" onclick="location.href='<?= URL_BASE ?>/public/Docente.php'"><?= Traductor::t("common.docente") ?></button>
+        <button class="boton-principal" type="button" onclick="location.href='<?= URL_BASE ?>/public/paginas/Docente.php'"><?= Traductor::t("common.docente") ?></button>
     <?php endif; ?>
 </section>
 </body>

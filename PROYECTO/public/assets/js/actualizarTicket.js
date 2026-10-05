@@ -15,7 +15,7 @@ function actualizarTicket(articulo) {
     const estado = selectEstado.value;
     const prioridad = selectPrioridad.value;
 
-    fetch(`api/tickets.php?id=${encodeURIComponent(idTicket)}`, {
+    fetch(`../api/tickets.php?id=${encodeURIComponent(idTicket)}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",

@@ -1,5 +1,5 @@
-const URL_API_DIAGNOSTICOS = "api/diagnosticos.php";
-const URL_API_REPARACIONES = "api/reparaciones.php";
+const URL_API_DIAGNOSTICOS = "../api/diagnosticos.php";
+const URL_API_REPARACIONES = "../api/reparaciones.php";
 
 const formRegistrarReparacion = document.getElementById("formRegistrarReparacion");
 const mensajeRegistrarReparacion = document.getElementById("mensajeRegistrarReparacion");

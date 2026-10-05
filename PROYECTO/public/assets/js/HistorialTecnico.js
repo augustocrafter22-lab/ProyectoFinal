@@ -1,5 +1,5 @@
-const URL_API_EQUIPOS = "api/equipos.php";
-const URL_API_REPARACIONES = "api/reparaciones.php";
+const URL_API_EQUIPOS = "../api/equipos.php";
+const URL_API_REPARACIONES = "../api/reparaciones.php";
 
 const selectEquipo = document.getElementById("historialTecnicoEquipoSelect");
 const tablaHistorialTecnico = document.getElementById("tablaHistorialTecnico");

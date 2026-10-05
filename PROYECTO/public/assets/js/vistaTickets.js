@@ -1,5 +1,5 @@
-const URL_API_TICKETS = "api/tickets.php";
-const URL_API_EQUIPOS = "api/equipos.php";
+const URL_API_TICKETS = "../api/tickets.php";
+const URL_API_EQUIPOS = "../api/equipos.php";
 
 const listaTickets = document.getElementById("listaTickets");
 const filtroDeEquipos = document.getElementById("filtroDeEquipos");

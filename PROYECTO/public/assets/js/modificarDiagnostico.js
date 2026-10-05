@@ -1,4 +1,4 @@
-const URL_API_DIAGNOSTICOS = "api/diagnosticos.php";
+const URL_API_DIAGNOSTICOS = "../api/diagnosticos.php";
 
 const formModificarDiagnostico = document.getElementById("formModificarDiagnostico");
 const mensajeModificarDiagnostico = document.getElementById("mensajeModificarDiagnostico");

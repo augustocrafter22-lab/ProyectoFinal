@@ -19,12 +19,12 @@
             </button>
 
             <ul class="listaNavegacion">
-                <li><a href="<?= URL_BASE ?>/public/Tecnico.php"><?= Traductor::t("common.regresar") ?></a></li>
-                <li><a href="<?= URL_BASE ?>/public/RegistrarDiagnostico.php"><?= Traductor::t("nav.registrarDiagnostico") ?></a></li>
-                <li><a href="<?= URL_BASE ?>/public/RegistrarSolucion.php"><?= Traductor::t("nav.registrarSolucion") ?></a></li>
-                <li><a href="<?= URL_BASE ?>/public/cerrarSesion.php" class="cerrarSesion"><?= Traductor::t("common.cerrarSesion") ?></a></li>
-                <li><a href="<?= URL_BASE ?>/public/cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a></li>
-                <li><a href="<?= URL_BASE ?>/public/cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/Tecnico.php"><?= Traductor::t("common.regresar") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/RegistrarDiagnostico.php"><?= Traductor::t("nav.registrarDiagnostico") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/RegistrarSolucion.php"><?= Traductor::t("nav.registrarSolucion") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/cerrarSesion.php" class="cerrarSesion"><?= Traductor::t("common.cerrarSesion") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a></li>
             </ul>
         </nav>
         <h1>S.G.R.S.I</h1>

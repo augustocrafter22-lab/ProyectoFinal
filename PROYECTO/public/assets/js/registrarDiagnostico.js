@@ -1,5 +1,5 @@
-const URL_API_TICKETS = "api/tickets.php";
-const URL_API_DIAGNOSTICOS = "api/diagnosticos.php";
+const URL_API_TICKETS = "../api/tickets.php";
+const URL_API_DIAGNOSTICOS = "../api/diagnosticos.php";
 
 const formRegistrarDiagnostico = document.getElementById("formregistrarDiagnostico");
 const mensajeRegistrarDiagnostico = document.getElementById("mensajeRegistrarDiagnostico");
