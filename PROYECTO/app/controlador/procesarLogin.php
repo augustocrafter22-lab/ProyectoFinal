@@ -15,10 +15,10 @@ require_once RUTA_MODELO . "/Usuario.php";
 require_once RUTA_MODELO . "/Login.php";
 require_once RUTA_MODELO . "/Validador.php";
 require_once RUTA_MODELO . "/Traductor.php";
-require_once RUTA_MODELO . "/Token.php";
+require_once RUTA_NUCLEO . "/Token.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    header("Location: " . URL_BASE . "/public/Login.php");
+    header("Location: " . URL_BASE . "/public/paginas/Login.php");
     exit;
 }
 
@@ -43,12 +43,12 @@ try {
     $conectorPDO->desconectar();
 
     if ($usuario === null) {
-        header("Location: " . URL_BASE . "/public/Login.php?error=" . urlencode($login->getError()));
+        header("Location: " . URL_BASE . "/public/paginas/Login.php?error=" . urlencode($login->getError()));
         exit;
     }
 
     if (!$usuario->tieneAlgunRol()) {
-        header("Location: " . URL_BASE . "/public/Login.php?error=" . urlencode(Traductor::t("login.sinRoles")));
+        header("Location: " . URL_BASE . "/public/paginas/Login.php?error=" . urlencode(Traductor::t("login.sinRoles")));
         exit;
     }
 
@@ -67,25 +67,25 @@ try {
     $cantidadRoles = (int) $usuario->esCoordinador() + (int) $usuario->esTecnico() + (int) $usuario->esDocente();
 
     if ($cantidadRoles > 1) {
-        header("Location: " . URL_BASE . "/public/PanelRoles.php");
+        header("Location: " . URL_BASE . "/public/paginas/PanelRoles.php");
     } elseif ($usuario->esCoordinador()) {
-        header("Location: " . URL_BASE . "/public/Administrador.php");
+        header("Location: " . URL_BASE . "/public/paginas/Administrador.php");
     } elseif ($usuario->esTecnico()) {
-        header("Location: " . URL_BASE . "/public/Tecnico.php");
+        header("Location: " . URL_BASE . "/public/paginas/Tecnico.php");
     } elseif ($usuario->esDocente()) {
-        header("Location: " . URL_BASE . "/public/Docente.php");
+        header("Location: " . URL_BASE . "/public/paginas/Docente.php");
     } else {
-        header("Location: " . URL_BASE . "/public/Login.php?error=" . urlencode(Traductor::t("login.sinPermisos")));
+        header("Location: " . URL_BASE . "/public/paginas/Login.php?error=" . urlencode(Traductor::t("login.sinPermisos")));
     }
     exit;
 
 } catch (PDOException $e) {
     RegistradorErrores::registrar($e);
-    header("Location: " . URL_BASE . "/public/Login.php?error=" . urlencode(Traductor::t("common.errorGenerico")));
+    header("Location: " . URL_BASE . "/public/paginas/Login.php?error=" . urlencode(Traductor::t("common.errorGenerico")));
     exit;
 } catch (Exception $e) {
     RegistradorErrores::registrar($e);
-    header("Location: " . URL_BASE . "/public/Login.php?error=" . urlencode($e->getMessage()));
+    header("Location: " . URL_BASE . "/public/paginas/Login.php?error=" . urlencode($e->getMessage()));
     exit;
 }
 ?>

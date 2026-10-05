@@ -1,7 +1,7 @@
 <?php
 
 require_once RUTA_VISTA . "/RespuestaJson.php";
-require_once RUTA_MODELO . "/Token.php";
+require_once RUTA_NUCLEO . "/Token.php";
 
 /**
  * Agrupa las verificaciones de sesión para que todas las páginas
@@ -18,7 +18,7 @@ class Sesion
     {
         if (!isset($_SESSION["cedula"])) {
             $mensaje = "Debe iniciar sesión para acceder a esa página.";
-            header("Location: " . URL_BASE . "/public/Login.php?error=" . urlencode($mensaje));
+            header("Location: " . URL_BASE . "/public/paginas/Login.php?error=" . urlencode($mensaje));
             exit;
         }
     }
@@ -36,7 +36,7 @@ class Sesion
 
         if (!($_SESSION[$rol] ?? false)) {
             $mensaje = "No tiene autorización para acceder a ese panel.";
-            header("Location: " . URL_BASE . "/public/Login.php?error=" . urlencode($mensaje));
+            header("Location: " . URL_BASE . "/public/paginas/Login.php?error=" . urlencode($mensaje));
             exit;
         }
     }

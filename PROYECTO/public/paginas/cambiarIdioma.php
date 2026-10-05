@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "/../config/config.php";
+require_once __DIR__ . "/../../config/config.php";
 
 session_start();
 
@@ -12,7 +12,7 @@ if ($idioma !== "es" && $idioma !== "en") {
 
 $_SESSION["idioma"] = $idioma;
 
-$regreso = $_SERVER["HTTP_REFERER"] ?? (URL_BASE . "/public/Login.php");
+$regreso = $_SERVER["HTTP_REFERER"] ?? (URL_BASE . "/public/paginas/Login.php");
 header("Location: " . $regreso);
 exit;
 

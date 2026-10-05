@@ -19,11 +19,11 @@
         </section>
         <section class="seccionLogin">
             <p class="selectorIdioma">
-                <a href="<?= URL_BASE ?>/public/cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a>
+                <a href="<?= URL_BASE ?>/public/paginas/cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a>
                 |
-                <a href="<?= URL_BASE ?>/public/cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a>
+                <a href="<?= URL_BASE ?>/public/paginas/cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a>
             </p>
-            <form action="<?= URL_BASE ?>/public/procesarLogin.php" method="POST" class="login-form" id="loginForm">
+            <form action="<?= URL_BASE ?>/public/paginas/procesarLogin.php" method="POST" class="login-form" id="loginForm">
                 <h2><?= Traductor::t("login.titulo") ?></h2>
                 <fieldset>
                     <label for="username"><?= Traductor::t("login.labelCi") ?></label>

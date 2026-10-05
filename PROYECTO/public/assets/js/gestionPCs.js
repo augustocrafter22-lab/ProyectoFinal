@@ -1,4 +1,4 @@
-const URL_API_EQUIPOS = "api/equipos.php";
+const URL_API_EQUIPOS = "../api/equipos.php";
 
 const formularioEquipo = document.getElementById("formularioEquipo");
 const cuerpoTablaPc = document.getElementById("cuerpoTablaPc");

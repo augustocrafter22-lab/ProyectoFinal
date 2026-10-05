@@ -5,7 +5,7 @@ require_once RUTA_MODELO . "/DAODiagnostico.php";
 require_once RUTA_MODELO . "/Validador.php";
 require_once RUTA_MODELO . "/RegistradorErrores.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
-require_once RUTA_MODELO . "/Sesion.php";
+require_once RUTA_NUCLEO . "/Sesion.php";
 
 /**
  * Controlador unificado de DIAGNOSTICO.

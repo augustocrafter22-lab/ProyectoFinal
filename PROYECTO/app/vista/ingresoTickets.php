@@ -21,10 +21,10 @@
             </button>
 
             <ul class="listaNavegacion">
-                <li><a href="<?= URL_BASE ?>/public/Docente.php"><?= Traductor::t("common.regresar") ?></a></li>
-                <li><a href="<?= URL_BASE ?>/public/cerrarSesion.php"><?= Traductor::t("common.cerrarSesion") ?></a></li>
-                <li><a href="<?= URL_BASE ?>/public/cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a></li>
-                <li><a href="<?= URL_BASE ?>/public/cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/Docente.php"><?= Traductor::t("common.regresar") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/cerrarSesion.php"><?= Traductor::t("common.cerrarSesion") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a></li>
             </ul>
         </nav>
         <h1>S.G.R.S.I</h1>

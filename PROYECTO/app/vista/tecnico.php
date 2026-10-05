@@ -23,17 +23,17 @@
             </button>
 
             <ul class="listaNavegacion">
-                <li><a href="<?= URL_BASE ?>/public/VistaLab.php"><?= Traductor::t("nav.solicitudesLab") ?></a></li>
-                <li><a href="<?= URL_BASE ?>/public/VistaDeTickets.php"><?= Traductor::t("nav.tickets") ?></a></li>
-                <li><a href="<?= URL_BASE ?>/public/RegistrarDiagnostico.php"><?= Traductor::t("nav.registrarDiagnostico") ?></a></li>
-                <li><a href="<?= URL_BASE ?>/public/RegistrarReparacion.php"><?= Traductor::t("nav.registrarReparacion") ?></a></li>
-                <li><a href="<?= URL_BASE ?>/public/RegistrarSolucion.php"><?= Traductor::t("nav.registrarSolucion") ?></a></li>
-                <li><a href="<?= URL_BASE ?>/public/ConsultarDiagnostico.php"><?= Traductor::t("nav.consultarDiagnosticos") ?></a></li>
-                <li><a href="<?= URL_BASE ?>/public/Equipos.php"><?= Traductor::t("nav.consultarEquipos") ?></a></li>
-                <li><a href="<?= URL_BASE ?>/public/HistorialTecnico.php"><?= Traductor::t("nav.historialTecnico") ?></a></li>
-                <li><a href="<?= URL_BASE ?>/public/cerrarSesion.php" class="cerrarSesion"><?= Traductor::t("common.cerrarSesion") ?></a></li>
-                <li><a href="<?= URL_BASE ?>/public/cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a></li>
-                <li><a href="<?= URL_BASE ?>/public/cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/VistaLab.php"><?= Traductor::t("nav.solicitudesLab") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/VistaDeTickets.php"><?= Traductor::t("nav.tickets") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/RegistrarDiagnostico.php"><?= Traductor::t("nav.registrarDiagnostico") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/RegistrarReparacion.php"><?= Traductor::t("nav.registrarReparacion") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/RegistrarSolucion.php"><?= Traductor::t("nav.registrarSolucion") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/ConsultarDiagnostico.php"><?= Traductor::t("nav.consultarDiagnosticos") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/Equipos.php"><?= Traductor::t("nav.consultarEquipos") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/HistorialTecnico.php"><?= Traductor::t("nav.historialTecnico") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/cerrarSesion.php" class="cerrarSesion"><?= Traductor::t("common.cerrarSesion") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a></li>
             </ul>
         </nav>
         <h1>S.G.R.S.I</h1>

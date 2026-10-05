@@ -1,10 +1,10 @@
 # NORMALIZACIÓN DEL MODELO DE DATOS
 
-Este documento recorre cada tabla del DDL (`bd/DDL/`) y justifica por qué está en Tercera Forma Normal (3FN): todos sus atributos no clave dependen únicamente de la clave primaria completa, y no hay dependencias transitivas (un atributo no clave dependiendo de otro atributo no clave).
+Este documento recorre cada tabla del DDL (`baseDeDatos/DDL/`) y justifica por qué está en Tercera Forma Normal (3FN): todos sus atributos no clave dependen únicamente de la clave primaria completa, y no hay dependencias transitivas (un atributo no clave dependiendo de otro atributo no clave).
 
 ## Orden de ejecución del DDL
 
-Los scripts de `bd/DDL/` tienen que ejecutarse en este orden, porque cada uno depende de que las tablas referenciadas por sus claves foráneas ya existan:
+Los scripts de `baseDeDatos/DDL/` tienen que ejecutarse en este orden, porque cada uno depende de que las tablas referenciadas por sus claves foráneas ya existan:
 
 1. `creacionUsuario.sql`
 2. `creacionLaboratorio.sql`
@@ -46,7 +46,7 @@ Antes de este issue, `creacionTicket.sql` no tenía ninguna clave foránea decla
 
 ## PRESTAMO 
 
-El DER del proyecto incluye una tabla `PRESTAMO` que no existía en el DDL. Se agrega en `bd/DDL/creacionPrestamo.sql`:
+El DER del proyecto incluye una tabla `PRESTAMO` que no existía en el DDL. Se agrega en `baseDeDatos/DDL/creacionPrestamo.sql`:
 
 * **PRESTAMO** (`idPrestamo` PK): `idEquipo` y `cedulaSolicitante` son FK (a `EQUIPO` y `USUARIO` respectivamente); `fechaPrestamo`, `fechaDevolucionEstimada`, `fechaDevolucionReal` y `estado` dependen solo de `idPrestamo`. 
 

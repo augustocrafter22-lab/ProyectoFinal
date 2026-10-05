@@ -1,17 +1,17 @@
 <?php
 
-require_once __DIR__ . "/../config/config.php";
+require_once __DIR__ . "/../../config/config.php";
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosSolicitudLaboratorio.php";
 require_once RUTA_MODELO . "/Validador.php";
 
 session_start();
 
-require_once RUTA_MODELO . "/Sesion.php";
+require_once RUTA_NUCLEO . "/Sesion.php";
 Sesion::verificarRol("docente");
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    header("Location: " . URL_BASE . "/public/SolicitarLab.php?error=" . urlencode("Método no permitido"));
+    header("Location: " . URL_BASE . "/public/paginas/SolicitarLab.php?error=" . urlencode("Método no permitido"));
     exit;
 }
 
@@ -49,17 +49,17 @@ try {
     $conectorPDO->desconectar();
 
     if ($resultado) {
-        header("Location: " . URL_BASE . "/public/SolicitarLab.php?exito=" . urlencode("Solicitud enviada correctamente"));
+        header("Location: " . URL_BASE . "/public/paginas/SolicitarLab.php?exito=" . urlencode("Solicitud enviada correctamente"));
     } else {
-        header("Location: " . URL_BASE . "/public/SolicitarLab.php?error=" . urlencode("Error al enviar la solicitud"));
+        header("Location: " . URL_BASE . "/public/paginas/SolicitarLab.php?error=" . urlencode("Error al enviar la solicitud"));
     }
 
 } catch (PDOException $e) {
     RegistradorErrores::registrar($e);
-    header("Location: " . URL_BASE . "/public/SolicitarLab.php?error=" . urlencode("Ocurrió un error, intente nuevamente."));
+    header("Location: " . URL_BASE . "/public/paginas/SolicitarLab.php?error=" . urlencode("Ocurrió un error, intente nuevamente."));
 } catch (Exception $e) {
     RegistradorErrores::registrar($e);
-    header("Location: " . URL_BASE . "/public/SolicitarLab.php?error=" . urlencode($e->getMessage()));
+    header("Location: " . URL_BASE . "/public/paginas/SolicitarLab.php?error=" . urlencode($e->getMessage()));
 }
 exit;
 ?>

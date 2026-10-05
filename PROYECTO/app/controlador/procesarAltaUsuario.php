@@ -14,7 +14,7 @@ require_once RUTA_MODELO . "/AltaDatosUsuario.php";
 require_once RUTA_MODELO . "/Validador.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    header("Location: " . URL_BASE . "/public/Administrador.php?error=" . urlencode("Método no permitido"));
+    header("Location: " . URL_BASE . "/public/paginas/Administrador.php?error=" . urlencode("Método no permitido"));
     exit;
 }
 
@@ -39,7 +39,7 @@ try {
     $altaDatosUsuario = new AltaDatosUsuario($conexion);
 
     if ($altaDatosUsuario->usuarioExiste($cedula)) {
-        header("Location: " . URL_BASE . "/public/Administrador.php?error=" . urlencode("El usuario ya existe"));
+        header("Location: " . URL_BASE . "/public/paginas/Administrador.php?error=" . urlencode("El usuario ya existe"));
         $conectorPDO->desconectar();
         exit;
     }
@@ -50,16 +50,16 @@ try {
     $conectorPDO->desconectar();
 
     if ($resultado) {
-        header("Location: " . URL_BASE . "/public/Administrador.php?exito=" . urlencode("Usuario creado exitosamente"));
+        header("Location: " . URL_BASE . "/public/paginas/Administrador.php?exito=" . urlencode("Usuario creado exitosamente"));
     } else {
-        header("Location: " . URL_BASE . "/public/Administrador.php?error=" . urlencode("Error al crear el usuario"));
+        header("Location: " . URL_BASE . "/public/paginas/Administrador.php?error=" . urlencode("Error al crear el usuario"));
     }
 
 } catch (PDOException $e) {
     RegistradorErrores::registrar($e);
-    header("Location: " . URL_BASE . "/public/Administrador.php?error=" . urlencode("Ocurrió un error, intente nuevamente."));
+    header("Location: " . URL_BASE . "/public/paginas/Administrador.php?error=" . urlencode("Ocurrió un error, intente nuevamente."));
 } catch (Exception $e) {
     RegistradorErrores::registrar($e);
-    header("Location: " . URL_BASE . "/public/Administrador.php?error=" . urlencode($e->getMessage()));
+    header("Location: " . URL_BASE . "/public/paginas/Administrador.php?error=" . urlencode($e->getMessage()));
 }
 exit;
