@@ -49,8 +49,9 @@ Las condiciones con un `:parámetro` se aplican con el valor que manda el usuari
 
 * **Q16** - Listar equipos con el número de su laboratorio, con filtros opcionales por estado, laboratorio y disponibilidad. (`DAOEquipo::listar`)
 * **Q17** - Obtener un equipo por su id con el número de su laboratorio. (`DAOEquipo::obtener`)
-* **Q18** - Verificar que existe un laboratorio. (`DAOEquipo::existeLaboratorio`)
-* **Q31** - Listar los laboratorios por número. (`AccesoDatosSolicitudLaboratorio::obtenerLaboratorios`)
+* **Q18** - Verificar que existe un laboratorio. (`DAOEquipo::existeLaboratorio`, `DAOSolicitudLaboratorio::existeLaboratorio`)
+* **Q31** - Listar los laboratorios por número. (`DAOLaboratorio::listar`, `AccesoDatosSolicitudLaboratorio::obtenerLaboratorios`)
+* **Q33** - Obtener un laboratorio por su id. (`DAOLaboratorio::obtener`)
 
 ### DIAGNOSTICO
 
@@ -78,7 +79,8 @@ Las condiciones con un `:parámetro` se aplican con el valor que manda el usuari
 
 ### SOLICITUD_LABORATORIO
 
-* **Q32** - Listar las solicitudes de laboratorio con el número del laboratorio, por fecha y hora estimada. (`AccesoDatosSolicitudLaboratorio::obtenerSolicitudes`)
+* **Q32** - Listar las solicitudes de laboratorio con el número del laboratorio, por fecha y hora estimada. Con filtros opcionales por tipo (preparación de laboratorio o instalación de software), laboratorio y fecha. (`DAOSolicitudLaboratorio::listar`, `AccesoDatosSolicitudLaboratorio::obtenerSolicitudes`)
+* **Q34** - Obtener una solicitud de laboratorio por su id. (`DAOSolicitudLaboratorio::obtener`)
 
 > La tabla `PRESTAMO` ya existe en el DDL, pero todavía no tiene consultas porque su módulo no está implementado.
 
@@ -160,6 +162,8 @@ Q17 π_{idEquipo, idLaboratorio, numeroLaboratorio → laboratorio, marca, estad
 Q18 γ_{COUNT(*)}(σ_{idLaboratorio = :idLaboratorio}(LABORATORIO))
 
 Q31 τ_{numeroLaboratorio ↑}(π_{idLaboratorio, numeroLaboratorio, estado}(LABORATORIO))
+
+Q33 π_{idLaboratorio, numeroLaboratorio, estado}(σ_{idLaboratorio = :idLaboratorio}(LABORATORIO))
 ```
 
 ### Diagnósticos, soluciones y reparaciones
@@ -225,6 +229,18 @@ Q32 τ_{fechaEstimada ↑, horaEstimada ↑}(
         π_{idSolicitud, SOLICITUD_LABORATORIO.idLaboratorio, numeroLaboratorio,
            cedulaSolicitante, solicitaSoftware, detalle, restricciones, fechaEstimada,
            horaEstimada, fechaCreacion}(
+            σ_{solicitaSoftware = :tipo ∧ SOLICITUD_LABORATORIO.idLaboratorio = :idLaboratorio
+               ∧ fechaEstimada = :fecha}(
+                SOLICITUD_LABORATORIO
+                    ⋈_{SOLICITUD_LABORATORIO.idLaboratorio = LABORATORIO.idLaboratorio}
+                LABORATORIO)))
+    (cada condición de σ se agrega solo si ese filtro llegó; en :tipo, 1 es
+     instalación de software y 0 es preparación de laboratorio)
+
+Q34 π_{idSolicitud, SOLICITUD_LABORATORIO.idLaboratorio, numeroLaboratorio,
+       cedulaSolicitante, solicitaSoftware, detalle, restricciones, fechaEstimada,
+       horaEstimada, fechaCreacion}(
+        σ_{idSolicitud = :idSolicitud}(
             SOLICITUD_LABORATORIO
                 ⋈_{SOLICITUD_LABORATORIO.idLaboratorio = LABORATORIO.idLaboratorio}
             LABORATORIO))
@@ -341,13 +357,34 @@ El `SELECT` del `INSERT` de reparaciones, en álgebra relacional:
         DIAGNOSTICO ⋈_{DIAGNOSTICO.idTicket = TICKET.idTicket} TICKET))
 ```
 
-### SOLICITUD_LABORATORIO (`AccesoDatosSolicitudLaboratorio`)
+### LABORATORIO (`DAOLaboratorio`)
+
+```sql
+INSERT INTO LABORATORIO (idLaboratorio, numeroLaboratorio, estado)
+VALUES (:idLaboratorio, :numeroLaboratorio, :estado);
+
+UPDATE LABORATORIO SET numeroLaboratorio = :numeroLaboratorio, estado = :estado
+WHERE idLaboratorio = :idLaboratorio;
+
+-- La base lo impide si el laboratorio tiene equipos, tickets o solicitudes
+DELETE FROM LABORATORIO WHERE idLaboratorio = :idLaboratorio;
+```
+
+### SOLICITUD_LABORATORIO (`DAOSolicitudLaboratorio` y `AccesoDatosSolicitudLaboratorio`)
 
 ```sql
 INSERT INTO SOLICITUD_LABORATORIO
     (idLaboratorio, cedulaSolicitante, solicitaSoftware, detalle, restricciones, fechaEstimada, horaEstimada)
 VALUES
     (:idLaboratorio, :cedulaSolicitante, :solicitaSoftware, :detalle, :restricciones, :fechaEstimada, :horaEstimada);
+
+-- El solicitante y la fecha de creación no se modifican
+UPDATE SOLICITUD_LABORATORIO
+SET idLaboratorio = :idLaboratorio, solicitaSoftware = :solicitaSoftware, detalle = :detalle,
+    restricciones = :restricciones, fechaEstimada = :fechaEstimada, horaEstimada = :horaEstimada
+WHERE idSolicitud = :idSolicitud;
+
+DELETE FROM SOLICITUD_LABORATORIO WHERE idSolicitud = :idSolicitud;
 ```
 
 ### Datos iniciales para pruebas (`baseDeDatos/DML/`)
@@ -359,4 +396,4 @@ VALUES
 
 Se ejecutan después del DDL y en el mismo orden de dependencia: usuarios, laboratorios, equipos y tickets.
 
-> `PRESTAMO` y la baja o edición de `SOLICITUD_LABORATORIO` y `LABORATORIO` todavía no tienen sentencias DML en el sistema.
+> `PRESTAMO` todavía no tiene sentencias DML en el sistema.
