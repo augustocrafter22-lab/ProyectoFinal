@@ -30,6 +30,7 @@
                 <li><a href="<?= URL_BASE ?>/public/paginas/RegistrarSolucion.php"><?= Traductor::t("nav.registrarSolucion") ?></a></li>
                 <li><a href="<?= URL_BASE ?>/public/paginas/ConsultarDiagnostico.php"><?= Traductor::t("nav.consultarDiagnosticos") ?></a></li>
                 <li><a href="<?= URL_BASE ?>/public/paginas/Equipos.php"><?= Traductor::t("nav.consultarEquipos") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/Prestamos.php"><?= Traductor::t("nav.prestamos") ?></a></li>
                 <li><a href="<?= URL_BASE ?>/public/paginas/HistorialTecnico.php"><?= Traductor::t("nav.historialTecnico") ?></a></li>
                 <li><a href="<?= URL_BASE ?>/public/paginas/cerrarSesion.php" class="cerrarSesion"><?= Traductor::t("common.cerrarSesion") ?></a></li>
                 <li><a href="<?= URL_BASE ?>/public/paginas/cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a></li>

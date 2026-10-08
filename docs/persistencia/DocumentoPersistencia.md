@@ -82,7 +82,12 @@ Las condiciones con un `:parámetro` se aplican con el valor que manda el usuari
 * **Q32** - Listar las solicitudes de laboratorio con el número del laboratorio, por fecha y hora estimada. Con filtros opcionales por tipo (preparación de laboratorio o instalación de software), laboratorio y fecha. (`DAOSolicitudLaboratorio::listar`, `AccesoDatosSolicitudLaboratorio::obtenerSolicitudes`)
 * **Q34** - Obtener una solicitud de laboratorio por su id. (`DAOSolicitudLaboratorio::obtener`)
 
-> La tabla `PRESTAMO` ya existe en el DDL, pero todavía no tiene consultas porque su módulo no está implementado.
+### PRESTAMO
+
+* **Q35** - Listar los préstamos con el nombre completo del solicitante, con filtros opcionales por estado (`Activo` o `Devuelto`) y por equipo, del más nuevo al más viejo. (`DAOPrestamo::listar`)
+* **Q36** - Obtener un préstamo por su id. (`DAOPrestamo::obtener`)
+* **Q37** - Verificar que existe un equipo. (`DAOPrestamo::existeEquipo`)
+* **Q38** - Verificar que existe un usuario con una cédula. (`DAOPrestamo::existeUsuario`)
 
 ---
 
@@ -246,6 +251,26 @@ Q34 π_{idSolicitud, SOLICITUD_LABORATORIO.idLaboratorio, numeroLaboratorio,
             LABORATORIO))
 ```
 
+### Préstamos
+
+```
+Q35 τ_{fechaPrestamo ↓}(
+        π_{idPrestamo, idEquipo, cedulaSolicitante, nombre + apellido → solicitante,
+           fechaPrestamo, fechaDevolucionEstimada, fechaDevolucionReal, PRESTAMO.estado}(
+            σ_{PRESTAMO.estado = :estado ∧ idEquipo = :idEquipo}(
+                PRESTAMO ⋈_{PRESTAMO.cedulaSolicitante = USUARIO.cedula} USUARIO)))
+    (cada condición de σ se agrega solo si ese filtro llegó)
+
+Q36 π_{idPrestamo, idEquipo, cedulaSolicitante, nombre + apellido → solicitante,
+       fechaPrestamo, fechaDevolucionEstimada, fechaDevolucionReal, PRESTAMO.estado}(
+        σ_{idPrestamo = :idPrestamo}(
+            PRESTAMO ⋈_{PRESTAMO.cedulaSolicitante = USUARIO.cedula} USUARIO))
+
+Q37 γ_{COUNT(*)}(σ_{idEquipo = :idEquipo}(EQUIPO))
+
+Q38 γ_{COUNT(*)}(σ_{cedula = :cedula}(USUARIO))
+```
+
 ---
 
 ## 3. Lista de sentencias DML
@@ -387,6 +412,37 @@ WHERE idSolicitud = :idSolicitud;
 DELETE FROM SOLICITUD_LABORATORIO WHERE idSolicitud = :idSolicitud;
 ```
 
+### PRESTAMO y disponibilidad de EQUIPO (`DAOPrestamo`)
+
+Registrar y devolver un préstamo modifican también la tabla `EQUIPO`, por eso las dos operaciones son transaccionales.
+
+```sql
+-- Registrar un préstamo: primero se reserva el equipo. Solo se modifica si sigue disponible,
+-- y si no se modificó ninguna fila se deshace todo y no se registra el préstamo.
+UPDATE EQUIPO SET disponibilidad = 'No disponible'
+WHERE idEquipo = :idEquipo AND disponibilidad = 'Disponible';
+
+INSERT INTO PRESTAMO (idEquipo, cedulaSolicitante, fechaDevolucionEstimada)
+VALUES (:idEquipo, :cedulaSolicitante, :fechaDevolucionEstimada);
+
+-- Registrar la devolución: solo afecta a un préstamo activo
+UPDATE PRESTAMO SET estado = 'Devuelto', fechaDevolucionReal = NOW()
+WHERE idPrestamo = :idPrestamo AND estado = 'Activo';
+
+-- El equipo vuelve a estar disponible, salvo que no esté funcionando (por ejemplo, si se dañó prestado)
+UPDATE EQUIPO AS e
+INNER JOIN PRESTAMO AS p ON p.idEquipo = e.idEquipo
+SET e.disponibilidad = 'Disponible'
+WHERE p.idPrestamo = :idPrestamo AND e.estado = 'Funcionando';
+
+-- Cambiar la fecha de devolución estimada de un préstamo
+UPDATE PRESTAMO SET fechaDevolucionEstimada = :fechaDevolucionEstimada
+WHERE idPrestamo = :idPrestamo;
+
+-- Solo se pueden eliminar préstamos ya devueltos
+DELETE FROM PRESTAMO WHERE idPrestamo = :idPrestamo;
+```
+
 ### Datos iniciales para pruebas (`baseDeDatos/DML/`)
 
 * `inserccionUsuario.sql`: cuatro usuarios de prueba (uno de ellos sin rol) y los roles de los otros tres (`INSERT INTO USUARIO`, `ADMINISTRADOR`, `TECNICO` y `DOCENTE`).
@@ -396,4 +452,3 @@ DELETE FROM SOLICITUD_LABORATORIO WHERE idSolicitud = :idSolicitud;
 
 Se ejecutan después del DDL y en el mismo orden de dependencia: usuarios, laboratorios, equipos y tickets.
 
-> `PRESTAMO` todavía no tiene sentencias DML en el sistema.
