@@ -18,6 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit;
 }
 
+$conectorPDO = null;
+
 try {
     $cedula = Validador::cedula($_POST["ci"] ?? "");
     $nombre = trim($_POST["nombre"] ?? "");
@@ -44,16 +46,17 @@ try {
 
     $altaDatosUsuario = new AltaDatosUsuario($conexion);
 
+    // Si se cambia la contraseña, se hashea acá igual que en el alta
+    $claveHasheada = !empty($clave) ? password_hash($clave, PASSWORD_BCRYPT) : null;
+
     $resultado = $altaDatosUsuario->actualizarUsuario(
         $cedula,
         !empty($nombre) ? $nombre : null,
         !empty($apellido) ? $apellido : null,
-        !empty($clave) ? $clave : null,
+        $claveHasheada,
         $roles,
         null // activo no se toca desde este formulario
     );
-
-    $conectorPDO->desconectar();
 
     if ($resultado) {
         header("Location: " . URL_BASE . "/public/paginas/Administrador.php?exito=" . urlencode("Usuario actualizado exitosamente"));
@@ -67,6 +70,11 @@ try {
 } catch (Exception $e) {
     RegistradorErrores::registrar($e);
     header("Location: " . URL_BASE . "/public/paginas/Administrador.php?error=" . urlencode($e->getMessage()));
+} finally {
+    // Se cierra la conexión pase lo que pase
+    if ($conectorPDO !== null) {
+        $conectorPDO->desconectar();
+    }
 }
 exit;
 ?>

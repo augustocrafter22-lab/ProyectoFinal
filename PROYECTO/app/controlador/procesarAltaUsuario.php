@@ -18,6 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit;
 }
 
+$conectorPDO = null;
+
 try {
     $cedula = Validador::cedula($_POST["ci"] ?? "");
     $nombre = Validador::longitud($_POST["nombre"] ?? "", 1, 12, "nombre");
@@ -39,15 +41,14 @@ try {
     $altaDatosUsuario = new AltaDatosUsuario($conexion);
 
     if ($altaDatosUsuario->usuarioExiste($cedula)) {
-        header("Location: " . URL_BASE . "/public/paginas/Administrador.php?error=" . urlencode("El usuario ya existe"));
-        $conectorPDO->desconectar();
-        exit;
+        throw new Exception("El usuario ya existe", 409);
     }
 
+    // El hasheo se hace acá y el modelo recibe solo el hash
     $claveHasheada = password_hash($clave, PASSWORD_BCRYPT);
-    $resultado = $altaDatosUsuario->crearUsuario($cedula, $nombre, $apellido, $claveHasheada, 1, $roles);
 
-    $conectorPDO->desconectar();
+    // Mismo orden que los parámetros de crearUsuario: cedula, nombre, apellido, clave, activo, roles
+    $resultado = $altaDatosUsuario->crearUsuario($cedula, $nombre, $apellido, $claveHasheada, 1, $roles);
 
     if ($resultado) {
         header("Location: " . URL_BASE . "/public/paginas/Administrador.php?exito=" . urlencode("Usuario creado exitosamente"));
@@ -61,5 +62,10 @@ try {
 } catch (Exception $e) {
     RegistradorErrores::registrar($e);
     header("Location: " . URL_BASE . "/public/paginas/Administrador.php?error=" . urlencode($e->getMessage()));
+} finally {
+    // Se cierra la conexión pase lo que pase (éxito, error o usuario repetido)
+    if ($conectorPDO !== null) {
+        $conectorPDO->desconectar();
+    }
 }
 exit;
