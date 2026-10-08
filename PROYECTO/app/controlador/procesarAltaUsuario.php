@@ -50,6 +50,8 @@ try {
     // Mismo orden que los parámetros de crearUsuario: cedula, nombre, apellido, clave, activo, roles
     $resultado = $altaDatosUsuario->crearUsuario($cedula, $nombre, $apellido, $claveHasheada, 1, $roles);
 
+    $conectorPDO->desconectar();
+
     if ($resultado) {
         header("Location: " . URL_BASE . "/public/paginas/Administrador.php?exito=" . urlencode("Usuario creado exitosamente"));
     } else {
@@ -58,14 +60,17 @@ try {
 
 } catch (PDOException $e) {
     RegistradorErrores::registrar($e);
-    header("Location: " . URL_BASE . "/public/paginas/Administrador.php?error=" . urlencode("Ocurrió un error, intente nuevamente."));
-} catch (Exception $e) {
-    RegistradorErrores::registrar($e);
-    header("Location: " . URL_BASE . "/public/paginas/Administrador.php?error=" . urlencode($e->getMessage()));
-} finally {
-    // Se cierra la conexión pase lo que pase (éxito, error o usuario repetido)
+    // Si hubo error, igual se cierra la conexión
     if ($conectorPDO !== null) {
         $conectorPDO->desconectar();
     }
+    header("Location: " . URL_BASE . "/public/paginas/Administrador.php?error=" . urlencode("Ocurrió un error, intente nuevamente."));
+} catch (Exception $e) {
+    RegistradorErrores::registrar($e);
+    // Si hubo error, igual se cierra la conexión
+    if ($conectorPDO !== null) {
+        $conectorPDO->desconectar();
+    }
+    header("Location: " . URL_BASE . "/public/paginas/Administrador.php?error=" . urlencode($e->getMessage()));
 }
 exit;

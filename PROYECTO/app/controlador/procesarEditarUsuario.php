@@ -58,6 +58,8 @@ try {
         null // activo no se toca desde este formulario
     );
 
+    $conectorPDO->desconectar();
+
     if ($resultado) {
         header("Location: " . URL_BASE . "/public/paginas/Administrador.php?exito=" . urlencode("Usuario actualizado exitosamente"));
     } else {
@@ -66,15 +68,18 @@ try {
 
 } catch (PDOException $e) {
     RegistradorErrores::registrar($e);
-    header("Location: " . URL_BASE . "/public/paginas/Administrador.php?error=" . urlencode("Ocurrió un error, intente nuevamente."));
-} catch (Exception $e) {
-    RegistradorErrores::registrar($e);
-    header("Location: " . URL_BASE . "/public/paginas/Administrador.php?error=" . urlencode($e->getMessage()));
-} finally {
-    // Se cierra la conexión pase lo que pase
+    // Si hubo error, igual se cierra la conexión
     if ($conectorPDO !== null) {
         $conectorPDO->desconectar();
     }
+    header("Location: " . URL_BASE . "/public/paginas/Administrador.php?error=" . urlencode("Ocurrió un error, intente nuevamente."));
+} catch (Exception $e) {
+    RegistradorErrores::registrar($e);
+    // Si hubo error, igual se cierra la conexión
+    if ($conectorPDO !== null) {
+        $conectorPDO->desconectar();
+    }
+    header("Location: " . URL_BASE . "/public/paginas/Administrador.php?error=" . urlencode($e->getMessage()));
 }
 exit;
 ?>
