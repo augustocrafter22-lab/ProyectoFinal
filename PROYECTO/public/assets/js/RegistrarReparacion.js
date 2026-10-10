@@ -17,13 +17,13 @@ async function cargarDiagnosticosEnFormulario() {
     const respuesta = await fetch(URL_API_DIAGNOSTICOS);
     const cuerpo = await respuesta.json();
 
-    if (!cuerpo.exito || cuerpo.datos.length === 0) {
+    if (cuerpo.status !== "success" || cuerpo.data.length === 0) {
       avisoSinDiagnosticosReparacion.hidden = false;
       formRegistrarReparacion.hidden = true;
       return;
     }
 
-    for (const diagnostico of cuerpo.datos) {
+    for (const diagnostico of cuerpo.data) {
       const option = document.createElement("option");
       option.value = diagnostico.idDiagnostico;
       option.textContent = `Ticket ${diagnostico.idTicket} - Equipo ${diagnostico.equipo} - ${diagnostico.diagnostico}`;
@@ -54,9 +54,9 @@ async function registrarReparacion(eventoFormulario) {
     });
     const cuerpo = await respuesta.json();
 
-    mostrarMensaje(cuerpo.mensaje, !cuerpo.exito);
+    mostrarMensaje(cuerpo.message, cuerpo.status !== "success");
 
-    if (cuerpo.exito) {
+    if (cuerpo.status === "success") {
       formRegistrarReparacion.reset();
     }
   } catch (error) {

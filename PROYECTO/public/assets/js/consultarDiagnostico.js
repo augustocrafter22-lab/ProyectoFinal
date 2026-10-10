@@ -51,12 +51,12 @@ async function cargarDiagnosticos() {
     const respuesta = await fetch(url);
     const cuerpo = await respuesta.json();
 
-    if (!cuerpo.exito) {
-      mostrarDiagnosticosVacio(cuerpo.mensaje);
+    if (cuerpo.status !== "success") {
+      mostrarDiagnosticosVacio(cuerpo.message);
       return;
     }
 
-    if (cuerpo.datos.length === 0) {
+    if (cuerpo.data.length === 0) {
       mostrarDiagnosticosVacio(
         ticketFiltro !== ""
           ? `No hay diagnósticos registrados para el ticket ${ticketFiltro}.`
@@ -67,7 +67,7 @@ async function cargarDiagnosticos() {
 
     tablaDiagnosticos.querySelector("thead").hidden = false;
     cuerpoTablaDiagnosticos.replaceChildren();
-    cuerpo.datos.forEach((diagnostico, indice) => {
+    cuerpo.data.forEach((diagnostico, indice) => {
       cuerpoTablaDiagnosticos.appendChild(crearFilaDiagnostico(diagnostico, indice));
     });
   } catch (error) {

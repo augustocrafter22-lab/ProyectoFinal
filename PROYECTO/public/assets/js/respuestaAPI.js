@@ -1,4 +1,4 @@
-// Lee la respuesta de la API y devuelve lo que viene bajo la clave "datos"
+// Lee la respuesta de la API y devuelve lo que viene bajo la clave "data"
 async function leerRespuestaAPI(respuesta) {
   const texto = await respuesta.text();
 
@@ -14,8 +14,8 @@ async function leerRespuestaAPI(respuesta) {
   }
 
   if (!respuesta.ok) {
-    throw new Error(`HTTP ${respuesta.status}: ${json.mensaje ?? "La solicitud no se pudo completar."}`);
+    throw new Error(`HTTP ${respuesta.status}: ${json.message ?? "La solicitud no se pudo completar."}`);
   }
 
-  return json.datos;
+  return json.data;
 }

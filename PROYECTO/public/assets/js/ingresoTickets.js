@@ -15,11 +15,11 @@ async function cargarEquiposEnFormulario() {
     const respuesta = await fetch(URL_API_EQUIPOS);
     const cuerpo = await respuesta.json();
 
-    if (!cuerpo.exito) {
+    if (cuerpo.status !== "success") {
       return;
     }
 
-    for (const equipo of cuerpo.datos) {
+    for (const equipo of cuerpo.data) {
       const option = document.createElement("option");
       option.value = equipo.idEquipo;
       option.textContent = equipo.idEquipo;
@@ -54,9 +54,9 @@ async function enviarTicket(eventoFormulario) {
     });
     const cuerpo = await respuesta.json();
 
-    mostrarMensaje(cuerpo.mensaje, !cuerpo.exito);
+    mostrarMensaje(cuerpo.message, cuerpo.status !== "success");
 
-    if (cuerpo.exito) {
+    if (cuerpo.status === "success") {
       ticketForm.reset();
     }
   } catch (error) {

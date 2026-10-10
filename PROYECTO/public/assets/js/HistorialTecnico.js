@@ -83,12 +83,12 @@ async function cargarHistorialTecnico() {
     const respuesta = await fetch(`${URL_API_REPARACIONES}?idEquipo=${encodeURIComponent(idEquipo)}`);
     const cuerpo = await respuesta.json();
 
-    if (!cuerpo.exito) {
-      mostrarTablaVacia(cuerpo.mensaje);
+    if (cuerpo.status !== "success") {
+      mostrarTablaVacia(cuerpo.message);
       return;
     }
 
-    mostrarReparaciones(cuerpo.datos);
+    mostrarReparaciones(cuerpo.data);
   } catch (error) {
     mostrarTablaVacia("No se pudo conectar con el servidor.");
   }
@@ -99,13 +99,13 @@ async function cargarEquiposEnSelect() {
     const respuesta = await fetch(URL_API_EQUIPOS);
     const cuerpo = await respuesta.json();
 
-    if (!cuerpo.exito) {
+    if (cuerpo.status !== "success") {
       return;
     }
 
     const idEquipoInicial = new URLSearchParams(window.location.search).get("equipo") || "";
 
-    for (const equipo of cuerpo.datos) {
+    for (const equipo of cuerpo.data) {
       const option = document.createElement("option");
       option.value = equipo.idEquipo;
       option.textContent = equipo.idEquipo;

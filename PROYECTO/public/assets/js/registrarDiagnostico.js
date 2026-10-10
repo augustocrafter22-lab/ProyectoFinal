@@ -16,11 +16,11 @@ async function cargarTicketsEnFormulario() {
     const respuesta = await fetch(URL_API_TICKETS);
     const cuerpo = await respuesta.json();
 
-    if (!cuerpo.exito) {
+    if (cuerpo.status !== "success") {
       return;
     }
 
-    for (const ticket of cuerpo.datos) {
+    for (const ticket of cuerpo.data) {
       const option = document.createElement("option");
       option.value = ticket.idTicket;
       option.textContent = `${ticket.idTicket} - ${ticket.asunto}`;
@@ -51,9 +51,9 @@ async function registrarDiagnostico(eventoFormulario) {
     });
     const cuerpo = await respuesta.json();
 
-    mostrarMensaje(cuerpo.mensaje, !cuerpo.exito);
+    mostrarMensaje(cuerpo.message, cuerpo.status !== "success");
 
-    if (cuerpo.exito) {
+    if (cuerpo.status === "success") {
       formRegistrarDiagnostico.reset();
     }
   } catch (error) {

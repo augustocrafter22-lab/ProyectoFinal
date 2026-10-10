@@ -25,9 +25,9 @@ function actualizarTicket(articulo) {
     })
         .then(respuesta => respuesta.json())
         .then(datos => {
-            if (!datos.exito) {
+            if (datos.status !== "success") {
                 restaurarValoresGuardados([selectEstado, selectPrioridad]);
-                alert(datos.mensaje || "No se pudo actualizar el ticket.");
+                alert(datos.message || "No se pudo actualizar el ticket.");
                 return;
             }
 

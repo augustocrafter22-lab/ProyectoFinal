@@ -15,11 +15,11 @@ async function cargarDiagnosticosEnFormulario() {
     const respuesta = await fetch(URL_API_DIAGNOSTICOS);
     const cuerpo = await respuesta.json();
 
-    if (!cuerpo.exito) {
+    if (cuerpo.status !== "success") {
       return;
     }
 
-    for (const diagnostico of cuerpo.datos) {
+    for (const diagnostico of cuerpo.data) {
       const option = document.createElement("option");
       option.value = diagnostico.idDiagnostico;
       option.dataset.texto = diagnostico.diagnostico;
@@ -52,7 +52,7 @@ async function modificarDiagnostico(eventoFormulario) {
     });
     const cuerpo = await respuesta.json();
 
-    mostrarMensaje(cuerpo.mensaje, !cuerpo.exito);
+    mostrarMensaje(cuerpo.message, cuerpo.status !== "success");
   } catch (error) {
     mostrarMensaje("No se pudo conectar con el servidor.", true);
   }

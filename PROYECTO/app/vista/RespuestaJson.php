@@ -4,6 +4,9 @@
  * Vista de la API.
  *
  * En lugar de devolver HTML, esta vista devuelve JSON.
+ * Todos los endpoints responden con la misma estructura:
+ *   { "status": "success" | "error", "message": "texto", "data": ... }
+ * y con el código HTTP que corresponda (200, 201, 400, 401, 403, 404, 500).
  * Todos sus métodos son estáticos, asi que se usan directamente
  * con RespuestaJson::exito o RespuestaJson::error sin crear un objeto.
  */
@@ -25,7 +28,7 @@ class RespuestaJson
     }
 
     /**
-     * Envía una respuesta correcta.
+     * Envía una respuesta correcta (status "success").
      *
      * @param mixed $datos Datos solicitados (un arreglo, un registro, null).
      * @param string $mensaje Mensaje descriptivo para el cliente.
@@ -35,14 +38,14 @@ class RespuestaJson
     public static function exito($datos = null, string $mensaje = "Operación realizada correctamente.", int $codigo = 200): void
     {
         self::enviar($codigo, [
-            "exito" => true,
-            "mensaje" => $mensaje,
-            "datos" => $datos
+            "status" => "success",
+            "message" => $mensaje,
+            "data" => $datos
         ]);
     }
 
     /**
-     * Envía una respuesta de error.
+     * Envía una respuesta de error (status "error", data siempre null).
      *
      * @param string $mensaje Descripción del error.
      * @param int $codigo Código de estado HTTP (400 por defecto).
@@ -51,9 +54,9 @@ class RespuestaJson
     public static function error(string $mensaje, int $codigo = 400): void
     {
         self::enviar($codigo, [
-            "exito" => false,
-            "mensaje" => $mensaje,
-            "datos" => null
+            "status" => "error",
+            "message" => $mensaje,
+            "data" => null
         ]);
     }
 }
