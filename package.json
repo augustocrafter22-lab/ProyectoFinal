@@ -1,0 +1,26 @@
+{
+  "name": "proyectofinal",
+  "version": "1.0.0",
+  "description": "Integrantes: Julián González, Augusto Cuello, Ezequiel Forcelledo y Federico Venis.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/augustocrafter22-lab/ProyectoFinal.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/augustocrafter22-lab/ProyectoFinal/issues"
+  },
+  "homepage": "https://github.com/augustocrafter22-lab/ProyectoFinal#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.64.0",
+    "@types/node": "^26.6.4"
+  }
+}
