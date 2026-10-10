@@ -1,35 +1,16 @@
 <?php
 
-/**
- * Controlador que carga la vista de ingreso de tickets.
- *
- * Obtiene el listado de laboratorios registrados para que el select
- * envíe el idLaboratorio que espera la tabla TICKET.
- * Los equipos se cargan con fetch contra la API desde ingresoTickets.js.
- */
-
 require_once RUTA_MODELO . "/ConectorPDO.php";
-require_once RUTA_MODELO . "/AccesoDatosSolicitudLaboratorio.php";
-require_once RUTA_MODELO . "/Traductor.php";
-Traductor::iniciar();
+require_once RUTA_MODELO . "/AccesoDatosEquipo.php";
 
-try {
-    $conectorPDO = new ConectorPDO($_ENV['BD_HOST'], $_ENV['BD_USER'], $_ENV['BD_PASS'], $_ENV['BD_NAME']);
-    $conexion = $conectorPDO->establecerConexion();
+$conectorPDO = new ConectorPDO($_ENV['BD_HOST'], $_ENV['BD_USER'], $_ENV['BD_PASS'], $_ENV['BD_NAME']);
+$conexion = $conectorPDO->establecerConexion();
 
-    if ($conexion === null) {
-        throw new Exception("No se pudo conectar a la base de datos");
-    }
+$accesoDatosEquipo = new AccesoDatosEquipo($conexion);
+$equipos = $accesoDatosEquipo->obtenerEquipos();
 
-    $accesoDatosSolicitudLaboratorio = new AccesoDatosSolicitudLaboratorio($conexion);
-    $laboratorios = $accesoDatosSolicitudLaboratorio->obtenerLaboratorios();
-
-    $conectorPDO->desconectar();
-} catch (Exception $e) {
-    RegistradorErrores::registrar($e);
-    echo Traductor::t("common.errorGenerico");
-    exit;
-}
+$conectorPDO->desconectar();
 
 require_once RUTA_VISTA . "/ingresoTickets.php";
+
 ?>
