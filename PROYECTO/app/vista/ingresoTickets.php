@@ -2,7 +2,6 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="csrf-token" content="<?= Token::generarTokenCSRF() ?>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ingreso de Tickets</title>
   <link rel="stylesheet" href="<?= URL_BASE ?>/public/assets/css/style.css" />
@@ -21,10 +20,8 @@
             </button>
 
             <ul class="listaNavegacion">
-                <li><a href="<?= URL_BASE ?>/public/paginas/Docente.php"><?= Traductor::t("common.regresar") ?></a></li>
-                <li><a href="<?= URL_BASE ?>/public/paginas/cerrarSesion.php"><?= Traductor::t("common.cerrarSesion") ?></a></li>
-                <li><a href="<?= URL_BASE ?>/public/paginas/cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a></li>
-                <li><a href="<?= URL_BASE ?>/public/paginas/cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/Docente.php">Regresar</a></li>
+                <li><a href="<?= URL_BASE ?>/public/cerrarSesion.php">Cerrar sesion</a></li>
             </ul>
         </nav>
         <h1>S.G.R.S.I</h1>
@@ -32,55 +29,69 @@
     </header>
 
   <section class="encabezado">
-    <h1><?= Traductor::t("ingresoTickets.titulo") ?></h1>
-    <p><?= Traductor::t("ingresoTickets.subtitulo") ?></p>
+    <h1>Nuevo Ticket</h1>
+    <p>¡Hola! Este espacio es para ingresar nuevos tickets sobre incidencias que hayan en los equipos de los laboratorios</p>
   </section>
 
-  <p id="mensajeIngresoTickets" role="status"></p>
+  <?php if (isset($_GET["error"])) { ?>
+      <p class="mensaje-error"><?= htmlspecialchars($_GET["error"]) ?></p>
+  <?php } ?>
+
+  <?php if (isset($_GET["exito"])) { ?>
+      <p class="mensaje-exito"><?= htmlspecialchars($_GET["exito"]) ?></p>
+  <?php } ?>
 
   <section class="modulo" id="ingresoTickets">
-    <form class="formulario" id="ticketForm">
+    <form class="formulario" id="ticketForm" action="<?= URL_BASE ?>/app/controlador/procesarIngresoTickets.php" method="POST">
 
-      <label for="laboratorioTaller"><?= Traductor::t("ingresoTickets.labelEspacio") ?></label>
+      <label for="laboratorioTaller">Espacio de Trabajo</label>
       <select name="laboratorio" id="laboratorioTaller" required>
-        <option value=""><?= Traductor::t("ingresoTickets.opcionSeleccioneEspacio") ?></option>
-        <?php foreach ($laboratorios as $laboratorio): ?>
-          <option value="<?= htmlspecialchars($laboratorio["idLaboratorio"]) ?>">
-            <?= htmlspecialchars($laboratorio["numeroLaboratorio"]) ?>
+        <option value="">Seleccione un espacio</option>
+        <option value="Laboratorio 1">Laboratorio 1</option>
+        <option value="Laboratorio 2">Laboratorio 2</option>
+        <option value="Laboratorio 3">Laboratorio 3</option>
+        <option value="Laboratorio 4">Laboratorio 4</option>
+        <option value="Laboratorio 5">Laboratorio 5</option>
+        <option value="Laboratorio 6">Laboratorio 6</option>
+        <option value="Taller 1">Taller 1</option>
+        <option value="Taller 2">Taller 2</option>
+        <option value="Taller 3">Taller 3</option>
+      </select>
+
+      <label for="equipo">Equipos</label>
+      <select name="equipo" id="equipo" required>
+        <option value="">Seleccione un equipo</option>
+        <?php foreach ($equipos as $equipo): ?>
+          <option value="<?= htmlspecialchars($equipo["idEquipo"]) ?>">
+            <?= htmlspecialchars($equipo["idEquipo"]) ?> - <?= htmlspecialchars($equipo["laboratorio"]) ?>
           </option>
         <?php endforeach; ?>
       </select>
 
-      <label for="equipo"><?= Traductor::t("ingresoTickets.labelEquipos") ?></label>
-      <select name="equipo" id="equipo" required>
-        <option value=""><?= Traductor::t("ingresoTickets.opcionSeleccioneEquipo") ?></option>
-      </select>
+      <label for="asunto">Asunto:</label>
+      <input type="text" id="asunto" name="asunto" placeholder="Ej: La computadora no enciende" required>
 
-      <label for="asunto"><?= Traductor::t("ingresoTickets.labelAsunto") ?></label>
-      <input type="text" id="asunto" name="asunto" placeholder="<?= Traductor::t("ingresoTickets.placeholderAsunto") ?>" required>
+      <label for="descripcion">Descripción:</label>
+      <textarea id="descripcion" name="descripcion" rows="5" placeholder="Describa la incidencia detectada:" required></textarea>
 
-      <label for="descripcion"><?= Traductor::t("ingresoTickets.labelDescripcion") ?></label>
-      <textarea id="descripcion" name="descripcion" rows="5" placeholder="<?= Traductor::t("ingresoTickets.placeholderDescripcion") ?>" required></textarea>
-
-      <label for="turno"><?= Traductor::t("ingresoTickets.labelTurno") ?></label>
+      <label for="turno">Turno donde fue registrada la incidencia:</label>
       <select id="turno" name="turno" required>
-        <option value=""><?= Traductor::t("ingresoTickets.opcionSeleccioneTurno") ?></option>
+        <option value="">Seleccione un turno</option>
         <option value="Matutino">Matutino</option>
         <option value="Vespertino">Vespertino</option>
         <option value="Nocturno">Nocturno</option>
       </select>
 
-      <label for="grupo"><?= Traductor::t("ingresoTickets.labelGrupo") ?></label>
-      <input type="text" id="grupo" name="grupo" placeholder="<?= Traductor::t("ingresoTickets.placeholderGrupo") ?>" required>
+      <label for="grupo">Grupo:</label>
+      <input type="text" id="grupo" name="grupo" placeholder="Ej: 3MB" required>
 
-      <label for="profesor"><?= Traductor::t("ingresoTickets.labelProfesor") ?></label>
-      <input type="text" id="profesor" name="profesor" placeholder="<?= Traductor::t("ingresoTickets.placeholderProfesor") ?>" required>
+      <label for="profesor">Profesor que reporta la incidencia:</label>
+      <input type="text" id="profesor" name="profesor" placeholder="Ej: Augusto Lopéz" required>
 
-      <button class="boton-principal" type="submit"><?= Traductor::t("ingresoTickets.btnEnviar") ?></button>
+      <button class="boton-principal" type="submit">Enviar Ticket</button>
 
     </form>
   </section>
-  <script src="<?= URL_BASE ?>/public/assets/js/ingresoTickets.js"></script>
   <script src="<?= URL_BASE ?>/public/assets/js/barraNavegacion.js"></script>
 </body>
 </html>

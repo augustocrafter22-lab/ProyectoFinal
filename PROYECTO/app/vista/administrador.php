@@ -1,9 +1,26 @@
+<?php
+
+require_once RUTA_NUCLEO . "/Token.php";
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<?= htmlspecialchars(Token::generarTokenCSRF()) ?>">
+    <meta name="usuarios-api" content="<?= URL_BASE ?>/public/api/usuarios.php">
+    <meta name="administrador-mensajes" content="<?= htmlspecialchars(json_encode([
+        "confirmarActivar" => Traductor::t("administrador.confirmarActivar"),
+        "confirmarDesactivar" => Traductor::t("administrador.confirmarDesactivar"),
+        "usuarioRegistrado" => Traductor::t("administrador.usuarioRegistrado"),
+        "usuarioActualizado" => Traductor::t("administrador.usuarioActualizado"),
+        "usuarioActivado" => Traductor::t("administrador.usuarioActivado"),
+        "usuarioDesactivado" => Traductor::t("administrador.usuarioDesactivado"),
+        "errorRespuestaApi" => Traductor::t("administrador.errorRespuestaApi"),
+        "errorConexion" => Traductor::t("administrador.errorConexion")
+    ], JSON_UNESCAPED_UNICODE), ENT_QUOTES, "UTF-8") ?>">
     <title>Administrador de usuarios</title>
     <link rel="stylesheet" href="<?= URL_BASE ?>/public/assets/css/barraNavegacion.css">
     <link rel="stylesheet" href="<?= URL_BASE ?>/public/assets/css/style.css">
@@ -72,12 +89,12 @@
                             <button type="button" class="btnEditar"><?= Traductor::t("administrador.btnEditar") ?></button>
 
                             <?php if ($usuario["activo"]): ?>
-                                <form action="procesarDesactivarUsuario.php" method="POST" class="formularioDesactivarUsuario">
+                                <form action="<?= URL_BASE ?>/public/api/usuarios.php" method="POST" class="formularioDesactivarUsuario">
                                     <input type="hidden" name="cedula" value="<?= htmlspecialchars($usuario["cedula"]) ?>">
                                     <button type="submit" class="btnEliminar"><?= Traductor::t("administrador.btnDesactivar") ?></button>
                                 </form>
                             <?php else: ?>
-                                <form action="procesarActivarUsuario.php" method="POST" class="formularioActivarUsuario">
+                                <form action="<?= URL_BASE ?>/public/api/usuarios.php" method="POST" class="formularioActivarUsuario">
                                     <input type="hidden" name="cedula" value="<?= htmlspecialchars($usuario["cedula"]) ?>">
                                     <button type="submit" class="btnActivar"><?= Traductor::t("administrador.btnActivar") ?></button>
                                 </form>
@@ -99,7 +116,7 @@
         <button id="btnCerrarGestionarUsuario" type="button">
             <img src="<?= URL_BASE ?>/public/assets/img/Bootstrap/x.svg" alt="Cerrar" width="24" height="24">
         </button>
-        <form id="formularioGestionarUsuario" method="POST">
+        <form id="formularioGestionarUsuario" action="<?= URL_BASE ?>/public/api/usuarios.php" method="POST">
             <fieldset>
                 <legend><?= Traductor::t("administrador.dialogTitulo") ?></legend>
                 <fieldset>
