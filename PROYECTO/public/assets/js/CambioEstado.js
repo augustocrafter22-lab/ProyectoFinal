@@ -1,112 +1,96 @@
-document.addEventListener("DOMContentLoaded", iniciarCambiarEstado);
+const URL_API_EQUIPOS_ESTADO = "../api/equipos.php";
 
-function iniciarCambiarEstado() {
-        const selectEquipo = document.getElementById("cambiarEstadoEquipoSelect");
-        selectEquipo.addEventListener("change", cargarEstadoActual);
+document.addEventListener("DOMContentLoaded", () => {
+  const selectEquipo = document.getElementById("cambiarEstadoEquipoSelect");
+  const formulario = document.getElementById("formCambiarEstado");
 
-        const formulario = document.getElementById("formCambiarEstado");
-        formulario.addEventListener("submit", registrarCambioEstado);
+  if (!selectEquipo || !formulario) {
+    return;
+  }
+
+  selectEquipo.addEventListener("change", cargarEstadoActual);
+  formulario.addEventListener("submit", registrarCambioEstado);
+});
+
+async function obtenerEquipoEstado(idEquipo) {
+  const respuesta = await fetch(
+    `${URL_API_EQUIPOS_ESTADO}?id=${encodeURIComponent(idEquipo)}`,
+  );
+  const cuerpo = await respuesta.json();
+
+  if (cuerpo.status !== "success") {
+    throw new Error(cuerpo.message || "No se pudo obtener el equipo.");
+  }
+
+  return cuerpo.data;
 }
 
-function cargarEstadoActual() {
-        const equipoId = document.getElementById("cambiarEstadoEquipoSelect").value;
-        const inputEstadoActual = document.getElementById("cambiarEstadoActual");
+async function cargarEstadoActual() {
+  const idEquipo = document.getElementById("cambiarEstadoEquipoSelect").value;
+  const campoEstadoActual = document.getElementById("cambiarEstadoActual");
 
-    if (!equipoId) {
-        inputEstadoActual.value = "";
-        return;
+  if (!idEquipo) {
+    campoEstadoActual.value = "";
+    return;
+  }
+
+  try {
+    const equipo = await obtenerEquipoEstado(idEquipo);
+    campoEstadoActual.value = equipo.estado;
+  } catch (error) {
+    mostrarMensajeEstado(error.message);
+  }
 }
 
-        const equipos = obtenerEquipos();
-        const equipo = equipos.find(function (e) { return e.id === equipoId; });
+async function registrarCambioEstado(evento) {
+  evento.preventDefault();
+  const idEquipo = document.getElementById("cambiarEstadoEquipoSelect").value;
+  const estado = document.getElementById("cambiarEstadoNuevo").value;
 
-    if (equipo) {
-        inputEstadoActual.value = equipo.estado;
-} else {
-        inputEstadoActual.value = "Sin estado registrado";
-}
-}
+  if (!idEquipo || !estado) {
+    mostrarMensajeEstado("Seleccioná un equipo y el nuevo estado.");
+    return;
+  }
 
-function registrarCambioEstado(evento) {
-        evento.preventDefault();
+  try {
+    const equipo = await obtenerEquipoEstado(idEquipo);
+    if (equipo.estado === estado) {
+      mostrarMensajeEstado("El equipo ya se encuentra en ese estado.");
+      return;
+    }
 
-        const equipoId = document.getElementById("cambiarEstadoEquipoSelect").value;
-        const estadoNuevo = document.getElementById("cambiarEstadoNuevo").value;
+    const respuesta = await fetch(
+      `${URL_API_EQUIPOS_ESTADO}?id=${encodeURIComponent(idEquipo)}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')
+            .content,
+        },
+        body: JSON.stringify({
+          idLaboratorio: equipo.idLaboratorio,
+          marca: equipo.marca,
+          estado,
+          disponibilidad: equipo.disponibilidad,
+          informacion: equipo.informacion || "",
+        }),
+      },
+    );
+    const cuerpo = await respuesta.json();
+    mostrarMensajeEstado(cuerpo.message);
 
-    if (!equipoId) {
-        mostrarMensaje("Seleccioná un equipo.");
-        return;
-}
-
-    if (!estadoNuevo) {
-        mostrarMensaje("Seleccioná el nuevo estado.");
-        return;
-}
-
-        const equipos = obtenerEquipos();
-        const equipo = equipos.find(function (e) { return e.id === equipoId; });
-
-        const estadoAnterior = equipo ? equipo.estado : "Sin estado";
-
-    if (estadoAnterior === estadoNuevo) {
-        mostrarMensaje("El equipo ya se encuentra en ese estado.");
-        return;
-}
-
-
-        const historial = obtenerHistorialEstados();
-
-        const nuevoRegistro = {
-    id: crearId("EST"),
-    equipoId: equipoId,
-    estadoAnterior: estadoAnterior,
-    estadoNuevo: estadoNuevo,
-    fecha: obtenerFechaActual(),
-    usuario: localStorage.getItem("CI")
-};
-
-        historial.push(nuevoRegistro);
-        guardarHistorialEstados(historial);
-
-
-    if (equipo) {
-        equipo.estado = estadoNuevo;
-} else {
-        equipos.push({ id: equipoId, estado: estadoNuevo, ubicacion: "-" });
-}
-        guardarEquipos(equipos);
-
-        document.getElementById("formCambiarEstado").reset();
-        document.getElementById("cambiarEstadoActual").value = "";
-        mostrarMensaje("Estado del equipo actualizado correctamente.");
+    if (cuerpo.status === "success") {
+      document.getElementById("formCambiarEstado").reset();
+      document.getElementById("cambiarEstadoActual").value = "";
+    }
+  } catch (error) {
+    mostrarMensajeEstado(
+      error.message || "No se pudo conectar con el servidor.",
+    );
+  }
 }
 
-    function obtenerEquipos() {
-        const datos = localStorage.getItem("equipos");
-        return datos === null ? [] : JSON.parse(datos);
-}
-
-    function guardarEquipos(equipos) {
-        localStorage.setItem("equipos", JSON.stringify(equipos));
-}
-
-    function obtenerHistorialEstados() {
-        const datos = localStorage.getItem("historialEstados");
-        return datos === null ? [] : JSON.parse(datos);
-}
-
-    function guardarHistorialEstados(historial) {
-        localStorage.setItem("historialEstados", JSON.stringify(historial));
-}
-
-    function crearId(prefijo) {
-        return prefijo + "-" + Date.now();
-}
-
-    function obtenerFechaActual() {
-        return new Date().toLocaleDateString("es-UY");
-}
-
-    function mostrarMensaje(mensaje) {
-        alert(mensaje);
+function mostrarMensajeEstado(mensaje) {
+  alert(mensaje);
 }

@@ -1,76 +1,68 @@
-document.addEventListener("DOMContentLoaded", iniciarRegistrarReemplazo);
+const URL_API_EQUIPOS_REEMPLAZO = "../api/equipos.php";
+const URL_API_REEMPLAZOS = "../api/reemplazos.php";
 
-function iniciarRegistrarReemplazo() {
-  const formulario = document.getElementById("formRegistrarReemplazo");
+const formRegistrarReemplazo = document.getElementById(
+  "formRegistrarReemplazo",
+);
+const selectEquipoReemplazo = document.getElementById("reemplazoEquipoSelect");
+const mensajeReemplazo = document.getElementById("mensajeReemplazo");
 
-  if (!formulario) {
-    return;
-  }
-
-  formulario.addEventListener("submit", registrarReemplazo);
+function mostrarMensajeReemplazo(texto, esError) {
+  mensajeReemplazo.textContent = texto;
+  mensajeReemplazo.className = esError ? "mensaje-error" : "mensaje-exito";
 }
 
-function registrarReemplazo(evento) {
-  evento.preventDefault();
+async function cargarEquiposReemplazo() {
+  try {
+    const respuesta = await fetch(URL_API_EQUIPOS_REEMPLAZO);
+    const cuerpo = await respuesta.json();
 
-  const equipoId = document.getElementById("reemplazoEquipoSelect").value;
-  const componente = document.getElementById("reemplazoComponente").value;
-  const descripcion = document.getElementById("reemplazoDescripcion").value.trim();
+    if (cuerpo.status !== "success") {
+      mostrarMensajeReemplazo(cuerpo.message, true);
+      return;
+    }
 
-  if (!equipoId) {
-    mostrarMensaje("Seleccioná un equipo.");
-    return;
+    for (const equipo of cuerpo.data) {
+      const option = document.createElement("option");
+      option.value = equipo.idEquipo;
+      option.textContent = equipo.idEquipo;
+      selectEquipoReemplazo.appendChild(option);
+    }
+  } catch (error) {
+    mostrarMensajeReemplazo("No se pudo conectar con el servidor.", true);
   }
+}
 
-  if (!componente) {
-    mostrarMensaje("Seleccioná el componente reemplazado.");
-    return;
-  }
+async function registrarReemplazo(eventoFormulario) {
+  eventoFormulario.preventDefault();
 
-  if (!validarMinimo(descripcion, 10)) {
-    mostrarMensaje("La descripción debe tener al menos 10 caracteres.");
-    return;
-  }
-
-  const reemplazos = obtenerDatos();
-
-  const nuevoReemplazo = {
-    id: crearId("RMP"),
-    equipoId: equipoId,
-    componente: componente,
-    descripcion: descripcion,
-    fecha: obtenerFechaActual(),
-    tecnico: localStorage.getItem("CI")
+  const datosReemplazo = {
+    idEquipo: selectEquipoReemplazo.value,
+    componente: document.getElementById("reemplazoComponente").value.trim(),
+    descripcion: document.getElementById("reemplazoDescripcion").value.trim(),
   };
 
-  reemplazos.push(nuevoReemplazo);
-  guardarDatos(reemplazos);
+  try {
+    const respuesta = await fetch(URL_API_REEMPLAZOS, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')
+          .content,
+      },
+      body: JSON.stringify(datosReemplazo),
+    });
+    const cuerpo = await respuesta.json();
 
-  document.getElementById("formRegistrarReemplazo").reset();
-  mostrarMensaje("Reemplazo de componente registrado correctamente.");
+    mostrarMensajeReemplazo(cuerpo.message, cuerpo.status !== "success");
+
+    if (cuerpo.status === "success") {
+      formRegistrarReemplazo.reset();
+    }
+  } catch (error) {
+    mostrarMensajeReemplazo("No se pudo conectar con el servidor.", true);
+  }
 }
 
-function obtenerDatos() {
-  const datosGuardados = localStorage.getItem("historialReemplazos");
-  return datosGuardados === null ? [] : JSON.parse(datosGuardados);
-}
-
-function guardarDatos(reemplazos) {
-  localStorage.setItem("historialReemplazos", JSON.stringify(reemplazos));
-}
-
-function validarMinimo(texto, minimo) {
-  return texto.length >= minimo;
-}
-
-function crearId(prefijo) {
-  return prefijo + "-" + Date.now();
-}
-
-function obtenerFechaActual() {
-  return new Date().toLocaleDateString("es-UY");
-}
-
-function mostrarMensaje(mensaje) {
-  alert(mensaje);
-}
+formRegistrarReemplazo.addEventListener("submit", registrarReemplazo);
+cargarEquiposReemplazo();
