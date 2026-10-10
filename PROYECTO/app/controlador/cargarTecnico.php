@@ -3,14 +3,13 @@
 /**
  * Controlador que carga el panel de técnico.
  *
- * Busca al usuario autenticado (por su cédula en sesión), y si existe
- * carga las métricas del dashboard para mostrarlas en la vista de técnico.
+ * Busca al usuario autenticado (por su cédula en sesión) y, si existe,
+ * muestra la vista de técnico con su nombre y su menú.
  */
 
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AccesoDatosUsuario.php";
 require_once RUTA_MODELO . "/Usuario.php";
-require_once RUTA_MODELO . "/AccesoDatosDashboard.php";
 require_once RUTA_MODELO . "/Traductor.php";
 Traductor::iniciar();
 
@@ -30,13 +29,6 @@ try {
         header("Location: " . URL_BASE . "/public/paginas/Login.php?error=" . urlencode(Traductor::t("common.usuarioNoEncontrado")));
         exit;
     }
-
-    $accesoDatosDashboard = new AccesoDatosDashboard($conexion);
-
-    $totalReportes = $accesoDatosDashboard->contarTotal();
-    $porEstado = $accesoDatosDashboard->contarPorEstado();
-    $tiemposResolucion = $accesoDatosDashboard->obtenerTiemposResolucion();
-    $incidenciasPorSalon = $accesoDatosDashboard->obtenerIncidenciasPorSalon();
 
     $conectorPDO->desconectar();
 
