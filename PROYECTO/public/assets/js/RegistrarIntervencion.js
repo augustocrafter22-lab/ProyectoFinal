@@ -1,76 +1,72 @@
-document.addEventListener("DOMContentLoaded", iniciarRegistrarIntervencion);
+const URL_API_EQUIPOS_INTERVENCION = "../api/equipos.php";
+const URL_API_INTERVENCIONES = "../api/intervenciones.php";
 
-function iniciarRegistrarIntervencion() {
-  const formulario = document.getElementById("formRegistrarIntervencion");
+const formRegistrarIntervencion = document.getElementById(
+  "formRegistrarIntervencion",
+);
+const selectEquipoIntervencion = document.getElementById(
+  "intervencionEquipoSelect",
+);
+const mensajeIntervencion = document.getElementById("mensajeIntervencion");
 
-  if (!formulario) {
-    return;
-  }
-
-  formulario.addEventListener("submit", registrarIntervencion);
+function mostrarMensajeIntervencion(texto, esError) {
+  mensajeIntervencion.textContent = texto;
+  mensajeIntervencion.className = esError ? "mensaje-error" : "mensaje-exito";
 }
 
-function registrarIntervencion(evento) {
-  evento.preventDefault();
+async function cargarEquiposIntervencion() {
+  try {
+    const respuesta = await fetch(URL_API_EQUIPOS_INTERVENCION);
+    const cuerpo = await respuesta.json();
 
-  const equipoId = document.getElementById("intervencionEquipoSelect").value;
-  const tipo = document.getElementById("intervencionTipo").value;
-  const descripcion = document.getElementById("intervencionDescripcion").value.trim();
+    if (cuerpo.status !== "success") {
+      mostrarMensajeIntervencion(cuerpo.message, true);
+      return;
+    }
 
-  if (!equipoId) {
-    mostrarMensaje("Seleccioná un equipo.");
-    return;
+    for (const equipo of cuerpo.data) {
+      const option = document.createElement("option");
+      option.value = equipo.idEquipo;
+      option.textContent = equipo.idEquipo;
+      selectEquipoIntervencion.appendChild(option);
+    }
+  } catch (error) {
+    mostrarMensajeIntervencion("No se pudo conectar con el servidor.", true);
   }
+}
 
-  if (!tipo) {
-    mostrarMensaje("Seleccioná el tipo de intervención.");
-    return;
-  }
+async function registrarIntervencion(eventoFormulario) {
+  eventoFormulario.preventDefault();
 
-  if (!validarMinimo(descripcion, 10)) {
-    mostrarMensaje("La descripción debe tener al menos 10 caracteres.");
-    return;
-  }
-
-  const intervenciones = obtenerDatos();
-
-  const nuevaIntervencion = {
-    id: crearId("INT"),
-    equipoId: equipoId,
-    tipo: tipo,
-    descripcion: descripcion,
-    fecha: obtenerFechaActual(),
-    tecnico: localStorage.getItem("CI")
+  const datosIntervencion = {
+    idEquipo: selectEquipoIntervencion.value,
+    tipo: document.getElementById("intervencionTipo").value.trim(),
+    descripcion: document
+      .getElementById("intervencionDescripcion")
+      .value.trim(),
   };
 
-  intervenciones.push(nuevaIntervencion);
-  guardarDatos(intervenciones);
+  try {
+    const respuesta = await fetch(URL_API_INTERVENCIONES, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')
+          .content,
+      },
+      body: JSON.stringify(datosIntervencion),
+    });
+    const cuerpo = await respuesta.json();
 
-  document.getElementById("formRegistrarIntervencion").reset();
-  mostrarMensaje("Intervención técnica registrada correctamente.");
+    mostrarMensajeIntervencion(cuerpo.message, cuerpo.status !== "success");
+
+    if (cuerpo.status === "success") {
+      formRegistrarIntervencion.reset();
+    }
+  } catch (error) {
+    mostrarMensajeIntervencion("No se pudo conectar con el servidor.", true);
+  }
 }
 
-function obtenerDatos() {
-  const datosGuardados = localStorage.getItem("historialIntervenciones");
-  return datosGuardados === null ? [] : JSON.parse(datosGuardados);
-}
-
-function guardarDatos(intervenciones) {
-  localStorage.setItem("historialIntervenciones", JSON.stringify(intervenciones));
-}
-
-function validarMinimo(texto, minimo) {
-  return texto.length >= minimo;
-}
-
-function crearId(prefijo) {
-  return prefijo + "-" + Date.now();
-}
-
-function obtenerFechaActual() {
-  return new Date().toLocaleDateString("es-UY");
-}
-
-function mostrarMensaje(mensaje) {
-  alert(mensaje);
-}
+formRegistrarIntervencion.addEventListener("submit", registrarIntervencion);
+cargarEquiposIntervencion();

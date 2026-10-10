@@ -134,7 +134,7 @@ class DAOEquipo
      *                     disponibilidad e informacion.
      * @return bool true si la actualización se ejecutó correctamente.
      */
-    public function actualizar(string $idEquipo, array $datos): bool
+    public function actualizar(string $idEquipo, array $datos, string $cedulaUsuario): bool
     {
         $sql = "
             UPDATE EQUIPO
@@ -146,16 +146,67 @@ class DAOEquipo
             WHERE idEquipo = :idEquipo
         ";
 
-        $consulta = $this->conexion->prepare($sql);
+        $this->conexion->beginTransaction();
 
-        return $consulta->execute([
-            ":idEquipo" => $idEquipo,
-            ":idLaboratorio" => $datos["idLaboratorio"],
-            ":marca" => $datos["marca"],
-            ":estado" => $datos["estado"],
-            ":disponibilidad" => $datos["disponibilidad"],
-            ":informacion" => $datos["informacion"]
-        ]);
+        try {
+            $consultaAnterior = $this->conexion->prepare(
+                "SELECT idLaboratorio, estado FROM EQUIPO WHERE idEquipo = :idEquipo FOR UPDATE"
+            );
+            $consultaAnterior->execute([":idEquipo" => $idEquipo]);
+            $datosAnteriores = $consultaAnterior->fetch(PDO::FETCH_ASSOC);
+
+            if ($datosAnteriores === false) {
+                throw new RuntimeException("El equipo ya no existe.");
+            }
+
+            $consulta = $this->conexion->prepare($sql);
+            $actualizado = $consulta->execute([
+                ":idEquipo" => $idEquipo,
+                ":idLaboratorio" => $datos["idLaboratorio"],
+                ":marca" => $datos["marca"],
+                ":estado" => $datos["estado"],
+                ":disponibilidad" => $datos["disponibilidad"],
+                ":informacion" => $datos["informacion"]
+            ]);
+
+            if ($datosAnteriores["idLaboratorio"] !== $datos["idLaboratorio"]) {
+                $registroMovimiento = $this->conexion->prepare(
+                    "INSERT INTO MOVIMIENTO_EQUIPO
+                        (idEquipo, idLaboratorioAnterior, idLaboratorioNuevo, cedulaUsuario)
+                     VALUES (:idEquipo, :anterior, :nuevo, :cedulaUsuario)"
+                );
+                $registroMovimiento->execute([
+                    ":idEquipo" => $idEquipo,
+                    ":anterior" => $datosAnteriores["idLaboratorio"],
+                    ":nuevo" => $datos["idLaboratorio"],
+                    ":cedulaUsuario" => $cedulaUsuario
+                ]);
+            }
+
+            if ($datosAnteriores["estado"] !== $datos["estado"]) {
+                $registroEstado = $this->conexion->prepare(
+                    "INSERT INTO HISTORIAL_ESTADO_EQUIPO
+                        (idEquipo, estadoAnterior, estadoNuevo, cedulaUsuario)
+                     VALUES (:idEquipo, :anterior, :nuevo, :cedulaUsuario)"
+                );
+                $registroEstado->execute([
+                    ":idEquipo" => $idEquipo,
+                    ":anterior" => $datosAnteriores["estado"],
+                    ":nuevo" => $datos["estado"],
+                    ":cedulaUsuario" => $cedulaUsuario
+                ]);
+            }
+
+            $this->conexion->commit();
+
+            return $actualizado;
+        } catch (Throwable $e) {
+            if ($this->conexion->inTransaction()) {
+                $this->conexion->rollBack();
+            }
+
+            throw $e;
+        }
     }
 
     /**

@@ -27,6 +27,8 @@
                 <li><a href="<?= URL_BASE ?>/public/paginas/VistaDeTickets.php"><?= Traductor::t("nav.tickets") ?></a></li>
                 <li><a href="<?= URL_BASE ?>/public/paginas/RegistrarDiagnostico.php"><?= Traductor::t("nav.registrarDiagnostico") ?></a></li>
                 <li><a href="<?= URL_BASE ?>/public/paginas/RegistrarReparacion.php"><?= Traductor::t("nav.registrarReparacion") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/RegistrarIntervencion.php"><?= Traductor::t("nav.registrarIntervencion") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/RegistrarReemplazo.php"><?= Traductor::t("nav.registrarReemplazo") ?></a></li>
                 <li><a href="<?= URL_BASE ?>/public/paginas/RegistrarSolucion.php"><?= Traductor::t("nav.registrarSolucion") ?></a></li>
                 <li><a href="<?= URL_BASE ?>/public/paginas/ConsultarDiagnostico.php"><?= Traductor::t("nav.consultarDiagnosticos") ?></a></li>
                 <li><a href="<?= URL_BASE ?>/public/paginas/Equipos.php"><?= Traductor::t("nav.consultarEquipos") ?></a></li>

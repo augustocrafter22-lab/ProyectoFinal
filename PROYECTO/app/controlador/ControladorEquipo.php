@@ -225,7 +225,7 @@ class ControladorEquipo
 
         $datos = $this->validarDatos($datosEnviados);
 
-        $this->dao->actualizar($idEquipo, $datos);
+        $this->dao->actualizar($idEquipo, $datos, $_SESSION["cedula"]);
 
         return [
             "datos" => $this->dao->obtener($idEquipo),

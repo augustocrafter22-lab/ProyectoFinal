@@ -1,5 +1,5 @@
 const URL_API_EQUIPOS = "../api/equipos.php";
-const URL_API_REPARACIONES = "../api/reparaciones.php";
+const URL_API_HISTORIAL = "../api/historialEquipo.php";
 
 const selectEquipo = document.getElementById("historialTecnicoEquipoSelect");
 const tablaHistorialTecnico = document.getElementById("tablaHistorialTecnico");
@@ -18,16 +18,16 @@ function mostrarTablaVacia(mensaje) {
   tablaHistorialTecnico.replaceChildren(cuerpo);
 }
 
-function mostrarReparaciones(reparaciones) {
-  if (reparaciones.length === 0) {
-    mostrarTablaVacia("No hay reparaciones registradas para este equipo.");
+function mostrarHistorial(historial) {
+  if (historial.length === 0) {
+    mostrarTablaVacia("No hay eventos registrados para este equipo.");
     return;
   }
 
   const encabezado = document.createElement("thead");
   const filaEncabezado = document.createElement("tr");
 
-  for (const nombre of ["Ticket", "Descripción", "Fecha", "Técnico"]) {
+  for (const nombre of ["Tipo", "Detalle", "Fecha", "Responsable"]) {
     const th = document.createElement("th");
     th.textContent = nombre;
     th.style.textAlign = "left";
@@ -42,11 +42,16 @@ function mostrarReparaciones(reparaciones) {
 
   const cuerpo = document.createElement("tbody");
 
-  reparaciones.forEach((reparacion, indice) => {
+  historial.forEach((evento, indice) => {
     const fila = document.createElement("tr");
     fila.style.backgroundColor = indice % 2 === 0 ? "#f6f7fc" : "#ffffff";
 
-    const valores = [reparacion.idTicket, reparacion.reparacion, reparacion.fechaReparacion, reparacion.cedulaTecnico];
+    const valores = [
+      evento.tipo,
+      evento.detalle,
+      evento.fecha,
+      evento.responsable,
+    ];
 
     for (const valor of valores) {
       const td = document.createElement("td");
@@ -80,7 +85,9 @@ async function cargarHistorialTecnico() {
   }
 
   try {
-    const respuesta = await fetch(`${URL_API_REPARACIONES}?idEquipo=${encodeURIComponent(idEquipo)}`);
+    const respuesta = await fetch(
+      `${URL_API_HISTORIAL}?idEquipo=${encodeURIComponent(idEquipo)}`,
+    );
     const cuerpo = await respuesta.json();
 
     if (cuerpo.status !== "success") {
@@ -88,7 +95,7 @@ async function cargarHistorialTecnico() {
       return;
     }
 
-    mostrarReparaciones(cuerpo.data);
+    mostrarHistorial(cuerpo.data);
   } catch (error) {
     mostrarTablaVacia("No se pudo conectar con el servidor.");
   }
@@ -103,7 +110,8 @@ async function cargarEquiposEnSelect() {
       return;
     }
 
-    const idEquipoInicial = new URLSearchParams(window.location.search).get("equipo") || "";
+    const idEquipoInicial =
+      new URLSearchParams(window.location.search).get("equipo") || "";
 
     for (const equipo of cuerpo.data) {
       const option = document.createElement("option");
