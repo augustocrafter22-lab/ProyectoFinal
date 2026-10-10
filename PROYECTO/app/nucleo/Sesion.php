@@ -42,6 +42,28 @@ class Sesion
     }
 
     /**
+     * Igual que verificarRol pero alcanza con que el usuario tenga uno
+     * de los roles indicados; si no tiene ninguno, redirige al login.
+     *
+     * @param array $roles Roles permitidos (coordinador, tecnico o docente).
+     * @return void
+     */
+    public static function verificarAlgunRol(array $roles): void
+    {
+        self::verificarSesion();
+
+        foreach ($roles as $rol) {
+            if ($_SESSION[$rol] ?? false) {
+                return;
+            }
+        }
+
+        $mensaje = "No tiene autorización para acceder a ese panel.";
+        header("Location: " . URL_BASE . "/public/paginas/Login.php?error=" . urlencode($mensaje));
+        exit;
+    }
+
+    /**
      * Igual que verificarRol pero para la API, responde JSON 401 si no hay
      * sesión y 403 si el usuario no tiene ninguno de los roles.
      *

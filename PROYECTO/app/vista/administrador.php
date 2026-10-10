@@ -25,6 +25,7 @@
 
             <ul class="listaNavegacion">
                 <li><a href="<?= URL_BASE ?>/public/paginas/Administrador.php"><?= Traductor::t("common.inicio") ?></a></li>
+                <li><a href="<?= URL_BASE ?>/public/paginas/Dashboard.php"><?= Traductor::t("nav.dashboard") ?></a></li>
                 <li><a href="<?= URL_BASE ?>/public/paginas/cerrarSesion.php"><?= Traductor::t("common.cerrarSesion") ?></a></li>
                 <li><a href="<?= URL_BASE ?>/public/paginas/cambiarIdioma.php?idioma=es"><?= Traductor::t("common.idiomaEs") ?></a></li>
                 <li><a href="<?= URL_BASE ?>/public/paginas/cambiarIdioma.php?idioma=en"><?= Traductor::t("common.idiomaEn") ?></a></li>
