@@ -98,8 +98,8 @@ async function eliminarTicket(articulo) {
     });
     const cuerpo = await respuesta.json();
 
-    if (!cuerpo.exito) {
-      alert(cuerpo.mensaje || "No se pudo eliminar el ticket.");
+    if (cuerpo.status !== "success") {
+      alert(cuerpo.message || "No se pudo eliminar el ticket.");
       return;
     }
 

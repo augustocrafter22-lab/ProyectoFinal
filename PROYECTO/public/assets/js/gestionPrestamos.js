@@ -145,9 +145,9 @@ async function registrarPrestamo(eventoFormulario) {
     });
     const cuerpo = await respuesta.json();
 
-    mostrarMensaje(cuerpo.mensaje, !cuerpo.exito);
+    mostrarMensaje(cuerpo.message, cuerpo.status !== "success");
 
-    if (cuerpo.exito) {
+    if (cuerpo.status === "success") {
       formularioPrestamo.reset();
       cargarPrestamos();
     }
@@ -172,7 +172,7 @@ async function devolverPrestamo(idPrestamo) {
     });
     const cuerpo = await respuesta.json();
 
-    mostrarMensaje(cuerpo.mensaje, !cuerpo.exito);
+    mostrarMensaje(cuerpo.message, cuerpo.status !== "success");
 
     cargarPrestamos();
     cargarEquiposDisponibles();
@@ -190,9 +190,9 @@ async function eliminarPrestamo(idPrestamo) {
     });
     const cuerpo = await respuesta.json();
 
-    mostrarMensaje(cuerpo.mensaje, !cuerpo.exito);
+    mostrarMensaje(cuerpo.message, cuerpo.status !== "success");
 
-    if (cuerpo.exito) {
+    if (cuerpo.status === "success") {
       cargarPrestamos();
     }
   } catch (error) {

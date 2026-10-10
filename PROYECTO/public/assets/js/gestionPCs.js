@@ -130,9 +130,9 @@ async function eliminarEquipo(idEquipo) {
     });
     const cuerpo = await respuesta.json();
 
-    mostrarMensaje(cuerpo.mensaje, !cuerpo.exito);
+    mostrarMensaje(cuerpo.message, cuerpo.status !== "success");
 
-    if (cuerpo.exito) {
+    if (cuerpo.status === "success") {
       cargarEquipos();
     }
   } catch (error) {
@@ -166,9 +166,9 @@ async function guardarEquipo(eventoFormulario) {
     });
     const cuerpo = await respuesta.json();
 
-    mostrarMensaje(cuerpo.mensaje, !cuerpo.exito);
+    mostrarMensaje(cuerpo.message, cuerpo.status !== "success");
 
-    if (cuerpo.exito) {
+    if (cuerpo.status === "success") {
       limpiarFormularioEquipo();
       cargarEquipos();
     }
