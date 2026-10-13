@@ -89,6 +89,8 @@ async function urlTrasLogin(browser: Browser, usuario: Usuario): Promise<{ url: 
   const contexto = await browser.newContext({ baseURL: BASE_URL });
   const pagina = await contexto.newPage();
   await enviarLogin(pagina, usuario.ci, usuario.clave);
+  // Se espera la respuesta de procesarLogin: un panel o Login.php con ?error=.
+  await pagina.waitForURL(url => !(url.pathname.endsWith('/Login.php') && url.search === ''));
   await pagina.waitForLoadState();
   const url = pagina.url();
   const mensaje = pagina.locator('#errorMessage');
@@ -379,11 +381,9 @@ test.describe('Administrador de usuarios (coordinador)', () => {
       .evaluate((elemento: HTMLInputElement) => { elemento.name = 'roles'; });
     await page.getByRole('button', { name: 'Guardar usuario' }).click();
 
-    // DEFECTO: procesarAltaUsuario.php:28 no verifica que roles sea un arreglo; crearUsuario(array $roles)
-    // (AltaDatosUsuario.php:53) lanza TypeError, que no es Exception y no se captura (procesarAltaUsuario.php:68):
-    // el coordinador ve un error fatal de PHP en lugar del mensaje. La API sí lo valida (ControladorUsuario.php:295).
+    // Antes daba un error 500 en blanco porque crearUsuario espera un arreglo.
     await expect(page).toHaveURL(/Administrador\.php\?error=/);
-    await expect(page.locator('#mensajeErrorAdministrador')).toBeVisible();
+    await expect(page.locator('#mensajeErrorAdministrador')).toHaveText(MENSAJE_SIN_ROL);
     expect(await obtenerUsuarioApi(request, datos.ci)).toBeNull();
   });
 
@@ -400,9 +400,7 @@ test.describe('Administrador de usuarios (coordinador)', () => {
     await page.waitForURL(/Administrador\.php\?(exito|error)=/);
 
     expect((await obtenerUsuarioApi(request, datos.ci)).activo).toBe(true);
-    // DEFECTO: AltaDatosUsuario.php:183-187 devuelve el resultado de execute() sin mirar rowCount(), así que
-    // procesarDesactivarUsuario.php:35-36 informa "Usuario desactivado exitosamente" aunque la cédula no exista.
-    await expect(page.locator('#mensajeErrorAdministrador')).toBeVisible();
+    await expect(page.locator('#mensajeErrorAdministrador')).toHaveText(`No existe un usuario con la cédula ${inexistente}.`);
     await expect(page.locator('#mensajeExitoAdministrador')).toHaveCount(0);
   });
 
@@ -416,8 +414,6 @@ test.describe('Administrador de usuarios (coordinador)', () => {
       headers: { Origin: 'http://sitio-externo.example', Referer: 'http://sitio-externo.example/' },
     });
 
-    // DEFECTO: procesarDesactivarUsuario.php (y alta, edición y activación) no piden token CSRF
-    // (app/controlador/procesarDesactivarUsuario.php:15-21), a diferencia de la API (ControladorUsuario.php:54-56).
     expect((await obtenerUsuarioApi(request, datos.ci)).activo).toBe(true);
   });
 });
@@ -432,9 +428,7 @@ test.describe('Coordinador sobre su propio usuario', () => {
     await desactivarDesdeTabla(page, coordinador.ci);
     await page.waitForURL(/Administrador\.php\?(exito|error)=/);
 
-    // DEFECTO: procesarDesactivarUsuario.php:21-31 no compara la cédula con $_SESSION["cedula"];
-    // la API sí lo impide con "No puede desactivar su propio usuario." (ControladorUsuario.php:230-233).
-    await expect(page.locator('#mensajeErrorAdministrador')).toBeVisible();
+    await expect(page.locator('#mensajeErrorAdministrador')).toHaveText('No puede desactivar su propio usuario.');
     await expect(filaDe(page, coordinador.ci).locator('td').nth(4)).toHaveText('Activo');
     expect((await obtenerUsuarioApi(request, coordinador.ci)).activo).toBe(true);
   });

@@ -12,6 +12,7 @@ require_once __DIR__ . "/../../config/config.php";
 require_once RUTA_MODELO . "/ConectorPDO.php";
 require_once RUTA_MODELO . "/AltaDatosUsuario.php";
 require_once RUTA_MODELO . "/Validador.php";
+require_once RUTA_NUCLEO . "/Token.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     header("Location: " . URL_BASE . "/public/paginas/Administrador.php?error=" . urlencode("Método no permitido"));
@@ -21,13 +22,19 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 $conectorPDO = null;
 
 try {
+    if (!Token::tokenValido($_POST["csrfToken"] ?? "")) {
+        throw new Exception("Solicitud rechazada.", 403);
+    }
+
     $cedula = Validador::cedula($_POST["ci"] ?? "");
     $nombre = Validador::longitud($_POST["nombre"] ?? "", 1, 12, "nombre");
     $apellido = Validador::longitud($_POST["apellido"] ?? "", 1, 16, "apellido");
     $clave = Validador::requerido($_POST["contrasenia"] ?? "", "contraseña");
     $roles = $_POST["roles"] ?? [];
 
-    if (empty($roles)) {
+    // Si roles no llega como lista (roles=docente en vez de roles[]=docente) se rechaza,
+    // porque crearUsuario espera un arreglo.
+    if (!is_array($roles) || empty($roles)) {
         throw new Exception("Debe seleccionar al menos un rol.", 400);
     }
 

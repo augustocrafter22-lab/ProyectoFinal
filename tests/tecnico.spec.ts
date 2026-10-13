@@ -805,8 +805,7 @@ test.describe('Equipos', () => {
     await expect(filaEquipo(page, funcionando.idEquipo)).toBeHidden();
   });
 
-  // DEFECTO: el filtro de disponibilidad compara con includes (filtrosEquipos.js:28-31), y como "No disponible"
-  // contiene "disponible", buscar "Disponible" sigue mostrando los equipos no disponibles.
+  // "No disponible" contiene "disponible": el filtro compara el comienzo del texto para no mezclarlos.
   test('TEC-30 filtrar equipos por disponibilidad "Disponible" oculta los no disponibles', async ({ page }) => {
     const disponible = await datos.crearEquipo();
     const noDisponible = await datos.crearEquipo({ disponibilidad: 'No disponible' });

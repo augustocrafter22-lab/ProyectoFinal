@@ -53,6 +53,8 @@ export async function enviarLogin(page: Page, ci: string, clave: string) {
 export async function login(page: Page, usuario: Usuario) {
   await enviarLogin(page, usuario.ci, usuario.clave);
   await expect(page).not.toHaveURL(/Login\.php/);
+  // Se espera a que carguen los scripts del panel antes de interactuar con él.
+  await page.waitForLoadState();
 }
 
 /** Lee el token CSRF de la página actual (meta csrf-token). */

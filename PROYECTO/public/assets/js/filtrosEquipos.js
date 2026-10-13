@@ -25,10 +25,12 @@ function aplicarFiltrosEquipos() {
       .trim()
       .toUpperCase()
       .includes(estadoBuscado);
+    // Se compara el comienzo del texto y no con includes, porque "NO DISPONIBLE"
+    // contiene "DISPONIBLE" y el filtro mostraría los dos.
     const coincideDisponibilidad = celdas[4].textContent
       .trim()
       .toUpperCase()
-      .includes(disponibilidadBuscada);
+      .slice(0, disponibilidadBuscada.length) === disponibilidadBuscada;
 
     fila.style.display =
       coincideID &&

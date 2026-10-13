@@ -72,11 +72,13 @@
 
                             <?php if ($usuario["activo"]): ?>
                                 <form action="procesarDesactivarUsuario.php" method="POST" class="formularioDesactivarUsuario">
+                                    <input type="hidden" name="csrfToken" value="<?= Token::generarTokenCSRF() ?>">
                                     <input type="hidden" name="cedula" value="<?= htmlspecialchars($usuario["cedula"]) ?>">
                                     <button type="submit" class="btnEliminar"><?= Traductor::t("administrador.btnDesactivar") ?></button>
                                 </form>
                             <?php else: ?>
                                 <form action="procesarActivarUsuario.php" method="POST" class="formularioActivarUsuario">
+                                    <input type="hidden" name="csrfToken" value="<?= Token::generarTokenCSRF() ?>">
                                     <input type="hidden" name="cedula" value="<?= htmlspecialchars($usuario["cedula"]) ?>">
                                     <button type="submit" class="btnActivar"><?= Traductor::t("administrador.btnActivar") ?></button>
                                 </form>
@@ -99,6 +101,7 @@
             <img src="<?= URL_BASE ?>/public/assets/img/Bootstrap/x.svg" alt="Cerrar" width="24" height="24">
         </button>
         <form id="formularioGestionarUsuario" method="POST">
+            <input type="hidden" name="csrfToken" value="<?= Token::generarTokenCSRF() ?>">
             <fieldset>
                 <legend><?= Traductor::t("administrador.dialogTitulo") ?></legend>
                 <fieldset>

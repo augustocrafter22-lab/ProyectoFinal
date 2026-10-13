@@ -173,9 +173,7 @@ test.describe('Seguridad: sesión', () => {
     await expect(page.locator('#errorMessage')).toHaveText(MENSAJE_CREDENCIALES);
   });
 
-  // DEFECTO: los formularios procesar*Usuario.php no piden token CSRF (app/controlador/procesarAltaUsuario.php:15-50,
-  // app/vista/administrador.php:74 y 101), a diferencia de la API (app/controlador/ControladorUsuario.php:54-55).
-  // Un POST sin token con la sesión del coordinador crea el usuario.
+  // Los formularios procesar*Usuario.php exigen el campo csrfToken (Token::tokenValido).
   test('SEG-16 alta de usuario por formulario sin token CSRF se rechaza', async ({ page, playwright }) => {
     const cedula = cedulaAleatoria();
     await login(page, USUARIOS.coordinador);
