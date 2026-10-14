@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="docente.titulo"></title>
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/barraNavegacion.css">
+    <link rel="stylesheet" href="../assets/css/formularios.css">
+</head>
+
+<body class="cargando" data-roles="docente">
+    <header class="barraNavegacion">
+        <nav>
+            <button class="btnMenu" id="btnMenu" type="button">
+                <img class="iconoMenu" src="../assets/img/Bootstrap/list.svg" alt="Menú" data-i18n-alt="comun.menu" width="40" height="40">
+            </button>
+
+            <button class="btnCerrarMenu" id="btnCerrarMenu" type="button">
+                <img class="iconoMenu" src="../assets/img/Bootstrap/x.svg" alt="Cerrar menú" data-i18n-alt="comun.cerrarMenu" width="40" height="40">
+            </button>
+
+            <ul class="listaNavegacion">
+                <li><a class="btnNavegacion" href="solicitarLab.html" data-i18n="navegacion.solicitarLab"></a></li>
+                <li><a class="btnNavegacion" href="ingresoTickets.html" data-i18n="navegacion.ingresarTicket"></a></li>
+                <li><button class="btnNavegacion cerrarSesion" id="btnCerrarSesion" type="button" data-i18n="comun.cerrarSesion"></button></li>
+                <li><button class="btnNavegacion" type="button" data-idioma="es" data-i18n="comun.idiomaEs"></button></li>
+                <li><button class="btnNavegacion" type="button" data-idioma="en" data-i18n="comun.idiomaEn"></button></li>
+            </ul>
+        </nav>
+
+        <h1>S.G.R.S.I</h1>
+        <img src="../assets/img/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo UTU" data-i18n-alt="comun.logoUtu" width="75">
+    </header>
+
+    <section class="encabezado">
+        <h1><span data-i18n="docente.bienvenida"></span> <span data-usuario="nombreCompleto"></span> <span data-i18n="docente.rolSufijo"></span></h1>
+    </section>
+
+    <section class="moduloImagen">
+        <p data-i18n="docente.instruccion"></p>
+        <img src="../assets/img/UTU_9296-1024x614.jpg" alt="Instituto UTU" width="500">
+    </section>
+
+    <script src="../assets/js/nucleo/traductor.js"></script>
+    <script src="../assets/js/nucleo/api.js"></script>
+    <script src="../assets/js/nucleo/sesion.js"></script>
+    <script src="../assets/js/nucleo/componentes.js"></script>
+    <script src="../assets/js/nucleo/barraNavegacion.js"></script>
+    <script src="../assets/js/nucleo/pagina.js"></script>
+    <script src="../assets/js/inicioPagina.js"></script>
+</body>
+
+</html>

@@ -1,119 +1,121 @@
-header.BarraNavegacion{
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    background-color: #0D2673 ;
-    color: var(#0D2673);
-    min-height: 3.5rem;
-    position: sticky;
-    top: 0px;
-    z-index: 100;
-    justify-content: space-between;
-}
-nav {
-  display:flex;
-}
-nav a{
-  display: inline-block;
-  border: none;
-  border-radius: var(--radio);
-}
-.btnMenu, .btnMenuC{
-display: none;
-}
-.BarraNavegacion h1{
-    color: white;
-    font-size: 1rem;
-    font-weight: 700;
-    display: flex;
-    justify-content: flex-end;
-    padding: 1rem;
+/* Barra de navegación superior: menú, cerrar sesión e idioma. */
 
+.barraNavegacion {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+  background-color: var(--azulBarra);
+  min-height: 3.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
-nav ul li{
-    display: flex;
-    align-items: stretch;
-    justify-content: flex-start;
+
+.barraNavegacion nav {
+  display: flex;
 }
-.listaNavegacion a{
-    color: white;
-    font-size: 1rem;
-    font-weight: 700;
-    padding: 0.4rem 1rem;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    max-height: 75vh;
+
+.barraNavegacion h1 {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+  color: var(--blancoPuro);
+  font-size: 1rem;
+  font-weight: 700;
 }
-.listaNavegacion a:hover {
-    color: #ed9921;
+
+.listaNavegacion {
+  display: flex;
+  justify-content: first baseline;
+  align-items: stretch;
+  gap: 1rem;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
-.listaNavegacion{
-    display: flex;
-    justify-content: first baseline;
-    align-items: stretch;
-    gap: 1rem;
-    flex-wrap: wrap;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    
+
+.listaNavegacion li {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
 }
-.listaNavegacion a.cerrarSesion:hover {
-    color: red;
+
+/* Los enlaces y los botones del menú (cerrar sesión, idioma) se ven igual. */
+.btnNavegacion {
+  display: flex;
+  align-items: center;
+  padding: 0.4rem 1rem;
+  border: none;
+  background: none;
+  color: var(--blancoPuro);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  max-height: 75vh;
 }
-.menu{
-    filter: invert();
+
+.btnNavegacion:hover {
+  color: #ed9921;
 }
-@media (max-width: 768px){
-.listaNavegacion{
-display: none;
-position: fixed;
-left: 0;
-top: 3.5rem;
-flex-direction: column;
-justify-content: flex-start;
-width: 50vw;
-height: calc(100vh - 3.5rem);
-background-color: #0D2673;
+
+.btnNavegacion.cerrarSesion:hover {
+  color: red;
 }
+
+.btnMenu,
+.btnCerrarMenu {
+  display: none;
 }
+
+.iconoMenu {
+  filter: invert();
+}
+
 @media (max-width: 768px) {
-.btnMenu.oculto{
+  .listaNavegacion {
     display: none;
-}
-}
-@media (max-width: 768px) {
-.btnMenu{
+    position: fixed;
+    left: 0;
+    top: 3.5rem;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 50vw;
+    height: calc(100vh - 3.5rem);
+    background-color: var(--azulBarra);
+  }
+
+  .listaNavegacion.visible {
     display: flex;
-}
-}
-@media (max-width: 768px) {
-.btnMenuC.visible{
-    display: flex;
-}
-}
-@media (max-width: 768px){
-.btnMenu, .btnMenuC{
-    align-items: center;
-    background-color: #0D2673;
-    border: none;
-    padding: 0 0.5rem;
-    height: 100%;
-}
-}
-@media (max-width: 768px){
-.listaNavegacion a{
+  }
+
+  .btnNavegacion {
     justify-content: flex-start;
     width: 100%;
-}
-}
-@media (max-width: 768px){
-.listaNavegacion.visible{
+  }
+
+  .btnMenu {
     display: flex;
+  }
+
+  .btnMenu.oculto {
+    display: none;
+  }
+
+  .btnCerrarMenu.visible {
+    display: flex;
+  }
+
+  .btnMenu,
+  .btnCerrarMenu {
+    align-items: center;
+    height: 100%;
+    padding: 0 0.5rem;
+    border: none;
+    background-color: var(--azulBarra);
+  }
 }
-}
-
-
-

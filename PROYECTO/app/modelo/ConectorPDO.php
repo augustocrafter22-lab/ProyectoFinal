@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "/RegistradorErrores.php";
+require_once RUTA_NUCLEO . "/RegistradorErrores.php";
 
 class ConectorPDO {
     private string $servername;
@@ -52,9 +52,3 @@ class ConectorPDO {
         $this->conexion = null;
     }
 }
-
-//Código para depuración
-//$ConectorPDO = new ConectorPDO ("localhost", "deklan", "123", "test");
-//$ConectorPDO->establecerConexion();
-
-?>

@@ -1,5 +1,7 @@
 <?php
 
+require_once RUTA_NUCLEO . "/Traductor.php";
+
 class Login {
     private AccesoDatosUsuario $accesoDatosUsuario;
     private string $error = "";
@@ -22,17 +24,17 @@ class Login {
         $usuario = $this->accesoDatosUsuario->buscarUsuario($cedula);
 
         if ($usuario === null) {
-            $this->error = "La cédula o la contraseña son incorrectas.";
+            $this->error = Traductor::t("login.credencialesIncorrectas");
             return null;
         }
 
         if (!$usuario->estaActivo()) {
-            $this->error = "El usuario se encuentra inactivo.";
+            $this->error = Traductor::t("login.usuarioInactivo");
             return null;
         }
 
         if (!password_verify($clave, $usuario->getClaveHash())) {
-            $this->error = "La cédula o la contraseña son incorrectas.";
+            $this->error = Traductor::t("login.credencialesIncorrectas");
             return null;
         }
 

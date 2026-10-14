@@ -1,0 +1,26 @@
+<?php
+
+return [
+    "titulo" => "Dashboard de tickets",
+    "subtitulo" => "Estas son las métricas de los tickets del sistema.",
+    "reportes" => "Reportes",
+    "incidenciasSinAtender" => "Incidencias sin atender",
+    "enProceso" => "En Proceso",
+    "resueltas" => "Resueltas",
+    "panelIncidenciasPorEstado" => "Incidencias por estado",
+    "thEstado" => "Estado",
+    "thCantidad" => "Cantidad",
+    "estadoPendiente" => "Pendiente",
+    "estadoEnProceso" => "En Proceso",
+    "estadoResuelto" => "Resuelto",
+    "estadoCerrado" => "Cerrado",
+    "total" => "Total",
+    "panelTiempos" => "Tiempos de Resolución",
+    "thTicket" => "Ticket",
+    "thDias" => "Días",
+    "sinTicketsResueltos" => "Todavía no hay tickets resueltos",
+    "panelIncidenciasPorSalon" => "Incidencias por salón",
+    "thSalon" => "Salón",
+    "thIncidencias" => "Incidencias",
+    "sinIncidencias" => "Todavía no hay incidencias",
+];

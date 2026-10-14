@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.G.R.S.I.</title>
+
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/login.css">
+</head>
+
+<body class="cargando">
+    <main>
+        <section class="seccionMarca">
+            <img src="../assets/img/Isotipo-UTU-Color-Dorado-PNG.png" alt="DeKlan Enterprise" width="200" height="200">
+            <h1>S.G.R.S.I.</h1>
+            <p data-i18n="login.subtitulo"></p>
+        </section>
+
+        <section class="seccionLogin">
+            <p class="selectorIdioma">
+                <button type="button" data-idioma="es" data-i18n="comun.idiomaEs"></button>
+                <button type="button" data-idioma="en" data-i18n="comun.idiomaEn"></button>
+            </p>
+
+            <form id="formularioLogin">
+                <h2 data-i18n="login.titulo"></h2>
+
+                <fieldset>
+                    <label for="cedula" data-i18n="login.labelCi"></label>
+                    <input type="text" id="cedula" name="cedula" inputmode="numeric" minlength="7" maxlength="8" required>
+
+                    <label for="clave" data-i18n="login.labelClave"></label>
+                    <input type="password" id="clave" name="clave" autocomplete="current-password" required>
+
+                    <p id="mensajeLogin" class="mensajeLogin" role="alert"></p>
+
+                    <button type="submit" data-i18n="login.botonIngresar"></button>
+                </fieldset>
+            </form>
+        </section>
+    </main>
+
+    <script src="../assets/js/nucleo/traductor.js"></script>
+    <script src="../assets/js/nucleo/api.js"></script>
+    <script src="../assets/js/nucleo/sesion.js"></script>
+    <script src="../assets/js/nucleo/componentes.js"></script>
+    <script src="../assets/js/nucleo/barraNavegacion.js"></script>
+    <script src="../assets/js/nucleo/pagina.js"></script>
+    <script src="../assets/js/login.js"></script>
+</body>
+
+</html>

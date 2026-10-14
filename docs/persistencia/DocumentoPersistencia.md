@@ -50,7 +50,7 @@ Las condiciones con un `:parámetro` se aplican con el valor que manda el usuari
 * **Q16** - Listar equipos con el número de su laboratorio, con filtros opcionales por estado, laboratorio y disponibilidad. (`DAOEquipo::listar`)
 * **Q17** - Obtener un equipo por su id con el número de su laboratorio. (`DAOEquipo::obtener`)
 * **Q18** - Verificar que existe un laboratorio. (`DAOEquipo::existeLaboratorio`, `DAOSolicitudLaboratorio::existeLaboratorio`)
-* **Q31** - Listar los laboratorios por número. (`DAOLaboratorio::listar`, `AccesoDatosSolicitudLaboratorio::obtenerLaboratorios`)
+* **Q31** - Listar los laboratorios por número. (`DAOLaboratorio::listar`)
 * **Q33** - Obtener un laboratorio por su id. (`DAOLaboratorio::obtener`)
 
 ### DIAGNOSTICO
@@ -79,7 +79,7 @@ Las condiciones con un `:parámetro` se aplican con el valor que manda el usuari
 
 ### SOLICITUD_LABORATORIO
 
-* **Q32** - Listar las solicitudes de laboratorio con el número del laboratorio, por fecha y hora estimada. Con filtros opcionales por tipo (preparación de laboratorio o instalación de software), laboratorio y fecha. (`DAOSolicitudLaboratorio::listar`, `AccesoDatosSolicitudLaboratorio::obtenerSolicitudes`)
+* **Q32** - Listar las solicitudes de laboratorio con el número del laboratorio, por fecha y hora estimada. Con filtros opcionales por tipo (preparación de laboratorio o instalación de software), laboratorio y fecha. (`DAOSolicitudLaboratorio::listar`)
 * **Q34** - Obtener una solicitud de laboratorio por su id. (`DAOSolicitudLaboratorio::obtener`)
 
 ### PRESTAMO
@@ -395,7 +395,7 @@ WHERE idLaboratorio = :idLaboratorio;
 DELETE FROM LABORATORIO WHERE idLaboratorio = :idLaboratorio;
 ```
 
-### SOLICITUD_LABORATORIO (`DAOSolicitudLaboratorio` y `AccesoDatosSolicitudLaboratorio`)
+### SOLICITUD_LABORATORIO (`DAOSolicitudLaboratorio`)
 
 ```sql
 INSERT INTO SOLICITUD_LABORATORIO

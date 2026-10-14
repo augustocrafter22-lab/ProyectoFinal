@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="equipos.titulo"></title>
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/barraNavegacion.css">
+    <link rel="stylesheet" href="../assets/css/formularios.css">
+</head>
+
+<body class="cargando" data-roles="tecnico">
+    <header class="barraNavegacion">
+        <nav>
+            <button class="btnMenu" id="btnMenu" type="button">
+                <img class="iconoMenu" src="../assets/img/Bootstrap/list.svg" alt="Menú" data-i18n-alt="comun.menu" width="40" height="40">
+            </button>
+
+            <button class="btnCerrarMenu" id="btnCerrarMenu" type="button">
+                <img class="iconoMenu" src="../assets/img/Bootstrap/x.svg" alt="Cerrar menú" data-i18n-alt="comun.cerrarMenu" width="40" height="40">
+            </button>
+
+            <ul class="listaNavegacion">
+                <li><a class="btnNavegacion" href="tecnico.html" data-i18n="comun.regresar"></a></li>
+                <li><button class="btnNavegacion cerrarSesion" id="btnCerrarSesion" type="button" data-i18n="comun.cerrarSesion"></button></li>
+                <li><button class="btnNavegacion" type="button" data-idioma="es" data-i18n="comun.idiomaEs"></button></li>
+                <li><button class="btnNavegacion" type="button" data-idioma="en" data-i18n="comun.idiomaEn"></button></li>
+            </ul>
+        </nav>
+
+        <h1>S.G.R.S.I</h1>
+        <img src="../assets/img/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo UTU" data-i18n-alt="comun.logoUtu" width="75">
+    </header>
+
+    <main>
+        <section class="modulo">
+            <header class="cajaEncabezado">
+                <h2 data-i18n="equipos.titulo"></h2>
+            </header>
+
+            <section class="filtrosBarra">
+                <label class="filtroContenedor" for="filtroID">
+                    <span data-i18n="equipos.filtroId"></span>
+                    <input class="campoFiltro" type="text" id="filtroID" data-i18n-placeholder="equipos.filtroPlaceholderId">
+                </label>
+                <label class="filtroContenedor" for="filtroLab">
+                    <span data-i18n="equipos.filtroLaboratorio"></span>
+                    <input class="campoFiltro" type="text" id="filtroLab" data-i18n-placeholder="equipos.filtroPlaceholderLaboratorio">
+                </label>
+                <label class="filtroContenedor" for="filtroEstado">
+                    <span data-i18n="equipos.filtroEstado"></span>
+                    <input class="campoFiltro" type="text" id="filtroEstado" data-i18n-placeholder="equipos.filtroPlaceholderEstado">
+                </label>
+                <label class="filtroContenedor" for="filtroDisponibilidad">
+                    <span data-i18n="equipos.filtroDisponibilidad"></span>
+                    <input class="campoFiltro" type="text" id="filtroDisponibilidad" data-i18n-placeholder="equipos.filtroPlaceholderDisponibilidad">
+                </label>
+            </section>
+
+            <p id="mensajeEquipos" class="mensaje" role="status"></p>
+
+            <form class="formulario" id="formularioEquipo">
+                <fieldset>
+                    <legend id="leyendaFormularioEquipo" data-i18n="equipos.leyendaAlta"></legend>
+
+                    <label for="idEquipo" data-i18n="equipos.labelId"></label>
+                    <input type="text" id="idEquipo" name="idEquipo" maxlength="10" required>
+
+                    <label for="idLaboratorio" data-i18n="equipos.labelLaboratorio"></label>
+                    <select id="idLaboratorio" name="idLaboratorio" required>
+                        <option value="" data-i18n="equipos.opcionSeleccioneLaboratorio"></option>
+                    </select>
+
+                    <label for="marca" data-i18n="equipos.labelMarca"></label>
+                    <select id="marca" name="marca" required>
+                        <option value="Dell">Dell</option>
+                        <option value="HP">HP</option>
+                        <option value="Lenovo">Lenovo</option>
+                        <option value="Asus">Asus</option>
+                        <option value="Acer">Acer</option>
+                    </select>
+
+                    <label for="estado" data-i18n="equipos.labelEstado"></label>
+                    <select id="estado" name="estado" required>
+                        <option value="Dañado" data-i18n="equipos.estadoDanado"></option>
+                        <option value="Funcionando" data-i18n="equipos.estadoFuncionando"></option>
+                        <option value="En mantenimiento" data-i18n="equipos.estadoMantenimiento"></option>
+                        <option value="No funciona" data-i18n="equipos.estadoNoFunciona"></option>
+                    </select>
+
+                    <label for="disponibilidad" data-i18n="equipos.labelDisponibilidad"></label>
+                    <select id="disponibilidad" name="disponibilidad" required>
+                        <option value="Disponible" data-i18n="equipos.disponible"></option>
+                        <option value="No disponible" data-i18n="equipos.noDisponible"></option>
+                    </select>
+
+                    <label for="informacion" data-i18n="equipos.labelInformacion"></label>
+                    <input type="text" id="informacion" name="informacion">
+
+                    <button class="btnPrincipal" type="submit" data-i18n="equipos.btnGuardar"></button>
+                    <button class="btnSecundario" id="btnCancelarEdicionEquipo" type="button" data-i18n="equipos.btnCancelar" hidden></button>
+                </fieldset>
+            </form>
+
+            <div class="tablaResponsiva">
+                <table>
+                    <caption data-i18n="equipos.captionTabla"></caption>
+                    <thead>
+                        <tr>
+                            <th data-i18n="equipos.thId"></th>
+                            <th data-i18n="equipos.thLaboratorio"></th>
+                            <th data-i18n="equipos.thMarca"></th>
+                            <th data-i18n="equipos.thEstado"></th>
+                            <th data-i18n="equipos.thDisponibilidad"></th>
+                            <th data-i18n="equipos.thInformacion"></th>
+                            <th data-i18n="equipos.thAcciones"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoTablaEquipos"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="../assets/js/nucleo/traductor.js"></script>
+    <script src="../assets/js/nucleo/api.js"></script>
+    <script src="../assets/js/nucleo/sesion.js"></script>
+    <script src="../assets/js/nucleo/componentes.js"></script>
+    <script src="../assets/js/nucleo/barraNavegacion.js"></script>
+    <script src="../assets/js/nucleo/pagina.js"></script>
+    <script src="../assets/js/equipos.js"></script>
+</body>
+
+</html>

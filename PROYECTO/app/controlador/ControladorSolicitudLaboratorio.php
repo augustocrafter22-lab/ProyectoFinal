@@ -1,6 +1,7 @@
 <?php
 
-require_once RUTA_MODELO . "/ConectorPDO.php";
+require_once RUTA_NUCLEO . "/Conexion.php";
+require_once RUTA_NUCLEO . "/Solicitud.php";
 require_once RUTA_MODELO . "/DAOSolicitudLaboratorio.php";
 require_once RUTA_MODELO . "/Validador.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
@@ -12,12 +13,12 @@ require_once RUTA_NUCLEO . "/Sesion.php";
  * Captura la solicitud del cliente mediante el método gestionar(), que
  * decide qué hacer según el método HTTP utilizado:
  *
- *   GET    /public/api/solicitudes.php                lista todas las solicitudes
- *   GET    /public/api/solicitudes.php?id=3           devuelve una solicitud puntual
- *   GET    /public/api/solicitudes.php?tipo=software&laboratorio=LAB001&fecha=2026-10-20
- *   POST   /public/api/solicitudes.php                registra una solicitud nueva
- *   PUT    /public/api/solicitudes.php?id=3           modifica una solicitud existente
- *   DELETE /public/api/solicitudes.php?id=3           elimina una solicitud
+ *   GET    /public/index.php?ruta=solicitudes                lista todas las solicitudes
+ *   GET    /public/index.php?ruta=solicitudes&id=3           devuelve una solicitud puntual
+ *   GET    /public/index.php?ruta=solicitudes&tipo=software&laboratorio=LAB001&fecha=2026-10-20
+ *   POST   /public/index.php?ruta=solicitudes                registra una solicitud nueva
+ *   PUT    /public/index.php?ruta=solicitudes&id=3           modifica una solicitud existente
+ *   DELETE /public/index.php?ruta=solicitudes&id=3           elimina una solicitud
  *
  * El filtro "tipo" separa las solicitudes de preparación de un laboratorio
  * (tipo=preparacion) de las de instalación de software (tipo=software).
@@ -27,7 +28,6 @@ require_once RUTA_NUCLEO . "/Sesion.php";
  */
 class ControladorSolicitudLaboratorio
 {
-    private ConectorPDO $conectorPDO;
     private DAOSolicitudLaboratorio $dao;
 
     /** @var array Tipos de solicitud que se pueden usar como filtro. */
@@ -54,47 +54,28 @@ class ControladorSolicitudLaboratorio
             Token::verificarCSRF();
         }
 
-        try {
-            $this->conectar();
+        $this->conectar();
 
-            switch ($metodo) {
-                case "GET":
-                    $resultado = $this->listar();
-                    break;
-                case "POST":
-                    $resultado = $this->registrar();
-                    break;
-                case "PUT":
-                    $resultado = $this->actualizar();
-                    break;
-                case "DELETE":
-                    $resultado = $this->eliminar();
-                    break;
-                default:
-                    throw new Exception("Método no permitido.", 405);
-            }
-
-            $this->conectorPDO->desconectar();
-
-            RespuestaJson::exito($resultado["datos"], $resultado["mensaje"], $resultado["codigo"]);
-
-        } catch (PDOException $e) {
-            // Los errores de la base de datos traen un código SQLSTATE (por ejemplo "42S02"),
-            // que no es un código HTTP, por eso siempre se responde con un 500.
-            RegistradorErrores::registrar($e);
-            RespuestaJson::error("Ocurrió un error, intente nuevamente.", 500);
-        } catch (Exception $e) {
-            // Si el código de la excepción es un código HTTP válido se usa ese,
-            // en cualquier otro caso se responde con un 500 (error del servidor).
-            $codigo = $e->getCode() >= 400 && $e->getCode() <= 599 ? (int) $e->getCode() : 500;
-
-            if ($codigo === 500) {
-                RegistradorErrores::registrar($e);
-                RespuestaJson::error("Ocurrió un error, intente nuevamente.", 500);
-            } else {
-                RespuestaJson::error($e->getMessage(), $codigo);
-            }
+        switch ($metodo) {
+            case "GET":
+                $resultado = $this->listar();
+                break;
+            case "POST":
+                $resultado = $this->registrar();
+                break;
+            case "PUT":
+                $resultado = $this->actualizar();
+                break;
+            case "DELETE":
+                $resultado = $this->eliminar();
+                break;
+            default:
+                throw new Exception("Método no permitido.", 405);
         }
+
+        Conexion::desconectar();
+
+        RespuestaJson::exito($resultado["datos"], $resultado["mensaje"], $resultado["codigo"]);
     }
 
     /**
@@ -105,12 +86,7 @@ class ControladorSolicitudLaboratorio
      */
     private function conectar(): void
     {
-        $this->conectorPDO = new ConectorPDO($_ENV["BD_HOST"], $_ENV["BD_USER"], $_ENV["BD_PASS"], $_ENV["BD_NAME"]);
-        $conexion = $this->conectorPDO->establecerConexion();
-
-        if ($conexion === null) {
-            throw new Exception("No se pudo conectar a la base de datos.", 500);
-        }
+        $conexion = Conexion::conectar();
 
         $this->dao = new DAOSolicitudLaboratorio($conexion);
     }
@@ -183,7 +159,7 @@ class ControladorSolicitudLaboratorio
      */
     private function registrar(): array
     {
-        $datos = $this->validarDatos($this->obtenerDatosEnviados());
+        $datos = $this->validarDatos(Solicitud::obtenerDatos());
         $datos["cedulaSolicitante"] = $_SESSION["cedula"];
 
         $idSolicitud = $this->dao->crear($datos);
@@ -203,7 +179,7 @@ class ControladorSolicitudLaboratorio
      */
     private function actualizar(): array
     {
-        $datosEnviados = $this->obtenerDatosEnviados();
+        $datosEnviados = Solicitud::obtenerDatos();
 
         $idSolicitud = $this->obtenerIdIndicado($datosEnviados);
 
@@ -228,7 +204,7 @@ class ControladorSolicitudLaboratorio
      */
     private function eliminar(): array
     {
-        $idSolicitud = $this->obtenerIdIndicado($this->obtenerDatosEnviados());
+        $idSolicitud = $this->obtenerIdIndicado(Solicitud::obtenerDatos());
 
         if ($this->dao->obtener($idSolicitud) === null) {
             throw new Exception("No existe una solicitud con el identificador $idSolicitud.", 404);
@@ -294,30 +270,6 @@ class ControladorSolicitudLaboratorio
         ];
     }
 
-    /**
-     * Obtiene los datos enviados por el cliente.
-     *
-     * Acepta tanto formato JSON como los datos de un formulario $_POST.
-     *
-     * @return array Arreglo asociativo con los datos recibidos.
-     */
-    private function obtenerDatosEnviados(): array
-    {
-        $cuerpo = file_get_contents("php://input");
-        $datos = json_decode($cuerpo, true);
-
-        if (is_array($datos)) {
-            return $datos;
-        }
-
-        if (!empty($_POST)) {
-            return $_POST;
-        }
-
-        parse_str($cuerpo, $datosFormulario);
-
-        return is_array($datosFormulario) ? $datosFormulario : [];
-    }
 }
 
 ?>

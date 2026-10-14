@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="ingresoTickets.titulo"></title>
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/barraNavegacion.css">
+    <link rel="stylesheet" href="../assets/css/formularios.css">
+</head>
+
+<body class="cargando" data-roles="docente">
+    <header class="barraNavegacion">
+        <nav>
+            <button class="btnMenu" id="btnMenu" type="button">
+                <img class="iconoMenu" src="../assets/img/Bootstrap/list.svg" alt="Menú" data-i18n-alt="comun.menu" width="40" height="40">
+            </button>
+
+            <button class="btnCerrarMenu" id="btnCerrarMenu" type="button">
+                <img class="iconoMenu" src="../assets/img/Bootstrap/x.svg" alt="Cerrar menú" data-i18n-alt="comun.cerrarMenu" width="40" height="40">
+            </button>
+
+            <ul class="listaNavegacion">
+                <li><a class="btnNavegacion" href="docente.html" data-i18n="comun.regresar"></a></li>
+                <li><button class="btnNavegacion cerrarSesion" id="btnCerrarSesion" type="button" data-i18n="comun.cerrarSesion"></button></li>
+                <li><button class="btnNavegacion" type="button" data-idioma="es" data-i18n="comun.idiomaEs"></button></li>
+                <li><button class="btnNavegacion" type="button" data-idioma="en" data-i18n="comun.idiomaEn"></button></li>
+            </ul>
+        </nav>
+
+        <h1>S.G.R.S.I</h1>
+        <img src="../assets/img/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo UTU" data-i18n-alt="comun.logoUtu" width="75">
+    </header>
+
+    <section class="encabezado">
+        <h1 data-i18n="ingresoTickets.titulo"></h1>
+        <p data-i18n="ingresoTickets.subtitulo"></p>
+    </section>
+
+    <p id="mensajeIngresoTickets" class="mensaje" role="status"></p>
+
+    <section class="modulo">
+        <form class="formulario" id="formularioTicket">
+            <label for="laboratorio" data-i18n="ingresoTickets.labelEspacio"></label>
+            <select id="laboratorio" name="laboratorio" required>
+                <option value="" data-i18n="ingresoTickets.opcionSeleccioneEspacio"></option>
+            </select>
+
+            <label for="equipo" data-i18n="ingresoTickets.labelEquipos"></label>
+            <select id="equipo" name="equipo" required>
+                <option value="" data-i18n="ingresoTickets.opcionSeleccioneEquipo"></option>
+            </select>
+
+            <label for="asunto" data-i18n="ingresoTickets.labelAsunto"></label>
+            <input type="text" id="asunto" name="asunto" data-i18n-placeholder="ingresoTickets.placeholderAsunto" maxlength="100" required>
+
+            <label for="descripcion" data-i18n="ingresoTickets.labelDescripcion"></label>
+            <textarea id="descripcion" name="descripcion" rows="5" data-i18n-placeholder="ingresoTickets.placeholderDescripcion" required></textarea>
+
+            <label for="turno" data-i18n="ingresoTickets.labelTurno"></label>
+            <select id="turno" name="turno" required>
+                <option value="" data-i18n="ingresoTickets.opcionSeleccioneTurno"></option>
+                <option value="Matutino" data-i18n="ingresoTickets.turnoMatutino"></option>
+                <option value="Vespertino" data-i18n="ingresoTickets.turnoVespertino"></option>
+                <option value="Nocturno" data-i18n="ingresoTickets.turnoNocturno"></option>
+            </select>
+
+            <label for="grupo" data-i18n="ingresoTickets.labelGrupo"></label>
+            <input type="text" id="grupo" name="grupo" data-i18n-placeholder="ingresoTickets.placeholderGrupo" maxlength="10" required>
+
+            <label for="profesor" data-i18n="ingresoTickets.labelProfesor"></label>
+            <input type="text" id="profesor" name="profesor" data-i18n-placeholder="ingresoTickets.placeholderProfesor" maxlength="50" required>
+
+            <button class="btnPrincipal" type="submit" data-i18n="ingresoTickets.btnEnviar"></button>
+        </form>
+    </section>
+
+    <script src="../assets/js/nucleo/traductor.js"></script>
+    <script src="../assets/js/nucleo/api.js"></script>
+    <script src="../assets/js/nucleo/sesion.js"></script>
+    <script src="../assets/js/nucleo/componentes.js"></script>
+    <script src="../assets/js/nucleo/barraNavegacion.js"></script>
+    <script src="../assets/js/nucleo/pagina.js"></script>
+    <script src="../assets/js/ingresoTickets.js"></script>
+</body>
+
+</html>

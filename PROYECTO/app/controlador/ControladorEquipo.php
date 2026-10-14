@@ -1,6 +1,7 @@
 <?php
 
-require_once RUTA_MODELO . "/ConectorPDO.php";
+require_once RUTA_NUCLEO . "/Conexion.php";
+require_once RUTA_NUCLEO . "/Solicitud.php";
 require_once RUTA_MODELO . "/DAOEquipo.php";
 require_once RUTA_MODELO . "/Validador.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
@@ -9,23 +10,18 @@ require_once RUTA_NUCLEO . "/Sesion.php";
 /**
  * Controlador unificado de EQUIPO.
  *
- * Agrupa las funcionalidades que antes estaban repartidas en
- * cargarEquipos y procesarEquipo (alta, modificación y baja) en una
- * sola clase.
- *
  * Captura la solicitud del cliente mediante el método gestionar(), que
  * decide qué hacer según el método HTTP utilizado:
  *
- *   GET    /public/api/equipos.php            lista todos los equipos
- *   GET    /public/api/equipos.php?id=PC-01   devuelve un equipo puntual
- *   GET    /public/api/equipos.php?estado=Funcionando&laboratorio=101&disponibilidad=Disponible
- *   POST   /public/api/equipos.php            registra un equipo nuevo
- *   PUT    /public/api/equipos.php?id=PC-01   modifica un equipo existente
- *   DELETE /public/api/equipos.php?id=PC-01   elimina un equipo
+ *   GET    /public/index.php?ruta=equipos            lista todos los equipos
+ *   GET    /public/index.php?ruta=equipos&id=PC-01   devuelve un equipo puntual
+ *   GET    /public/index.php?ruta=equipos&estado=Funcionando&laboratorio=101&disponibilidad=Disponible
+ *   POST   /public/index.php?ruta=equipos            registra un equipo nuevo
+ *   PUT    /public/index.php?ruta=equipos&id=PC-01   modifica un equipo existente
+ *   DELETE /public/index.php?ruta=equipos&id=PC-01   elimina un equipo
  */
 class ControladorEquipo
 {
-    private ConectorPDO $conectorPDO;
     private DAOEquipo $dao;
 
     /**
@@ -49,48 +45,28 @@ class ControladorEquipo
             Token::verificarCSRF();
         }
 
-        try {
-            $this->conectar();
+        $this->conectar();
 
-            switch ($metodo) {
-                case "GET":
-                    $resultado = $this->listar();
-                    break;
-                case "POST":
-                    $resultado = $this->registrar();
-                    break;
-                case "PUT":
-                    $resultado = $this->actualizar();
-                    break;
-                case "DELETE":
-                    $resultado = $this->eliminar();
-                    break;
-                default:
-                    throw new Exception("Método no permitido.", 405);
-            }
-
-            $this->conectorPDO->desconectar();
-
-            RespuestaJson::exito($resultado["datos"], $resultado["mensaje"], $resultado["codigo"]);
-
-        } catch (PDOException $e) {
-            RegistradorErrores::registrar($e);
-
-            if ($metodo === "DELETE" && (string) $e->getCode() === "23000") {
-                RespuestaJson::error("No se puede eliminar el equipo porque tiene registros relacionados.", 409);
-            }
-
-            RespuestaJson::error("Ocurrió un error, intente nuevamente.", 500);
-        } catch (Exception $e) {
-            $codigo = $e->getCode() >= 400 && $e->getCode() <= 599 ? (int) $e->getCode() : 500;
-
-            if ($codigo === 500) {
-                RegistradorErrores::registrar($e);
-                RespuestaJson::error("Ocurrió un error, intente nuevamente.", 500);
-            } else {
-                RespuestaJson::error($e->getMessage(), $codigo);
-            }
+        switch ($metodo) {
+            case "GET":
+                $resultado = $this->listar();
+                break;
+            case "POST":
+                $resultado = $this->registrar();
+                break;
+            case "PUT":
+                $resultado = $this->actualizar();
+                break;
+            case "DELETE":
+                $resultado = $this->eliminar();
+                break;
+            default:
+                throw new Exception("Método no permitido.", 405);
         }
+
+        Conexion::desconectar();
+
+        RespuestaJson::exito($resultado["datos"], $resultado["mensaje"], $resultado["codigo"]);
     }
 
     /**
@@ -101,12 +77,7 @@ class ControladorEquipo
      */
     private function conectar(): void
     {
-        $this->conectorPDO = new ConectorPDO($_ENV["BD_HOST"], $_ENV["BD_USER"], $_ENV["BD_PASS"], $_ENV["BD_NAME"]);
-        $conexion = $this->conectorPDO->establecerConexion();
-
-        if ($conexion === null) {
-            throw new Exception("No se pudo conectar a la base de datos.", 500);
-        }
+        $conexion = Conexion::conectar();
 
         $this->dao = new DAOEquipo($conexion);
     }
@@ -180,7 +151,7 @@ class ControladorEquipo
      */
     private function registrar(): array
     {
-        $datosEnviados = $this->obtenerDatosEnviados();
+        $datosEnviados = Solicitud::obtenerDatos();
 
         $idEquipo = Validador::requerido($datosEnviados["idEquipo"] ?? "", "idEquipo");
         $idEquipo = Validador::longitud($idEquipo, 1, 10, "idEquipo");
@@ -209,7 +180,7 @@ class ControladorEquipo
      */
     private function actualizar(): array
     {
-        $datosEnviados = $this->obtenerDatosEnviados();
+        $datosEnviados = Solicitud::obtenerDatos();
 
         $idEquipo = trim($_GET["id"] ?? ($datosEnviados["idEquipo"] ?? ""));
 
@@ -242,7 +213,7 @@ class ControladorEquipo
      */
     private function eliminar(): array
     {
-        $datosEnviados = $this->obtenerDatosEnviados();
+        $datosEnviados = Solicitud::obtenerDatos();
 
         $idEquipo = trim($_GET["id"] ?? ($datosEnviados["idEquipo"] ?? ""));
 
@@ -291,30 +262,6 @@ class ControladorEquipo
         return $datos;
     }
 
-    /**
-     * Obtiene los datos enviados por el cliente.
-     *
-     * Acepta tanto formato JSON como los datos de un formulario $_POST.
-     *
-     * @return array Arreglo asociativo con los datos recibidos.
-     */
-    private function obtenerDatosEnviados(): array
-    {
-        $cuerpo = file_get_contents("php://input");
-        $datos = json_decode($cuerpo, true);
-
-        if (is_array($datos)) {
-            return $datos;
-        }
-
-        if (!empty($_POST)) {
-            return $_POST;
-        }
-
-        parse_str($cuerpo, $datosFormulario);
-
-        return is_array($datosFormulario) ? $datosFormulario : [];
-    }
 }
 
 ?>

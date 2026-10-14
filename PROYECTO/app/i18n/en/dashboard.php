@@ -1,0 +1,26 @@
+<?php
+
+return [
+    "titulo" => "Ticket dashboard",
+    "subtitulo" => "These are the metrics of the system tickets.",
+    "reportes" => "Reports",
+    "incidenciasSinAtender" => "Unattended incidents",
+    "enProceso" => "In Progress",
+    "resueltas" => "Resolved",
+    "panelIncidenciasPorEstado" => "Incidents by status",
+    "thEstado" => "Status",
+    "thCantidad" => "Count",
+    "estadoPendiente" => "Pending",
+    "estadoEnProceso" => "In Progress",
+    "estadoResuelto" => "Resolved",
+    "estadoCerrado" => "Closed",
+    "total" => "Total",
+    "panelTiempos" => "Resolution Times",
+    "thTicket" => "Ticket",
+    "thDias" => "Days",
+    "sinTicketsResueltos" => "No tickets resolved yet",
+    "panelIncidenciasPorSalon" => "Incidents by room",
+    "thSalon" => "Room",
+    "thIncidencias" => "Incidents",
+    "sinIncidencias" => "There are no incidents yet",
+];

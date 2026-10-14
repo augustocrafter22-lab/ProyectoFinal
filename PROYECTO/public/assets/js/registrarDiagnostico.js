@@ -1,65 +1,54 @@
-const URL_API_TICKETS = "../api/tickets.php";
-const URL_API_DIAGNOSTICOS = "../api/diagnosticos.php";
-
-const formRegistrarDiagnostico = document.getElementById("formregistrarDiagnostico");
+const formularioRegistrarDiagnostico = document.getElementById("formularioRegistrarDiagnostico");
 const mensajeRegistrarDiagnostico = document.getElementById("mensajeRegistrarDiagnostico");
 const selectTicket = document.getElementById("registrarDiagnosticoTicket");
-const campoDiagnostico = document.getElementById("registrarDiagnosticoDiagnostico");
+const campoDiagnostico = document.getElementById("registrarDiagnosticoTexto");
 
-function mostrarMensaje(texto, esError) {
-  mensajeRegistrarDiagnostico.textContent = texto;
-  mensajeRegistrarDiagnostico.className = esError ? "mensaje-error" : "mensaje-exito";
+//GET - Obtiene los tickets sobre los que se puede registrar un diagnóstico
+async function obtenerTickets() {
+    const { datos } = await llamarApi("tickets");
+
+    return datos;
 }
 
-async function cargarTicketsEnFormulario() {
-  try {
-    const respuesta = await fetch(URL_API_TICKETS);
-    const cuerpo = await respuesta.json();
+//POST - Registra el diagnóstico de un ticket
+async function enviarDiagnostico(diagnostico) {
+    return await llamarApi("diagnosticos", { metodo: "POST", cuerpo: diagnostico });
+}
 
-    if (cuerpo.status !== "success") {
-      return;
-    }
+async function cargarTickets() {
+    try {
+        const tickets = await obtenerTickets();
 
-    for (const ticket of cuerpo.data) {
-      const option = document.createElement("option");
-      option.value = ticket.idTicket;
-      option.textContent = `${ticket.idTicket} - ${ticket.asunto}`;
-      selectTicket.appendChild(option);
+        agregarOpciones(selectTicket, tickets, (ticket) => ticket.idTicket, (ticket) => `${ticket.idTicket} - ${ticket.asunto}`);
+    } catch (error) {
+        mostrarMensaje(mensajeRegistrarDiagnostico, error.message, true);
     }
-  } catch (error) {
-    // Si no se pueden cargar los tickets, el select queda solo con la opción por defecto.
-  }
 }
 
 async function registrarDiagnostico(eventoFormulario) {
-  eventoFormulario.preventDefault();
+    eventoFormulario.preventDefault();
 
-  const datosDiagnostico = {
-    idTicket: selectTicket.value,
-    cedulaTecnico: window.cedulaTecnico,
-    diagnostico: campoDiagnostico.value.trim(),
-  };
+    const diagnostico = {
+        idTicket: selectTicket.value,
+        cedulaTecnico: datosSesion.cedula,
+        diagnostico: campoDiagnostico.value.trim()
+    };
 
-  try {
-    const respuesta = await fetch(URL_API_DIAGNOSTICOS, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
-      },
-      body: JSON.stringify(datosDiagnostico),
-    });
-    const cuerpo = await respuesta.json();
+    try {
+        const { mensaje } = await enviarDiagnostico(diagnostico);
 
-    mostrarMensaje(cuerpo.message, cuerpo.status !== "success");
-
-    if (cuerpo.status === "success") {
-      formRegistrarDiagnostico.reset();
+        mostrarMensaje(mensajeRegistrarDiagnostico, mensaje, false);
+        formularioRegistrarDiagnostico.reset();
+    } catch (error) {
+        mostrarMensaje(mensajeRegistrarDiagnostico, error.message, true);
     }
-  } catch (error) {
-    mostrarMensaje("No se pudo conectar con el servidor.", true);
-  }
 }
 
-formRegistrarDiagnostico.addEventListener("submit", registrarDiagnostico);
-cargarTicketsEnFormulario();
+formularioRegistrarDiagnostico.addEventListener("submit", registrarDiagnostico);
+
+async function iniciar() {
+    await iniciarPagina();
+    await cargarTickets();
+}
+
+iniciar();

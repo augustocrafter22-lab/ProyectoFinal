@@ -1,6 +1,7 @@
 <?php
 
-require_once RUTA_MODELO . "/ConectorPDO.php";
+require_once RUTA_NUCLEO . "/Conexion.php";
+require_once RUTA_NUCLEO . "/Solicitud.php";
 require_once RUTA_MODELO . "/DAOUsuario.php";
 require_once RUTA_MODELO . "/ValidadorUsuario.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
@@ -15,7 +16,6 @@ require_once RUTA_NUCLEO . "/Sesion.php";
  */
 class ControladorUsuario
 {
-    private ConectorPDO $conectorPDO;
     private DAOUsuario $dao;
 
     /**
@@ -33,48 +33,27 @@ class ControladorUsuario
             Token::verificarCSRF();
         }
 
-        try {
-            $this->conectar();
+        $this->conectar();
 
-            switch ($metodo) {
-                case "GET":
-                    $resultado = $this->listar();
-                    break;
-                case "POST":
-                    $resultado = $this->registrar();
-                    break;
-                case "PUT":
-                    $resultado = $this->actualizar();
-                    break;
-                case "DELETE":
-                    $resultado = $this->eliminar();
-                    break;
-                default:
-                    throw new Exception("Método no permitido.", 405);
-            }
-
-            $this->conectorPDO->desconectar();
-            RespuestaJson::exito($resultado["datos"], $resultado["mensaje"], $resultado["codigo"]);
-        } catch (PDOException $e) {
-            RegistradorErrores::registrar($e);
-            $this->desconectar();
-
-            if ($metodo === "DELETE" && (string) $e->getCode() === "23000") {
-                RespuestaJson::error("No se puede eliminar el usuario porque tiene registros relacionados.", 409);
-            }
-
-            RespuestaJson::error("Ocurrió un error, intente nuevamente.", 500);
-        } catch (Exception $e) {
-            $this->desconectar();
-            $codigo = $e->getCode() >= 400 && $e->getCode() <= 599 ? (int) $e->getCode() : 500;
-
-            if ($codigo === 500) {
-                RegistradorErrores::registrar($e);
-                RespuestaJson::error("Ocurrió un error, intente nuevamente.", 500);
-            }
-
-            RespuestaJson::error($e->getMessage(), $codigo);
+        switch ($metodo) {
+            case "GET":
+                $resultado = $this->listar();
+                break;
+            case "POST":
+                $resultado = $this->registrar();
+                break;
+            case "PUT":
+                $resultado = $this->actualizar();
+                break;
+            case "DELETE":
+                $resultado = $this->eliminar();
+                break;
+            default:
+                throw new Exception("Método no permitido.", 405);
         }
+
+        Conexion::desconectar();
+        RespuestaJson::exito($resultado["datos"], $resultado["mensaje"], $resultado["codigo"]);
     }
 
     /**
@@ -85,12 +64,7 @@ class ControladorUsuario
      */
     private function conectar(): void
     {
-        $this->conectorPDO = new ConectorPDO($_ENV["BD_HOST"], $_ENV["BD_USER"], $_ENV["BD_PASS"], $_ENV["BD_NAME"]);
-        $conexion = $this->conectorPDO->establecerConexion();
-
-        if ($conexion === null) {
-            throw new Exception("No se pudo conectar a la base de datos.", 500);
-        }
+        $conexion = Conexion::conectar();
 
         $this->dao = new DAOUsuario($conexion);
     }
@@ -125,7 +99,7 @@ class ControladorUsuario
      */
     private function registrar(): array
     {
-        $datosEnviados = $this->obtenerDatosEnviados();
+        $datosEnviados = Solicitud::obtenerDatos();
         $datosUsuario = ValidadorUsuario::registro($datosEnviados);
         $cedula = $datosUsuario["cedula"];
 
@@ -156,7 +130,7 @@ class ControladorUsuario
      */
     private function actualizar(): array
     {
-        $datosEnviados = $this->obtenerDatosEnviados();
+        $datosEnviados = Solicitud::obtenerDatos();
         $cedula = ValidadorUsuario::cedula($_GET["id"] ?? ($datosEnviados["cedula"] ?? ""));
 
         if ($this->dao->obtener($cedula) === null) {
@@ -189,7 +163,7 @@ class ControladorUsuario
      */
     private function eliminar(): array
     {
-        $datosEnviados = $this->obtenerDatosEnviados();
+        $datosEnviados = Solicitud::obtenerDatos();
         $cedula = ValidadorUsuario::texto($_GET["id"] ?? ($datosEnviados["cedula"] ?? ""));
 
         if ($cedula === "") {
@@ -211,40 +185,6 @@ class ControladorUsuario
         return ["datos" => null, "mensaje" => "Usuario $cedula eliminado correctamente.", "codigo" => 200];
     }
 
-    /**
-     * Obtiene el cuerpo JSON o los datos enviados como formulario.
-     *
-     * @return array Datos enviados por el cliente.
-     */
-    private function obtenerDatosEnviados(): array
-    {
-        $cuerpo = file_get_contents("php://input");
-        $datos = json_decode($cuerpo, true);
-
-        if (is_array($datos)) {
-            return $datos;
-        }
-
-        if (!empty($_POST)) {
-            return $_POST;
-        }
-
-        parse_str($cuerpo, $datosFormulario);
-
-        return is_array($datosFormulario) ? $datosFormulario : [];
-    }
-
-    /**
-     * Cierra la conexión activa al gestionar un error.
-     *
-     * @return void
-     */
-    private function desconectar(): void
-    {
-        if (isset($this->conectorPDO)) {
-            $this->conectorPDO->desconectar();
-        }
-    }
 }
 
 ?>

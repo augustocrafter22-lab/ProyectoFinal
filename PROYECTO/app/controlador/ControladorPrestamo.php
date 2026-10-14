@@ -1,6 +1,7 @@
 <?php
 
-require_once RUTA_MODELO . "/ConectorPDO.php";
+require_once RUTA_NUCLEO . "/Conexion.php";
+require_once RUTA_NUCLEO . "/Solicitud.php";
 require_once RUTA_MODELO . "/DAOPrestamo.php";
 require_once RUTA_MODELO . "/Validador.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
@@ -12,12 +13,12 @@ require_once RUTA_NUCLEO . "/Sesion.php";
  * Captura la solicitud del cliente mediante el método gestionar(), que
  * decide qué hacer según el método HTTP utilizado:
  *
- *   GET    /public/api/prestamos.php                       lista todos los préstamos
- *   GET    /public/api/prestamos.php?id=3                  devuelve un préstamo puntual
- *   GET    /public/api/prestamos.php?estado=Activo&equipo=PC-01
- *   POST   /public/api/prestamos.php                       registra un préstamo nuevo
- *   PUT    /public/api/prestamos.php?id=3                  registra la devolución o cambia la fecha estimada
- *   DELETE /public/api/prestamos.php?id=3                  elimina un préstamo ya devuelto
+ *   GET    /public/index.php?ruta=prestamos                       lista todos los préstamos
+ *   GET    /public/index.php?ruta=prestamos&id=3                  devuelve un préstamo puntual
+ *   GET    /public/index.php?ruta=prestamos&estado=Activo&equipo=PC-01
+ *   POST   /public/index.php?ruta=prestamos                       registra un préstamo nuevo
+ *   PUT    /public/index.php?ruta=prestamos&id=3                  registra la devolución o cambia la fecha estimada
+ *   DELETE /public/index.php?ruta=prestamos&id=3                  elimina un préstamo ya devuelto
  *
  * Al registrar un préstamo el equipo pasa a "No disponible", y al devolverlo
  * vuelve a "Disponible" (si está funcionando). En POST se envían idEquipo,
@@ -29,7 +30,6 @@ require_once RUTA_NUCLEO . "/Sesion.php";
  */
 class ControladorPrestamo
 {
-    private ConectorPDO $conectorPDO;
     private DAOPrestamo $dao;
 
     /** @var array Estados permitidos para un préstamo. */
@@ -51,47 +51,28 @@ class ControladorPrestamo
             Token::verificarCSRF();
         }
 
-        try {
-            $this->conectar();
+        $this->conectar();
 
-            switch ($metodo) {
-                case "GET":
-                    $resultado = $this->listar();
-                    break;
-                case "POST":
-                    $resultado = $this->registrar();
-                    break;
-                case "PUT":
-                    $resultado = $this->actualizar();
-                    break;
-                case "DELETE":
-                    $resultado = $this->eliminar();
-                    break;
-                default:
-                    throw new Exception("Método no permitido.", 405);
-            }
-
-            $this->conectorPDO->desconectar();
-
-            RespuestaJson::exito($resultado["datos"], $resultado["mensaje"], $resultado["codigo"]);
-
-        } catch (PDOException $e) {
-            // Los errores de la base de datos traen un código SQLSTATE (por ejemplo "42S02"),
-            // que no es un código HTTP, por eso siempre se responde con un 500.
-            RegistradorErrores::registrar($e);
-            RespuestaJson::error("Ocurrió un error, intente nuevamente.", 500);
-        } catch (Exception $e) {
-            // Si el código de la excepción es un código HTTP válido se usa ese,
-            // en cualquier otro caso se responde con un 500 (error del servidor).
-            $codigo = $e->getCode() >= 400 && $e->getCode() <= 599 ? (int) $e->getCode() : 500;
-
-            if ($codigo === 500) {
-                RegistradorErrores::registrar($e);
-                RespuestaJson::error("Ocurrió un error, intente nuevamente.", 500);
-            } else {
-                RespuestaJson::error($e->getMessage(), $codigo);
-            }
+        switch ($metodo) {
+            case "GET":
+                $resultado = $this->listar();
+                break;
+            case "POST":
+                $resultado = $this->registrar();
+                break;
+            case "PUT":
+                $resultado = $this->actualizar();
+                break;
+            case "DELETE":
+                $resultado = $this->eliminar();
+                break;
+            default:
+                throw new Exception("Método no permitido.", 405);
         }
+
+        Conexion::desconectar();
+
+        RespuestaJson::exito($resultado["datos"], $resultado["mensaje"], $resultado["codigo"]);
     }
 
     /**
@@ -102,12 +83,7 @@ class ControladorPrestamo
      */
     private function conectar(): void
     {
-        $this->conectorPDO = new ConectorPDO($_ENV["BD_HOST"], $_ENV["BD_USER"], $_ENV["BD_PASS"], $_ENV["BD_NAME"]);
-        $conexion = $this->conectorPDO->establecerConexion();
-
-        if ($conexion === null) {
-            throw new Exception("No se pudo conectar a la base de datos.", 500);
-        }
+        $conexion = Conexion::conectar();
 
         $this->dao = new DAOPrestamo($conexion);
     }
@@ -172,7 +148,7 @@ class ControladorPrestamo
      */
     private function registrar(): array
     {
-        $datosEnviados = $this->obtenerDatosEnviados();
+        $datosEnviados = Solicitud::obtenerDatos();
 
         $idEquipo = Validador::longitud($datosEnviados["idEquipo"] ?? "", 1, 10, "idEquipo");
         $cedula = Validador::cedula($datosEnviados["cedulaSolicitante"] ?? "");
@@ -213,7 +189,7 @@ class ControladorPrestamo
      */
     private function actualizar(): array
     {
-        $datosEnviados = $this->obtenerDatosEnviados();
+        $datosEnviados = Solicitud::obtenerDatos();
 
         $idPrestamo = $this->obtenerIdIndicado($datosEnviados);
         $prestamo = $this->dao->obtener($idPrestamo);
@@ -265,7 +241,7 @@ class ControladorPrestamo
      */
     private function eliminar(): array
     {
-        $idPrestamo = $this->obtenerIdIndicado($this->obtenerDatosEnviados());
+        $idPrestamo = $this->obtenerIdIndicado(Solicitud::obtenerDatos());
         $prestamo = $this->dao->obtener($idPrestamo);
 
         if ($prestamo === null) {
@@ -320,30 +296,6 @@ class ControladorPrestamo
         return $fecha . " 23:59:59";
     }
 
-    /**
-     * Obtiene los datos enviados por el cliente.
-     *
-     * Acepta tanto formato JSON como los datos de un formulario $_POST.
-     *
-     * @return array Arreglo asociativo con los datos recibidos.
-     */
-    private function obtenerDatosEnviados(): array
-    {
-        $cuerpo = file_get_contents("php://input");
-        $datos = json_decode($cuerpo, true);
-
-        if (is_array($datos)) {
-            return $datos;
-        }
-
-        if (!empty($_POST)) {
-            return $_POST;
-        }
-
-        parse_str($cuerpo, $datosFormulario);
-
-        return is_array($datosFormulario) ? $datosFormulario : [];
-    }
 }
 
 ?>

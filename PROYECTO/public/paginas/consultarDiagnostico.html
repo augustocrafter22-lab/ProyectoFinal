@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="consultarDiagnostico.titulo"></title>
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/barraNavegacion.css">
+    <link rel="stylesheet" href="../assets/css/formularios.css">
+</head>
+
+<body class="cargando" data-roles="tecnico">
+    <header class="barraNavegacion">
+        <nav>
+            <button class="btnMenu" id="btnMenu" type="button">
+                <img class="iconoMenu" src="../assets/img/Bootstrap/list.svg" alt="Menú" data-i18n-alt="comun.menu" width="40" height="40">
+            </button>
+
+            <button class="btnCerrarMenu" id="btnCerrarMenu" type="button">
+                <img class="iconoMenu" src="../assets/img/Bootstrap/x.svg" alt="Cerrar menú" data-i18n-alt="comun.cerrarMenu" width="40" height="40">
+            </button>
+
+            <ul class="listaNavegacion">
+                <li><a class="btnNavegacion" href="tecnico.html" data-i18n="comun.regresar"></a></li>
+                <li><a class="btnNavegacion" href="registrarDiagnostico.html" data-i18n="navegacion.registrarDiagnostico"></a></li>
+                <li><a class="btnNavegacion" href="registrarSolucion.html" data-i18n="navegacion.registrarSolucion"></a></li>
+                <li><button class="btnNavegacion cerrarSesion" id="btnCerrarSesion" type="button" data-i18n="comun.cerrarSesion"></button></li>
+                <li><button class="btnNavegacion" type="button" data-idioma="es" data-i18n="comun.idiomaEs"></button></li>
+                <li><button class="btnNavegacion" type="button" data-idioma="en" data-i18n="comun.idiomaEn"></button></li>
+            </ul>
+        </nav>
+
+        <h1>S.G.R.S.I</h1>
+        <img src="../assets/img/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo UTU" data-i18n-alt="comun.logoUtu" width="75">
+    </header>
+
+    <header class="encabezado">
+        <h1 data-i18n="consultarDiagnostico.titulo"></h1>
+        <p data-i18n="consultarDiagnostico.subtitulo"></p>
+    </header>
+
+    <section class="modulo">
+        <form class="formulario" id="formularioFiltroDiagnosticos">
+            <label for="filtroTicket" data-i18n="consultarDiagnostico.labelFiltrarTicket"></label>
+            <input type="text" id="filtroTicket" name="ticket" data-i18n-placeholder="consultarDiagnostico.placeholderTicket">
+
+            <button class="btnPrincipal" type="submit" data-i18n="consultarDiagnostico.btnFiltrar"></button>
+            <button class="btnSecundario" id="btnQuitarFiltroTicket" type="button" data-i18n="consultarDiagnostico.btnQuitarFiltro" hidden></button>
+        </form>
+    </section>
+
+    <section class="modulo">
+        <h2 id="tituloConsultarDiagnosticos"></h2>
+
+        <div class="tablaResponsiva">
+            <table>
+                <thead id="encabezadoTablaDiagnosticos" hidden>
+                    <tr>
+                        <th data-i18n="consultarDiagnostico.thId"></th>
+                        <th data-i18n="consultarDiagnostico.thTicket"></th>
+                        <th data-i18n="consultarDiagnostico.thDiagnostico"></th>
+                        <th data-i18n="consultarDiagnostico.thFecha"></th>
+                        <th data-i18n="consultarDiagnostico.thTecnico"></th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpoTablaDiagnosticos">
+                    <tr>
+                        <td class="tablaVacia" colspan="5" data-i18n="consultarDiagnostico.cargando"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <script src="../assets/js/nucleo/traductor.js"></script>
+    <script src="../assets/js/nucleo/api.js"></script>
+    <script src="../assets/js/nucleo/sesion.js"></script>
+    <script src="../assets/js/nucleo/componentes.js"></script>
+    <script src="../assets/js/nucleo/barraNavegacion.js"></script>
+    <script src="../assets/js/nucleo/pagina.js"></script>
+    <script src="../assets/js/consultarDiagnostico.js"></script>
+</body>
+
+</html>

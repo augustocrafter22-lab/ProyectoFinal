@@ -1,63 +1,69 @@
-const URL_API_DIAGNOSTICOS = "../api/diagnosticos.php";
-
-const formModificarDiagnostico = document.getElementById("formModificarDiagnostico");
+const formularioModificarDiagnostico = document.getElementById("formularioModificarDiagnostico");
 const mensajeModificarDiagnostico = document.getElementById("mensajeModificarDiagnostico");
 const selectDiagnostico = document.getElementById("modificarDiagnosticoSelect");
 const campoTextoDiagnostico = document.getElementById("modificarDiagnosticoTexto");
 
-function mostrarMensaje(texto, esError) {
-  mensajeModificarDiagnostico.textContent = texto;
-  mensajeModificarDiagnostico.className = esError ? "mensaje-error" : "mensaje-exito";
+//GET - Obtiene los diagnósticos registrados
+async function obtenerDiagnosticos() {
+    const { datos } = await llamarApi("diagnosticos");
+
+    return datos;
 }
 
-async function cargarDiagnosticosEnFormulario() {
-  try {
-    const respuesta = await fetch(URL_API_DIAGNOSTICOS);
-    const cuerpo = await respuesta.json();
+//PUT - Guarda el nuevo texto de un diagnóstico
+async function enviarModificacion(idDiagnostico, texto) {
+    return await llamarApi("diagnosticos", {
+        metodo: "PUT",
+        parametros: { id: idDiagnostico },
+        cuerpo: { diagnostico: texto }
+    });
+}
 
-    if (cuerpo.status !== "success") {
-      return;
-    }
+async function cargarDiagnosticos() {
+    try {
+        const diagnosticos = await obtenerDiagnosticos();
 
-    for (const diagnostico of cuerpo.data) {
-      const option = document.createElement("option");
-      option.value = diagnostico.idDiagnostico;
-      option.dataset.texto = diagnostico.diagnostico;
-      option.textContent = `${diagnostico.idDiagnostico} | ${diagnostico.idTicket} | ${diagnostico.fechaDiagnostico}`;
-      selectDiagnostico.appendChild(option);
+        agregarOpciones(
+            selectDiagnostico,
+            diagnosticos,
+            (diagnostico) => diagnostico.idDiagnostico,
+            (diagnostico) => `${diagnostico.idDiagnostico} | ${diagnostico.idTicket} | ${diagnostico.fechaDiagnostico}`
+        );
+
+        //El texto de cada diagnóstico se guarda en su opción para mostrarlo al elegirla
+        diagnosticos.forEach((diagnostico, indice) => {
+            selectDiagnostico.options[indice + 1].dataset.texto = diagnostico.diagnostico;
+        });
+    } catch (error) {
+        mostrarMensaje(mensajeModificarDiagnostico, error.message, true);
     }
-  } catch (error) {
-    // Si no se pueden cargar los diagnósticos, el select queda solo con la opción por defecto.
-  }
 }
 
 function completarTextoDiagnostico() {
-  const opcionSeleccionada = selectDiagnostico.options[selectDiagnostico.selectedIndex];
-  campoTextoDiagnostico.value = opcionSeleccionada.dataset.texto || "";
+    const opcionSeleccionada = selectDiagnostico.options[selectDiagnostico.selectedIndex];
+
+    campoTextoDiagnostico.value = opcionSeleccionada.dataset.texto || "";
 }
 
 async function modificarDiagnostico(eventoFormulario) {
-  eventoFormulario.preventDefault();
+    eventoFormulario.preventDefault();
 
-  const idDiagnostico = selectDiagnostico.value;
+    try {
+        const { mensaje } = await enviarModificacion(selectDiagnostico.value, campoTextoDiagnostico.value.trim());
 
-  try {
-    const respuesta = await fetch(`${URL_API_DIAGNOSTICOS}?id=${encodeURIComponent(idDiagnostico)}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
-      },
-      body: JSON.stringify({ diagnostico: campoTextoDiagnostico.value.trim() }),
-    });
-    const cuerpo = await respuesta.json();
-
-    mostrarMensaje(cuerpo.message, cuerpo.status !== "success");
-  } catch (error) {
-    mostrarMensaje("No se pudo conectar con el servidor.", true);
-  }
+        mostrarMensaje(mensajeModificarDiagnostico, mensaje, false);
+        selectDiagnostico.options[selectDiagnostico.selectedIndex].dataset.texto = campoTextoDiagnostico.value.trim();
+    } catch (error) {
+        mostrarMensaje(mensajeModificarDiagnostico, error.message, true);
+    }
 }
 
 selectDiagnostico.addEventListener("change", completarTextoDiagnostico);
-formModificarDiagnostico.addEventListener("submit", modificarDiagnostico);
-cargarDiagnosticosEnFormulario();
+formularioModificarDiagnostico.addEventListener("submit", modificarDiagnostico);
+
+async function iniciar() {
+    await iniciarPagina();
+    await cargarDiagnosticos();
+}
+
+iniciar();
