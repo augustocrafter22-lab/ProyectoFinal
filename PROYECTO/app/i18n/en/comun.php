@@ -28,4 +28,6 @@ return [
     "cerrarMenu" => "Close menu",
     "logoUtu" => "UTU logo",
     "cerrar" => "Close",
+    "errorRegistroDuplicado" => "A record with that data already exists.",
+    "errorReferenciaInexistente" => "The data refers to a record that does not exist.",
 ];

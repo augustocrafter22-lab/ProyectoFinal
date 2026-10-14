@@ -42,6 +42,9 @@ class ManejadorErrores
     /**
      * Responde a un error de PDO sin mostrar el detalle de la base de datos.
      *
+     * Las restricciones de integridad (SQLSTATE 23000) se distinguen por el código
+     * propio de MariaDB, porque cada una significa algo distinto para el usuario.
+     *
      * @param PDOException $error Error lanzado por PDO.
      * @return void
      */
@@ -49,12 +52,21 @@ class ManejadorErrores
     {
         RegistradorErrores::registrar($error);
 
-        // 23000 es el código SQLSTATE de una restricción de integridad: el registro
-        // tiene datos relacionados y la base no deja borrarlo.
-        $esBajaConRelaciones = ($_SERVER["REQUEST_METHOD"] ?? "") === "DELETE" && (string) $error->getCode() === "23000";
+        $codigoMariaDb = (int) ($error->errorInfo[1] ?? 0);
 
-        if ($esBajaConRelaciones) {
+        // 1451: el registro tiene datos relacionados y la base no deja borrarlo o cambiarlo.
+        if ($codigoMariaDb === 1451) {
             RespuestaJson::error(Traductor::t("comun.errorRegistrosRelacionados"), 409);
+        }
+
+        // 1062: ya existe un registro con ese identificador.
+        if ($codigoMariaDb === 1062) {
+            RespuestaJson::error(Traductor::t("comun.errorRegistroDuplicado"), 409);
+        }
+
+        // 1452: se hace referencia a un registro que no existe (por ejemplo un equipo inexistente).
+        if ($codigoMariaDb === 1452) {
+            RespuestaJson::error(Traductor::t("comun.errorReferenciaInexistente"), 400);
         }
 
         RespuestaJson::error(Traductor::t("comun.errorGenerico"), 500);

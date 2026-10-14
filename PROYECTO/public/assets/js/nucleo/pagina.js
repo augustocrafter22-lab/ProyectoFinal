@@ -13,8 +13,7 @@ async function iniciarPagina() {
         await verificarAcceso();
         await cargarTraducciones(obtenerSeccionesDePagina());
     } catch (error) {
-        document.body.classList.remove("cargando");
-        window.alert(error.message);
+        await mostrarPaginaConError(error);
 
         //Si no se pudo preparar la pantalla, el resto del código de la pantalla no se ejecuta
         return new Promise(() => {});
@@ -28,6 +27,21 @@ async function iniciarPagina() {
     document.body.classList.remove("cargando");
 
     return datosSesion;
+}
+
+//Si falló el arranque (por ejemplo la base de datos no responde) se muestran igual los textos y el menú, y después el aviso
+async function mostrarPaginaConError(error) {
+    try {
+        await cargarTraducciones(obtenerSeccionesDePagina());
+        aplicarTraducciones();
+        iniciarBarraNavegacion();
+        iniciarBotonesComunes();
+    } catch {
+        //Sin textos traducidos igual se muestra el aviso del error
+    }
+
+    document.body.classList.remove("cargando");
+    window.alert(error.message);
 }
 
 //Verifica que haya sesión y que el usuario tenga uno de los roles de la pantalla
