@@ -2,79 +2,63 @@
 
 require_once RUTA_VISTA . "/RespuestaJson.php";
 require_once RUTA_NUCLEO . "/Token.php";
+require_once RUTA_NUCLEO . "/Traductor.php";
+require_once RUTA_MODELO . "/Usuario.php";
 
 /**
- * Agrupa las verificaciones de sesión para que todas las páginas
- * protegidas controlen el acceso de la misma manera.
+ * Agrupa todo lo relacionado con la sesión del usuario: iniciarla, cerrarla
+ * y verificar el acceso, para que todos los endpoints controlen el acceso
+ * de la misma manera.
  */
 class Sesion
 {
     /**
-     * Verifica que haya una sesión iniciada; si no, redirige al login.
+     * Guarda en la sesión los datos del usuario que acaba de autenticarse
+     * y genera un token CSRF nuevo.
      *
+     * @param Usuario $usuario Usuario autenticado.
      * @return void
      */
-    public static function verificarSesion(): void
+    public static function iniciar(Usuario $usuario): void
     {
-        if (!isset($_SESSION["cedula"])) {
-            $mensaje = "Debe iniciar sesión para acceder a esa página.";
-            header("Location: " . URL_BASE . "/public/paginas/Login.php?error=" . urlencode($mensaje));
-            exit;
-        }
+        // Se cambia el identificador de sesión para evitar que se reutilice uno anterior.
+        session_regenerate_id(true);
+
+        $_SESSION["cedula"] = $usuario->getCedula();
+        $_SESSION["coordinador"] = $usuario->esCoordinador();
+        $_SESSION["tecnico"] = $usuario->esTecnico();
+        $_SESSION["docente"] = $usuario->esDocente();
+        $_SESSION["roles"] = $usuario->getRoles();
+
+        unset($_SESSION["csrfToken"]);
+        Token::generarTokenCSRF();
     }
 
     /**
-     * Verifica que haya una sesión iniciada y que el usuario tenga el rol
-     * indicado; si no, redirige al login.
+     * Cierra la sesión del usuario: borra sus datos y cambia el identificador
+     * de sesión, así el anterior deja de servir. El idioma elegido no es un
+     * dato del usuario, por eso se conserva.
      *
-     * @param string $rol Rol requerido (coordinador, tecnico o docente).
      * @return void
      */
-    public static function verificarRol(string $rol): void
+    public static function cerrar(): void
     {
-        self::verificarSesion();
+        $idioma = $_SESSION["idioma"] ?? "es";
 
-        if (!($_SESSION[$rol] ?? false)) {
-            $mensaje = "No tiene autorización para acceder a ese panel.";
-            header("Location: " . URL_BASE . "/public/paginas/Login.php?error=" . urlencode($mensaje));
-            exit;
-        }
+        $_SESSION = ["idioma" => $idioma];
+        session_regenerate_id(true);
     }
 
     /**
-     * Igual que verificarRol pero alcanza con que el usuario tenga uno
-     * de los roles indicados; si no tiene ninguno, redirige al login.
-     *
-     * @param array $roles Roles permitidos (coordinador, tecnico o docente).
-     * @return void
-     */
-    public static function verificarAlgunRol(array $roles): void
-    {
-        self::verificarSesion();
-
-        foreach ($roles as $rol) {
-            if ($_SESSION[$rol] ?? false) {
-                return;
-            }
-        }
-
-        $mensaje = "No tiene autorización para acceder a ese panel.";
-        header("Location: " . URL_BASE . "/public/paginas/Login.php?error=" . urlencode($mensaje));
-        exit;
-    }
-
-    /**
-     * Igual que verificarRol pero para la API, responde JSON 401 si no hay
-     * sesión y 403 si el usuario no tiene ninguno de los roles.
+     * Verifica que haya una sesión iniciada y que el usuario tenga alguno
+     * de los roles indicados; si no, responde JSON 401 o 403.
      *
      * @param array $roles Roles permitidos (coordinador, tecnico o docente).
      * @return void
      */
     public static function verificarRolApi(array $roles): void
     {
-        if (!isset($_SESSION["cedula"])) {
-            RespuestaJson::error("Acceso denegado: sesión no iniciada.", 401);
-        }
+        self::verificarSesionIniciada();
 
         foreach ($roles as $rol) {
             if ($_SESSION[$rol] ?? false) {
@@ -82,8 +66,18 @@ class Sesion
             }
         }
 
-        RespuestaJson::error("Acceso denegado: rol incorrecto.", 403);
+        RespuestaJson::error(Traductor::t("comun.errorRolIncorrecto"), 403);
+    }
+
+    /**
+     * Verifica que haya una sesión iniciada, sin importar el rol.
+     *
+     * @return void
+     */
+    public static function verificarSesionIniciada(): void
+    {
+        if (!isset($_SESSION["cedula"])) {
+            RespuestaJson::error(Traductor::t("comun.errorSesionNoIniciada"), 401);
+        }
     }
 }
-
-?>

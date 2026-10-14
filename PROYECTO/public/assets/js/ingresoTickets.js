@@ -1,68 +1,85 @@
-const URL_API_TICKETS = "../api/tickets.php";
-const URL_API_EQUIPOS = "../api/equipos.php";
-
-const ticketForm = document.getElementById("ticketForm");
+const formularioTicket = document.getElementById("formularioTicket");
 const mensajeIngresoTickets = document.getElementById("mensajeIngresoTickets");
+
+const selectLaboratorio = document.getElementById("laboratorio");
 const selectEquipo = document.getElementById("equipo");
 
-function mostrarMensaje(texto, esError) {
-  mensajeIngresoTickets.textContent = texto;
-  mensajeIngresoTickets.className = esError ? "mensaje-error" : "mensaje-exito";
+//GET - Obtiene los laboratorios para elegir dónde ocurrió la incidencia
+async function obtenerLaboratorios() {
+    const { datos } = await llamarApi("laboratorios");
+
+    return datos;
 }
 
-async function cargarEquiposEnFormulario() {
-  try {
-    const respuesta = await fetch(URL_API_EQUIPOS);
-    const cuerpo = await respuesta.json();
+//GET - Obtiene los equipos del laboratorio elegido
+async function obtenerEquiposDelLaboratorio(idLaboratorio) {
+    const { datos } = await llamarApi("equipos", { parametros: { laboratorio: idLaboratorio } });
 
-    if (cuerpo.status !== "success") {
-      return;
-    }
-
-    for (const equipo of cuerpo.data) {
-      const option = document.createElement("option");
-      option.value = equipo.idEquipo;
-      option.textContent = equipo.idEquipo;
-      selectEquipo.appendChild(option);
-    }
-  } catch (error) {
-    // Si no se pueden cargar los equipos, el select queda solo con la opción por defecto.
-  }
+    return datos;
 }
 
-async function enviarTicket(eventoFormulario) {
-  eventoFormulario.preventDefault();
-
-  const datosTicket = {
-    laboratorio: document.getElementById("laboratorioTaller").value,
-    equipo: selectEquipo.value,
-    asunto: document.getElementById("asunto").value.trim(),
-    descripcion: document.getElementById("descripcion").value.trim(),
-    turno: document.getElementById("turno").value,
-    grupo: document.getElementById("grupo").value.trim(),
-    profesor: document.getElementById("profesor").value.trim(),
-  };
-
-  try {
-    const respuesta = await fetch(URL_API_TICKETS, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
-      },
-      body: JSON.stringify(datosTicket),
-    });
-    const cuerpo = await respuesta.json();
-
-    mostrarMensaje(cuerpo.message, cuerpo.status !== "success");
-
-    if (cuerpo.status === "success") {
-      ticketForm.reset();
-    }
-  } catch (error) {
-    mostrarMensaje("No se pudo conectar con el servidor.", true);
-  }
+//POST - Envía el ticket nuevo
+async function enviarTicket(ticket) {
+    return await llamarApi("tickets", { metodo: "POST", cuerpo: ticket });
 }
 
-ticketForm.addEventListener("submit", enviarTicket);
-cargarEquiposEnFormulario();
+async function cargarLaboratorios() {
+    try {
+        const laboratorios = await obtenerLaboratorios();
+
+        agregarOpciones(selectLaboratorio, laboratorios, (lab) => lab.idLaboratorio, (lab) => lab.numeroLaboratorio);
+    } catch (error) {
+        mostrarMensaje(mensajeIngresoTickets, error.message, true);
+    }
+}
+
+//Cada vez que cambia el laboratorio, la lista de equipos muestra solo los de ese laboratorio
+async function cargarEquipos() {
+    vaciarOpciones(selectEquipo);
+
+    if (selectLaboratorio.value === "") {
+        return;
+    }
+
+    try {
+        const equipos = await obtenerEquiposDelLaboratorio(selectLaboratorio.value);
+
+        agregarOpciones(selectEquipo, equipos, (equipo) => equipo.idEquipo, (equipo) => `${equipo.idEquipo} - ${equipo.marca}`);
+    } catch (error) {
+        mostrarMensaje(mensajeIngresoTickets, error.message, true);
+    }
+}
+
+async function registrarTicket(eventoFormulario) {
+    eventoFormulario.preventDefault();
+
+    const ticket = {
+        laboratorio: selectLaboratorio.value,
+        equipo: selectEquipo.value,
+        asunto: document.getElementById("asunto").value.trim(),
+        descripcion: document.getElementById("descripcion").value.trim(),
+        turno: document.getElementById("turno").value,
+        grupo: document.getElementById("grupo").value.trim(),
+        profesor: document.getElementById("profesor").value.trim()
+    };
+
+    try {
+        const { mensaje } = await enviarTicket(ticket);
+
+        mostrarMensaje(mensajeIngresoTickets, mensaje, false);
+        formularioTicket.reset();
+        await cargarEquipos();
+    } catch (error) {
+        mostrarMensaje(mensajeIngresoTickets, error.message, true);
+    }
+}
+
+formularioTicket.addEventListener("submit", registrarTicket);
+selectLaboratorio.addEventListener("change", cargarEquipos);
+
+async function iniciar() {
+    await iniciarPagina();
+    await cargarLaboratorios();
+}
+
+iniciar();

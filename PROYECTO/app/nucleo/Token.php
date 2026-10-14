@@ -1,6 +1,7 @@
 <?php
 
 require_once RUTA_VISTA . "/RespuestaJson.php";
+require_once RUTA_NUCLEO . "/Traductor.php";
 
 /**
  * Genera y verifica el token CSRF, para que solo las páginas del
@@ -32,9 +33,7 @@ class Token
         $token = $_SERVER["HTTP_X_CSRF_TOKEN"] ?? "";
 
         if (!isset($_SESSION["csrfToken"]) || !hash_equals($_SESSION["csrfToken"], $token)) {
-            RespuestaJson::error("Solicitud rechazada.", 403);
+            RespuestaJson::error(Traductor::t("comun.errorSolicitudRechazada"), 403);
         }
     }
 }
-
-?>

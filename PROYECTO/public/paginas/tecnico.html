@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="tecnico.titulo"></title>
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/barraNavegacion.css">
+    <link rel="stylesheet" href="../assets/css/formularios.css">
+</head>
+
+<body class="cargando" data-roles="tecnico">
+    <header class="barraNavegacion">
+        <nav>
+            <button class="btnMenu" id="btnMenu" type="button">
+                <img class="iconoMenu" src="../assets/img/Bootstrap/list.svg" alt="Menú" data-i18n-alt="comun.menu" width="40" height="40">
+            </button>
+
+            <button class="btnCerrarMenu" id="btnCerrarMenu" type="button">
+                <img class="iconoMenu" src="../assets/img/Bootstrap/x.svg" alt="Cerrar menú" data-i18n-alt="comun.cerrarMenu" width="40" height="40">
+            </button>
+
+            <ul class="listaNavegacion">
+                <li><a class="btnNavegacion" href="dashboard.html" data-i18n="navegacion.dashboard"></a></li>
+                <li><a class="btnNavegacion" href="vistaLab.html" data-i18n="navegacion.solicitudesLab"></a></li>
+                <li><a class="btnNavegacion" href="vistaTickets.html" data-i18n="navegacion.tickets"></a></li>
+                <li><a class="btnNavegacion" href="registrarDiagnostico.html" data-i18n="navegacion.registrarDiagnostico"></a></li>
+                <li><a class="btnNavegacion" href="registrarReparacion.html" data-i18n="navegacion.registrarReparacion"></a></li>
+                <li><a class="btnNavegacion" href="registrarIntervencion.html" data-i18n="navegacion.registrarIntervencion"></a></li>
+                <li><a class="btnNavegacion" href="registrarReemplazo.html" data-i18n="navegacion.registrarReemplazo"></a></li>
+                <li><a class="btnNavegacion" href="registrarSolucion.html" data-i18n="navegacion.registrarSolucion"></a></li>
+                <li><a class="btnNavegacion" href="consultarDiagnostico.html" data-i18n="navegacion.consultarDiagnosticos"></a></li>
+                <li><a class="btnNavegacion" href="equipos.html" data-i18n="navegacion.consultarEquipos"></a></li>
+                <li><a class="btnNavegacion" href="prestamos.html" data-i18n="navegacion.prestamos"></a></li>
+                <li><a class="btnNavegacion" href="historialTecnico.html" data-i18n="navegacion.historialTecnico"></a></li>
+                <li><button class="btnNavegacion cerrarSesion" id="btnCerrarSesion" type="button" data-i18n="comun.cerrarSesion"></button></li>
+                <li><button class="btnNavegacion" type="button" data-idioma="es" data-i18n="comun.idiomaEs"></button></li>
+                <li><button class="btnNavegacion" type="button" data-idioma="en" data-i18n="comun.idiomaEn"></button></li>
+            </ul>
+        </nav>
+
+        <h1>S.G.R.S.I</h1>
+        <img src="../assets/img/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo UTU" data-i18n-alt="comun.logoUtu" width="75">
+    </header>
+
+    <section class="encabezado">
+        <h1><span data-i18n="tecnico.bienvenida"></span> <span data-usuario="nombreCompleto"></span> <span data-i18n="tecnico.rolSufijo"></span></h1>
+        <p data-i18n="tecnico.instruccion"></p>
+    </section>
+
+    <script src="../assets/js/nucleo/traductor.js"></script>
+    <script src="../assets/js/nucleo/api.js"></script>
+    <script src="../assets/js/nucleo/sesion.js"></script>
+    <script src="../assets/js/nucleo/componentes.js"></script>
+    <script src="../assets/js/nucleo/barraNavegacion.js"></script>
+    <script src="../assets/js/nucleo/pagina.js"></script>
+    <script src="../assets/js/inicioPagina.js"></script>
+</body>
+
+</html>

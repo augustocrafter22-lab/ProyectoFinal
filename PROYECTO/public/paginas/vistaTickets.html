@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="vistaTickets.titulo"></title>
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/barraNavegacion.css">
+    <link rel="stylesheet" href="../assets/css/formularios.css">
+    <link rel="stylesheet" href="../assets/css/vistaTickets.css">
+</head>
+
+<body class="cargando" data-roles="tecnico">
+    <header class="barraNavegacion">
+        <nav>
+            <button class="btnMenu" id="btnMenu" type="button">
+                <img class="iconoMenu" src="../assets/img/Bootstrap/list.svg" alt="Menú" data-i18n-alt="comun.menu" width="40" height="40">
+            </button>
+
+            <button class="btnCerrarMenu" id="btnCerrarMenu" type="button">
+                <img class="iconoMenu" src="../assets/img/Bootstrap/x.svg" alt="Cerrar menú" data-i18n-alt="comun.cerrarMenu" width="40" height="40">
+            </button>
+
+            <ul class="listaNavegacion">
+                <li><a class="btnNavegacion" href="tecnico.html" data-i18n="comun.regresar"></a></li>
+                <li><button class="btnNavegacion cerrarSesion" id="btnCerrarSesion" type="button" data-i18n="comun.cerrarSesion"></button></li>
+                <li><button class="btnNavegacion" type="button" data-idioma="es" data-i18n="comun.idiomaEs"></button></li>
+                <li><button class="btnNavegacion" type="button" data-idioma="en" data-i18n="comun.idiomaEn"></button></li>
+            </ul>
+        </nav>
+
+        <h1>S.G.R.S.I</h1>
+        <img src="../assets/img/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo UTU" data-i18n-alt="comun.logoUtu" width="75">
+    </header>
+
+    <section class="seccionFiltrosTickets">
+        <h1 data-i18n="vistaTickets.titulo"></h1>
+        <input type="text" class="campoBuscadorTickets" id="buscadorDeTickets" data-i18n-placeholder="vistaTickets.placeholderBuscador">
+        <button class="btnBuscarTicket" id="btnBuscarTicket" type="button" data-i18n="vistaTickets.btnBuscar"></button>
+        <p data-i18n="vistaTickets.subtitulo"></p>
+
+        <select class="filtroTickets" id="filtroDeEquipos">
+            <option value="" data-i18n="vistaTickets.opcionTodosEquipos"></option>
+        </select>
+
+        <select class="filtroTickets" id="filtroPrioridad">
+            <option value="" data-i18n="vistaTickets.opcionTodasPrioridades"></option>
+            <option value="Indefinida" data-i18n="vistaTickets.prioridadIndefinida"></option>
+            <option value="Alta" data-i18n="vistaTickets.prioridadAlta"></option>
+            <option value="Media" data-i18n="vistaTickets.prioridadMedia"></option>
+            <option value="Baja" data-i18n="vistaTickets.prioridadBaja"></option>
+        </select>
+
+        <select class="filtroTickets" id="filtroEstado">
+            <option value="" data-i18n="vistaTickets.opcionTodosEstados"></option>
+            <option value="Pendiente" data-i18n="vistaTickets.estadoPendiente"></option>
+            <option value="En Proceso" data-i18n="vistaTickets.estadoEnProceso"></option>
+            <option value="Resuelto" data-i18n="vistaTickets.estadoResuelto"></option>
+            <option value="Cerrado" data-i18n="vistaTickets.estadoCerrado"></option>
+        </select>
+
+        <input type="date" class="campoFechaTickets" id="fechaDesde">
+        <input type="date" class="campoFechaTickets" id="fechaHasta">
+        <button class="btnFiltrarFechas" id="btnFiltrarFechas" type="button" data-i18n="vistaTickets.btnFiltrarFechas"></button>
+    </section>
+
+    <p id="mensajeVistaTickets" class="mensaje" role="status"></p>
+
+    <section id="listaTickets"></section>
+
+    <script src="../assets/js/nucleo/traductor.js"></script>
+    <script src="../assets/js/nucleo/api.js"></script>
+    <script src="../assets/js/nucleo/sesion.js"></script>
+    <script src="../assets/js/nucleo/componentes.js"></script>
+    <script src="../assets/js/nucleo/barraNavegacion.js"></script>
+    <script src="../assets/js/nucleo/pagina.js"></script>
+    <script src="../assets/js/vistaTickets.js"></script>
+</body>
+
+</html>

@@ -1,100 +1,108 @@
-const URL_API_DIAGNOSTICOS = "../api/diagnosticos.php";
-
-const formFiltroDiagnosticos = document.getElementById("formFiltroDiagnosticos");
+const formularioFiltroDiagnosticos = document.getElementById("formularioFiltroDiagnosticos");
 const campoFiltroTicket = document.getElementById("filtroTicket");
 const btnQuitarFiltroTicket = document.getElementById("btnQuitarFiltroTicket");
 const tituloConsultarDiagnosticos = document.getElementById("tituloConsultarDiagnosticos");
-const tablaDiagnosticos = document.getElementById("tablaDiagnosticos");
+const encabezadoTablaDiagnosticos = document.getElementById("encabezadoTablaDiagnosticos");
 const cuerpoTablaDiagnosticos = document.getElementById("cuerpoTablaDiagnosticos");
 
-function crearFilaDiagnostico(diagnostico, indice) {
-  const fila = document.createElement("tr");
-  fila.classList.add(indice % 2 === 0 ? "tabla-fila-par" : "tabla-fila-impar");
+//GET - Obtiene los diagnósticos, opcionalmente solo los de un ticket
+async function obtenerDiagnosticos(idTicket) {
+    const { datos } = await llamarApi("diagnosticos", { parametros: { idTicket: idTicket } });
 
-  for (const valor of [diagnostico.idDiagnostico, diagnostico.idTicket, diagnostico.diagnostico, diagnostico.fechaDiagnostico, diagnostico.cedulaTecnico]) {
-    const celda = document.createElement("td");
-    celda.classList.add("tabla-td");
-    celda.textContent = valor;
-    fila.appendChild(celda);
-  }
-
-  return fila;
+    return datos;
 }
 
-function mostrarDiagnosticosVacio(mensaje) {
-  tablaDiagnosticos.querySelector("thead").hidden = true;
-  cuerpoTablaDiagnosticos.replaceChildren();
+function crearFilaDiagnostico(diagnostico) {
+    const fila = document.createElement("tr");
 
-  const fila = document.createElement("tr");
-  const celda = document.createElement("td");
-  celda.colSpan = 5;
-  celda.classList.add("tabla-vacia");
-  celda.textContent = mensaje;
-  fila.appendChild(celda);
-  cuerpoTablaDiagnosticos.appendChild(fila);
+    fila.append(
+        crearCelda(diagnostico.idDiagnostico),
+        crearCelda(diagnostico.idTicket),
+        crearCelda(diagnostico.diagnostico),
+        crearCelda(diagnostico.fechaDiagnostico),
+        crearCelda(diagnostico.cedulaTecnico)
+    );
+
+    return fila;
+}
+
+//Reemplaza la tabla por una sola fila con un aviso
+function mostrarTablaVacia(texto) {
+    encabezadoTablaDiagnosticos.hidden = true;
+    cuerpoTablaDiagnosticos.replaceChildren();
+
+    const fila = document.createElement("tr");
+    const celda = crearCelda(texto);
+    celda.colSpan = 5;
+    celda.className = "tablaVacia";
+    fila.appendChild(celda);
+    cuerpoTablaDiagnosticos.appendChild(fila);
+}
+
+//El ticket a filtrar viaja en la dirección de la página (?ticket=INC-2026-0001)
+function obtenerTicketFiltrado() {
+    return new URLSearchParams(window.location.search).get("ticket") || "";
+}
+
+function guardarTicketFiltradoEnDireccion(idTicket) {
+    const url = new URL(window.location.href);
+
+    if (idTicket !== "") {
+        url.searchParams.set("ticket", idTicket);
+    } else {
+        url.searchParams.delete("ticket");
+    }
+
+    window.history.replaceState({}, "", url);
 }
 
 async function cargarDiagnosticos() {
-  const ticketFiltro = new URLSearchParams(window.location.search).get("ticket") || "";
+    const idTicket = obtenerTicketFiltrado();
+    const hayFiltro = idTicket !== "";
 
-  campoFiltroTicket.value = ticketFiltro;
-  btnQuitarFiltroTicket.hidden = ticketFiltro === "";
-  tituloConsultarDiagnosticos.textContent = ticketFiltro !== ""
-    ? `Diagnósticos del ticket ${ticketFiltro}`
-    : "Diagnósticos registrados";
+    campoFiltroTicket.value = idTicket;
+    btnQuitarFiltroTicket.hidden = !hayFiltro;
+    tituloConsultarDiagnosticos.textContent = hayFiltro
+        ? traducir("consultarDiagnostico.tituloFiltrado", { ticket: idTicket })
+        : traducir("consultarDiagnostico.tituloTabla");
 
-  const url = ticketFiltro !== ""
-    ? `${URL_API_DIAGNOSTICOS}?idTicket=${encodeURIComponent(ticketFiltro)}`
-    : URL_API_DIAGNOSTICOS;
+    try {
+        const diagnosticos = await obtenerDiagnosticos(idTicket);
 
-  try {
-    const respuesta = await fetch(url);
-    const cuerpo = await respuesta.json();
+        if (diagnosticos.length === 0) {
+            mostrarTablaVacia(
+                hayFiltro
+                    ? traducir("consultarDiagnostico.vacioFiltrado", { ticket: idTicket })
+                    : traducir("consultarDiagnostico.vacio")
+            );
+            return;
+        }
 
-    if (cuerpo.status !== "success") {
-      mostrarDiagnosticosVacio(cuerpo.message);
-      return;
+        encabezadoTablaDiagnosticos.hidden = false;
+        cuerpoTablaDiagnosticos.replaceChildren();
+        for (const diagnostico of diagnosticos) {
+            cuerpoTablaDiagnosticos.appendChild(crearFilaDiagnostico(diagnostico));
+        }
+    } catch (error) {
+        mostrarTablaVacia(error.message);
     }
-
-    if (cuerpo.data.length === 0) {
-      mostrarDiagnosticosVacio(
-        ticketFiltro !== ""
-          ? `No hay diagnósticos registrados para el ticket ${ticketFiltro}.`
-          : "No hay diagnósticos registrados."
-      );
-      return;
-    }
-
-    tablaDiagnosticos.querySelector("thead").hidden = false;
-    cuerpoTablaDiagnosticos.replaceChildren();
-    cuerpo.data.forEach((diagnostico, indice) => {
-      cuerpoTablaDiagnosticos.appendChild(crearFilaDiagnostico(diagnostico, indice));
-    });
-  } catch (error) {
-    mostrarDiagnosticosVacio("No se pudo conectar con el servidor.");
-  }
 }
 
-formFiltroDiagnosticos.addEventListener("submit", evento => {
-  evento.preventDefault();
+formularioFiltroDiagnosticos.addEventListener("submit", (eventoFormulario) => {
+    eventoFormulario.preventDefault();
 
-  const url = new URL(window.location.href);
-  if (campoFiltroTicket.value.trim() !== "") {
-    url.searchParams.set("ticket", campoFiltroTicket.value.trim());
-  } else {
-    url.searchParams.delete("ticket");
-  }
-  window.history.replaceState({}, "", url);
-
-  cargarDiagnosticos();
+    guardarTicketFiltradoEnDireccion(campoFiltroTicket.value.trim());
+    cargarDiagnosticos();
 });
 
 btnQuitarFiltroTicket.addEventListener("click", () => {
-  const url = new URL(window.location.href);
-  url.searchParams.delete("ticket");
-  window.history.replaceState({}, "", url);
-
-  cargarDiagnosticos();
+    guardarTicketFiltradoEnDireccion("");
+    cargarDiagnosticos();
 });
 
-cargarDiagnosticos();
+async function iniciar() {
+    await iniciarPagina();
+    await cargarDiagnosticos();
+}
+
+iniciar();

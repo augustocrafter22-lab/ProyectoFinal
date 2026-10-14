@@ -1,6 +1,7 @@
 <?php
 
-require_once RUTA_MODELO . "/ConectorPDO.php";
+require_once RUTA_NUCLEO . "/Conexion.php";
+require_once RUTA_NUCLEO . "/Solicitud.php";
 require_once RUTA_MODELO . "/DAOTicket.php";
 require_once RUTA_MODELO . "/Validador.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
@@ -9,22 +10,17 @@ require_once RUTA_NUCLEO . "/Sesion.php";
 /**
  * Controlador unificado de TICKET.
  *
- * Agrupa las funcionalidades que antes estaban sueltas en varios
- * controladores (cargarTickets, procesarIngresoTickets,
- * procesarActualizarTicket) en una sola clase.
- *
  * Captura la solicitud del cliente mediante el método gestionar(), que
  * decide qué hacer según el método HTTP utilizado:
  *
- *   GET    /public/api/tickets.php         lista todos los tickets
- *   GET    /public/api/tickets.php?id=INC- devuelve un ticket puntual
- *   POST   /public/api/tickets.php         registra un ticket nuevo
- *   PUT    /public/api/tickets.php?id=INC- actualiza estado y prioridad
- *   DELETE /public/api/tickets.php?id=INC- elimina un ticket
+ *   GET    /public/index.php?ruta=tickets         lista todos los tickets
+ *   GET    /public/index.php?ruta=tickets&id=INC- devuelve un ticket puntual
+ *   POST   /public/index.php?ruta=tickets         registra un ticket nuevo
+ *   PUT    /public/index.php?ruta=tickets&id=INC- actualiza estado y prioridad
+ *   DELETE /public/index.php?ruta=tickets&id=INC- elimina un ticket
  */
 class ControladorTicket
 {
-    private ConectorPDO $conectorPDO;
     private DAOTicket $dao;
 
     /** @var array Estados permitidos para un ticket. */
@@ -54,47 +50,28 @@ class ControladorTicket
             Token::verificarCSRF();
         }
 
-        try {
-            $this->conectar();
+        $this->conectar();
 
-            switch ($metodo) {
-                case "GET":
-                    $resultado = $this->listar();
-                    break;
-                case "POST":
-                    $resultado = $this->registrar();
-                    break;
-                case "PUT":
-                    $resultado = $this->actualizar();
-                    break;
-                case "DELETE":
-                    $resultado = $this->eliminar();
-                    break;
-                default:
-                    throw new Exception("Método no permitido.", 405);
-            }
-
-            $this->conectorPDO->desconectar();
-
-            RespuestaJson::exito($resultado["datos"], $resultado["mensaje"], $resultado["codigo"]);
-
-        } catch (PDOException $e) {
-            // Los errores de la base de datos traen un código SQLSTATE (por ejemplo "42S02"),
-            // que no es un código HTTP, por eso siempre se responde con un 500.
-            RegistradorErrores::registrar($e);
-            RespuestaJson::error("Ocurrió un error, intente nuevamente.", 500);
-        } catch (Exception $e) {
-            // Si el código de la excepción es un código HTTP válido se usa ese,
-            // en cualquier otro caso se responde con un 500 (error del servidor).
-            $codigo = $e->getCode() >= 400 && $e->getCode() <= 599 ? (int) $e->getCode() : 500;
-
-            if ($codigo === 500) {
-                RegistradorErrores::registrar($e);
-                RespuestaJson::error("Ocurrió un error, intente nuevamente.", 500);
-            } else {
-                RespuestaJson::error($e->getMessage(), $codigo);
-            }
+        switch ($metodo) {
+            case "GET":
+                $resultado = $this->listar();
+                break;
+            case "POST":
+                $resultado = $this->registrar();
+                break;
+            case "PUT":
+                $resultado = $this->actualizar();
+                break;
+            case "DELETE":
+                $resultado = $this->eliminar();
+                break;
+            default:
+                throw new Exception("Método no permitido.", 405);
         }
+
+        Conexion::desconectar();
+
+        RespuestaJson::exito($resultado["datos"], $resultado["mensaje"], $resultado["codigo"]);
     }
 
     /**
@@ -105,12 +82,7 @@ class ControladorTicket
      */
     private function conectar(): void
     {
-        $this->conectorPDO = new ConectorPDO($_ENV["BD_HOST"], $_ENV["BD_USER"], $_ENV["BD_PASS"], $_ENV["BD_NAME"]);
-        $conexion = $this->conectorPDO->establecerConexion();
-
-        if ($conexion === null) {
-            throw new Exception("No se pudo conectar a la base de datos.", 500);
-        }
+        $conexion = Conexion::conectar();
 
         $this->dao = new DAOTicket($conexion);
     }
@@ -177,7 +149,7 @@ class ControladorTicket
      */
     private function registrar(): array
     {
-        $datosEnviados = $this->obtenerDatosEnviados();
+        $datosEnviados = Solicitud::obtenerDatos();
 
         $datos = [
             "laboratorio" => Validador::longitud($datosEnviados["laboratorio"] ?? "", 1, 20, "laboratorio"),
@@ -206,7 +178,7 @@ class ControladorTicket
      */
     private function actualizar(): array
     {
-        $datosEnviados = $this->obtenerDatosEnviados();
+        $datosEnviados = Solicitud::obtenerDatos();
 
         $idTicket = Validador::requerido($_GET["id"] ?? ($datosEnviados["idTicket"] ?? ""), "identificador del ticket");
         $estado = Validador::enLista($datosEnviados["estado"] ?? "", $this->estadosValidos, "estado");
@@ -233,7 +205,7 @@ class ControladorTicket
      */
     private function eliminar(): array
     {
-        $datosEnviados = $this->obtenerDatosEnviados();
+        $datosEnviados = Solicitud::obtenerDatos();
 
         $idTicket = trim($_GET["id"] ?? ($datosEnviados["idTicket"] ?? ""));
 
@@ -250,32 +222,6 @@ class ControladorTicket
         return ["datos" => null, "mensaje" => "Ticket $idTicket eliminado correctamente.", "codigo" => 200];
     }
 
-    /**
-     * Obtiene los datos enviados por el cliente.
-     *
-     * Acepta tanto formato JSON como los datos de un formulario $_POST.
-     *
-     * @return array Arreglo asociativo con los datos recibidos.
-     */
-    private function obtenerDatosEnviados(): array
-    {
-        $cuerpo = file_get_contents("php://input");
-        $datos = json_decode($cuerpo, true);
-
-        if (is_array($datos)) {
-            return $datos;
-        }
-
-        // Si no vino JSON, se intenta con un formulario POST
-        // o con el formato clave=valor del cuerpo PUT y DELETE.
-        if (!empty($_POST)) {
-            return $_POST;
-        }
-
-        parse_str($cuerpo, $datosFormulario);
-
-        return is_array($datosFormulario) ? $datosFormulario : [];
-    }
 }
 
 ?>

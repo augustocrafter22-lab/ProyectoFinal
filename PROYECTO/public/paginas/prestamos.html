@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="prestamos.titulo"></title>
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/barraNavegacion.css">
+    <link rel="stylesheet" href="../assets/css/formularios.css">
+</head>
+
+<body class="cargando" data-roles="tecnico">
+    <header class="barraNavegacion">
+        <nav>
+            <button class="btnMenu" id="btnMenu" type="button">
+                <img class="iconoMenu" src="../assets/img/Bootstrap/list.svg" alt="Menú" data-i18n-alt="comun.menu" width="40" height="40">
+            </button>
+
+            <button class="btnCerrarMenu" id="btnCerrarMenu" type="button">
+                <img class="iconoMenu" src="../assets/img/Bootstrap/x.svg" alt="Cerrar menú" data-i18n-alt="comun.cerrarMenu" width="40" height="40">
+            </button>
+
+            <ul class="listaNavegacion">
+                <li><a class="btnNavegacion" href="tecnico.html" data-i18n="comun.regresar"></a></li>
+                <li><button class="btnNavegacion cerrarSesion" id="btnCerrarSesion" type="button" data-i18n="comun.cerrarSesion"></button></li>
+                <li><button class="btnNavegacion" type="button" data-idioma="es" data-i18n="comun.idiomaEs"></button></li>
+                <li><button class="btnNavegacion" type="button" data-idioma="en" data-i18n="comun.idiomaEn"></button></li>
+            </ul>
+        </nav>
+
+        <h1>S.G.R.S.I</h1>
+        <img src="../assets/img/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo UTU" data-i18n-alt="comun.logoUtu" width="75">
+    </header>
+
+    <main>
+        <section class="modulo">
+            <header class="cajaEncabezado">
+                <h2 data-i18n="prestamos.titulo"></h2>
+            </header>
+
+            <section class="filtrosBarra">
+                <label class="filtroContenedor" for="filtroEstadoPrestamo">
+                    <span data-i18n="prestamos.filtroEstado"></span>
+                    <select class="campoFiltro" id="filtroEstadoPrestamo">
+                        <option value="" data-i18n="prestamos.opcionTodos"></option>
+                        <option value="Activo" data-i18n="prestamos.estadoActivo"></option>
+                        <option value="Devuelto" data-i18n="prestamos.estadoDevuelto"></option>
+                    </select>
+                </label>
+            </section>
+
+            <p id="mensajePrestamos" class="mensaje" role="status"></p>
+
+            <form class="formulario" id="formularioPrestamo">
+                <fieldset>
+                    <legend data-i18n="prestamos.leyendaAlta"></legend>
+
+                    <label for="idEquipo" data-i18n="prestamos.labelEquipo"></label>
+                    <select id="idEquipo" name="idEquipo" required>
+                        <option value="" data-i18n="prestamos.opcionSeleccioneEquipo"></option>
+                    </select>
+
+                    <label for="cedulaSolicitante" data-i18n="prestamos.labelSolicitante"></label>
+                    <input type="text" id="cedulaSolicitante" name="cedulaSolicitante" data-i18n-placeholder="prestamos.placeholderSolicitante" pattern="[0-9]{8}" inputmode="numeric" maxlength="8" required>
+
+                    <label for="fechaDevolucionEstimada" data-i18n="prestamos.labelFechaEstimada"></label>
+                    <input type="date" id="fechaDevolucionEstimada" name="fechaDevolucionEstimada" required>
+
+                    <button class="btnPrincipal" type="submit" data-i18n="prestamos.btnRegistrar"></button>
+                </fieldset>
+            </form>
+
+            <div class="tablaResponsiva">
+                <table>
+                    <caption data-i18n="prestamos.captionTabla"></caption>
+                    <thead>
+                        <tr>
+                            <th data-i18n="prestamos.thId"></th>
+                            <th data-i18n="prestamos.thEquipo"></th>
+                            <th data-i18n="prestamos.thSolicitante"></th>
+                            <th data-i18n="prestamos.thFechaPrestamo"></th>
+                            <th data-i18n="prestamos.thFechaEstimada"></th>
+                            <th data-i18n="prestamos.thFechaReal"></th>
+                            <th data-i18n="prestamos.thEstado"></th>
+                            <th data-i18n="prestamos.thAcciones"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoTablaPrestamos"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="../assets/js/nucleo/traductor.js"></script>
+    <script src="../assets/js/nucleo/api.js"></script>
+    <script src="../assets/js/nucleo/sesion.js"></script>
+    <script src="../assets/js/nucleo/componentes.js"></script>
+    <script src="../assets/js/nucleo/barraNavegacion.js"></script>
+    <script src="../assets/js/nucleo/pagina.js"></script>
+    <script src="../assets/js/prestamos.js"></script>
+</body>
+
+</html>

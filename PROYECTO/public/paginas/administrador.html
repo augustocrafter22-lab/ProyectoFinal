@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="administrador.titulo"></title>
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/barraNavegacion.css">
+    <link rel="stylesheet" href="../assets/css/formularios.css">
+</head>
+
+<body class="cargando" data-roles="coordinador">
+    <header class="barraNavegacion">
+        <nav>
+            <button class="btnMenu" id="btnMenu" type="button">
+                <img class="iconoMenu" src="../assets/img/Bootstrap/list.svg" alt="Menú" data-i18n-alt="comun.menu" width="40" height="40">
+            </button>
+
+            <button class="btnCerrarMenu" id="btnCerrarMenu" type="button">
+                <img class="iconoMenu" src="../assets/img/Bootstrap/x.svg" alt="Cerrar menú" data-i18n-alt="comun.cerrarMenu" width="40" height="40">
+            </button>
+
+            <ul class="listaNavegacion">
+                <li><a class="btnNavegacion" href="administrador.html" data-i18n="comun.inicio"></a></li>
+                <li><a class="btnNavegacion" href="dashboard.html" data-i18n="navegacion.dashboard"></a></li>
+                <li><button class="btnNavegacion cerrarSesion" id="btnCerrarSesion" type="button" data-i18n="comun.cerrarSesion"></button></li>
+                <li><button class="btnNavegacion" type="button" data-idioma="es" data-i18n="comun.idiomaEs"></button></li>
+                <li><button class="btnNavegacion" type="button" data-idioma="en" data-i18n="comun.idiomaEn"></button></li>
+            </ul>
+        </nav>
+
+        <h1>S.G.R.S.I</h1>
+        <img src="../assets/img/Isotipo-UTU-Color-Dorado-PNG.png" alt="Logo UTU" data-i18n-alt="comun.logoUtu" width="75">
+    </header>
+
+    <section class="encabezado">
+        <h1 data-i18n="administrador.bienvenida"></h1>
+        <p data-i18n="administrador.subtitulo"></p>
+    </section>
+
+    <p id="mensajeAdministrador" class="mensaje" role="status"></p>
+
+    <section class="modulo">
+        <div class="tablaResponsiva">
+            <table id="tablaUsuarios">
+                <caption data-i18n="administrador.captionTabla"></caption>
+                <thead>
+                    <tr>
+                        <th data-i18n="administrador.thCi"></th>
+                        <th data-i18n="administrador.thNombre"></th>
+                        <th data-i18n="administrador.thApellido"></th>
+                        <th data-i18n="administrador.thRoles"></th>
+                        <th data-i18n="administrador.thEstado"></th>
+                        <th data-i18n="administrador.thAcciones"></th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpoTablaUsuarios"></tbody>
+            </table>
+        </div>
+
+        <div class="botonera">
+            <button class="btnPrincipal" id="btnAltaUsuario" type="button" data-i18n="administrador.btnAgregarUsuario"></button>
+        </div>
+    </section>
+
+    <dialog class="dialogGestionar" id="dialogGestionarUsuario">
+        <button class="btnCerrarDialog" id="btnCerrarGestionarUsuario" type="button">
+            <img src="../assets/img/Bootstrap/x.svg" alt="Cerrar" data-i18n-alt="comun.cerrar" width="24" height="24">
+        </button>
+
+        <form id="formularioGestionarUsuario">
+            <fieldset>
+                <legend data-i18n="administrador.dialogTitulo"></legend>
+
+                <fieldset>
+                    <legend data-i18n="administrador.dialogSubtitulo"></legend>
+
+                    <div class="cajaEntradaDeDatos">
+                        <label for="cedula" data-i18n="administrador.labelCi"></label>
+                        <input type="text" id="cedula" name="cedula" data-i18n-placeholder="administrador.placeholderCi" inputmode="numeric" maxlength="8" required>
+                    </div>
+
+                    <div class="cajaEntradaDeDatos">
+                        <label for="nombre" data-i18n="administrador.labelNombre"></label>
+                        <input type="text" id="nombre" name="nombre" data-i18n-placeholder="administrador.placeholderNombre">
+                    </div>
+
+                    <div class="cajaEntradaDeDatos">
+                        <label for="apellido" data-i18n="administrador.labelApellido"></label>
+                        <input type="text" id="apellido" name="apellido" data-i18n-placeholder="administrador.placeholderApellido">
+                    </div>
+
+                    <div class="cajaEntradaDeDatos">
+                        <label for="clave" data-i18n="administrador.labelContrasenia"></label>
+                        <input type="password" id="clave" name="clave" autocomplete="new-password" data-i18n-placeholder="administrador.placeholderContrasenia">
+                    </div>
+
+                    <fieldset class="cajaRoles">
+                        <legend data-i18n="administrador.legendRoles"></legend>
+                        <label><input type="checkbox" name="roles" value="coordinador"> <span data-i18n="comun.coordinador"></span></label>
+                        <label><input type="checkbox" name="roles" value="tecnico"> <span data-i18n="comun.tecnico"></span></label>
+                        <label><input type="checkbox" name="roles" value="docente"> <span data-i18n="comun.docente"></span></label>
+                    </fieldset>
+                </fieldset>
+
+                <button class="btnSecundario" type="submit" data-i18n="administrador.btnGuardarUsuario"></button>
+            </fieldset>
+        </form>
+    </dialog>
+
+    <script src="../assets/js/nucleo/traductor.js"></script>
+    <script src="../assets/js/nucleo/api.js"></script>
+    <script src="../assets/js/nucleo/sesion.js"></script>
+    <script src="../assets/js/nucleo/componentes.js"></script>
+    <script src="../assets/js/nucleo/barraNavegacion.js"></script>
+    <script src="../assets/js/nucleo/pagina.js"></script>
+    <script src="../assets/js/administrador.js"></script>
+</body>
+
+</html>

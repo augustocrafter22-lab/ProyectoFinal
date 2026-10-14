@@ -1,0 +1,138 @@
+/* Dashboard de tickets: tarjetas con las métricas y tablas resumen. */
+
+body.paginaDashboard {
+  min-height: 100vh;
+  background: var(--gris);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Este reseteo vale solo en el dashboard; :where() evita que pise a las clases de las otras hojas. */
+:where(body.paginaDashboard) * {
+  margin: 0;
+  padding: 0;
+}
+
+.seccionEstadisticas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  max-width: 75%;
+  margin: 0.75rem auto;
+}
+
+.cartaEstadistica {
+  max-width: 75%;
+  padding: 1rem;
+  border-radius: 12px;
+  background: var(--blancoPuro);
+}
+
+.cantidadEstadistica {
+  color: var(--negro);
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.etiquetaEstadistica {
+  margin-top: 4px;
+  color: var(--medio);
+  font-size: 12px;
+}
+
+/* Colores de los puntos de las tarjetas (filtros sobre un círculo negro) */
+
+.iconoReportes {
+  filter: invert(27%) sepia(93%) saturate(3468%) hue-rotate(218deg) brightness(99%) contrast(86%);
+}
+
+.iconoSinAtender {
+  filter: invert(71%) sepia(81%) saturate(4758%) hue-rotate(351deg) brightness(99%) contrast(97%);
+}
+
+.iconoEnProceso {
+  filter: invert(69%) sepia(84%) saturate(2631%) hue-rotate(10deg) brightness(108%) contrast(94%);
+}
+
+.iconoResueltas {
+  filter: invert(59%) sepia(58%) saturate(520%) hue-rotate(89deg) brightness(90%) contrast(111%);
+}
+
+.panelGrafico {
+  max-width: 75%;
+  margin: 0 auto 0.75rem;
+  padding: 1rem;
+  border: 0.5px solid var(--blancoCristal);
+  border-radius: 12px;
+  background: var(--blancoPuro);
+}
+
+.panelGrafico h2 {
+  margin-bottom: 0.75rem;
+  color: var(--negro);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.tablaEstados {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.tablaEstados th,
+.tablaEstados td {
+  padding: 9px 10px;
+  border: none;
+  border-bottom: 0.5px solid whitesmoke;
+  color: var(--negro);
+}
+
+.tablaEstados th {
+  background: none;
+  font-weight: 600;
+}
+
+.tablaEstados tr:nth-child(even) {
+  background: none;
+}
+
+.etiquetaEstado {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.puntoEstado {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.puntoPendiente {
+  background: red;
+}
+
+.puntoEnProceso {
+  background: yellow;
+}
+
+.puntoResuelto {
+  background: green;
+}
+
+.puntoCerrado {
+  background: gray;
+}
+
+@media (max-width: 768px) {
+  .seccionEstadisticas,
+  .panelGrafico {
+    max-width: 95%;
+  }
+
+  .cartaEstadistica {
+    max-width: 100%;
+  }
+}

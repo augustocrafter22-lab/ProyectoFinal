@@ -1,24 +1,23 @@
 <?php
 
-require_once RUTA_MODELO . "/ConectorPDO.php";
+require_once RUTA_NUCLEO . "/Conexion.php";
+require_once RUTA_NUCLEO . "/Solicitud.php";
 require_once RUTA_MODELO . "/DAODiagnostico.php";
 require_once RUTA_MODELO . "/Validador.php";
-require_once RUTA_MODELO . "/RegistradorErrores.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
 require_once RUTA_NUCLEO . "/Sesion.php";
 
 /**
  * Controlador unificado de DIAGNOSTICO.
  *
- *   GET    /public/api/diagnosticos.php                lista todos los diagnósticos (admite ?idTicket= para filtrar)
- *   GET    /public/api/diagnosticos.php?id=5            devuelve un diagnóstico puntual
- *   POST   /public/api/diagnosticos.php                 registra un diagnóstico nuevo
- *   PUT    /public/api/diagnosticos.php?id=5             modifica un diagnóstico existente
- *   DELETE /public/api/diagnosticos.php?id=5             elimina un diagnóstico
+ *   GET    /public/index.php?ruta=diagnosticos                lista todos los diagnósticos (admite ?idTicket= para filtrar)
+ *   GET    /public/index.php?ruta=diagnosticos&id=5            devuelve un diagnóstico puntual
+ *   POST   /public/index.php?ruta=diagnosticos                 registra un diagnóstico nuevo
+ *   PUT    /public/index.php?ruta=diagnosticos&id=5             modifica un diagnóstico existente
+ *   DELETE /public/index.php?ruta=diagnosticos&id=5             elimina un diagnóstico
  */
 class ControladorDiagnostico
 {
-    private ConectorPDO $conectorPDO;
     private DAODiagnostico $dao;
 
     /**
@@ -37,45 +36,28 @@ class ControladorDiagnostico
             Token::verificarCSRF();
         }
 
-        try {
-            $this->conectar();
+        $this->conectar();
 
-            switch ($metodo) {
-                case "GET":
-                    $resultado = $this->listar();
-                    break;
-                case "POST":
-                    $resultado = $this->registrar();
-                    break;
-                case "PUT":
-                    $resultado = $this->actualizar();
-                    break;
-                case "DELETE":
-                    $resultado = $this->eliminar();
-                    break;
-                default:
-                    throw new Exception("Método no permitido.", 405);
-            }
-
-            $this->conectorPDO->desconectar();
-
-            RespuestaJson::exito($resultado["datos"], $resultado["mensaje"], $resultado["codigo"]);
-
-        } catch (PDOException $e) {
-            // Los errores de la base de datos traen un código SQLSTATE (por ejemplo "42S02"),
-            // que no es un código HTTP, por eso siempre se responde con un 500.
-            RegistradorErrores::registrar($e);
-            RespuestaJson::error("Ocurrió un error, intente nuevamente.", 500);
-        } catch (Exception $e) {
-            $codigo = $e->getCode() >= 400 && $e->getCode() <= 599 ? (int) $e->getCode() : 500;
-
-            if ($codigo === 500) {
-                RegistradorErrores::registrar($e);
-                RespuestaJson::error("Ocurrió un error, intente nuevamente.", 500);
-            } else {
-                RespuestaJson::error($e->getMessage(), $codigo);
-            }
+        switch ($metodo) {
+            case "GET":
+                $resultado = $this->listar();
+                break;
+            case "POST":
+                $resultado = $this->registrar();
+                break;
+            case "PUT":
+                $resultado = $this->actualizar();
+                break;
+            case "DELETE":
+                $resultado = $this->eliminar();
+                break;
+            default:
+                throw new Exception("Método no permitido.", 405);
         }
+
+        Conexion::desconectar();
+
+        RespuestaJson::exito($resultado["datos"], $resultado["mensaje"], $resultado["codigo"]);
     }
 
     /**
@@ -86,12 +68,7 @@ class ControladorDiagnostico
      */
     private function conectar(): void
     {
-        $this->conectorPDO = new ConectorPDO($_ENV["BD_HOST"], $_ENV["BD_USER"], $_ENV["BD_PASS"], $_ENV["BD_NAME"]);
-        $conexion = $this->conectorPDO->establecerConexion();
-
-        if ($conexion === null) {
-            throw new Exception("No se pudo conectar a la base de datos.", 500);
-        }
+        $conexion = Conexion::conectar();
 
         $this->dao = new DAODiagnostico($conexion);
     }
@@ -135,7 +112,7 @@ class ControladorDiagnostico
      */
     private function registrar(): array
     {
-        $datos = $this->validarDatos($this->obtenerDatosEnviados());
+        $datos = $this->validarDatos(Solicitud::obtenerDatos());
 
         $idDiagnostico = $this->dao->crear($datos);
 
@@ -154,7 +131,7 @@ class ControladorDiagnostico
      */
     private function actualizar(): array
     {
-        $datosEnviados = $this->obtenerDatosEnviados();
+        $datosEnviados = Solicitud::obtenerDatos();
         $idDiagnostico = (int) Validador::numerico($_GET["id"] ?? ($datosEnviados["idDiagnostico"] ?? ""), "idDiagnostico");
 
         if ($this->dao->obtener($idDiagnostico) === null) {
@@ -180,7 +157,7 @@ class ControladorDiagnostico
      */
     private function eliminar(): array
     {
-        $datosEnviados = $this->obtenerDatosEnviados();
+        $datosEnviados = Solicitud::obtenerDatos();
         $idDiagnostico = (int) Validador::numerico($_GET["id"] ?? ($datosEnviados["idDiagnostico"] ?? ""), "idDiagnostico");
 
         if ($this->dao->obtener($idDiagnostico) === null) {
@@ -216,30 +193,6 @@ class ControladorDiagnostico
         ];
     }
 
-    /**
-     * Obtiene los datos enviados por el cliente.
-     *
-     * Acepta tanto formato JSON como los datos de un formulario $_POST.
-     *
-     * @return array Arreglo asociativo con los datos recibidos.
-     */
-    private function obtenerDatosEnviados(): array
-    {
-        $cuerpo = file_get_contents("php://input");
-        $datos = json_decode($cuerpo, true);
-
-        if (is_array($datos)) {
-            return $datos;
-        }
-
-        if (!empty($_POST)) {
-            return $_POST;
-        }
-
-        parse_str($cuerpo, $datosFormulario);
-
-        return is_array($datosFormulario) ? $datosFormulario : [];
-    }
 }
 
 ?>

@@ -1,0 +1,219 @@
+/*
+ * Estilos globales del sistema: paleta de colores, base de la página,
+ * secciones, tablas y mensajes que usan todas las pantallas.
+ *
+ * Convención de nombres: camelCase en español, con un prefijo que dice qué es
+ *   btn...      botones            seccion...  bloques grandes de una pantalla
+ *   caja...     contenedores       lista...    listas
+ *   campo...    campos de formulario   mensaje...  avisos al usuario
+ */
+
+:root {
+  /* Paleta base */
+  --blancoPuro: #ffffff;
+  --blancoCristal: #dceaf8;
+  --gris: #c0c0c0;
+  --grisClaro: #ebebeb;
+  --amarillo: #eeb906;
+  --oscuro: #4e5b64;
+  --medio: #47606f;
+  --azulOscuro: #1f5397;
+  --negro: #000000;
+
+  /* Paleta de las pantallas del sistema */
+  --azulMarino: #153894;
+  --azul: #1956c0;
+  --azulIntenso: #103e82;
+  --azulBarra: #0d2673;
+  --dorado: #d2953a;
+  --fondoPagina: #f1f2f6;
+  --fondoTarjeta: #ffffff;
+  --fondoCampo: #f6f7fc;
+  --bordeSuave: #d7dbe8;
+  --textoPrincipal: #1f2433;
+  --textoSuave: #6b7280;
+
+  /* Colores de los mensajes */
+  --exitoFondo: #dcfce7;
+  --exitoTexto: #166534;
+  --exitoBorde: #bbf7d0;
+  --errorFondo: #fee2e2;
+  --errorTexto: #991b1b;
+  --errorBorde: #fecaca;
+  --peligro: #c0152e;
+
+  --radio: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+  background-color: var(--fondoPagina);
+  color: var(--textoPrincipal);
+}
+
+/* La página se muestra cuando terminó de cargar la sesión y los textos (nucleo/pagina.js). */
+body.cargando {
+  visibility: hidden;
+}
+
+img {
+  border-radius: var(--radio);
+}
+
+/* Secciones */
+
+.encabezado {
+  background-color: var(--azulMarino);
+  color: var(--blancoPuro);
+  padding: 28px 24px;
+}
+
+.encabezado h1 {
+  margin: 0 0 6px 0;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.encabezado p {
+  margin: 0;
+  font-size: 14px;
+  color: #cfd6ef;
+}
+
+.modulo,
+.moduloImagen {
+  background-color: var(--fondoTarjeta);
+  max-width: 100%;
+  margin: 24px auto;
+  padding: 28px;
+  border-radius: 14px;
+  overflow-x: auto;
+  box-shadow: 0 4px 14px rgba(21, 56, 148, 0.12);
+}
+
+.moduloImagen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modulo h2 {
+  margin: 0 0 18px 0;
+  font-size: 18px;
+  color: var(--azulMarino);
+  font-weight: 600;
+}
+
+.cajaEncabezado {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Tablas */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+th,
+td {
+  border: 1px solid #cccccc;
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+th {
+  background-color: var(--azulMarino);
+  color: var(--blancoPuro);
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+caption {
+  caption-side: bottom;
+  text-align: center;
+  font-size: 14px;
+  color: var(--textoSuave);
+  margin-top: 8px;
+}
+
+.tablaResponsiva {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.tablaResponsiva table {
+  min-width: 600px;
+}
+
+.tablaVacia {
+  text-align: center;
+  color: var(--textoSuave);
+}
+
+.cajaOperaciones {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Mensajes al usuario: la pantalla cambia la clase según el resultado */
+
+.mensaje {
+  display: none;
+  padding: 10px 14px;
+  border-radius: var(--radio);
+  margin: 14px 24px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.mensaje.mensajeExito {
+  display: block;
+  background-color: var(--exitoFondo);
+  color: var(--exitoTexto);
+  border: 1px solid var(--exitoBorde);
+}
+
+.mensaje.mensajeError {
+  display: block;
+  background-color: var(--errorFondo);
+  color: var(--errorTexto);
+  border: 1px solid var(--errorBorde);
+}
+
+@media (max-width: 768px) {
+  .modulo,
+  .moduloImagen {
+    margin: 1rem 0.5rem;
+    padding: 0.75rem;
+  }
+
+  .cajaEncabezado {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  th,
+  td {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* El atributo hidden tiene que ganarle a cualquier display definido en una clase. */
+[hidden] {
+  display: none !important;
+}

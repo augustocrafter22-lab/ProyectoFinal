@@ -1,10 +1,10 @@
 <?php
 
-require_once RUTA_MODELO . "/ConectorPDO.php";
+require_once RUTA_NUCLEO . "/Conexion.php";
+require_once RUTA_NUCLEO . "/Solicitud.php";
 require_once RUTA_MODELO . "/DAOEquipo.php";
 require_once RUTA_MODELO . "/DAOIntervencion.php";
 require_once RUTA_MODELO . "/Validador.php";
-require_once RUTA_MODELO . "/RegistradorErrores.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
 require_once RUTA_NUCLEO . "/Sesion.php";
 
@@ -13,7 +13,6 @@ require_once RUTA_NUCLEO . "/Sesion.php";
  */
 class ControladorIntervencion
 {
-    private ConectorPDO $conectorPDO;
     private DAOEquipo $daoEquipo;
     private DAOIntervencion $dao;
 
@@ -26,39 +25,20 @@ class ControladorIntervencion
             Token::verificarCSRF();
         }
 
-        try {
-            if ($metodo !== "POST") {
-                throw new Exception("Método no permitido.", 405);
-            }
-
-            $this->conectar();
-            $resultado = $this->registrar();
-            $this->conectorPDO->desconectar();
-
-            RespuestaJson::exito($resultado["datos"], $resultado["mensaje"], $resultado["codigo"]);
-        } catch (PDOException $e) {
-            RegistradorErrores::registrar($e);
-            RespuestaJson::error("Ocurrió un error, intente nuevamente.", 500);
-        } catch (Exception $e) {
-            $codigo = $e->getCode() >= 400 && $e->getCode() <= 599 ? (int) $e->getCode() : 500;
-
-            if ($codigo === 500) {
-                RegistradorErrores::registrar($e);
-                RespuestaJson::error("Ocurrió un error, intente nuevamente.", 500);
-            } else {
-                RespuestaJson::error($e->getMessage(), $codigo);
-            }
+        if ($metodo !== "POST") {
+            throw new Exception("Método no permitido.", 405);
         }
+
+        $this->conectar();
+        $resultado = $this->registrar();
+        Conexion::desconectar();
+
+        RespuestaJson::exito($resultado["datos"], $resultado["mensaje"], $resultado["codigo"]);
     }
 
     private function conectar(): void
     {
-        $this->conectorPDO = new ConectorPDO($_ENV["BD_HOST"], $_ENV["BD_USER"], $_ENV["BD_PASS"], $_ENV["BD_NAME"]);
-        $conexion = $this->conectorPDO->establecerConexion();
-
-        if ($conexion === null) {
-            throw new Exception("No se pudo conectar a la base de datos.", 500);
-        }
+        $conexion = Conexion::conectar();
 
         $this->daoEquipo = new DAOEquipo($conexion);
         $this->dao = new DAOIntervencion($conexion);
@@ -66,8 +46,7 @@ class ControladorIntervencion
 
     private function registrar(): array
     {
-        $datosEnviados = json_decode(file_get_contents("php://input"), true);
-        $datosEnviados = is_array($datosEnviados) ? $datosEnviados : [];
+        $datosEnviados = Solicitud::obtenerDatos();
         $idEquipo = Validador::longitud(
             Validador::requerido($datosEnviados["idEquipo"] ?? "", "idEquipo"),
             1,

@@ -1,44 +1,65 @@
-const formulario = document.getElementById("loginForm");
-const inputCI = document.getElementById("username");
-const inputContrasenia = document.getElementById("clave");
-const errorMessageDisplay = document.getElementById("errorMessage");
+const formularioLogin = document.getElementById("formularioLogin");
 
-function inicializarUsuarioRaiz() {
-  const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-  const raizExiste = usuarios.some(u => u.ci === "11111111");
+const campoCedula = document.getElementById("cedula");
+const campoClave = document.getElementById("clave");
+const mensajeLogin = document.getElementById("mensajeLogin");
 
-  if (!raizExiste) {
-    usuarios.push({
-      ci: "11111111",
-      contrasenia: "123456789",
-      rol: "coordinador"
+//POST - Envía las credenciales y devuelve los datos de la sesión iniciada
+async function loguear(cedula, clave) {
+    const { datos } = await llamarApi("login", {
+        metodo: "POST",
+        cuerpo: { cedula: cedula, clave: clave }
     });
-    localStorage.setItem("usuarios", JSON.stringify(usuarios));
-  }
+
+    return datos;
 }
 
-inicializarUsuarioRaiz();
-
-formulario.addEventListener("submit", function (event) {
-  event.preventDefault();
-  errorMessageDisplay.textContent = "";
-
-  const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-  const usuarioEncontrado = usuarios.find(
-    u => u.ci === inputCI.value && u.contrasenia === inputContrasenia.value
-  );
-
-  if (usuarioEncontrado) {
-    localStorage.setItem("usuarioActivo", JSON.stringify(usuarioEncontrado));
-
-    if (usuarioEncontrado.rol === "coordinador") {
-      window.location.href = "../../HTML/Coordinador.html";
-    } else if (usuarioEncontrado.rol === "tecnico") {
-      window.location.href = "Tecnico.html";
-    } else if (usuarioEncontrado.rol === "solicitante") {
-      window.location.href = "Solicitante.html";
+//Decide a qué pantalla va el usuario según los roles que tiene habilitados
+function obtenerPaginaInicio(roles) {
+    if (roles.length > 1) {
+        return "panelRoles.html";
     }
-  } else {
-    errorMessageDisplay.textContent = "CI o contraseña incorrectos";
-  }
-});
+
+    if (roles.includes("coordinador")) {
+        return "administrador.html";
+    }
+
+    if (roles.includes("tecnico")) {
+        return "tecnico.html";
+    }
+
+    return "docente.html";
+}
+
+//Si el sistema mandó al login por una sesión vencida o un rol incorrecto, lo explica
+function mostrarMotivoDeRedireccion() {
+    const motivo = new URLSearchParams(window.location.search).get("motivo");
+
+    if (motivo === "sesionRequerida" || motivo === "sinAutorizacion") {
+        mensajeLogin.textContent = traducir(`login.${motivo}`);
+    }
+}
+
+async function gestionarLogin(eventoFormulario) {
+    eventoFormulario.preventDefault();
+    mensajeLogin.textContent = "";
+
+    try {
+        const sesion = await loguear(campoCedula.value.trim(), campoClave.value);
+
+        sessionStorage.setItem("csrfToken", sesion.csrfToken);
+        //replace() abre la siguiente página borrando el historial de la previa
+        window.location.replace(obtenerPaginaInicio(sesion.roles));
+    } catch (error) {
+        mensajeLogin.textContent = error.message;
+    }
+}
+
+formularioLogin.addEventListener("submit", gestionarLogin);
+
+async function iniciar() {
+    await iniciarPagina();
+    mostrarMotivoDeRedireccion();
+}
+
+iniciar();

@@ -1,0 +1,39 @@
+/* Historial técnico de un equipo: línea de tiempo en forma de tabla. */
+
+.moduloHistorial {
+  max-width: 780px;
+}
+
+.tablaHistorial {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.tablaHistorial th {
+  padding: 8px 10px;
+  border: none;
+  border-bottom: 2px solid var(--azul);
+  background: none;
+  color: var(--azulMarino);
+  font-size: 13px;
+}
+
+.tablaHistorial td {
+  padding: 8px 10px;
+  border: none;
+  border-bottom: 1px solid var(--bordeSuave);
+  font-size: 13px;
+}
+
+.tablaHistorial tr:nth-child(even) {
+  background-color: var(--blancoPuro);
+}
+
+.tablaHistorial tr:nth-child(odd) {
+  background-color: var(--fondoCampo);
+}
+
+.tablaHistorial .tablaVacia {
+  padding: 16px;
+}

@@ -1,25 +1,24 @@
 <?php
 
-require_once RUTA_MODELO . "/ConectorPDO.php";
+require_once RUTA_NUCLEO . "/Conexion.php";
+require_once RUTA_NUCLEO . "/Solicitud.php";
 require_once RUTA_MODELO . "/DAOReparacion.php";
 require_once RUTA_MODELO . "/Validador.php";
-require_once RUTA_MODELO . "/RegistradorErrores.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
 require_once RUTA_NUCLEO . "/Sesion.php";
 
 /**
  * Controlador unificado de REPARACION.
  *
- *   GET    /public/api/reparaciones.php                   lista todas las reparaciones
- *   GET    /public/api/reparaciones.php?idEquipo=PC-01     historial técnico de un equipo puntual
- *   GET    /public/api/reparaciones.php?id=5                devuelve una reparación puntual
- *   POST   /public/api/reparaciones.php                    registra una reparación nueva
- *   PUT    /public/api/reparaciones.php?id=5                modifica una reparación existente
- *   DELETE /public/api/reparaciones.php?id=5                elimina una reparación
+ *   GET    /public/index.php?ruta=reparaciones                   lista todas las reparaciones
+ *   GET    /public/index.php?ruta=reparaciones&idEquipo=PC-01     historial técnico de un equipo puntual
+ *   GET    /public/index.php?ruta=reparaciones&id=5                devuelve una reparación puntual
+ *   POST   /public/index.php?ruta=reparaciones                    registra una reparación nueva
+ *   PUT    /public/index.php?ruta=reparaciones&id=5                modifica una reparación existente
+ *   DELETE /public/index.php?ruta=reparaciones&id=5                elimina una reparación
  */
 class ControladorReparacion
 {
-    private ConectorPDO $conectorPDO;
     private DAOReparacion $dao;
 
     /**
@@ -38,45 +37,28 @@ class ControladorReparacion
             Token::verificarCSRF();
         }
 
-        try {
-            $this->conectar();
+        $this->conectar();
 
-            switch ($metodo) {
-                case "GET":
-                    $resultado = $this->listar();
-                    break;
-                case "POST":
-                    $resultado = $this->registrar();
-                    break;
-                case "PUT":
-                    $resultado = $this->actualizar();
-                    break;
-                case "DELETE":
-                    $resultado = $this->eliminar();
-                    break;
-                default:
-                    throw new Exception("Método no permitido.", 405);
-            }
-
-            $this->conectorPDO->desconectar();
-
-            RespuestaJson::exito($resultado["datos"], $resultado["mensaje"], $resultado["codigo"]);
-
-        } catch (PDOException $e) {
-            // Los errores de la base de datos traen un código SQLSTATE (por ejemplo "42S02"),
-            // que no es un código HTTP, por eso siempre se responde con un 500.
-            RegistradorErrores::registrar($e);
-            RespuestaJson::error("Ocurrió un error, intente nuevamente.", 500);
-        } catch (Exception $e) {
-            $codigo = $e->getCode() >= 400 && $e->getCode() <= 599 ? (int) $e->getCode() : 500;
-
-            if ($codigo === 500) {
-                RegistradorErrores::registrar($e);
-                RespuestaJson::error("Ocurrió un error, intente nuevamente.", 500);
-            } else {
-                RespuestaJson::error($e->getMessage(), $codigo);
-            }
+        switch ($metodo) {
+            case "GET":
+                $resultado = $this->listar();
+                break;
+            case "POST":
+                $resultado = $this->registrar();
+                break;
+            case "PUT":
+                $resultado = $this->actualizar();
+                break;
+            case "DELETE":
+                $resultado = $this->eliminar();
+                break;
+            default:
+                throw new Exception("Método no permitido.", 405);
         }
+
+        Conexion::desconectar();
+
+        RespuestaJson::exito($resultado["datos"], $resultado["mensaje"], $resultado["codigo"]);
     }
 
     /**
@@ -87,12 +69,7 @@ class ControladorReparacion
      */
     private function conectar(): void
     {
-        $this->conectorPDO = new ConectorPDO($_ENV["BD_HOST"], $_ENV["BD_USER"], $_ENV["BD_PASS"], $_ENV["BD_NAME"]);
-        $conexion = $this->conectorPDO->establecerConexion();
-
-        if ($conexion === null) {
-            throw new Exception("No se pudo conectar a la base de datos.", 500);
-        }
+        $conexion = Conexion::conectar();
 
         $this->dao = new DAOReparacion($conexion);
     }
@@ -140,7 +117,7 @@ class ControladorReparacion
      */
     private function registrar(): array
     {
-        $datos = $this->validarDatos($this->obtenerDatosEnviados());
+        $datos = $this->validarDatos(Solicitud::obtenerDatos());
 
         $idReparacion = $this->dao->crear($datos);
 
@@ -159,7 +136,7 @@ class ControladorReparacion
      */
     private function actualizar(): array
     {
-        $datosEnviados = $this->obtenerDatosEnviados();
+        $datosEnviados = Solicitud::obtenerDatos();
         $idReparacion = (int) Validador::numerico($_GET["id"] ?? ($datosEnviados["idReparacion"] ?? ""), "idReparacion");
 
         if ($this->dao->obtener($idReparacion) === null) {
@@ -185,7 +162,7 @@ class ControladorReparacion
      */
     private function eliminar(): array
     {
-        $datosEnviados = $this->obtenerDatosEnviados();
+        $datosEnviados = Solicitud::obtenerDatos();
         $idReparacion = (int) Validador::numerico($_GET["id"] ?? ($datosEnviados["idReparacion"] ?? ""), "idReparacion");
 
         if ($this->dao->obtener($idReparacion) === null) {
@@ -221,30 +198,6 @@ class ControladorReparacion
         ];
     }
 
-    /**
-     * Obtiene los datos enviados por el cliente.
-     *
-     * Acepta tanto formato JSON como los datos de un formulario $_POST.
-     *
-     * @return array Arreglo asociativo con los datos recibidos.
-     */
-    private function obtenerDatosEnviados(): array
-    {
-        $cuerpo = file_get_contents("php://input");
-        $datos = json_decode($cuerpo, true);
-
-        if (is_array($datos)) {
-            return $datos;
-        }
-
-        if (!empty($_POST)) {
-            return $_POST;
-        }
-
-        parse_str($cuerpo, $datosFormulario);
-
-        return is_array($datosFormulario) ? $datosFormulario : [];
-    }
 }
 
 ?>

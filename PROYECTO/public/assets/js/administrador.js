@@ -1,179 +1,224 @@
-// Dialog para gestionar usuarios
-const dialog = document.querySelector(".dialogGestionarUsuario");
-const btnAbrirDialog = document.getElementById("btnCrear");
-const btnCerrarDialog = document.getElementById("btnCerrarGestionarUsuario");
-
-// Tabla de usuarios
+const mensajeAdministrador = document.getElementById("mensajeAdministrador");
 const cuerpoTablaUsuarios = document.getElementById("cuerpoTablaUsuarios");
 
-// Formulario de gestión de usuarios
-const formulario = document.getElementById("formularioGestionarUsuario");
+//Constantes para el cuadro de diálogo
+const btnAltaUsuario = document.getElementById("btnAltaUsuario");
+const btnCerrarGestionarUsuario = document.getElementById("btnCerrarGestionarUsuario");
+const dialogGestionarUsuario = document.getElementById("dialogGestionarUsuario");
 
-// Inputs del formulario
-const inputCI = document.getElementById("ci");
-const inputNombre = document.getElementById("nombre");
-const inputApellido = document.getElementById("apellido");
-const inputContrasenia = document.getElementById("contrasenia");
-const checkboxesRol = document.querySelectorAll("input[name='roles[]']");
+//Constante para manipular el formulario y sus campos
+const formularioGestionarUsuario = document.getElementById("formularioGestionarUsuario");
+const campoCedula = document.getElementById("cedula");
+const campoNombre = document.getElementById("nombre");
+const campoApellido = document.getElementById("apellido");
+const campoClave = document.getElementById("clave");
+const casillasRoles = document.querySelectorAll("input[name='roles']");
 
-// Variable para controlar el modo de edición
-let modoEdicion = false;
+//Auxiliar para saber si se está agregando o modificando un usuario
+let usuarioEnEdicion = false;
 
-const formulariosDesactivar = document.querySelectorAll(".formularioDesactivarUsuario");
-const formulariosActivar = document.querySelectorAll(".formularioActivarUsuario");
-const urlApiUsuarios = document.querySelector('meta[name="usuarios-api"]').content;
-const tokenCSRF = document.querySelector('meta[name="csrf-token"]').content;
-const mensajes = JSON.parse(document.querySelector('meta[name="administrador-mensajes"]').content);
+/**
+ * GESTIÓN DEL ESTADO DEL FORMULARIO / MODAL
+ */
 
-function limpiarCheckboxesRol() {
-    for (const checkbox of checkboxesRol) {
-        checkbox.checked = false;
+//Limpia todos los campos y configuraciones seleccionadas del formulario
+function limpiarFormularioUsuario() {
+    usuarioEnEdicion = false;
+    campoCedula.readOnly = false;
+    formularioGestionarUsuario.reset();
+}
+
+function abrirAltaUsuario() {
+    limpiarFormularioUsuario();
+
+    dialogGestionarUsuario.showModal();
+}
+
+//Carga en el formulario los datos del usuario elegido y abre el modal
+function abrirEdicionUsuario(usuario) {
+    limpiarFormularioUsuario();
+    usuarioEnEdicion = true;
+
+    campoCedula.value = usuario.cedula;
+    campoCedula.readOnly = true;
+    campoNombre.value = usuario.nombre;
+    campoApellido.value = usuario.apellido;
+
+    for (const casilla of casillasRoles) {
+        casilla.checked = usuario.roles.includes(casilla.value);
+    }
+
+    dialogGestionarUsuario.showModal();
+}
+
+function cerrarGestionarUsuario() {
+    limpiarFormularioUsuario();
+
+    dialogGestionarUsuario.close();
+}
+
+/**
+ * OBTENCIÓN DE DATOS DEL FORMULARIO
+ */
+
+//Captura los datos ingresados en el formulario. Al modificar solo se envía lo que el usuario escribió.
+function obtenerDatosFormularioUsuario() {
+    const roles = [...casillasRoles].filter((casilla) => casilla.checked).map((casilla) => casilla.value);
+    const usuario = { cedula: campoCedula.value.trim(), roles: roles };
+
+    if (!usuarioEnEdicion || campoNombre.value.trim() !== "") {
+        usuario.nombre = campoNombre.value.trim();
+    }
+
+    if (!usuarioEnEdicion || campoApellido.value.trim() !== "") {
+        usuario.apellido = campoApellido.value.trim();
+    }
+
+    if (!usuarioEnEdicion || campoClave.value !== "") {
+        usuario.clave = campoClave.value;
+    }
+
+    return usuario;
+}
+
+/**
+ * OPERACIONES CON LA API
+ */
+
+//GET - Obtiene todos los usuarios
+async function obtenerUsuarios() {
+    const { datos } = await llamarApi("usuarios");
+
+    return datos;
+}
+
+//POST - Envía un nuevo usuario a la API
+async function altaUsuario(usuario) {
+    await llamarApi("usuarios", { metodo: "POST", cuerpo: usuario });
+}
+
+//PUT - Modifica los datos de un usuario existente (también activa y desactiva)
+async function modificarUsuario(cambios) {
+    await llamarApi("usuarios", { metodo: "PUT", cuerpo: cambios });
+}
+
+/**
+ * GESTIÓN DE FILAS DE LA TABLA
+ */
+
+function crearFilaUsuario(usuario) {
+    const fila = document.createElement("tr");
+
+    const roles = usuario.roles.map((rol) => traducir(`comun.${rol}`)).join(", ");
+    const estado = usuario.activo ? traducir("administrador.activo") : traducir("administrador.inactivo");
+
+    const cajaOperaciones = document.createElement("div");
+    cajaOperaciones.className = "cajaOperaciones";
+    cajaOperaciones.appendChild(
+        crearBoton(traducir("administrador.btnEditar"), "btnAccion", () => abrirEdicionUsuario(usuario))
+    );
+
+    if (usuario.activo) {
+        cajaOperaciones.appendChild(
+            crearBoton(traducir("administrador.btnDesactivar"), "btnAccion btnPeligro", () => cambiarEstadoUsuario(usuario, false))
+        );
+    } else {
+        cajaOperaciones.appendChild(
+            crearBoton(traducir("administrador.btnActivar"), "btnAccion", () => cambiarEstadoUsuario(usuario, true))
+        );
+    }
+
+    const celdaOperaciones = document.createElement("td");
+    celdaOperaciones.appendChild(cajaOperaciones);
+
+    fila.append(
+        crearCelda(usuario.cedula),
+        crearCelda(usuario.nombre),
+        crearCelda(usuario.apellido),
+        crearCelda(roles),
+        crearCelda(estado),
+        celdaOperaciones
+    );
+
+    return fila;
+}
+
+//Solicita los usuarios nuevamente a la API y genera las filas
+async function actualizarTabla() {
+    try {
+        const usuarios = await obtenerUsuarios();
+
+        cuerpoTablaUsuarios.replaceChildren();
+        for (const usuario of usuarios) {
+            cuerpoTablaUsuarios.appendChild(crearFilaUsuario(usuario));
+        }
+    } catch (error) {
+        mostrarMensaje(mensajeAdministrador, error.message, true);
     }
 }
 
-function abrirDialogCrear() {
-    modoEdicion = false;
-    inputCI.readOnly = false;
-    formulario.reset();
-    limpiarCheckboxesRol();
-    dialog.showModal();
-}
+/**
+ * Decide si debe realizarse un POST o un PUT dependiendo del estado del formulario.
+ */
+async function gestionarUsuario(eventoFormulario) {
+    eventoFormulario.preventDefault();
 
-function cerrarDialog() {
-    formulario.reset();
-    limpiarCheckboxesRol();
-    inputCI.readOnly = false;
-    modoEdicion = false;
-    dialog.close();
-}
-
-function editarUsuario(eventoEditar) {
-    const btnEditar = eventoEditar.target.closest(".btnEditar");
-    if (btnEditar === null) {
-        return;
-    }
-    const fila = btnEditar.closest("tr");
-
-    const cedula = fila.cells[0].textContent.trim();
-    const nombre = fila.cells[1].textContent.trim();
-    const apellido = fila.cells[2].textContent.trim();
-    const rolesTexto = fila.cells[3].textContent.trim();
-    const roles = rolesTexto === "" ? [] : rolesTexto.split(",").map(r => r.trim());
-
-    formulario.reset();
-    limpiarCheckboxesRol();
-
-    inputCI.value = cedula;
-    inputNombre.value = nombre;
-    inputApellido.value = apellido;
-    inputContrasenia.value = "";
-
-    for (const checkbox of checkboxesRol) {
-        checkbox.checked = roles.includes(checkbox.value);
-    }
-
-    inputCI.readOnly = true;
-    modoEdicion = true;
-    dialog.showModal();
-}
-
-function redirigirConMensaje(tipo, mensaje) {
-    const url = new URL(window.location.href);
-    url.searchParams.delete("exito");
-    url.searchParams.delete("error");
-    url.searchParams.set(tipo, mensaje);
-    window.location.assign(url);
-}
-
-async function enviarSolicitudUsuario(metodo, datos) {
-    const respuesta = await fetch(urlApiUsuarios, {
-        method: metodo,
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-Token": tokenCSRF,
-        },
-        body: JSON.stringify(datos),
-    });
-
-    const cuerpo = await respuesta.json().catch(() => null);
-
-    if (!cuerpo || typeof cuerpo.status !== "string" || typeof cuerpo.message !== "string") {
-        throw new Error(`${mensajes.errorRespuestaApi} (HTTP ${respuesta.status}).`);
-    }
-
-    if (!respuesta.ok || cuerpo.status !== "success") {
-        throw new Error(cuerpo.message);
-    }
-
-    return cuerpo.message;
-}
-
-async function gestionarUsuario(eventoGestion) {
-    eventoGestion.preventDefault();
-
-    const datos = {
-        cedula: inputCI.value.trim(),
-        roles: Array.from(checkboxesRol)
-            .filter((checkbox) => checkbox.checked)
-            .map((checkbox) => checkbox.value),
-    };
-
-    if (!modoEdicion || inputNombre.value.trim() !== "") {
-        datos.nombre = inputNombre.value.trim();
-    }
-    if (!modoEdicion || inputApellido.value.trim() !== "") {
-        datos.apellido = inputApellido.value.trim();
-    }
-    if (!modoEdicion || inputContrasenia.value !== "") {
-        datos.clave = inputContrasenia.value;
-    }
-
-    const botonGuardar = formulario.querySelector('button[type="submit"]');
+    const botonGuardar = formularioGestionarUsuario.querySelector("button[type='submit']");
     botonGuardar.disabled = true;
 
     try {
-        await enviarSolicitudUsuario(modoEdicion ? "PUT" : "POST", datos);
-        const mensaje = modoEdicion ? mensajes.usuarioActualizado : mensajes.usuarioRegistrado;
-        redirigirConMensaje("exito", mensaje);
+        const usuario = obtenerDatosFormularioUsuario();
+        const claveMensaje = usuarioEnEdicion ? "administrador.usuarioActualizado" : "administrador.usuarioRegistrado";
+
+        if (usuarioEnEdicion) {
+            await modificarUsuario(usuario);
+        } else {
+            await altaUsuario(usuario);
+        }
+
+        cerrarGestionarUsuario();
+        mostrarMensaje(mensajeAdministrador, traducir(claveMensaje), false);
+        await actualizarTabla();
     } catch (error) {
-        redirigirConMensaje("error", error.message || mensajes.errorConexion);
+        mostrarMensaje(mensajeAdministrador, error.message, true);
+        cerrarGestionarUsuario();
     } finally {
         botonGuardar.disabled = false;
     }
 }
 
-async function cambiarEstadoUsuario(evento, activo) {
-    evento.preventDefault();
+async function cambiarEstadoUsuario(usuario, activo) {
+    const claveConfirmacion = activo ? "administrador.confirmarActivar" : "administrador.confirmarDesactivar";
 
-    const mensajeConfirmacion = activo ? mensajes.confirmarActivar : mensajes.confirmarDesactivar;
-    if (!confirm(mensajeConfirmacion)) {
+    if (!window.confirm(traducir(claveConfirmacion))) {
         return;
     }
 
-    const formularioEstado = evento.currentTarget;
-    const boton = formularioEstado.querySelector('button[type="submit"]');
-    const cedula = formularioEstado.querySelector('input[name="cedula"]').value;
-    boton.disabled = true;
-
     try {
-        await enviarSolicitudUsuario("PUT", { cedula, activo });
-        const mensaje = activo ? mensajes.usuarioActivado : mensajes.usuarioDesactivado;
-        redirigirConMensaje("exito", mensaje);
+        await modificarUsuario({ cedula: usuario.cedula, activo: activo });
+
+        const claveMensaje = activo ? "administrador.usuarioActivado" : "administrador.usuarioDesactivado";
+        mostrarMensaje(mensajeAdministrador, traducir(claveMensaje), false);
+        await actualizarTabla();
     } catch (error) {
-        redirigirConMensaje("error", error.message || mensajes.errorConexion);
-    } finally {
-        boton.disabled = false;
+        mostrarMensaje(mensajeAdministrador, error.message, true);
     }
 }
 
-btnAbrirDialog.addEventListener("click", abrirDialogCrear);
-btnCerrarDialog.addEventListener("click", cerrarDialog);
-cuerpoTablaUsuarios.addEventListener("click", editarUsuario);
-formulario.addEventListener("submit", gestionarUsuario);
+/**
+ * EVENTOS
+ */
 
-for (const formulario of formulariosDesactivar) {
-    formulario.addEventListener("submit", (evento) => cambiarEstadoUsuario(evento, false));
+formularioGestionarUsuario.addEventListener("submit", gestionarUsuario);
+btnAltaUsuario.addEventListener("click", abrirAltaUsuario);
+btnCerrarGestionarUsuario.addEventListener("click", cerrarGestionarUsuario);
+
+//Al presionar Escape se limpia el estado del formulario
+dialogGestionarUsuario.addEventListener("cancel", limpiarFormularioUsuario);
+
+async function iniciar() {
+    await iniciarPagina();
+    await actualizarTabla();
 }
-for (const formulario of formulariosActivar) {
-    formulario.addEventListener("submit", (evento) => cambiarEstadoUsuario(evento, true));
-}
+
+iniciar();

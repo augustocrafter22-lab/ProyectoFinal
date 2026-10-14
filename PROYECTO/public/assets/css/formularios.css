@@ -1,0 +1,266 @@
+/* Formularios, botones, barras de filtros y cuadros de diálogo. */
+
+/* Formulario general */
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.formulario fieldset {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  border: 1px solid var(--bordeSuave);
+  border-radius: var(--radio);
+  padding: 1rem;
+}
+
+.formulario label {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--textoSuave);
+}
+
+.formulario select,
+.formulario textarea,
+.formulario input {
+  width: 65%;
+  padding: 10px 14px;
+  border: 1px solid var(--negro);
+  border-radius: var(--radio);
+  background-color: var(--fondoCampo);
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--textoPrincipal);
+}
+
+.formulario select:focus,
+.formulario textarea:focus,
+.formulario input:focus {
+  border-color: var(--azul);
+}
+
+.formulario textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.formulario textarea:disabled {
+  background-color: #e9e9e9;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.selectorTicket {
+  max-width: 75vw;
+  border: 2px solid var(--negro);
+  border-radius: 5px;
+}
+
+.botonera {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+/* Botones */
+
+.btnPrincipal,
+.btnSecundario {
+  margin-top: 22px;
+  padding: 12px 20px;
+  border-radius: var(--radio);
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btnPrincipal {
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 22rem;
+  border: none;
+  background-color: var(--azul);
+  color: var(--blancoPuro);
+}
+
+.btnPrincipal:hover {
+  background-color: var(--azulIntenso);
+}
+
+.btnSecundario {
+  width: 75%;
+  border: 1px solid var(--bordeSuave);
+  background-color: var(--blancoPuro);
+  color: var(--textoPrincipal);
+}
+
+.btnSecundario:hover {
+  background-color: var(--fondoPagina);
+}
+
+.btnAccion {
+  padding: 6px 12px;
+  border: 1px solid var(--bordeSuave);
+  border-radius: var(--radio);
+  background: none;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--oscuro);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btnAccion:hover {
+  background-color: var(--oscuro);
+  color: var(--blancoPuro);
+}
+
+.btnPeligro {
+  border-color: var(--peligro);
+  color: var(--peligro);
+}
+
+.btnPeligro:hover {
+  background-color: var(--peligro);
+  color: var(--blancoPuro);
+}
+
+/* Barra de filtros sobre una tabla */
+
+.filtrosBarra {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: var(--blancoPuro);
+  border: 0.5px solid var(--blancoCristal);
+  border-radius: 12px;
+}
+
+.filtroContenedor {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 180px;
+  gap: 0.35rem;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--medio);
+}
+
+.campoFiltro {
+  width: 100%;
+  max-width: 300px;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--gris);
+  border-radius: 8px;
+  background-color: var(--fondoCampo);
+  font-size: 14px;
+  color: var(--negro);
+}
+
+.campoFiltro:focus {
+  outline: none;
+  border-color: var(--azul);
+  box-shadow: 0 0 0 3px rgba(25, 86, 192, 0.15);
+}
+
+.cajaControles {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+/* Cuadro de diálogo (alta y edición de usuarios) */
+
+.dialogGestionar {
+  width: 90vw;
+  max-width: 480px;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 28px;
+  border: none;
+  border-radius: var(--radio);
+  background-color: var(--blancoPuro);
+  box-shadow: 0 8px 28px rgba(20, 48, 92, 0.25);
+}
+
+.dialogGestionar::backdrop {
+  background-color: rgba(20, 48, 92, 0.45);
+}
+
+.dialogGestionar fieldset {
+  border: none;
+  padding: 0;
+}
+
+.cajaEntradaDeDatos {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.cajaEntradaDeDatos input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.cajaRoles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.btnCerrarDialog {
+  float: right;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .formulario select,
+  .formulario textarea,
+  .formulario input {
+    width: 100%;
+  }
+
+  .filtrosBarra {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .campoFiltro {
+    max-width: 100%;
+  }
+
+  .cajaEncabezado button {
+    width: 100%;
+  }
+
+  .dialogGestionar {
+    width: 94vw;
+    padding: 20px;
+  }
+}
