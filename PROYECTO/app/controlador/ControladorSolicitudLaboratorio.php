@@ -160,6 +160,7 @@ class ControladorSolicitudLaboratorio
     private function registrar(): array
     {
         $datos = $this->validarDatos(Solicitud::obtenerDatos());
+        $this->validarFechaNoPasada($datos["fechaEstimada"], $datos["horaEstimada"]);
         $datos["cedulaSolicitante"] = $_SESSION["cedula"];
 
         $idSolicitud = $this->dao->crear($datos);
@@ -268,6 +269,28 @@ class ControladorSolicitudLaboratorio
             "fechaEstimada" => Validador::fecha($datosEnviados["fechaEstimada"] ?? "", "fechaEstimada"),
             "horaEstimada" => Validador::hora($datosEnviados["horaEstimada"] ?? "", "horaEstimada")
         ];
+    }
+
+    /**
+     * Verifica que la fecha y hora estimadas de una solicitud nueva no hayan
+     * pasado. Solo se aplica al registrar: al modificar, el coordinador o el
+     * técnico pueden editar solicitudes cuya fecha ya quedó atrás.
+     *
+     * @param string $fecha Fecha estimada ya validada (AAAA-MM-DD).
+     * @param string $hora Hora estimada ya validada (HH:MM o HH:MM:SS).
+     * @return void
+     * @throws Exception Si la fecha es anterior a hoy, o es hoy con una hora que ya pasó.
+     */
+    private function validarFechaNoPasada(string $fecha, string $hora): void
+    {
+        // Las fechas AAAA-MM-DD y las horas HH:MM se pueden comparar como texto.
+        if ($fecha < date("Y-m-d")) {
+            throw new Exception("La fechaEstimada no puede ser anterior a hoy.", 400);
+        }
+
+        if ($fecha === date("Y-m-d") && substr($hora, 0, 5) < date("H:i")) {
+            throw new Exception("La horaEstimada no puede ser anterior a la hora actual.", 400);
+        }
     }
 
 }
