@@ -205,6 +205,24 @@ class DAOTicket
     }
 
     /**
+     * Verifica que el equipo exista y esté en el laboratorio indicado,
+     * para que un ticket no quede con un equipo de otro laboratorio.
+     *
+     * @param string $idEquipo Id del equipo.
+     * @param string $idLaboratorio Id del laboratorio.
+     * @return bool true si el equipo pertenece a ese laboratorio.
+     */
+    public function equipoEstaEnLaboratorio(string $idEquipo, string $idLaboratorio): bool
+    {
+        $consulta = $this->conexion->prepare(
+            "SELECT COUNT(*) FROM EQUIPO WHERE idEquipo = :idEquipo AND idLaboratorio = :idLaboratorio"
+        );
+        $consulta->execute([":idEquipo" => $idEquipo, ":idLaboratorio" => $idLaboratorio]);
+
+        return ((int) $consulta->fetchColumn()) > 0;
+    }
+
+    /**
      * Genera un idTicket único.
      *
      * @return string El idTicket generado.

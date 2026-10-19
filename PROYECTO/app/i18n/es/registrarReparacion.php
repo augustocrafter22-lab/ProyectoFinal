@@ -7,6 +7,7 @@ return [
     "avisoSinDiagnosticos" => "No hay diagnósticos registrados para asociar una reparación.",
     "labelDiagnostico" => "Diagnóstico",
     "opcionSeleccioneDiagnostico" => "Seleccione un diagnóstico",
+    "opcionDiagnostico" => "Ticket {ticket} - Equipo {equipo} - {diagnostico}",
     "labelTexto" => "Descripción de la reparación",
     "btnRegistrar" => "Registrar reparación",
 ];

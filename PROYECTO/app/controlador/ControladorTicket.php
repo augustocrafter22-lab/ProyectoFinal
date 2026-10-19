@@ -145,7 +145,7 @@ class ControladorTicket
      * Registra un ticket nuevo con los datos enviados por el cliente.
      *
      * @return array Arreglo con las claves datos, mensaje y codigo.
-     * @throws Exception Si falta algún campo obligatorio.
+     * @throws Exception Si falta algún campo obligatorio o el equipo no es del laboratorio indicado.
      */
     private function registrar(): array
     {
@@ -160,6 +160,11 @@ class ControladorTicket
             "grupo" => Validador::longitud($datosEnviados["grupo"] ?? "", 1, 10, "grupo"),
             "profesor" => Validador::longitud($datosEnviados["profesor"] ?? "", 1, 50, "profesor")
         ];
+
+        // El equipo tiene que estar en el laboratorio donde se reportó la incidencia.
+        if (!$this->dao->equipoEstaEnLaboratorio($datos["equipo"], $datos["laboratorio"])) {
+            throw new Exception("El equipo " . $datos["equipo"] . " no pertenece al laboratorio " . $datos["laboratorio"] . ".", 400);
+        }
 
         $idTicket = $this->dao->crear($datos);
 

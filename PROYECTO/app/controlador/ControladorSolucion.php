@@ -29,7 +29,12 @@ class ControladorSolucion
     {
         $metodo = $_SERVER["REQUEST_METHOD"];
 
-        Sesion::verificarRolApi(["coordinador", "tecnico"]);
+        // La solución queda a nombre del técnico que la registra, por eso solo un técnico puede darla de alta.
+        if ($metodo === "POST") {
+            Sesion::verificarRolApi(["tecnico"]);
+        } else {
+            Sesion::verificarRolApi(["coordinador", "tecnico"]);
+        }
 
         // GET no modifica datos, por eso solo se pide el token en POST, PUT y DELETE.
         if (in_array($metodo, ["POST", "PUT", "DELETE"], true)) {
@@ -98,7 +103,7 @@ class ControladorSolucion
     }
 
     /**
-     * Registra una solución nueva con los datos enviados por el cliente.
+     * Registra una solución nueva a nombre del técnico que inició sesión.
      *
      * @return array Arreglo con las claves datos, mensaje y codigo.
      * @throws Exception Si los datos son incorrectos o el diagnóstico no existe.
@@ -106,6 +111,8 @@ class ControladorSolucion
     private function registrar(): array
     {
         $datos = $this->validarDatos(Solicitud::obtenerDatos());
+        // La cédula sale de la sesión y no del cliente, así nadie registra a nombre de otro técnico.
+        $datos["cedulaTecnico"] = $_SESSION["cedula"];
 
         $idSolucion = $this->dao->crear($datos);
 
@@ -172,7 +179,6 @@ class ControladorSolucion
     private function validarDatos(array $datosEnviados): array
     {
         $idDiagnostico = (int) Validador::numerico($datosEnviados["idDiagnostico"] ?? "", "idDiagnostico");
-        $cedulaTecnico = Validador::cedula($datosEnviados["cedulaTecnico"] ?? "");
         $solucion = Validador::longitud($datosEnviados["solucion"] ?? "", 10, 2000, "solución");
 
         if (!$this->dao->existeDiagnostico($idDiagnostico)) {
@@ -181,7 +187,6 @@ class ControladorSolucion
 
         return [
             "idDiagnostico" => $idDiagnostico,
-            "cedulaTecnico" => $cedulaTecnico,
             "solucion" => $solucion
         ];
     }

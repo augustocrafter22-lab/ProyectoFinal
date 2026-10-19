@@ -25,13 +25,26 @@ class Sesion
         session_regenerate_id(true);
 
         $_SESSION["cedula"] = $usuario->getCedula();
+        self::actualizarRoles($usuario);
+
+        unset($_SESSION["csrfToken"]);
+        Token::generarTokenCSRF();
+    }
+
+    /**
+     * Guarda en la sesión los roles que el usuario tiene en la base de datos.
+     * Se usa al iniciar sesión y cada vez que una pantalla consulta la sesión,
+     * así un cambio de roles hecho por el coordinador se aplica sin volver a loguearse.
+     *
+     * @param Usuario $usuario Usuario con sus roles actuales.
+     * @return void
+     */
+    public static function actualizarRoles(Usuario $usuario): void
+    {
         $_SESSION["coordinador"] = $usuario->esCoordinador();
         $_SESSION["tecnico"] = $usuario->esTecnico();
         $_SESSION["docente"] = $usuario->esDocente();
         $_SESSION["roles"] = $usuario->getRoles();
-
-        unset($_SESSION["csrfToken"]);
-        Token::generarTokenCSRF();
     }
 
     /**

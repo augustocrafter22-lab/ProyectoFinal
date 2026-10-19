@@ -19,6 +19,8 @@ class DAOReparacion
     /**
      * Recupera las reparaciones registradas, opcionalmente filtradas por equipo.
      * Filtrar por equipo es lo que permite consultar el historial técnico de un equipo puntual.
+     * El ticket y el equipo no se guardan en REPARACION: salen del diagnóstico
+     * siguiendo la cadena diagnóstico -> ticket -> equipo.
      *
      * @param string|null $idEquipo Id del equipo a filtrar, o null para traer todas.
      * @return array Arreglo con los datos de cada reparación.
@@ -27,21 +29,23 @@ class DAOReparacion
     {
         $sql = "
             SELECT
-                idReparacion,
-                idDiagnostico,
-                idTicket,
-                idEquipo,
-                cedulaTecnico,
-                reparacion,
-                fechaReparacion
-            FROM REPARACION
+                r.idReparacion,
+                r.idDiagnostico,
+                d.idTicket,
+                t.equipo AS idEquipo,
+                r.cedulaTecnico,
+                r.reparacion,
+                r.fechaReparacion
+            FROM REPARACION AS r
+            INNER JOIN DIAGNOSTICO AS d ON d.idDiagnostico = r.idDiagnostico
+            INNER JOIN TICKET AS t ON t.idTicket = d.idTicket
         ";
 
         if ($idEquipo !== null) {
-            $sql .= " WHERE idEquipo = :idEquipo ";
+            $sql .= " WHERE t.equipo = :idEquipo ";
         }
 
-        $sql .= " ORDER BY fechaReparacion DESC ";
+        $sql .= " ORDER BY r.fechaReparacion DESC ";
 
         $consulta = $this->conexion->prepare($sql);
 
@@ -64,15 +68,17 @@ class DAOReparacion
     {
         $sql = "
             SELECT
-                idReparacion,
-                idDiagnostico,
-                idTicket,
-                idEquipo,
-                cedulaTecnico,
-                reparacion,
-                fechaReparacion
-            FROM REPARACION
-            WHERE idReparacion = :idReparacion
+                r.idReparacion,
+                r.idDiagnostico,
+                d.idTicket,
+                t.equipo AS idEquipo,
+                r.cedulaTecnico,
+                r.reparacion,
+                r.fechaReparacion
+            FROM REPARACION AS r
+            INNER JOIN DIAGNOSTICO AS d ON d.idDiagnostico = r.idDiagnostico
+            INNER JOIN TICKET AS t ON t.idTicket = d.idTicket
+            WHERE r.idReparacion = :idReparacion
         ";
 
         $consulta = $this->conexion->prepare($sql);
@@ -85,8 +91,7 @@ class DAOReparacion
 
     /**
      * Registra una nueva reparación a partir de un diagnóstico existente.
-     * El ticket y el equipo se completan solos siguiendo la cadena
-     * diagnóstico -> ticket -> equipo.
+     * Solo se guarda el diagnóstico: el ticket y el equipo ya se conocen a través de él.
      *
      * @param array $datos Arreglo con las claves idDiagnostico, cedulaTecnico y reparacion.
      * @return int El idReparacion generado.
@@ -94,17 +99,8 @@ class DAOReparacion
     public function crear(array $datos): int
     {
         $sql = "
-            INSERT INTO REPARACION
-                (idDiagnostico, idTicket, idEquipo, cedulaTecnico, reparacion)
-            SELECT
-                d.idDiagnostico,
-                d.idTicket,
-                t.equipo,
-                :cedulaTecnico,
-                :reparacion
-            FROM DIAGNOSTICO AS d
-            INNER JOIN TICKET AS t ON t.idTicket = d.idTicket
-            WHERE d.idDiagnostico = :idDiagnostico
+            INSERT INTO REPARACION (idDiagnostico, cedulaTecnico, reparacion)
+            VALUES (:idDiagnostico, :cedulaTecnico, :reparacion)
         ";
 
         $consulta = $this->conexion->prepare($sql);

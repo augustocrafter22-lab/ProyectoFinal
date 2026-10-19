@@ -251,6 +251,11 @@
     gap: 10px;
   }
 
+  /* En columna, la base de 180px del flex pasaba a ser el alto de cada filtro y dejaba huecos. */
+  .filtroContenedor {
+    flex: 0 0 auto;
+  }
+
   .campoFiltro {
     max-width: 100%;
   }

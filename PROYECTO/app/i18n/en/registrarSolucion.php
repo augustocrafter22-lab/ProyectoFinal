@@ -7,6 +7,7 @@ return [
     "avisoSinDiagnosticos" => "No diagnoses registered yet. Register a diagnosis before adding a solution.",
     "labelDiagnostico" => "Diagnosis",
     "opcionSeleccioneDiagnostico" => "Select a diagnosis",
+    "opcionDiagnostico" => "Ticket {ticket} - Equipment {equipo} - {diagnostico}",
     "labelSolucion" => "Applied technical solution",
     "btnRegistrar" => "Register solution",
 ];
