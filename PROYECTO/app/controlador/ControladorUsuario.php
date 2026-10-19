@@ -6,6 +6,7 @@ require_once RUTA_MODELO . "/DAOUsuario.php";
 require_once RUTA_MODELO . "/ValidadorUsuario.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
 require_once RUTA_NUCLEO . "/Sesion.php";
+require_once RUTA_NUCLEO . "/Traductor.php";
 
 /**
  * Controlador unificado de USUARIO.
@@ -49,7 +50,7 @@ class ControladorUsuario
                 $resultado = $this->eliminar();
                 break;
             default:
-                throw new Exception("Método no permitido.", 405);
+                throw new Exception(Traductor::t("comun.errorMetodoNoPermitido"), 405);
         }
 
         Conexion::desconectar();
@@ -83,13 +84,13 @@ class ControladorUsuario
             $usuario = $this->dao->obtener($cedula);
 
             if ($usuario === null) {
-                throw new Exception("No existe un usuario con la cédula $cedula.", 404);
+                throw new Exception(Traductor::t("usuarios.noExiste", ["cedula" => $cedula]), 404);
             }
 
-            return ["datos" => $usuario, "mensaje" => "Usuario encontrado.", "codigo" => 200];
+            return ["datos" => $usuario, "mensaje" => Traductor::t("usuarios.encontrado"), "codigo" => 200];
         }
 
-        return ["datos" => $this->dao->listar(), "mensaje" => "Listado de usuarios.", "codigo" => 200];
+        return ["datos" => $this->dao->listar(), "mensaje" => Traductor::t("usuarios.listado"), "codigo" => 200];
     }
 
     /**
@@ -104,7 +105,7 @@ class ControladorUsuario
         $cedula = $datosUsuario["cedula"];
 
         if ($this->dao->obtener($cedula) !== null) {
-            throw new Exception("Ya existe un usuario con la cédula $cedula.", 409);
+            throw new Exception(Traductor::t("usuarios.yaExiste", ["cedula" => $cedula]), 409);
         }
 
         $this->dao->crear([
@@ -118,7 +119,7 @@ class ControladorUsuario
 
         return [
             "datos" => $this->dao->obtener($cedula),
-            "mensaje" => "Usuario $cedula registrado correctamente.",
+            "mensaje" => Traductor::t("usuarios.registrado", ["cedula" => $cedula]),
             "codigo" => 201
         ];
     }
@@ -134,7 +135,7 @@ class ControladorUsuario
         $cedula = ValidadorUsuario::cedula($_GET["id"] ?? ($datosEnviados["cedula"] ?? ""));
 
         if ($this->dao->obtener($cedula) === null) {
-            throw new Exception("No existe un usuario con la cédula $cedula.", 404);
+            throw new Exception(Traductor::t("usuarios.noExiste", ["cedula" => $cedula]), 404);
         }
 
         $cambios = ValidadorUsuario::cambios($datosEnviados, $_SESSION["cedula"], $cedula);
@@ -146,11 +147,11 @@ class ControladorUsuario
 
         $this->dao->actualizar($cedula, $cambios);
 
-        $mensaje = "Usuario $cedula actualizado correctamente.";
+        $mensaje = Traductor::t("usuarios.actualizado", ["cedula" => $cedula]);
         if (array_keys($cambios) === ["activo"]) {
             $mensaje = $cambios["activo"] === 1
-                ? "Usuario $cedula activado correctamente."
-                : "Usuario $cedula desactivado correctamente.";
+                ? Traductor::t("usuarios.activado", ["cedula" => $cedula])
+                : Traductor::t("usuarios.desactivado", ["cedula" => $cedula]);
         }
 
         return ["datos" => $this->dao->obtener($cedula), "mensaje" => $mensaje, "codigo" => 200];
@@ -167,22 +168,22 @@ class ControladorUsuario
         $cedula = ValidadorUsuario::texto($_GET["id"] ?? ($datosEnviados["cedula"] ?? ""));
 
         if ($cedula === "") {
-            throw new Exception("Debe indicar la cédula del usuario.", 400);
+            throw new Exception(Traductor::t("usuarios.faltaCedula"), 400);
         }
 
         $cedula = ValidadorUsuario::cedula($cedula);
 
         if ($this->dao->obtener($cedula) === null) {
-            throw new Exception("No existe un usuario con la cédula $cedula.", 404);
+            throw new Exception(Traductor::t("usuarios.noExiste", ["cedula" => $cedula]), 404);
         }
 
         if ($cedula === $_SESSION["cedula"]) {
-            throw new Exception("No puede eliminar su propio usuario.", 409);
+            throw new Exception(Traductor::t("usuarios.noEliminarse"), 409);
         }
 
         $this->dao->eliminar($cedula);
 
-        return ["datos" => null, "mensaje" => "Usuario $cedula eliminado correctamente.", "codigo" => 200];
+        return ["datos" => null, "mensaje" => Traductor::t("usuarios.eliminado", ["cedula" => $cedula]), "codigo" => 200];
     }
 
 }

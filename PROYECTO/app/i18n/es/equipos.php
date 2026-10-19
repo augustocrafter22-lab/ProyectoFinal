@@ -35,4 +35,14 @@ return [
     "estadoNoFunciona" => "No funciona",
     "disponible" => "Disponible",
     "noDisponible" => "No disponible",
+
+    // Mensajes de la API de equipos (ControladorEquipo).
+    "noExiste" => "No existe un equipo con el identificador {id}.",
+    "encontrado" => "Equipo encontrado.",
+    "listado" => "Listado de equipos.",
+    "yaExiste" => "Ya existe un equipo con el identificador {id}.",
+    "registrado" => "Equipo {id} registrado correctamente.",
+    "actualizado" => "Equipo {id} actualizado correctamente.",
+    "eliminado" => "Equipo {id} eliminado correctamente.",
+    "faltaId" => "Debe indicar el identificador del equipo.",
 ];

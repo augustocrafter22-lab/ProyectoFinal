@@ -7,6 +7,7 @@ require_once RUTA_MODELO . "/DAOIntervencion.php";
 require_once RUTA_MODELO . "/Validador.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
 require_once RUTA_NUCLEO . "/Sesion.php";
+require_once RUTA_NUCLEO . "/Traductor.php";
 
 /**
  * Registra intervenciones técnicas sobre equipos.
@@ -26,7 +27,7 @@ class ControladorIntervencion
         }
 
         if ($metodo !== "POST") {
-            throw new Exception("Método no permitido.", 405);
+            throw new Exception(Traductor::t("comun.errorMetodoNoPermitido"), 405);
         }
 
         $this->conectar();
@@ -55,19 +56,19 @@ class ControladorIntervencion
         );
 
         if ($this->daoEquipo->obtener($idEquipo) === null) {
-            throw new Exception("No existe un equipo con el identificador $idEquipo.", 404);
+            throw new Exception(Traductor::t("equipos.noExiste", ["id" => $idEquipo]), 404);
         }
 
         $idIntervencion = $this->dao->crear([
             "idEquipo" => $idEquipo,
             "tipo" => Validador::longitud($datosEnviados["tipo"] ?? "", 1, 60, "tipo"),
-            "descripcion" => Validador::longitud($datosEnviados["descripcion"] ?? "", 10, 2000, "descripción"),
+            "descripcion" => Validador::longitud($datosEnviados["descripcion"] ?? "", 10, 2000, "descripcion"),
             "cedulaTecnico" => $_SESSION["cedula"]
         ]);
 
         return [
             "datos" => $this->dao->obtener($idIntervencion),
-            "mensaje" => "Intervención $idIntervencion registrada correctamente.",
+            "mensaje" => Traductor::t("intervenciones.registrado", ["id" => $idIntervencion]),
             "codigo" => 201
         ];
     }

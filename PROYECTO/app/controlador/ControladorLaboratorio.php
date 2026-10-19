@@ -6,6 +6,7 @@ require_once RUTA_MODELO . "/DAOLaboratorio.php";
 require_once RUTA_MODELO . "/Validador.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
 require_once RUTA_NUCLEO . "/Sesion.php";
+require_once RUTA_NUCLEO . "/Traductor.php";
 
 /**
  * Controlador unificado de LABORATORIO.
@@ -64,7 +65,7 @@ class ControladorLaboratorio
                 $resultado = $this->eliminar();
                 break;
             default:
-                throw new Exception("Método no permitido.", 405);
+                throw new Exception(Traductor::t("comun.errorMetodoNoPermitido"), 405);
         }
 
         Conexion::desconectar();
@@ -99,13 +100,13 @@ class ControladorLaboratorio
             $laboratorio = $this->dao->obtener($idLaboratorio);
 
             if ($laboratorio === null) {
-                throw new Exception("No existe un laboratorio con el identificador $idLaboratorio.", 404);
+                throw new Exception(Traductor::t("laboratorios.noExiste", ["id" => $idLaboratorio]), 404);
             }
 
-            return ["datos" => $laboratorio, "mensaje" => "Laboratorio encontrado.", "codigo" => 200];
+            return ["datos" => $laboratorio, "mensaje" => Traductor::t("laboratorios.encontrado"), "codigo" => 200];
         }
 
-        return ["datos" => $this->dao->listar(), "mensaje" => "Listado de laboratorios.", "codigo" => 200];
+        return ["datos" => $this->dao->listar(), "mensaje" => Traductor::t("laboratorios.listado"), "codigo" => 200];
     }
 
     /**
@@ -121,7 +122,7 @@ class ControladorLaboratorio
         $idLaboratorio = Validador::longitud($datosEnviados["idLaboratorio"] ?? "", 1, 20, "idLaboratorio");
 
         if ($this->dao->obtener($idLaboratorio) !== null) {
-            throw new Exception("Ya existe un laboratorio con el identificador $idLaboratorio.", 409);
+            throw new Exception(Traductor::t("laboratorios.yaExiste", ["id" => $idLaboratorio]), 409);
         }
 
         $datos = $this->validarDatos($datosEnviados, 1);
@@ -131,7 +132,7 @@ class ControladorLaboratorio
 
         return [
             "datos" => $this->dao->obtener($idLaboratorio),
-            "mensaje" => "Laboratorio $idLaboratorio registrado correctamente.",
+            "mensaje" => Traductor::t("laboratorios.registrado", ["id" => $idLaboratorio]),
             "codigo" => 201
         ];
     }
@@ -150,7 +151,7 @@ class ControladorLaboratorio
         $laboratorioActual = $this->dao->obtener($idLaboratorio);
 
         if ($laboratorioActual === null) {
-            throw new Exception("No existe un laboratorio con el identificador $idLaboratorio.", 404);
+            throw new Exception(Traductor::t("laboratorios.noExiste", ["id" => $idLaboratorio]), 404);
         }
 
         // Si no se envía estado, se conserva el que tenía el laboratorio.
@@ -160,7 +161,7 @@ class ControladorLaboratorio
 
         return [
             "datos" => $this->dao->obtener($idLaboratorio),
-            "mensaje" => "Laboratorio $idLaboratorio actualizado correctamente.",
+            "mensaje" => Traductor::t("laboratorios.actualizado", ["id" => $idLaboratorio]),
             "codigo" => 200
         ];
     }
@@ -176,12 +177,12 @@ class ControladorLaboratorio
         $idLaboratorio = $this->obtenerIdIndicado(Solicitud::obtenerDatos());
 
         if ($this->dao->obtener($idLaboratorio) === null) {
-            throw new Exception("No existe un laboratorio con el identificador $idLaboratorio.", 404);
+            throw new Exception(Traductor::t("laboratorios.noExiste", ["id" => $idLaboratorio]), 404);
         }
 
         $this->dao->eliminar($idLaboratorio);
 
-        return ["datos" => null, "mensaje" => "Laboratorio $idLaboratorio eliminado correctamente.", "codigo" => 200];
+        return ["datos" => null, "mensaje" => Traductor::t("laboratorios.eliminado", ["id" => $idLaboratorio]), "codigo" => 200];
     }
 
     /**
@@ -197,7 +198,7 @@ class ControladorLaboratorio
         $idLaboratorio = Validador::limpiar($_GET["id"] ?? ($datosEnviados["idLaboratorio"] ?? ""));
 
         if ($idLaboratorio === "") {
-            throw new Exception("Debe indicar el identificador del laboratorio.", 400);
+            throw new Exception(Traductor::t("laboratorios.faltaId"), 400);
         }
 
         return Validador::longitud($idLaboratorio, 1, 20, "idLaboratorio");

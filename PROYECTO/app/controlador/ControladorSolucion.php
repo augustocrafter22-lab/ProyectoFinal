@@ -6,6 +6,7 @@ require_once RUTA_MODELO . "/DAOSolucion.php";
 require_once RUTA_MODELO . "/Validador.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
 require_once RUTA_NUCLEO . "/Sesion.php";
+require_once RUTA_NUCLEO . "/Traductor.php";
 
 /**
  * Controlador unificado de SOLUCION.
@@ -57,7 +58,7 @@ class ControladorSolucion
                 $resultado = $this->eliminar();
                 break;
             default:
-                throw new Exception("Método no permitido.", 405);
+                throw new Exception(Traductor::t("comun.errorMetodoNoPermitido"), 405);
         }
 
         Conexion::desconectar();
@@ -93,13 +94,13 @@ class ControladorSolucion
             $solucion = $this->dao->obtener($idSolucion);
 
             if ($solucion === null) {
-                throw new Exception("No existe una solución con el identificador $idSolucion.", 404);
+                throw new Exception(Traductor::t("soluciones.noExiste", ["id" => $idSolucion]), 404);
             }
 
-            return ["datos" => $solucion, "mensaje" => "Solución encontrada.", "codigo" => 200];
+            return ["datos" => $solucion, "mensaje" => Traductor::t("soluciones.encontrado"), "codigo" => 200];
         }
 
-        return ["datos" => $this->dao->listar(), "mensaje" => "Listado de soluciones.", "codigo" => 200];
+        return ["datos" => $this->dao->listar(), "mensaje" => Traductor::t("soluciones.listado"), "codigo" => 200];
     }
 
     /**
@@ -118,7 +119,7 @@ class ControladorSolucion
 
         return [
             "datos" => $this->dao->obtener($idSolucion),
-            "mensaje" => "Solución $idSolucion registrada correctamente.",
+            "mensaje" => Traductor::t("soluciones.registrado", ["id" => $idSolucion]),
             "codigo" => 201
         ];
     }
@@ -135,16 +136,16 @@ class ControladorSolucion
         $idSolucion = (int) Validador::numerico($_GET["id"] ?? ($datosEnviados["idSolucion"] ?? ""), "idSolucion");
 
         if ($this->dao->obtener($idSolucion) === null) {
-            throw new Exception("No existe una solución con el identificador $idSolucion.", 404);
+            throw new Exception(Traductor::t("soluciones.noExiste", ["id" => $idSolucion]), 404);
         }
 
-        $solucion = Validador::longitud($datosEnviados["solucion"] ?? "", 10, 2000, "solución");
+        $solucion = Validador::longitud($datosEnviados["solucion"] ?? "", 10, 2000, "solucion");
 
         $this->dao->actualizar($idSolucion, ["solucion" => $solucion]);
 
         return [
             "datos" => $this->dao->obtener($idSolucion),
-            "mensaje" => "Solución $idSolucion actualizada correctamente.",
+            "mensaje" => Traductor::t("soluciones.actualizado", ["id" => $idSolucion]),
             "codigo" => 200
         ];
     }
@@ -161,12 +162,12 @@ class ControladorSolucion
         $idSolucion = (int) Validador::numerico($_GET["id"] ?? ($datosEnviados["idSolucion"] ?? ""), "idSolucion");
 
         if ($this->dao->obtener($idSolucion) === null) {
-            throw new Exception("No existe una solución con el identificador $idSolucion.", 404);
+            throw new Exception(Traductor::t("soluciones.noExiste", ["id" => $idSolucion]), 404);
         }
 
         $this->dao->eliminar($idSolucion);
 
-        return ["datos" => null, "mensaje" => "Solución $idSolucion eliminada correctamente.", "codigo" => 200];
+        return ["datos" => null, "mensaje" => Traductor::t("soluciones.eliminado", ["id" => $idSolucion]), "codigo" => 200];
     }
 
     /**
@@ -179,10 +180,10 @@ class ControladorSolucion
     private function validarDatos(array $datosEnviados): array
     {
         $idDiagnostico = (int) Validador::numerico($datosEnviados["idDiagnostico"] ?? "", "idDiagnostico");
-        $solucion = Validador::longitud($datosEnviados["solucion"] ?? "", 10, 2000, "solución");
+        $solucion = Validador::longitud($datosEnviados["solucion"] ?? "", 10, 2000, "solucion");
 
         if (!$this->dao->existeDiagnostico($idDiagnostico)) {
-            throw new Exception("No existe el diagnóstico $idDiagnostico.", 400);
+            throw new Exception(Traductor::t("diagnosticos.noExiste", ["id" => $idDiagnostico]), 400);
         }
 
         return [

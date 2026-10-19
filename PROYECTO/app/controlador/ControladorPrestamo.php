@@ -6,6 +6,7 @@ require_once RUTA_MODELO . "/DAOPrestamo.php";
 require_once RUTA_MODELO . "/Validador.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
 require_once RUTA_NUCLEO . "/Sesion.php";
+require_once RUTA_NUCLEO . "/Traductor.php";
 
 /**
  * Controlador unificado de PRESTAMO.
@@ -67,7 +68,7 @@ class ControladorPrestamo
                 $resultado = $this->eliminar();
                 break;
             default:
-                throw new Exception("Método no permitido.", 405);
+                throw new Exception(Traductor::t("comun.errorMetodoNoPermitido"), 405);
         }
 
         Conexion::desconectar();
@@ -103,15 +104,15 @@ class ControladorPrestamo
             $prestamo = $this->dao->obtener($idPrestamo);
 
             if ($prestamo === null) {
-                throw new Exception("No existe un préstamo con el identificador $idPrestamo.", 404);
+                throw new Exception(Traductor::t("prestamos.noExiste", ["id" => $idPrestamo]), 404);
             }
 
-            return ["datos" => $prestamo, "mensaje" => "Préstamo encontrado.", "codigo" => 200];
+            return ["datos" => $prestamo, "mensaje" => Traductor::t("prestamos.encontrado"), "codigo" => 200];
         }
 
         return [
             "datos" => $this->dao->listar($this->obtenerFiltros()),
-            "mensaje" => "Listado de préstamos.",
+            "mensaje" => Traductor::t("prestamos.listado"),
             "codigo" => 200
         ];
     }
@@ -155,11 +156,11 @@ class ControladorPrestamo
         $fechaEstimada = $this->validarFechaEstimada($datosEnviados["fechaDevolucionEstimada"] ?? "");
 
         if (!$this->dao->existeEquipo($idEquipo)) {
-            throw new Exception("No existe el equipo $idEquipo.", 400);
+            throw new Exception(Traductor::t("equipos.noExiste", ["id" => $idEquipo]), 400);
         }
 
         if (!$this->dao->existeUsuario($cedula)) {
-            throw new Exception("No existe un usuario con la cédula $cedula.", 400);
+            throw new Exception(Traductor::t("usuarios.noExiste", ["cedula" => $cedula]), 400);
         }
 
         $idPrestamo = $this->dao->crear([
@@ -169,12 +170,12 @@ class ControladorPrestamo
         ]);
 
         if ($idPrestamo === 0) {
-            throw new Exception("El equipo $idEquipo no está disponible para prestar.", 409);
+            throw new Exception(Traductor::t("prestamos.equipoNoDisponible", ["id" => $idEquipo]), 409);
         }
 
         return [
             "datos" => $this->dao->obtener($idPrestamo),
-            "mensaje" => "Préstamo $idPrestamo registrado correctamente.",
+            "mensaje" => Traductor::t("prestamos.registrado", ["id" => $idPrestamo]),
             "codigo" => 201
         ];
     }
@@ -195,14 +196,14 @@ class ControladorPrestamo
         $prestamo = $this->dao->obtener($idPrestamo);
 
         if ($prestamo === null) {
-            throw new Exception("No existe un préstamo con el identificador $idPrestamo.", 404);
+            throw new Exception(Traductor::t("prestamos.noExiste", ["id" => $idPrestamo]), 404);
         }
 
         $quiereDevolver = array_key_exists("estado", $datosEnviados);
         $quiereCambiarFecha = array_key_exists("fechaDevolucionEstimada", $datosEnviados);
 
         if (!$quiereDevolver && !$quiereCambiarFecha) {
-            throw new Exception("Debe enviar el estado o la fechaDevolucionEstimada para modificar.", 400);
+            throw new Exception(Traductor::t("prestamos.sinCambios"), 400);
         }
 
         if ($quiereDevolver) {
@@ -215,18 +216,18 @@ class ControladorPrestamo
         }
 
         if ($prestamo["estado"] !== "Activo") {
-            throw new Exception("El préstamo $idPrestamo ya fue devuelto.", 409);
+            throw new Exception(Traductor::t("prestamos.yaDevuelto", ["id" => $idPrestamo]), 409);
         }
 
         if ($quiereCambiarFecha) {
             $this->dao->actualizarFechaEstimada($idPrestamo, $fechaEstimada);
         }
 
-        $mensaje = "Préstamo $idPrestamo actualizado correctamente.";
+        $mensaje = Traductor::t("prestamos.actualizado", ["id" => $idPrestamo]);
 
         if ($quiereDevolver) {
             $this->dao->devolver($idPrestamo);
-            $mensaje = "Devolución del préstamo $idPrestamo registrada correctamente.";
+            $mensaje = Traductor::t("prestamos.devuelto", ["id" => $idPrestamo]);
         }
 
         return ["datos" => $this->dao->obtener($idPrestamo), "mensaje" => $mensaje, "codigo" => 200];
@@ -245,16 +246,16 @@ class ControladorPrestamo
         $prestamo = $this->dao->obtener($idPrestamo);
 
         if ($prestamo === null) {
-            throw new Exception("No existe un préstamo con el identificador $idPrestamo.", 404);
+            throw new Exception(Traductor::t("prestamos.noExiste", ["id" => $idPrestamo]), 404);
         }
 
         if ($prestamo["estado"] === "Activo") {
-            throw new Exception("El préstamo $idPrestamo sigue activo, registre primero la devolución.", 409);
+            throw new Exception(Traductor::t("prestamos.sigueActivo", ["id" => $idPrestamo]), 409);
         }
 
         $this->dao->eliminar($idPrestamo);
 
-        return ["datos" => null, "mensaje" => "Préstamo $idPrestamo eliminado correctamente.", "codigo" => 200];
+        return ["datos" => null, "mensaje" => Traductor::t("prestamos.eliminado", ["id" => $idPrestamo]), "codigo" => 200];
     }
 
     /**
@@ -270,7 +271,7 @@ class ControladorPrestamo
         $id = Validador::limpiar($_GET["id"] ?? ($datosEnviados["idPrestamo"] ?? ""));
 
         if ($id === "") {
-            throw new Exception("Debe indicar el identificador del préstamo.", 400);
+            throw new Exception(Traductor::t("prestamos.faltaId"), 400);
         }
 
         return (int) Validador::numerico($id, "id");
@@ -290,7 +291,7 @@ class ControladorPrestamo
 
         // Las fechas con formato AAAA-MM-DD se pueden comparar como texto.
         if ($fecha < date("Y-m-d")) {
-            throw new Exception("La fechaDevolucionEstimada no puede ser anterior a hoy.", 400);
+            throw new Exception(Traductor::t("prestamos.fechaPasada"), 400);
         }
 
         return $fecha . " 23:59:59";

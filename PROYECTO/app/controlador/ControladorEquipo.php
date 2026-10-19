@@ -6,6 +6,7 @@ require_once RUTA_MODELO . "/DAOEquipo.php";
 require_once RUTA_MODELO . "/Validador.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
 require_once RUTA_NUCLEO . "/Sesion.php";
+require_once RUTA_NUCLEO . "/Traductor.php";
 
 /**
  * Controlador unificado de EQUIPO.
@@ -61,7 +62,7 @@ class ControladorEquipo
                 $resultado = $this->eliminar();
                 break;
             default:
-                throw new Exception("Método no permitido.", 405);
+                throw new Exception(Traductor::t("comun.errorMetodoNoPermitido"), 405);
         }
 
         Conexion::desconectar();
@@ -96,15 +97,15 @@ class ControladorEquipo
             $equipo = $this->dao->obtener($idEquipo);
 
             if ($equipo === null) {
-                throw new Exception("No existe un equipo con el identificador $idEquipo.", 404);
+                throw new Exception(Traductor::t("equipos.noExiste", ["id" => $idEquipo]), 404);
             }
 
-            return ["datos" => $equipo, "mensaje" => "Equipo encontrado.", "codigo" => 200];
+            return ["datos" => $equipo, "mensaje" => Traductor::t("equipos.encontrado"), "codigo" => 200];
         }
 
         return [
             "datos" => $this->dao->listar($this->obtenerFiltros()),
-            "mensaje" => "Listado de equipos.",
+            "mensaje" => Traductor::t("equipos.listado"),
             "codigo" => 200
         ];
     }
@@ -125,11 +126,11 @@ class ControladorEquipo
         $disponibilidadesValidas = ["Disponible", "No disponible"];
 
         if ($estado !== "" && !in_array($estado, $estadosValidos, true)) {
-            throw new Exception("El filtro estado tiene un valor no permitido.", 400);
+            throw new Exception(Traductor::t("validacion.filtroNoPermitido", ["filtro" => Traductor::t("campos.estado")]), 400);
         }
 
         if ($disponibilidad !== "" && !in_array($disponibilidad, $disponibilidadesValidas, true)) {
-            throw new Exception("El filtro disponibilidad tiene un valor no permitido.", 400);
+            throw new Exception(Traductor::t("validacion.filtroNoPermitido", ["filtro" => Traductor::t("campos.disponibilidad")]), 400);
         }
 
         if ($laboratorio !== "") {
@@ -157,7 +158,7 @@ class ControladorEquipo
         $idEquipo = Validador::longitud($idEquipo, 1, 10, "idEquipo");
 
         if ($this->dao->obtener($idEquipo) !== null) {
-            throw new Exception("Ya existe un equipo con el identificador $idEquipo.", 409);
+            throw new Exception(Traductor::t("equipos.yaExiste", ["id" => $idEquipo]), 409);
         }
 
         $datos = $this->validarDatos($datosEnviados);
@@ -167,7 +168,7 @@ class ControladorEquipo
 
         return [
             "datos" => $this->dao->obtener($idEquipo),
-            "mensaje" => "Equipo $idEquipo registrado correctamente.",
+            "mensaje" => Traductor::t("equipos.registrado", ["id" => $idEquipo]),
             "codigo" => 201
         ];
     }
@@ -185,13 +186,13 @@ class ControladorEquipo
         $idEquipo = trim($_GET["id"] ?? ($datosEnviados["idEquipo"] ?? ""));
 
         if ($idEquipo === "") {
-            throw new Exception("Debe indicar el identificador del equipo.", 400);
+            throw new Exception(Traductor::t("equipos.faltaId"), 400);
         }
 
         $idEquipo = Validador::longitud($idEquipo, 1, 10, "idEquipo");
 
         if ($this->dao->obtener($idEquipo) === null) {
-            throw new Exception("No existe un equipo con el identificador $idEquipo.", 404);
+            throw new Exception(Traductor::t("equipos.noExiste", ["id" => $idEquipo]), 404);
         }
 
         $datos = $this->validarDatos($datosEnviados);
@@ -200,7 +201,7 @@ class ControladorEquipo
 
         return [
             "datos" => $this->dao->obtener($idEquipo),
-            "mensaje" => "Equipo $idEquipo actualizado correctamente.",
+            "mensaje" => Traductor::t("equipos.actualizado", ["id" => $idEquipo]),
             "codigo" => 200
         ];
     }
@@ -218,18 +219,18 @@ class ControladorEquipo
         $idEquipo = trim($_GET["id"] ?? ($datosEnviados["idEquipo"] ?? ""));
 
         if ($idEquipo === "") {
-            throw new Exception("Debe indicar el identificador del equipo.", 400);
+            throw new Exception(Traductor::t("equipos.faltaId"), 400);
         }
 
         $idEquipo = Validador::longitud($idEquipo, 1, 10, "idEquipo");
 
         if ($this->dao->obtener($idEquipo) === null) {
-            throw new Exception("No existe un equipo con el identificador $idEquipo.", 404);
+            throw new Exception(Traductor::t("equipos.noExiste", ["id" => $idEquipo]), 404);
         }
 
         $this->dao->eliminar($idEquipo);
 
-        return ["datos" => null, "mensaje" => "Equipo $idEquipo eliminado correctamente.", "codigo" => 200];
+        return ["datos" => null, "mensaje" => Traductor::t("equipos.eliminado", ["id" => $idEquipo]), "codigo" => 200];
     }
 
     /**
@@ -254,7 +255,7 @@ class ControladorEquipo
         ];
 
         if (!$this->dao->existeLaboratorio($datos["idLaboratorio"])) {
-            throw new Exception("No existe el laboratorio " . $datos["idLaboratorio"] . ".", 400);
+            throw new Exception(Traductor::t("laboratorios.noExiste", ["id" => $datos["idLaboratorio"]]), 400);
         }
 
         $datos["informacion"] = trim($datosEnviados["informacion"] ?? "");

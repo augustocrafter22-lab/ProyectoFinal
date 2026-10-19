@@ -6,6 +6,7 @@ require_once RUTA_MODELO . "/DAOTicket.php";
 require_once RUTA_MODELO . "/Validador.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
 require_once RUTA_NUCLEO . "/Sesion.php";
+require_once RUTA_NUCLEO . "/Traductor.php";
 
 /**
  * Controlador unificado de TICKET.
@@ -66,7 +67,7 @@ class ControladorTicket
                 $resultado = $this->eliminar();
                 break;
             default:
-                throw new Exception("Método no permitido.", 405);
+                throw new Exception(Traductor::t("comun.errorMetodoNoPermitido"), 405);
         }
 
         Conexion::desconectar();
@@ -101,15 +102,15 @@ class ControladorTicket
             $ticket = $this->dao->obtener($idTicket);
 
             if ($ticket === null) {
-                throw new Exception("No existe un ticket con el identificador $idTicket.", 404);
+                throw new Exception(Traductor::t("tickets.noExiste", ["id" => $idTicket]), 404);
             }
 
-            return ["datos" => $ticket, "mensaje" => "Ticket encontrado.", "codigo" => 200];
+            return ["datos" => $ticket, "mensaje" => Traductor::t("tickets.encontrado"), "codigo" => 200];
         }
 
         $filtros = $this->obtenerFiltros();
 
-        return ["datos" => $this->dao->listar($filtros), "mensaje" => "Listado de tickets.", "codigo" => 200];
+        return ["datos" => $this->dao->listar($filtros), "mensaje" => Traductor::t("tickets.listado"), "codigo" => 200];
     }
 
     /**
@@ -125,11 +126,11 @@ class ControladorTicket
         $prioridad = trim($_GET["prioridad"] ?? "");
 
         if ($estado !== "" && !in_array($estado, $this->estadosValidos, true)) {
-            throw new Exception("El filtro estado tiene un valor no permitido.", 400);
+            throw new Exception(Traductor::t("validacion.filtroNoPermitido", ["filtro" => Traductor::t("campos.estado")]), 400);
         }
 
         if ($prioridad !== "" && !in_array($prioridad, $this->prioridadesValidas, true)) {
-            throw new Exception("El filtro prioridad tiene un valor no permitido.", 400);
+            throw new Exception(Traductor::t("validacion.filtroNoPermitido", ["filtro" => Traductor::t("campos.prioridad")]), 400);
         }
 
         return [
@@ -163,14 +164,14 @@ class ControladorTicket
 
         // El equipo tiene que estar en el laboratorio donde se reportó la incidencia.
         if (!$this->dao->equipoEstaEnLaboratorio($datos["equipo"], $datos["laboratorio"])) {
-            throw new Exception("El equipo " . $datos["equipo"] . " no pertenece al laboratorio " . $datos["laboratorio"] . ".", 400);
+            throw new Exception(Traductor::t("tickets.equipoFueraDeLaboratorio", ["equipo" => $datos["equipo"], "laboratorio" => $datos["laboratorio"]]), 400);
         }
 
         $idTicket = $this->dao->crear($datos);
 
         return [
             "datos" => $this->dao->obtener($idTicket),
-            "mensaje" => "Ticket $idTicket registrado correctamente.",
+            "mensaje" => Traductor::t("tickets.registrado", ["id" => $idTicket]),
             "codigo" => 201
         ];
     }
@@ -185,19 +186,19 @@ class ControladorTicket
     {
         $datosEnviados = Solicitud::obtenerDatos();
 
-        $idTicket = Validador::requerido($_GET["id"] ?? ($datosEnviados["idTicket"] ?? ""), "identificador del ticket");
+        $idTicket = Validador::requerido($_GET["id"] ?? ($datosEnviados["idTicket"] ?? ""), "idTicket");
         $estado = Validador::enLista($datosEnviados["estado"] ?? "", $this->estadosValidos, "estado");
         $prioridad = Validador::enLista($datosEnviados["prioridad"] ?? "", $this->prioridadesValidas, "prioridad");
 
         if ($this->dao->obtener($idTicket) === null) {
-            throw new Exception("No existe un ticket con el identificador $idTicket.", 404);
+            throw new Exception(Traductor::t("tickets.noExiste", ["id" => $idTicket]), 404);
         }
 
         $this->dao->actualizar($idTicket, ["estado" => $estado, "prioridad" => $prioridad]);
 
         return [
             "datos" => $this->dao->obtener($idTicket),
-            "mensaje" => "Ticket $idTicket actualizado correctamente.",
+            "mensaje" => Traductor::t("tickets.actualizado", ["id" => $idTicket]),
             "codigo" => 200
         ];
     }
@@ -215,16 +216,16 @@ class ControladorTicket
         $idTicket = trim($_GET["id"] ?? ($datosEnviados["idTicket"] ?? ""));
 
         if ($idTicket === "") {
-            throw new Exception("Debe indicar el identificador del ticket.", 400);
+            throw new Exception(Traductor::t("tickets.faltaId"), 400);
         }
 
         if ($this->dao->obtener($idTicket) === null) {
-            throw new Exception("No existe un ticket con el identificador $idTicket.", 404);
+            throw new Exception(Traductor::t("tickets.noExiste", ["id" => $idTicket]), 404);
         }
 
         $this->dao->eliminar($idTicket);
 
-        return ["datos" => null, "mensaje" => "Ticket $idTicket eliminado correctamente.", "codigo" => 200];
+        return ["datos" => null, "mensaje" => Traductor::t("tickets.eliminado", ["id" => $idTicket]), "codigo" => 200];
     }
 
 }

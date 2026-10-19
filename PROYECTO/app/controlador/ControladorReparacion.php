@@ -6,6 +6,7 @@ require_once RUTA_MODELO . "/DAOReparacion.php";
 require_once RUTA_MODELO . "/Validador.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
 require_once RUTA_NUCLEO . "/Sesion.php";
+require_once RUTA_NUCLEO . "/Traductor.php";
 
 /**
  * Controlador unificado de REPARACION.
@@ -58,7 +59,7 @@ class ControladorReparacion
                 $resultado = $this->eliminar();
                 break;
             default:
-                throw new Exception("Método no permitido.", 405);
+                throw new Exception(Traductor::t("comun.errorMetodoNoPermitido"), 405);
         }
 
         Conexion::desconectar();
@@ -95,10 +96,10 @@ class ControladorReparacion
             $reparacion = $this->dao->obtener($idReparacion);
 
             if ($reparacion === null) {
-                throw new Exception("No existe una reparación con el identificador $idReparacion.", 404);
+                throw new Exception(Traductor::t("reparaciones.noExiste", ["id" => $idReparacion]), 404);
             }
 
-            return ["datos" => $reparacion, "mensaje" => "Reparación encontrada.", "codigo" => 200];
+            return ["datos" => $reparacion, "mensaje" => Traductor::t("reparaciones.encontrado"), "codigo" => 200];
         }
 
         $idEquipo = trim($_GET["idEquipo"] ?? "");
@@ -106,12 +107,12 @@ class ControladorReparacion
         if ($idEquipo !== "") {
             return [
                 "datos" => $this->dao->listar($idEquipo),
-                "mensaje" => "Historial técnico del equipo $idEquipo.",
+                "mensaje" => Traductor::t("historialEquipo.listado", ["id" => $idEquipo]),
                 "codigo" => 200
             ];
         }
 
-        return ["datos" => $this->dao->listar(), "mensaje" => "Listado de reparaciones.", "codigo" => 200];
+        return ["datos" => $this->dao->listar(), "mensaje" => Traductor::t("reparaciones.listado"), "codigo" => 200];
     }
 
     /**
@@ -130,7 +131,7 @@ class ControladorReparacion
 
         return [
             "datos" => $this->dao->obtener($idReparacion),
-            "mensaje" => "Reparación $idReparacion registrada correctamente.",
+            "mensaje" => Traductor::t("reparaciones.registrado", ["id" => $idReparacion]),
             "codigo" => 201
         ];
     }
@@ -147,16 +148,16 @@ class ControladorReparacion
         $idReparacion = (int) Validador::numerico($_GET["id"] ?? ($datosEnviados["idReparacion"] ?? ""), "idReparacion");
 
         if ($this->dao->obtener($idReparacion) === null) {
-            throw new Exception("No existe una reparación con el identificador $idReparacion.", 404);
+            throw new Exception(Traductor::t("reparaciones.noExiste", ["id" => $idReparacion]), 404);
         }
 
-        $reparacion = Validador::longitud($datosEnviados["reparacion"] ?? "", 10, 2000, "reparación");
+        $reparacion = Validador::longitud($datosEnviados["reparacion"] ?? "", 10, 2000, "reparacion");
 
         $this->dao->actualizar($idReparacion, ["reparacion" => $reparacion]);
 
         return [
             "datos" => $this->dao->obtener($idReparacion),
-            "mensaje" => "Reparación $idReparacion actualizada correctamente.",
+            "mensaje" => Traductor::t("reparaciones.actualizado", ["id" => $idReparacion]),
             "codigo" => 200
         ];
     }
@@ -173,12 +174,12 @@ class ControladorReparacion
         $idReparacion = (int) Validador::numerico($_GET["id"] ?? ($datosEnviados["idReparacion"] ?? ""), "idReparacion");
 
         if ($this->dao->obtener($idReparacion) === null) {
-            throw new Exception("No existe una reparación con el identificador $idReparacion.", 404);
+            throw new Exception(Traductor::t("reparaciones.noExiste", ["id" => $idReparacion]), 404);
         }
 
         $this->dao->eliminar($idReparacion);
 
-        return ["datos" => null, "mensaje" => "Reparación $idReparacion eliminada correctamente.", "codigo" => 200];
+        return ["datos" => null, "mensaje" => Traductor::t("reparaciones.eliminado", ["id" => $idReparacion]), "codigo" => 200];
     }
 
     /**
@@ -191,10 +192,10 @@ class ControladorReparacion
     private function validarDatos(array $datosEnviados): array
     {
         $idDiagnostico = (int) Validador::numerico($datosEnviados["idDiagnostico"] ?? "", "idDiagnostico");
-        $reparacion = Validador::longitud($datosEnviados["reparacion"] ?? "", 10, 2000, "reparación");
+        $reparacion = Validador::longitud($datosEnviados["reparacion"] ?? "", 10, 2000, "reparacion");
 
         if (!$this->dao->existeDiagnostico($idDiagnostico)) {
-            throw new Exception("No existe el diagnóstico $idDiagnostico.", 400);
+            throw new Exception(Traductor::t("diagnosticos.noExiste", ["id" => $idDiagnostico]), 400);
         }
 
         return [

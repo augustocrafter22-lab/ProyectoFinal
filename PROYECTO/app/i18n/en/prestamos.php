@@ -26,4 +26,19 @@ return [
     "btnDevolver" => "Register return",
     "btnEliminar" => "Delete",
     "errorConexion" => "Could not connect to the server.",
+
+    // Mensajes de la API de préstamos (ControladorPrestamo).
+    "noExiste" => "There is no loan with the ID {id}.",
+    "encontrado" => "Loan found.",
+    "listado" => "Loan list.",
+    "registrado" => "Loan {id} registered successfully.",
+    "actualizado" => "Loan {id} updated successfully.",
+    "devuelto" => "Return of loan {id} registered successfully.",
+    "eliminado" => "Loan {id} deleted successfully.",
+    "faltaId" => "You must indicate the loan ID.",
+    "equipoNoDisponible" => "Equipment {id} is not available to lend.",
+    "sinCambios" => "You must send the status or the estimated return date to modify.",
+    "yaDevuelto" => "Loan {id} has already been returned.",
+    "sigueActivo" => "Loan {id} is still active, register the return first.",
+    "fechaPasada" => "The estimated return date cannot be earlier than today.",
 ];

@@ -33,8 +33,8 @@ class ControladorLogin
         $this->verificarMetodo("POST");
 
         $datosEnviados = Solicitud::obtenerDatos();
-        $cedula = Validador::requerido($datosEnviados["cedula"] ?? "", "cédula");
-        $clave = Validador::requerido($datosEnviados["clave"] ?? "", "contraseña");
+        $cedula = Validador::requerido($datosEnviados["cedula"] ?? "", "cedula");
+        $clave = Validador::requerido($datosEnviados["clave"] ?? "", "clave");
 
         $login = new Login(new AccesoDatosUsuario(Conexion::conectar()));
         $usuario = $login->autenticar($cedula, $clave);

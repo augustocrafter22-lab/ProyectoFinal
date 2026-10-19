@@ -41,6 +41,6 @@ class ControladorDashboard
 
         Conexion::desconectar();
 
-        RespuestaJson::exito($metricas, "Métricas del dashboard.");
+        RespuestaJson::exito($metricas, Traductor::t("dashboard.metricas"));
     }
 }

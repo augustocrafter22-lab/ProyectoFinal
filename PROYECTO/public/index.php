@@ -10,15 +10,16 @@ if (!isset($_GET["ruta"])) {
 }
 
 try {
+    // La sesión se abre primero para que hasta el error de ruta salga en el idioma elegido.
+    session_start();
+    Traductor::iniciar();
+
     // Captura el nombre del recurso que viene luego de ? en la URL
     $ruta = $_GET["ruta"];
 
     if (!is_string($ruta) || trim($ruta) === "") {
-        throw new Exception("La ruta es inválida.", 400);
+        throw new Exception(Traductor::t("comun.errorRutaInvalida"), 400);
     }
-
-    session_start();
-    Traductor::iniciar();
 
     require RUTA_RUTAS . "/api.php";
 } catch (Throwable $error) {

@@ -6,6 +6,7 @@ require_once RUTA_MODELO . "/DAODiagnostico.php";
 require_once RUTA_MODELO . "/Validador.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
 require_once RUTA_NUCLEO . "/Sesion.php";
+require_once RUTA_NUCLEO . "/Traductor.php";
 
 /**
  * Controlador unificado de DIAGNOSTICO.
@@ -57,7 +58,7 @@ class ControladorDiagnostico
                 $resultado = $this->eliminar();
                 break;
             default:
-                throw new Exception("Método no permitido.", 405);
+                throw new Exception(Traductor::t("comun.errorMetodoNoPermitido"), 405);
         }
 
         Conexion::desconectar();
@@ -94,17 +95,17 @@ class ControladorDiagnostico
             $diagnostico = $this->dao->obtener($idDiagnostico);
 
             if ($diagnostico === null) {
-                throw new Exception("No existe un diagnóstico con el identificador $idDiagnostico.", 404);
+                throw new Exception(Traductor::t("diagnosticos.noExiste", ["id" => $idDiagnostico]), 404);
             }
 
-            return ["datos" => $diagnostico, "mensaje" => "Diagnóstico encontrado.", "codigo" => 200];
+            return ["datos" => $diagnostico, "mensaje" => Traductor::t("diagnosticos.encontrado"), "codigo" => 200];
         }
 
         $idTicket = trim($_GET["idTicket"] ?? "");
 
         return [
             "datos" => $this->dao->listar($idTicket !== "" ? $idTicket : null),
-            "mensaje" => "Listado de diagnósticos.",
+            "mensaje" => Traductor::t("diagnosticos.listado"),
             "codigo" => 200
         ];
     }
@@ -125,7 +126,7 @@ class ControladorDiagnostico
 
         return [
             "datos" => $this->dao->obtener($idDiagnostico),
-            "mensaje" => "Diagnóstico $idDiagnostico registrado correctamente.",
+            "mensaje" => Traductor::t("diagnosticos.registrado", ["id" => $idDiagnostico]),
             "codigo" => 201
         ];
     }
@@ -142,16 +143,16 @@ class ControladorDiagnostico
         $idDiagnostico = (int) Validador::numerico($_GET["id"] ?? ($datosEnviados["idDiagnostico"] ?? ""), "idDiagnostico");
 
         if ($this->dao->obtener($idDiagnostico) === null) {
-            throw new Exception("No existe un diagnóstico con el identificador $idDiagnostico.", 404);
+            throw new Exception(Traductor::t("diagnosticos.noExiste", ["id" => $idDiagnostico]), 404);
         }
 
-        $diagnostico = Validador::longitud($datosEnviados["diagnostico"] ?? "", 10, 2000, "diagnóstico");
+        $diagnostico = Validador::longitud($datosEnviados["diagnostico"] ?? "", 10, 2000, "diagnostico");
 
         $this->dao->actualizar($idDiagnostico, ["diagnostico" => $diagnostico]);
 
         return [
             "datos" => $this->dao->obtener($idDiagnostico),
-            "mensaje" => "Diagnóstico $idDiagnostico actualizado correctamente.",
+            "mensaje" => Traductor::t("diagnosticos.actualizado", ["id" => $idDiagnostico]),
             "codigo" => 200
         ];
     }
@@ -168,12 +169,12 @@ class ControladorDiagnostico
         $idDiagnostico = (int) Validador::numerico($_GET["id"] ?? ($datosEnviados["idDiagnostico"] ?? ""), "idDiagnostico");
 
         if ($this->dao->obtener($idDiagnostico) === null) {
-            throw new Exception("No existe un diagnóstico con el identificador $idDiagnostico.", 404);
+            throw new Exception(Traductor::t("diagnosticos.noExiste", ["id" => $idDiagnostico]), 404);
         }
 
         $this->dao->eliminar($idDiagnostico);
 
-        return ["datos" => null, "mensaje" => "Diagnóstico $idDiagnostico eliminado correctamente.", "codigo" => 200];
+        return ["datos" => null, "mensaje" => Traductor::t("diagnosticos.eliminado", ["id" => $idDiagnostico]), "codigo" => 200];
     }
 
     /**
@@ -186,10 +187,10 @@ class ControladorDiagnostico
     private function validarDatos(array $datosEnviados): array
     {
         $idTicket = Validador::requerido($datosEnviados["idTicket"] ?? "", "idTicket");
-        $diagnostico = Validador::longitud($datosEnviados["diagnostico"] ?? "", 10, 2000, "diagnóstico");
+        $diagnostico = Validador::longitud($datosEnviados["diagnostico"] ?? "", 10, 2000, "diagnostico");
 
         if (!$this->dao->existeTicket($idTicket)) {
-            throw new Exception("No existe el ticket $idTicket.", 400);
+            throw new Exception(Traductor::t("tickets.noExiste", ["id" => $idTicket]), 400);
         }
 
         return [

@@ -5,6 +5,7 @@ require_once RUTA_MODELO . "/DAOHistorialEquipo.php";
 require_once RUTA_MODELO . "/Validador.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
 require_once RUTA_NUCLEO . "/Sesion.php";
+require_once RUTA_NUCLEO . "/Traductor.php";
 
 /**
  * Consulta la trazabilidad técnica completa de un equipo.
@@ -21,7 +22,7 @@ class ControladorHistorialEquipo
         $this->conectar();
 
         if ($metodo !== "GET") {
-            throw new Exception("Método no permitido.", 405);
+            throw new Exception(Traductor::t("comun.errorMetodoNoPermitido"), 405);
         }
 
         $resultado = $this->listar();
@@ -46,12 +47,12 @@ class ControladorHistorialEquipo
         );
 
         if (!$this->dao->existeEquipo($idEquipo)) {
-            throw new Exception("No existe un equipo con el identificador $idEquipo.", 404);
+            throw new Exception(Traductor::t("equipos.noExiste", ["id" => $idEquipo]), 404);
         }
 
         return [
             "datos" => $this->dao->listar($idEquipo),
-            "mensaje" => "Historial técnico del equipo $idEquipo.",
+            "mensaje" => Traductor::t("historialEquipo.listado", ["id" => $idEquipo]),
             "codigo" => 200
         ];
     }

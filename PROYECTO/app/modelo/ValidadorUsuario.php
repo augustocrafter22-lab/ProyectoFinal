@@ -1,6 +1,7 @@
 <?php
 
 require_once RUTA_MODELO . "/Validador.php";
+require_once RUTA_NUCLEO . "/Traductor.php";
 
 /**
  * Valida los datos de entrada específicos de las operaciones de usuario.
@@ -59,16 +60,16 @@ class ValidadorUsuario
         }
 
         if (empty($cambios)) {
-            throw new Exception("Debe enviar al menos un campo para modificar.", 400);
+            throw new Exception(Traductor::t("usuarios.sinCambios"), 400);
         }
 
         if ($cedula === $cedulaSesion) {
             if (isset($cambios["activo"]) && $cambios["activo"] === 0) {
-                throw new Exception("No puede desactivar su propio usuario.", 409);
+                throw new Exception(Traductor::t("usuarios.noDesactivarse"), 409);
             }
 
             if (isset($cambios["roles"]) && !in_array("coordinador", $cambios["roles"], true)) {
-                throw new Exception("No puede quitarse a si mismo el rol coordinador.", 409);
+                throw new Exception(Traductor::t("usuarios.noQuitarseCoordinador"), 409);
             }
         }
 
@@ -106,7 +107,7 @@ class ValidadorUsuario
     private static function roles($roles): array
     {
         if (!is_array($roles) || empty($roles)) {
-            throw new Exception("Debe indicar al menos un rol.", 400);
+            throw new Exception(Traductor::t("usuarios.faltanRoles"), 400);
         }
 
         $rolesValidados = [];
@@ -134,7 +135,7 @@ class ValidadorUsuario
             return 0;
         }
 
-        throw new Exception("El campo activo debe ser true o false.", 400);
+        throw new Exception(Traductor::t("validacion.booleano", ["campo" => Traductor::t("campos.activo")]), 400);
     }
 }
 

@@ -23,4 +23,7 @@ return [
     "thSalon" => "Salón",
     "thIncidencias" => "Incidencias",
     "sinIncidencias" => "Todavía no hay incidencias",
+
+    // Mensaje de la API del dashboard (ControladorDashboard).
+    "metricas" => "Métricas del dashboard.",
 ];

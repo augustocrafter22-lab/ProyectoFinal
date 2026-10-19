@@ -35,4 +35,14 @@ return [
     "estadoNoFunciona" => "Not working",
     "disponible" => "Available",
     "noDisponible" => "Unavailable",
+
+    // Mensajes de la API de equipos (ControladorEquipo).
+    "noExiste" => "There is no equipment with the ID {id}.",
+    "encontrado" => "Equipment found.",
+    "listado" => "Equipment list.",
+    "yaExiste" => "Equipment with the ID {id} already exists.",
+    "registrado" => "Equipment {id} registered successfully.",
+    "actualizado" => "Equipment {id} updated successfully.",
+    "eliminado" => "Equipment {id} deleted successfully.",
+    "faltaId" => "You must indicate the equipment ID.",
 ];

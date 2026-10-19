@@ -30,4 +30,5 @@ return [
     "cerrar" => "Close",
     "errorRegistroDuplicado" => "A record with that data already exists.",
     "errorReferenciaInexistente" => "The data refers to a record that does not exist.",
+    "errorRutaInvalida" => "The route is invalid.",
 ];

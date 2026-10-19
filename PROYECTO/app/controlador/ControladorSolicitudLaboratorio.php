@@ -6,6 +6,7 @@ require_once RUTA_MODELO . "/DAOSolicitudLaboratorio.php";
 require_once RUTA_MODELO . "/Validador.php";
 require_once RUTA_VISTA . "/RespuestaJson.php";
 require_once RUTA_NUCLEO . "/Sesion.php";
+require_once RUTA_NUCLEO . "/Traductor.php";
 
 /**
  * Controlador unificado de SOLICITUD_LABORATORIO.
@@ -70,7 +71,7 @@ class ControladorSolicitudLaboratorio
                 $resultado = $this->eliminar();
                 break;
             default:
-                throw new Exception("Método no permitido.", 405);
+                throw new Exception(Traductor::t("comun.errorMetodoNoPermitido"), 405);
         }
 
         Conexion::desconectar();
@@ -106,15 +107,15 @@ class ControladorSolicitudLaboratorio
             $solicitud = $this->dao->obtener($idSolicitud);
 
             if ($solicitud === null) {
-                throw new Exception("No existe una solicitud con el identificador $idSolicitud.", 404);
+                throw new Exception(Traductor::t("solicitudes.noExiste", ["id" => $idSolicitud]), 404);
             }
 
-            return ["datos" => $solicitud, "mensaje" => "Solicitud encontrada.", "codigo" => 200];
+            return ["datos" => $solicitud, "mensaje" => Traductor::t("solicitudes.encontrado"), "codigo" => 200];
         }
 
         return [
             "datos" => $this->dao->listar($this->obtenerFiltros()),
-            "mensaje" => "Listado de solicitudes.",
+            "mensaje" => Traductor::t("solicitudes.listado"),
             "codigo" => 200
         ];
     }
@@ -167,7 +168,7 @@ class ControladorSolicitudLaboratorio
 
         return [
             "datos" => $this->dao->obtener($idSolicitud),
-            "mensaje" => "Solicitud $idSolicitud registrada correctamente.",
+            "mensaje" => Traductor::t("solicitudes.registrado", ["id" => $idSolicitud]),
             "codigo" => 201
         ];
     }
@@ -185,14 +186,14 @@ class ControladorSolicitudLaboratorio
         $idSolicitud = $this->obtenerIdIndicado($datosEnviados);
 
         if ($this->dao->obtener($idSolicitud) === null) {
-            throw new Exception("No existe una solicitud con el identificador $idSolicitud.", 404);
+            throw new Exception(Traductor::t("solicitudes.noExiste", ["id" => $idSolicitud]), 404);
         }
 
         $this->dao->actualizar($idSolicitud, $this->validarDatos($datosEnviados));
 
         return [
             "datos" => $this->dao->obtener($idSolicitud),
-            "mensaje" => "Solicitud $idSolicitud actualizada correctamente.",
+            "mensaje" => Traductor::t("solicitudes.actualizado", ["id" => $idSolicitud]),
             "codigo" => 200
         ];
     }
@@ -208,12 +209,12 @@ class ControladorSolicitudLaboratorio
         $idSolicitud = $this->obtenerIdIndicado(Solicitud::obtenerDatos());
 
         if ($this->dao->obtener($idSolicitud) === null) {
-            throw new Exception("No existe una solicitud con el identificador $idSolicitud.", 404);
+            throw new Exception(Traductor::t("solicitudes.noExiste", ["id" => $idSolicitud]), 404);
         }
 
         $this->dao->eliminar($idSolicitud);
 
-        return ["datos" => null, "mensaje" => "Solicitud $idSolicitud eliminada correctamente.", "codigo" => 200];
+        return ["datos" => null, "mensaje" => Traductor::t("solicitudes.eliminado", ["id" => $idSolicitud]), "codigo" => 200];
     }
 
     /**
@@ -229,7 +230,7 @@ class ControladorSolicitudLaboratorio
         $id = Validador::limpiar($_GET["id"] ?? ($datosEnviados["idSolicitud"] ?? ""));
 
         if ($id === "") {
-            throw new Exception("Debe indicar el identificador de la solicitud.", 400);
+            throw new Exception(Traductor::t("solicitudes.faltaId"), 400);
         }
 
         return (int) Validador::numerico($id, "id");
@@ -248,7 +249,7 @@ class ControladorSolicitudLaboratorio
         $idLaboratorio = Validador::longitud($datosEnviados["idLaboratorio"] ?? "", 1, 20, "idLaboratorio");
 
         if (!$this->dao->existeLaboratorio($idLaboratorio)) {
-            throw new Exception("No existe el laboratorio $idLaboratorio.", 400);
+            throw new Exception(Traductor::t("laboratorios.noExiste", ["id" => $idLaboratorio]), 400);
         }
 
         $solicitaSoftware = Validador::booleano($datosEnviados["solicitaSoftware"] ?? "", "solicitaSoftware");
@@ -285,11 +286,11 @@ class ControladorSolicitudLaboratorio
     {
         // Las fechas AAAA-MM-DD y las horas HH:MM se pueden comparar como texto.
         if ($fecha < date("Y-m-d")) {
-            throw new Exception("La fechaEstimada no puede ser anterior a hoy.", 400);
+            throw new Exception(Traductor::t("solicitudes.fechaPasada"), 400);
         }
 
         if ($fecha === date("Y-m-d") && substr($hora, 0, 5) < date("H:i")) {
-            throw new Exception("La horaEstimada no puede ser anterior a la hora actual.", 400);
+            throw new Exception(Traductor::t("solicitudes.horaPasada"), 400);
         }
     }
 

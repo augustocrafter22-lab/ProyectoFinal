@@ -51,14 +51,25 @@ class Traductor
     /**
      * Devuelve un texto a partir de su clave "seccion.clave".
      *
+     * Los valores reemplazan a las {marcas} del texto, igual que traducir()
+     * en el JS: t("equipos.registrado", ["id" => "PC-01"]).
+     *
      * @param string $clave Por ejemplo "equipos.titulo".
+     * @param array $valores Valores de las marcas, con la forma [marca => valor].
      * @return string El texto traducido o la misma clave si no existe.
      */
-    public static function t(string $clave): string
+    public static function t(string $clave, array $valores = []): string
     {
         [$seccion, $nombre] = array_pad(explode(".", $clave, 2), 2, "");
 
-        return self::obtenerSeccion($seccion)[$nombre] ?? $clave;
+        $texto = self::obtenerSeccion($seccion)[$nombre] ?? $clave;
+
+        // Cambia cada {marca} por su valor, por ejemplo {id} por PC-01.
+        foreach ($valores as $marca => $valor) {
+            $texto = str_replace("{" . $marca . "}", (string) $valor, $texto);
+        }
+
+        return $texto;
     }
 
     /**

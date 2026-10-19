@@ -1,9 +1,14 @@
 <?php
 
+require_once RUTA_NUCLEO . "/Traductor.php";
+
 /**
  * Agrupa las reglas de validación de campos para que todos los
  * controladores formularios y API REST las apliquen
  * de la misma manera.
+ *
+ * Los mensajes de error están en app/i18n/<idioma>/validacion.php y el
+ * nombre de cada campo en app/i18n/<idioma>/campos.php.
  */
 class Validador
 {
@@ -11,7 +16,7 @@ class Validador
      * Verifica que el valor no esté vacío.
      *
      * @param mixed $valor Valor recibido del cliente.
-     * @param string $campo Nombre del campo, para el mensaje de error.
+     * @param string $campo Nombre del campo (clave de campos.php), para el mensaje de error.
      * @return string El valor limpio.
      */
     public static function requerido($valor, string $campo): string
@@ -19,7 +24,7 @@ class Validador
         $valor = self::limpiar($valor);
 
         if ($valor === "") {
-            throw new Exception("El campo $campo es obligatorio.", 400);
+            throw new Exception(self::mensaje("requerido", $campo), 400);
         }
 
         return $valor;
@@ -31,7 +36,7 @@ class Validador
      * @param mixed $valor Valor recibido del cliente.
      * @param int $minimo Cantidad mínima de caracteres.
      * @param int $maximo Cantidad máxima de caracteres.
-     * @param string $campo Nombre del campo, para el mensaje de error.
+     * @param string $campo Nombre del campo (clave de campos.php), para el mensaje de error.
      * @return string El valor limpio.
      */
     public static function longitud($valor, int $minimo, int $maximo, string $campo): string
@@ -39,7 +44,7 @@ class Validador
         $valor = self::limpiar($valor);
 
         if (strlen($valor) < $minimo || strlen($valor) > $maximo) {
-            throw new Exception("El campo $campo debe tener entre $minimo y $maximo caracteres.", 400);
+            throw new Exception(self::mensaje("longitud", $campo, ["minimo" => $minimo, "maximo" => $maximo]), 400);
         }
 
         return $valor;
@@ -56,7 +61,7 @@ class Validador
         $valor = self::limpiar($valor);
 
         if (strlen($valor) !== 8 || !ctype_digit($valor)) {
-            throw new Exception("La cédula debe tener 8 dígitos numéricos.", 400);
+            throw new Exception(Traductor::t("validacion.cedula"), 400);
         }
 
         return $valor;
@@ -66,7 +71,7 @@ class Validador
      * Verifica que el valor sea un número entero (solo dígitos).
      *
      * @param mixed $valor Valor recibido del cliente.
-     * @param string $campo Nombre del campo, para el mensaje de error.
+     * @param string $campo Nombre del campo (clave de campos.php), para el mensaje de error.
      * @return string El valor ya limpio (trim).
      */
     public static function numerico($valor, string $campo): string
@@ -74,7 +79,7 @@ class Validador
         $valor = self::limpiar($valor);
 
         if ($valor === "" || !ctype_digit($valor)) {
-            throw new Exception("El campo $campo debe ser un número.", 400);
+            throw new Exception(self::mensaje("numerico", $campo), 400);
         }
 
         return $valor;
@@ -85,7 +90,7 @@ class Validador
      *
      * @param mixed $valor Valor recibido del cliente.
      * @param array $listaValida Valores permitidos para el campo.
-     * @param string $campo Nombre del campo, para el mensaje de error.
+     * @param string $campo Nombre del campo (clave de campos.php), para el mensaje de error.
      * @return string El valor ya limpio (trim).
      */
     public static function enLista($valor, array $listaValida, string $campo): string
@@ -93,7 +98,7 @@ class Validador
         $valor = self::limpiar($valor);
 
         if (!in_array($valor, $listaValida, true)) {
-            throw new Exception("El campo $campo tiene un valor no permitido.", 400);
+            throw new Exception(self::mensaje("enLista", $campo), 400);
         }
 
         return $valor;
@@ -103,7 +108,7 @@ class Validador
      * Verifica que el valor sea una fecha real con formato AAAA-MM-DD.
      *
      * @param mixed $valor Valor recibido del cliente.
-     * @param string $campo Nombre del campo, para el mensaje de error.
+     * @param string $campo Nombre del campo (clave de campos.php), para el mensaje de error.
      * @return string La fecha ya limpia (trim).
      */
     public static function fecha($valor, string $campo): string
@@ -112,7 +117,7 @@ class Validador
 
         // checkdate comprueba que el día exista, por ejemplo rechaza 2026-02-31.
         if (!preg_match("/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/", $valor, $partes) || !checkdate((int) $partes[2], (int) $partes[3], (int) $partes[1])) {
-            throw new Exception("El campo $campo debe ser una fecha válida con formato AAAA-MM-DD.", 400);
+            throw new Exception(self::mensaje("fecha", $campo), 400);
         }
 
         return $valor;
@@ -122,7 +127,7 @@ class Validador
      * Verifica que el valor sea una hora válida con formato HH:MM o HH:MM:SS.
      *
      * @param mixed $valor Valor recibido del cliente.
-     * @param string $campo Nombre del campo, para el mensaje de error.
+     * @param string $campo Nombre del campo (clave de campos.php), para el mensaje de error.
      * @return string La hora ya limpia (trim).
      */
     public static function hora($valor, string $campo): string
@@ -130,7 +135,7 @@ class Validador
         $valor = self::limpiar($valor);
 
         if (!preg_match("/^([01][0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$/", $valor)) {
-            throw new Exception("El campo $campo debe ser una hora válida con formato HH:MM.", 400);
+            throw new Exception(self::mensaje("hora", $campo), 400);
         }
 
         return $valor;
@@ -141,7 +146,7 @@ class Validador
      * que guarda la base de datos.
      *
      * @param mixed $valor Valor recibido del cliente (true, false, 1, 0 o sus textos).
-     * @param string $campo Nombre del campo, para el mensaje de error.
+     * @param string $campo Nombre del campo (clave de campos.php), para el mensaje de error.
      * @return int 1 si es verdadero, 0 si es falso.
      */
     public static function booleano($valor, string $campo): int
@@ -161,7 +166,7 @@ class Validador
             return 0;
         }
 
-        throw new Exception("El campo $campo debe ser true o false.", 400);
+        throw new Exception(self::mensaje("booleano", $campo), 400);
     }
 
     /**
@@ -175,6 +180,22 @@ class Validador
     public static function limpiar($valor): string
     {
         return is_scalar($valor) ? trim((string) $valor) : "";
+    }
+
+    /**
+     * Arma un mensaje de error de validacion.php con el nombre del campo
+     * en el idioma elegido (por ejemplo "descripcion" pasa a "description").
+     *
+     * @param string $clave Clave del mensaje en validacion.php.
+     * @param string $campo Clave del campo en campos.php.
+     * @param array $valores Otros valores del mensaje, como el mínimo y el máximo.
+     * @return string El mensaje ya traducido.
+     */
+    private static function mensaje(string $clave, string $campo, array $valores = []): string
+    {
+        $valores["campo"] = Traductor::t("campos." . $campo);
+
+        return Traductor::t("validacion." . $clave, $valores);
     }
 }
 

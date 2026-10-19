@@ -26,4 +26,19 @@ return [
     "btnDevolver" => "Registrar devolución",
     "btnEliminar" => "Eliminar",
     "errorConexion" => "No se pudo conectar con el servidor.",
+
+    // Mensajes de la API de préstamos (ControladorPrestamo).
+    "noExiste" => "No existe un préstamo con el identificador {id}.",
+    "encontrado" => "Préstamo encontrado.",
+    "listado" => "Listado de préstamos.",
+    "registrado" => "Préstamo {id} registrado correctamente.",
+    "actualizado" => "Préstamo {id} actualizado correctamente.",
+    "devuelto" => "Devolución del préstamo {id} registrada correctamente.",
+    "eliminado" => "Préstamo {id} eliminado correctamente.",
+    "faltaId" => "Debe indicar el identificador del préstamo.",
+    "equipoNoDisponible" => "El equipo {id} no está disponible para prestar.",
+    "sinCambios" => "Debe enviar el estado o la fecha de devolución estimada para modificar.",
+    "yaDevuelto" => "El préstamo {id} ya fue devuelto.",
+    "sigueActivo" => "El préstamo {id} sigue activo, registre primero la devolución.",
+    "fechaPasada" => "La fecha de devolución estimada no puede ser anterior a hoy.",
 ];
