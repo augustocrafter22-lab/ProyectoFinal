@@ -79,7 +79,7 @@ class ControladorLogin
      * el idioma elegido y el token CSRF que debe usar la página.
      *
      * @return void
-     * @throws Exception Si el método no es GET o el usuario de la sesión ya no existe.
+     * @throws Exception Si el método no es GET, o el usuario de la sesión ya no existe, fue desactivado o se quedó sin roles.
      */
     public function consultarSesion(): void
     {
@@ -94,6 +94,20 @@ class ControladorLogin
             Sesion::cerrar();
             throw new Exception(Traductor::t("login.usuarioNoEncontrado"), 401);
         }
+
+        // Si el coordinador lo desactivó o le quitó todos los roles, la sesión abierta deja de servir.
+        if (!$usuario->estaActivo()) {
+            Sesion::cerrar();
+            throw new Exception(Traductor::t("login.usuarioInactivo"), 401);
+        }
+
+        if (!$usuario->tieneAlgunRol()) {
+            Sesion::cerrar();
+            throw new Exception(Traductor::t("login.sinRoles"), 401);
+        }
+
+        // Los permisos de la API se toman de la base de datos y no del momento del login.
+        Sesion::actualizarRoles($usuario);
 
         RespuestaJson::exito([
             "cedula" => $usuario->getCedula(),

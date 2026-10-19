@@ -30,7 +30,11 @@ async function cargarDiagnosticos() {
             selectDiagnostico,
             diagnosticos,
             (diagnostico) => diagnostico.idDiagnostico,
-            (diagnostico) => `Ticket ${diagnostico.idTicket} - Equipo ${diagnostico.equipo} - ${diagnostico.diagnostico}`
+            (diagnostico) => traducir("registrarReparacion.opcionDiagnostico", {
+                ticket: diagnostico.idTicket,
+                equipo: diagnostico.equipo,
+                diagnostico: diagnostico.diagnostico
+            })
         );
     } catch (error) {
         mostrarMensaje(mensajeRegistrarReparacion, error.message, true);
@@ -42,7 +46,6 @@ async function registrarReparacion(eventoFormulario) {
 
     const reparacion = {
         idDiagnostico: selectDiagnostico.value,
-        cedulaTecnico: datosSesion.cedula,
         reparacion: campoReparacion.value.trim()
     };
 

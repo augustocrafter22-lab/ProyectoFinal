@@ -60,12 +60,15 @@ class DAOHistorialEquipo
                 $idEquipo
             ],
             [
+                // El equipo de una reparación se conoce por su diagnóstico y el ticket de ese diagnóstico.
                 "SELECT 'Reparación' AS tipo,
-                        CONCAT('Ticket ', idTicket, ': ', reparacion) AS detalle,
-                        fechaReparacion AS fecha,
-                        cedulaTecnico AS responsable
-                 FROM REPARACION
-                 WHERE idEquipo = :idEquipo",
+                        CONCAT('Ticket ', d.idTicket, ': ', r.reparacion) AS detalle,
+                        r.fechaReparacion AS fecha,
+                        r.cedulaTecnico AS responsable
+                 FROM REPARACION AS r
+                 INNER JOIN DIAGNOSTICO AS d ON d.idDiagnostico = r.idDiagnostico
+                 INNER JOIN TICKET AS t ON t.idTicket = d.idTicket
+                 WHERE t.equipo = :idEquipo",
                 $idEquipo
             ]
         ];

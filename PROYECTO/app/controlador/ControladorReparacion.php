@@ -30,7 +30,12 @@ class ControladorReparacion
     {
         $metodo = $_SERVER["REQUEST_METHOD"];
 
-        Sesion::verificarRolApi(["coordinador", "tecnico"]);
+        // La reparación queda a nombre del técnico que la registra, por eso solo un técnico puede darla de alta.
+        if ($metodo === "POST") {
+            Sesion::verificarRolApi(["tecnico"]);
+        } else {
+            Sesion::verificarRolApi(["coordinador", "tecnico"]);
+        }
 
         // GET no modifica datos, por eso solo se pide el token en POST, PUT y DELETE.
         if (in_array($metodo, ["POST", "PUT", "DELETE"], true)) {
@@ -110,7 +115,7 @@ class ControladorReparacion
     }
 
     /**
-     * Registra una reparación nueva con los datos enviados por el cliente.
+     * Registra una reparación nueva a nombre del técnico que inició sesión.
      *
      * @return array Arreglo con las claves datos, mensaje y codigo.
      * @throws Exception Si los datos son incorrectos o el diagnóstico no existe.
@@ -118,6 +123,8 @@ class ControladorReparacion
     private function registrar(): array
     {
         $datos = $this->validarDatos(Solicitud::obtenerDatos());
+        // La cédula sale de la sesión y no del cliente, así nadie registra a nombre de otro técnico.
+        $datos["cedulaTecnico"] = $_SESSION["cedula"];
 
         $idReparacion = $this->dao->crear($datos);
 
@@ -184,7 +191,6 @@ class ControladorReparacion
     private function validarDatos(array $datosEnviados): array
     {
         $idDiagnostico = (int) Validador::numerico($datosEnviados["idDiagnostico"] ?? "", "idDiagnostico");
-        $cedulaTecnico = Validador::cedula($datosEnviados["cedulaTecnico"] ?? "");
         $reparacion = Validador::longitud($datosEnviados["reparacion"] ?? "", 10, 2000, "reparación");
 
         if (!$this->dao->existeDiagnostico($idDiagnostico)) {
@@ -193,7 +199,6 @@ class ControladorReparacion
 
         return [
             "idDiagnostico" => $idDiagnostico,
-            "cedulaTecnico" => $cedulaTecnico,
             "reparacion" => $reparacion
         ];
     }

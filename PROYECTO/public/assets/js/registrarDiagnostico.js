@@ -30,7 +30,6 @@ async function registrarDiagnostico(eventoFormulario) {
 
     const diagnostico = {
         idTicket: selectTicket.value,
-        cedulaTecnico: datosSesion.cedula,
         diagnostico: campoDiagnostico.value.trim()
     };
 

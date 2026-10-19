@@ -44,6 +44,7 @@ Las condiciones con un `:parámetro` se aplican con el valor que manda el usuari
 * **Q13** - Listar tickets, con filtros opcionales por estado, prioridad, rango de fechas y palabra clave, del más nuevo al más viejo. (`DAOTicket::listar`)
 * **Q14** - Obtener un ticket por su id. (`DAOTicket::obtener`)
 * **Q15** - Contar los tickets de un año para generar el próximo id (`INC-año-0001`). (`DAOTicket::generarIdTicket`)
+* **Q39** - Verificar que el equipo del ticket está en el laboratorio indicado. (`DAOTicket::equipoEstaEnLaboratorio`)
 
 ### EQUIPO y LABORATORIO
 
@@ -146,6 +147,8 @@ Q14 π_{idTicket, laboratorio, equipo, asunto, descripcion, turno, grupo, profes
         σ_{idTicket = :idTicket}(TICKET))
 
 Q15 γ_{COUNT(*)}(σ_{idTicket LIKE 'INC-año-%'}(TICKET))
+
+Q39 γ_{COUNT(*)}(σ_{idEquipo = :idEquipo ∧ idLaboratorio = :idLaboratorio}(EQUIPO))
 ```
 
 ### Equipos y laboratorios
@@ -203,14 +206,18 @@ Q23 π_{idSolucion, SOLUCION.idDiagnostico, DIAGNOSTICO.idTicket, equipo,
 Q24 γ_{COUNT(*)}(σ_{idDiagnostico = :idDiagnostico}(DIAGNOSTICO))
 
 Q25 τ_{fechaReparacion ↓}(
-        π_{idReparacion, idDiagnostico, idTicket, idEquipo, cedulaTecnico, reparacion,
-           fechaReparacion}(
-            σ_{idEquipo = :idEquipo}(REPARACION)))
-    (la σ se agrega solo si se pidió un equipo)
+        π_{idReparacion, REPARACION.idDiagnostico, DIAGNOSTICO.idTicket, equipo,
+           REPARACION.cedulaTecnico, reparacion, fechaReparacion}(
+            σ_{equipo = :idEquipo}(
+                (REPARACION ⋈_{REPARACION.idDiagnostico = DIAGNOSTICO.idDiagnostico} DIAGNOSTICO)
+                            ⋈_{DIAGNOSTICO.idTicket = TICKET.idTicket} TICKET)))
+    (la σ se agrega solo si se pidió un equipo; equipo se devuelve con el nombre idEquipo)
 
-Q26 π_{idReparacion, idDiagnostico, idTicket, idEquipo, cedulaTecnico, reparacion,
-       fechaReparacion}(
-        σ_{idReparacion = :idReparacion}(REPARACION))
+Q26 π_{idReparacion, REPARACION.idDiagnostico, DIAGNOSTICO.idTicket, equipo,
+       REPARACION.cedulaTecnico, reparacion, fechaReparacion}(
+        σ_{idReparacion = :idReparacion}(
+            (REPARACION ⋈_{REPARACION.idDiagnostico = DIAGNOSTICO.idDiagnostico} DIAGNOSTICO)
+                        ⋈_{DIAGNOSTICO.idTicket = TICKET.idTicket} TICKET))
 ```
 
 ### Dashboard
@@ -362,25 +369,16 @@ DELETE FROM SOLUCION WHERE idSolucion = :idSolucion;
 ### REPARACION (`DAOReparacion`)
 
 ```sql
--- El ticket y el equipo no los manda el usuario: salen del diagnóstico elegido
-INSERT INTO REPARACION (idDiagnostico, idTicket, idEquipo, cedulaTecnico, reparacion)
-SELECT d.idDiagnostico, d.idTicket, t.equipo, :cedulaTecnico, :reparacion
-FROM DIAGNOSTICO AS d
-INNER JOIN TICKET AS t ON t.idTicket = d.idTicket
-WHERE d.idDiagnostico = :idDiagnostico;
+-- Solo se guarda el diagnóstico: el ticket y el equipo se obtienen a través de él (ver Q25 y Q26)
+INSERT INTO REPARACION (idDiagnostico, cedulaTecnico, reparacion)
+VALUES (:idDiagnostico, :cedulaTecnico, :reparacion);
 
 UPDATE REPARACION SET reparacion = :reparacion WHERE idReparacion = :idReparacion;
 
 DELETE FROM REPARACION WHERE idReparacion = :idReparacion;
 ```
 
-El `SELECT` del `INSERT` de reparaciones, en álgebra relacional:
-
-```
-π_{DIAGNOSTICO.idDiagnostico, DIAGNOSTICO.idTicket, equipo}(
-    σ_{DIAGNOSTICO.idDiagnostico = :idDiagnostico}(
-        DIAGNOSTICO ⋈_{DIAGNOSTICO.idTicket = TICKET.idTicket} TICKET))
-```
+La cédula del técnico no la manda el cliente: sale de la sesión iniciada, igual que en `DIAGNOSTICO` y `SOLUCION`.
 
 ### LABORATORIO (`DAOLaboratorio`)
 
@@ -448,7 +446,7 @@ DELETE FROM PRESTAMO WHERE idPrestamo = :idPrestamo;
 * `inserccionUsuario.sql`: cuatro usuarios de prueba (uno de ellos sin rol) y los roles de los otros tres (`INSERT INTO USUARIO`, `ADMINISTRADOR`, `TECNICO` y `DOCENTE`).
 * `inserccionLaboratorio.sql`: tres laboratorios (`INSERT INTO LABORATORIO`).
 * `inserccionEquipo.sql`: dieciséis equipos repartidos en los tres laboratorios (`INSERT INTO EQUIPO`).
-* `inserccionTicket.sql`: cinco tickets de ejemplo en distintos estados (`INSERT INTO TICKET`).
+* `inserccionTicket.sql`: cinco tickets de ejemplo en distintos estados, con su fecha de creación anterior a la de finalización (`INSERT INTO TICKET`).
 
 Se ejecutan después del DDL y en el mismo orden de dependencia: usuarios, laboratorios, equipos y tickets.
 

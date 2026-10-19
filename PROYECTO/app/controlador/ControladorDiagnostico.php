@@ -29,7 +29,12 @@ class ControladorDiagnostico
     {
         $metodo = $_SERVER["REQUEST_METHOD"];
 
-        Sesion::verificarRolApi(["coordinador", "tecnico"]);
+        // El diagnóstico queda a nombre del técnico que lo registra, por eso solo un técnico puede darlo de alta.
+        if ($metodo === "POST") {
+            Sesion::verificarRolApi(["tecnico"]);
+        } else {
+            Sesion::verificarRolApi(["coordinador", "tecnico"]);
+        }
 
         // GET no modifica datos, por eso solo se pide el token en POST, PUT y DELETE.
         if (in_array($metodo, ["POST", "PUT", "DELETE"], true)) {
@@ -105,7 +110,7 @@ class ControladorDiagnostico
     }
 
     /**
-     * Registra un diagnóstico nuevo con los datos enviados por el cliente.
+     * Registra un diagnóstico nuevo a nombre del técnico que inició sesión.
      *
      * @return array Arreglo con las claves datos, mensaje y codigo.
      * @throws Exception Si los datos son incorrectos o el ticket no existe.
@@ -113,6 +118,8 @@ class ControladorDiagnostico
     private function registrar(): array
     {
         $datos = $this->validarDatos(Solicitud::obtenerDatos());
+        // La cédula sale de la sesión y no del cliente, así nadie registra a nombre de otro técnico.
+        $datos["cedulaTecnico"] = $_SESSION["cedula"];
 
         $idDiagnostico = $this->dao->crear($datos);
 
@@ -179,7 +186,6 @@ class ControladorDiagnostico
     private function validarDatos(array $datosEnviados): array
     {
         $idTicket = Validador::requerido($datosEnviados["idTicket"] ?? "", "idTicket");
-        $cedulaTecnico = Validador::cedula($datosEnviados["cedulaTecnico"] ?? "");
         $diagnostico = Validador::longitud($datosEnviados["diagnostico"] ?? "", 10, 2000, "diagnóstico");
 
         if (!$this->dao->existeTicket($idTicket)) {
@@ -188,7 +194,6 @@ class ControladorDiagnostico
 
         return [
             "idTicket" => $idTicket,
-            "cedulaTecnico" => $cedulaTecnico,
             "diagnostico" => $diagnostico
         ];
     }
