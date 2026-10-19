@@ -1,6 +1,6 @@
 
 # Credenciales y BD
-.env
+#.env
 .env.local
 credenciales.local.txt
 
@@ -10,6 +10,6 @@ Reseteador.php
 
 #php
 
-vendor/
+#vendor/
 
 composer.phar
