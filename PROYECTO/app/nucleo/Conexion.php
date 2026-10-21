@@ -18,7 +18,9 @@ class Conexion
      */
     public static function conectar(): PDO
     {
-        self::$conectorPDO = new ConectorPDO($_ENV["BD_HOST"], $_ENV["BD_USER"], $_ENV["BD_PASS"], $_ENV["BD_NAME"]);
+        // Si el .env no define BD_PORT se usa el puerto por defecto de MariaDB.
+        $puerto = $_ENV["BD_PORT"] ?? "3306";
+        self::$conectorPDO = new ConectorPDO($_ENV["BD_HOST"], $_ENV["BD_USER"], $_ENV["BD_PASS"], $_ENV["BD_NAME"], $puerto);
         $conexion = self::$conectorPDO->establecerConexion();
 
         if ($conexion === null) {
