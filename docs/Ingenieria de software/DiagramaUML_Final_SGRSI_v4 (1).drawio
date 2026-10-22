@@ -1,0 +1,1207 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="UML Final SGRSI" id="sgrsi-v3">
+    <mxGraphModel dx="10531" dy="5823" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t1" parent="1" style="text;html=1;fontSize=22;fontStyle=1;align=left;" value="Capa de presentación (public/paginas + public/assets/js)" vertex="1">
+          <mxGeometry height="40" width="620" x="1750" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="n_login_html" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«página HTML»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;login.html&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- Página pública&lt;br/&gt;- JS: login.js&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ loguear(cedula, clave)  → POST login&lt;br/&gt;+ obtenerPaginaInicio(roles)&lt;br/&gt;+ gestionarLogin(eventoFormulario)&lt;br/&gt;+ mostrarMotivoDeRedireccion()&lt;/p&gt;" vertex="1">
+          <mxGeometry height="164" width="330" x="2595" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="n_panelRoles_html" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«página HTML»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;panelRoles.html&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- data-roles: coordinador, tecnico, docente&lt;br/&gt;- JS: panelRoles.js&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ mostrarRolesHabilitados()&lt;br/&gt;+ iniciar()&lt;/p&gt;" vertex="1">
+          <mxGeometry height="134" width="330" x="2595" y="324" as="geometry" />
+        </mxCell>
+        <mxCell id="n_administrador_html" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«página HTML»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;administrador.html&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- data-roles: coordinador&lt;br/&gt;- JS: administrador.js&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ obtenerUsuarios()  → GET usuarios&lt;br/&gt;+ altaUsuario(usuario)  → POST usuarios&lt;br/&gt;+ modificarUsuario(cambios)  → PUT usuarios&lt;br/&gt;+ cambiarEstadoUsuario(usuario, activo)  → PUT usuarios&lt;br/&gt;+ abrirAltaUsuario()&lt;br/&gt;+ abrirEdicionUsuario(usuario)&lt;br/&gt;+ gestionarUsuario(eventoFormulario)&lt;br/&gt;+ actualizarTabla()&lt;/p&gt;" vertex="1">
+          <mxGeometry height="224" width="330" x="75" y="548" as="geometry" />
+        </mxCell>
+        <mxCell id="n_dashboard_html" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«página HTML»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;dashboard.html&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- data-roles: coordinador, tecnico&lt;br/&gt;- JS: dashboard.js&lt;br/&gt;- Enlaces: También se abre desde tecnico.html&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ obtenerMetricas()  → GET dashboard&lt;br/&gt;+ mostrarConteos(metricas)&lt;br/&gt;+ cargarDashboard()&lt;/p&gt;" vertex="1">
+          <mxGeometry height="164" width="330" x="75" y="862" as="geometry" />
+        </mxCell>
+        <mxCell id="n_docente_html" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«página HTML»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;docente.html&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- data-roles: docente&lt;br/&gt;- JS: inicioPagina.js&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ iniciarPagina()  (panel del solicitante)&lt;/p&gt;" vertex="1">
+          <mxGeometry height="119" width="330" x="615" y="548" as="geometry" />
+        </mxCell>
+        <mxCell id="n_ingresoTickets_html" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«página HTML»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;ingresoTickets.html&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- data-roles: docente&lt;br/&gt;- JS: ingresoTickets.js&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ obtenerLaboratorios()  → GET laboratorios&lt;br/&gt;+ obtenerEquiposDelLaboratorio(idLaboratorio)  → GET equipos&lt;br/&gt;+ enviarTicket(ticket)  → POST tickets&lt;br/&gt;+ registrarTicket(eventoFormulario)&lt;/p&gt;" vertex="1">
+          <mxGeometry height="164" width="330" x="435" y="862" as="geometry" />
+        </mxCell>
+        <mxCell id="n_solicitarLab_html" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«página HTML»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;solicitarLab.html&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- data-roles: docente&lt;br/&gt;- JS: solicitarLab.js&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ obtenerLaboratorios()  → GET laboratorios&lt;br/&gt;+ enviarSolicitud(solicitud)  → POST solicitudes&lt;br/&gt;+ limitarFechaYHora()&lt;br/&gt;+ actualizarCamposSoftware()&lt;br/&gt;+ registrarSolicitud(eventoFormulario)&lt;/p&gt;" vertex="1">
+          <mxGeometry height="179" width="330" x="795" y="862" as="geometry" />
+        </mxCell>
+        <mxCell id="n_tecnico_html" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«página HTML»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;tecnico.html&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- data-roles: tecnico&lt;br/&gt;- JS: inicioPagina.js&lt;br/&gt;- Enlaces: dashboard&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ iniciarPagina()  (panel del técnico)&lt;/p&gt;" vertex="1">
+          <mxGeometry height="134" width="330" x="3135" y="548" as="geometry" />
+        </mxCell>
+        <mxCell id="n_vistaTickets_html" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«página HTML»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;vistaTickets.html&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- data-roles: tecnico&lt;br/&gt;- JS: vistaTickets.js&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ obtenerTickets()  → GET tickets&lt;br/&gt;+ obtenerEquipos()  → GET equipos&lt;br/&gt;+ actualizarTicket(articulo)  → PUT tickets&lt;br/&gt;+ eliminarTicket(articulo)  → DELETE tickets&lt;br/&gt;+ aplicarFiltros()&lt;br/&gt;+ cargarTickets()&lt;br/&gt;+ cargarEquiposEnFiltro()&lt;br/&gt;+ crearArticuloTicket(ticket)&lt;/p&gt;" vertex="1">
+          <mxGeometry height="224" width="330" x="1155" y="862" as="geometry" />
+        </mxCell>
+        <mxCell id="n_equipos_html" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«página HTML»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;equipos.html&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- data-roles: tecnico&lt;br/&gt;- JS: equipos.js&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ obtenerEquipos()  → GET equipos&lt;br/&gt;+ obtenerEquipo(idEquipo)  → GET equipos&lt;br/&gt;+ obtenerLaboratorios()  → GET laboratorios&lt;br/&gt;+ guardarEquipo(eventoFormulario)  → POST / PUT equipos&lt;br/&gt;+ eliminarEquipo(idEquipo)  → DELETE equipos&lt;br/&gt;+ mostrarEquiposFiltrados()&lt;br/&gt;+ abrirEdicionEquipo(idEquipo)&lt;/p&gt;" vertex="1">
+          <mxGeometry height="209" width="330" x="1515" y="862" as="geometry" />
+        </mxCell>
+        <mxCell id="n_registrarDiagnostico_html" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«página HTML»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;registrarDiagnostico.html&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- data-roles: tecnico&lt;br/&gt;- JS: registrarDiagnostico.js&lt;br/&gt;- Enlaces: consultarDiagnostico, modificarDiagnostico&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ obtenerTickets()  → GET tickets&lt;br/&gt;+ enviarDiagnostico(diagnostico)  → POST diagnosticos&lt;br/&gt;+ registrarDiagnostico(eventoFormulario)&lt;/p&gt;" vertex="1">
+          <mxGeometry height="164" width="330" x="1875" y="862" as="geometry" />
+        </mxCell>
+        <mxCell id="n_consultarDiagnostico_html" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«página HTML»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;consultarDiagnostico.html&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- data-roles: tecnico&lt;br/&gt;- JS: consultarDiagnostico.js&lt;br/&gt;- Enlaces: registrarDiagnostico, registrarSolucion&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ obtenerDiagnosticos(idTicket)  → GET diagnosticos&lt;br/&gt;+ cargarDiagnosticos()&lt;br/&gt;+ obtenerTicketFiltrado()&lt;/p&gt;" vertex="1">
+          <mxGeometry height="164" width="330" x="2235" y="862" as="geometry" />
+        </mxCell>
+        <mxCell id="n_modificarDiagnostico_html" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«página HTML»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;modificarDiagnostico.html&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- data-roles: tecnico&lt;br/&gt;- JS: modificarDiagnostico.js&lt;br/&gt;- Enlaces: consultarDiagnostico&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ obtenerDiagnosticos()  → GET diagnosticos&lt;br/&gt;+ enviarModificacion(idDiagnostico, texto)  → PUT diagnosticos&lt;br/&gt;+ modificarDiagnostico(eventoFormulario)&lt;/p&gt;" vertex="1">
+          <mxGeometry height="164" width="330" x="2595" y="862" as="geometry" />
+        </mxCell>
+        <mxCell id="n_registrarSolucion_html" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«página HTML»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;registrarSolucion.html&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- data-roles: tecnico&lt;br/&gt;- JS: registrarSolucion.js&lt;br/&gt;- Enlaces: consultarDiagnostico, registrarReparacion&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ obtenerDiagnosticos()  → GET diagnosticos&lt;br/&gt;+ enviarSolucion(solucion)  → POST soluciones&lt;br/&gt;+ registrarSolucion(eventoFormulario)&lt;/p&gt;" vertex="1">
+          <mxGeometry height="164" width="330" x="2955" y="862" as="geometry" />
+        </mxCell>
+        <mxCell id="n_registrarReparacion_html" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«página HTML»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;registrarReparacion.html&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- data-roles: tecnico&lt;br/&gt;- JS: registrarReparacion.js&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ obtenerDiagnosticos()  → GET diagnosticos&lt;br/&gt;+ enviarReparacion(reparacion)  → POST reparaciones&lt;br/&gt;+ registrarReparacion(eventoFormulario)&lt;/p&gt;" vertex="1">
+          <mxGeometry height="149" width="330" x="3315" y="862" as="geometry" />
+        </mxCell>
+        <mxCell id="n_historialTecnico_html" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«página HTML»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;historialTecnico.html&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- data-roles: tecnico&lt;br/&gt;- JS: historialTecnico.js&lt;br/&gt;- Enlaces: registrarIntervencion, registrarReemplazo&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ obtenerEquipos()  → GET equipos&lt;br/&gt;+ obtenerHistorial(idEquipo)  → GET historialEquipo&lt;br/&gt;+ mostrarHistorial(historial)&lt;/p&gt;" vertex="1">
+          <mxGeometry height="164" width="330" x="3675" y="862" as="geometry" />
+        </mxCell>
+        <mxCell id="n_registrarIntervencion_html" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«página HTML»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;registrarIntervencion.html&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- data-roles: tecnico&lt;br/&gt;- JS: registrarIntervencion.js&lt;br/&gt;- Enlaces: historialTecnico&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ obtenerEquipos()  → GET equipos&lt;br/&gt;+ enviarIntervencion(intervencion)  → POST intervenciones&lt;br/&gt;+ registrarIntervencion(eventoFormulario)&lt;/p&gt;" vertex="1">
+          <mxGeometry height="164" width="330" x="4035" y="862" as="geometry" />
+        </mxCell>
+        <mxCell id="n_registrarReemplazo_html" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«página HTML»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;registrarReemplazo.html&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- data-roles: tecnico&lt;br/&gt;- JS: registrarReemplazo.js&lt;br/&gt;- Enlaces: historialTecnico&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ obtenerEquipos()  → GET equipos&lt;br/&gt;+ enviarReemplazo(reemplazo)  → POST reemplazos&lt;br/&gt;+ registrarReemplazo(eventoFormulario)&lt;/p&gt;" vertex="1">
+          <mxGeometry height="164" width="330" x="4395" y="862" as="geometry" />
+        </mxCell>
+        <mxCell id="n_prestamos_html" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«página HTML»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;prestamos.html&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- data-roles: tecnico&lt;br/&gt;- JS: prestamos.js&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ obtenerPrestamos(estado)  → GET prestamos&lt;br/&gt;+ obtenerEquiposDisponibles()  → GET equipos&lt;br/&gt;+ registrarPrestamo(eventoFormulario)  → POST prestamos&lt;br/&gt;+ devolverPrestamo(idPrestamo)  → PUT prestamos&lt;br/&gt;+ eliminarPrestamo(idPrestamo)  → DELETE prestamos&lt;/p&gt;" vertex="1">
+          <mxGeometry height="179" width="330" x="4755" y="862" as="geometry" />
+        </mxCell>
+        <mxCell id="n_vistaLab_html" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«página HTML»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;vistaLab.html&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- data-roles: tecnico&lt;br/&gt;- JS: vistaLab.js&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ obtenerSolicitudes()  → GET solicitudes&lt;br/&gt;+ obtenerLaboratorios()  → GET laboratorios&lt;br/&gt;+ mostrarSolicitudesFiltradas()&lt;br/&gt;+ limpiarFiltros()&lt;/p&gt;" vertex="1">
+          <mxGeometry height="164" width="330" x="5115" y="862" as="geometry" />
+        </mxCell>
+        <mxCell id="gJS" parent="1" style="swimlane;startSize=30;html=1;dashed=1;fillColor=none;fontStyle=1;fontSize=14;" value="Núcleo JS (public/assets/js/nucleo) – todas las páginas HTML incluyen estos 6 archivos" vertex="1">
+          <mxGeometry height="812" width="1420" x="2050" y="1256" as="geometry" />
+        </mxCell>
+        <mxCell id="n_pagina_js" parent="gJS" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«JS núcleo»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;pagina.js&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ iniciarPagina(): Promise&lt;br/&gt;+ verificarAcceso()&lt;br/&gt;+ mostrarPaginaConError(error)&lt;br/&gt;+ mostrarDatosUsuario()&lt;br/&gt;+ iniciarBotonesComunes()&lt;/p&gt;" vertex="1">
+          <mxGeometry height="149" width="320" x="360" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="n_sesion_js" parent="gJS" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«JS núcleo»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;sesion.js&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- datosSesion&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ cargarSesion()  → GET sesion&lt;br/&gt;+ tieneAlgunRol(roles)&lt;br/&gt;+ irALogin(motivo)&lt;br/&gt;+ cerrarSesion()  → POST logout&lt;/p&gt;" vertex="1">
+          <mxGeometry height="149" width="320" x="20" y="264" as="geometry" />
+        </mxCell>
+        <mxCell id="n_traductor_js" parent="gJS" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«JS núcleo»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;traductor.js&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ obtenerSeccionesDePagina()&lt;br/&gt;+ cargarTraducciones(secciones)  → GET traducciones&lt;br/&gt;+ traducir(clave, valores = {})&lt;br/&gt;+ aplicarTraducciones()&lt;br/&gt;+ cambiarIdioma(idioma)  → POST idioma&lt;/p&gt;" vertex="1">
+          <mxGeometry height="149" width="320" x="360" y="264" as="geometry" />
+        </mxCell>
+        <mxCell id="n_barraNavegacion_js" parent="gJS" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«JS núcleo»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;barraNavegacion.js&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ iniciarBarraNavegacion()&lt;/p&gt;" vertex="1">
+          <mxGeometry height="89" width="320" x="700" y="264" as="geometry" />
+        </mxCell>
+        <mxCell id="n_api_js" parent="gJS" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«JS núcleo»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;api.js&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- URL_API: ../index.php&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ construirUrlApi(ruta, parametros)&lt;br/&gt;+ crearErrorApi(mensaje, estado)&lt;br/&gt;+ leerRespuestaAPI(respuesta)&lt;br/&gt;+ llamarApi(ruta, { metodo, parametros, cuerpo })&lt;/p&gt;" vertex="1">
+          <mxGeometry height="149" width="320" x="190" y="483" as="geometry" />
+        </mxCell>
+        <mxCell id="n_componentes_js" parent="gJS" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«JS núcleo»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;componentes.js&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ mostrarMensaje(elemento, texto, esError)&lt;br/&gt;+ ocultarMensaje(elemento)&lt;br/&gt;+ agregarOpciones(select, lista, ...)&lt;br/&gt;+ vaciarOpciones(select)&lt;br/&gt;+ crearBoton(texto, claseCss, accion)&lt;br/&gt;+ crearCelda(texto)&lt;br/&gt;+ obtenerFechaHoy()&lt;/p&gt;" vertex="1">
+          <mxGeometry height="179" width="320" x="1040" y="264" as="geometry" />
+        </mxCell>
+        <mxCell id="t2" parent="1" style="text;html=1;fontSize=22;fontStyle=1;align=left;" value="Capa lógica y de datos (public/index.php → app/rutas/api.php → app/controlador → app/modelo)" vertex="1">
+          <mxGeometry height="40" width="1030" x="1515" y="2670" as="geometry" />
+        </mxCell>
+        <mxCell id="n_index" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«front controller»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;index.php&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- Recibe: index.php?ruta=...&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ session_start()&lt;br/&gt;+ Traductor::iniciar()&lt;br/&gt;+ require api.php&lt;br/&gt;+ catch → ManejadorErrores::responder(error)&lt;/p&gt;" vertex="1">
+          <mxGeometry height="149" width="330" x="2595" y="2398" as="geometry" />
+        </mxCell>
+        <mxCell id="n_api" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«enrutador»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;api.php&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- rutas: 18 (ruta → [controlador, método])&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ Busca la ruta y ejecuta el método del controlador&lt;br/&gt;+ Ruta inexistente → Exception 404&lt;/p&gt;" vertex="1">
+          <mxGeometry height="119" width="340" x="2590" y="2637" as="geometry" />
+        </mxCell>
+        <mxCell id="n_ControladorLogin" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«controlador»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;ControladorLogin&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- Ruta: index.php?ruta=login · logout · sesion&lt;br/&gt;- login: POST (público)&lt;br/&gt;- logout: POST (sesión iniciada)&lt;br/&gt;- sesion: GET (sesión iniciada)&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ autenticar(): void&lt;br/&gt;+ cerrarSesion(): void&lt;br/&gt;+ consultarSesion(): void&lt;br/&gt;- verificarMetodo(metodoPermitido: string): void&lt;/p&gt;" vertex="1">
+          <mxGeometry height="194" width="340" y="2846" as="geometry" />
+        </mxCell>
+        <mxCell id="n_Login" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«modelo»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;Login&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- accesoDatosUsuario: AccesoDatosUsuario&lt;br/&gt;- error: string = &quot;&quot;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ __construct(accesoDatosUsuario: AccesoDatosUsuario)&lt;br/&gt;+ autenticar(cedula: string, clave: string): ?Usuario&lt;br/&gt;+ getError(): string&lt;/p&gt;" vertex="1">
+          <mxGeometry height="149" width="330" x="5" y="3265" as="geometry" />
+        </mxCell>
+        <mxCell id="n_AccesoDatosUsuario" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«modelo»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;AccesoDatosUsuario&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- conexion: PDO&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ __construct(conexion: PDO)&lt;br/&gt;+ buscarUsuario(cedula: string): ?Usuario&lt;br/&gt;+ obtenerTodos(): array&lt;/p&gt;" vertex="1">
+          <mxGeometry height="134" width="330" x="5" y="3609" as="geometry" />
+        </mxCell>
+        <mxCell id="n_Usuario" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«modelo»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;Usuario&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- cedula: string&lt;br/&gt;- nombre: string&lt;br/&gt;- apellido: string&lt;br/&gt;- claveHash: string&lt;br/&gt;- activo: bool&lt;br/&gt;- roles: array&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ __construct(cedula: string, nombre: string, apellido: string, claveHash: string, activo: bool, roles: array)&lt;br/&gt;+ getCedula(): string&lt;br/&gt;+ getClaveHash(): string&lt;br/&gt;+ getNombre(): string&lt;br/&gt;+ getApellido(): string&lt;br/&gt;+ estaActivo(): bool&lt;br/&gt;+ getRoles(): array&lt;br/&gt;+ esCoordinador(): bool&lt;br/&gt;+ esTecnico(): bool&lt;br/&gt;+ esDocente(): bool&lt;br/&gt;+ tieneAlgunRol(): bool&lt;/p&gt;" vertex="1">
+          <mxGeometry height="329" width="330" x="5" y="3833" as="geometry" />
+        </mxCell>
+        <mxCell id="n_ControladorIdioma" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«controlador»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;ControladorIdioma&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- Ruta: index.php?ruta=idioma · traducciones&lt;br/&gt;- idioma: POST (público)&lt;br/&gt;- traducciones: GET (público)&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ obtenerTraducciones(): void&lt;br/&gt;+ cambiarIdioma(): void&lt;/p&gt;" vertex="1">
+          <mxGeometry height="149" width="340" x="370" y="2846" as="geometry" />
+        </mxCell>
+        <mxCell id="n_ControladorUsuario" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«controlador»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;ControladorUsuario&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- Ruta: index.php?ruta=usuarios&lt;br/&gt;- GET: coordinador&lt;br/&gt;- POST: coordinador&lt;br/&gt;- PUT: coordinador&lt;br/&gt;- DELETE: coordinador&lt;br/&gt;- dao: DAOUsuario&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ gestionar(): void&lt;br/&gt;- conectar(): void&lt;br/&gt;- listar(): array   [GET]&lt;br/&gt;- registrar(): array   [POST]&lt;br/&gt;- actualizar(): array   [PUT]&lt;br/&gt;- eliminar(): array   [DELETE]&lt;/p&gt;" vertex="1">
+          <mxGeometry height="254" width="340" x="740" y="2846" as="geometry" />
+        </mxCell>
+        <mxCell id="n_DAOUsuario" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«DAO»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;DAOUsuario&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- conexion: PDO&lt;br/&gt;- tablasRol: array = [         &quot;coordinador&quot; =&amp;gt; &quot;ADMINISTRA…&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ __construct(conexion: PDO)&lt;br/&gt;+ listar(): array&lt;br/&gt;+ obtener(cedula: string): ?array&lt;br/&gt;+ crear(datos: array): void&lt;br/&gt;+ actualizar(cedula: string, cambios: array): void&lt;br/&gt;+ eliminar(cedula: string): void&lt;br/&gt;- consultaBase(): string&lt;br/&gt;- armarUsuario(fila: array): array&lt;br/&gt;- guardarRoles(cedula: string, roles: array): void&lt;br/&gt;- borrarRoles(cedula: string): void&lt;/p&gt;" vertex="1">
+          <mxGeometry height="254" width="330" x="745" y="3265" as="geometry" />
+        </mxCell>
+        <mxCell id="n_ControladorDashboard" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«controlador»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;ControladorDashboard&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- Ruta: index.php?ruta=dashboard&lt;br/&gt;- GET: coordinador, tecnico&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ gestionar(): void&lt;/p&gt;" vertex="1">
+          <mxGeometry height="119" width="340" x="1110" y="2846" as="geometry" />
+        </mxCell>
+        <mxCell id="n_AccesoDatosDashboard" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«modelo»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;AccesoDatosDashboard&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- conexion: PDO&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ __construct(conexion: PDO)&lt;br/&gt;+ contarPorEstado(): array&lt;br/&gt;+ contarTotal(): int&lt;br/&gt;+ obtenerTiemposResolucion(): array&lt;br/&gt;+ obtenerIncidenciasPorSalon(): array&lt;/p&gt;" vertex="1">
+          <mxGeometry height="164" width="330" x="1115" y="3265" as="geometry" />
+        </mxCell>
+        <mxCell id="n_ControladorTicket" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«controlador»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;ControladorTicket&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- Ruta: index.php?ruta=tickets&lt;br/&gt;- GET: coordinador, tecnico&lt;br/&gt;- POST: coordinador, tecnico, docente&lt;br/&gt;- PUT: coordinador, tecnico&lt;br/&gt;- DELETE: coordinador, tecnico&lt;br/&gt;- dao: DAOTicket&lt;br/&gt;- estadosValidos: array = [&quot;Pendiente&quot;, &quot;En Proceso&quot;, &quot;Resuelto&quot;…&lt;br/&gt;- prioridadesValidas: array = [&quot;Indefinida&quot;, &quot;Alta&quot;, &quot;Media&quot;, &quot;Baja&quot;]&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ gestionar(): void&lt;br/&gt;- conectar(): void&lt;br/&gt;- listar(): array   [GET]&lt;br/&gt;- obtenerFiltros(): array&lt;br/&gt;- registrar(): array   [POST]&lt;br/&gt;- actualizar(): array   [PUT]&lt;br/&gt;- eliminar(): array   [DELETE]&lt;/p&gt;" vertex="1">
+          <mxGeometry height="299" width="340" x="1480" y="2846" as="geometry" />
+        </mxCell>
+        <mxCell id="n_DAOTicket" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«DAO»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;DAOTicket&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- conexion: PDO&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ __construct(conexion: PDO)&lt;br/&gt;+ listar(filtros: array = []): array&lt;br/&gt;+ obtener(idTicket: string): ?array&lt;br/&gt;+ crear(datos: array): string&lt;br/&gt;+ actualizar(idTicket: string, datos: array): bool&lt;br/&gt;+ eliminar(idTicket: string): bool&lt;br/&gt;- generarIdTicket(): string&lt;/p&gt;" vertex="1">
+          <mxGeometry height="194" width="330" x="1485" y="3265" as="geometry" />
+        </mxCell>
+        <mxCell id="n_ControladorEquipo" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«controlador»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;ControladorEquipo&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- Ruta: index.php?ruta=equipos&lt;br/&gt;- GET: coordinador, tecnico, docente&lt;br/&gt;- POST: coordinador, tecnico&lt;br/&gt;- PUT: coordinador, tecnico&lt;br/&gt;- DELETE: coordinador, tecnico&lt;br/&gt;- dao: DAOEquipo&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ gestionar(): void&lt;br/&gt;- conectar(): void&lt;br/&gt;- listar(): array   [GET]&lt;br/&gt;- obtenerFiltros(): array&lt;br/&gt;- registrar(): array   [POST]&lt;br/&gt;- actualizar(): array   [PUT]&lt;br/&gt;- eliminar(): array   [DELETE]&lt;br/&gt;- validarDatos(datosEnviados: array): array&lt;/p&gt;" vertex="1">
+          <mxGeometry height="284" width="340" x="1850" y="2846" as="geometry" />
+        </mxCell>
+        <mxCell id="n_DAOEquipo" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«DAO»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;DAOEquipo&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- conexion: PDO&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ __construct(conexion: PDO)&lt;br/&gt;+ listar(filtros: array = []): array&lt;br/&gt;+ obtener(idEquipo: string): ?array&lt;br/&gt;+ crear(datos: array): bool&lt;br/&gt;+ actualizar(idEquipo: string, datos: array, cedulaUsuario: string): bool&lt;br/&gt;+ eliminar(idEquipo: string): bool&lt;br/&gt;+ existeLaboratorio(idLaboratorio: string): bool&lt;/p&gt;" vertex="1">
+          <mxGeometry height="194" width="330" x="1855" y="3265" as="geometry" />
+        </mxCell>
+        <mxCell id="n_ControladorLaboratorio" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«controlador»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;ControladorLaboratorio&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- Ruta: index.php?ruta=laboratorios&lt;br/&gt;- GET: coordinador, tecnico, docente&lt;br/&gt;- POST: coordinador, tecnico&lt;br/&gt;- PUT: coordinador, tecnico&lt;br/&gt;- DELETE: coordinador, tecnico&lt;br/&gt;- dao: DAOLaboratorio&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ gestionar(): void&lt;br/&gt;- conectar(): void&lt;br/&gt;- listar(): array   [GET]&lt;br/&gt;- registrar(): array   [POST]&lt;br/&gt;- actualizar(): array   [PUT]&lt;br/&gt;- eliminar(): array   [DELETE]&lt;br/&gt;- obtenerIdIndicado(datosEnviados: array): string&lt;br/&gt;- validarDatos(datosEnviados: array, estadoPorDefecto: int): array&lt;/p&gt;" vertex="1">
+          <mxGeometry height="284" width="340" x="2220" y="2846" as="geometry" />
+        </mxCell>
+        <mxCell id="n_DAOLaboratorio" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«DAO»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;DAOLaboratorio&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- conexion: PDO&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ __construct(conexion: PDO)&lt;br/&gt;+ listar(): array&lt;br/&gt;+ obtener(idLaboratorio: string): ?array&lt;br/&gt;+ crear(datos: array): bool&lt;br/&gt;+ actualizar(idLaboratorio: string, datos: array): bool&lt;br/&gt;+ eliminar(idLaboratorio: string): bool&lt;br/&gt;- armarLaboratorio(fila: array): array&lt;/p&gt;" vertex="1">
+          <mxGeometry height="194" width="330" x="2225" y="3265" as="geometry" />
+        </mxCell>
+        <mxCell id="n_ControladorSolicitudLaboratorio" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«controlador»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;ControladorSolicitudLaboratorio&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- Ruta: index.php?ruta=solicitudes&lt;br/&gt;- GET: coordinador, tecnico&lt;br/&gt;- POST: docente&lt;br/&gt;- PUT: coordinador, tecnico&lt;br/&gt;- DELETE: coordinador, tecnico&lt;br/&gt;- dao: DAOSolicitudLaboratorio&lt;br/&gt;- tiposValidos: array = [&quot;preparacion&quot;, &quot;software&quot;]&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ gestionar(): void&lt;br/&gt;- conectar(): void&lt;br/&gt;- listar(): array   [GET]&lt;br/&gt;- obtenerFiltros(): array&lt;br/&gt;- registrar(): array   [POST]&lt;br/&gt;- actualizar(): array   [PUT]&lt;br/&gt;- eliminar(): array   [DELETE]&lt;br/&gt;- obtenerIdIndicado(datosEnviados: array): int&lt;br/&gt;- validarDatos(datosEnviados: array): array&lt;br/&gt;- validarFechaNoPasada(fecha: string, hora: string): void&lt;/p&gt;" vertex="1">
+          <mxGeometry height="329" width="340" x="2590" y="2846" as="geometry" />
+        </mxCell>
+        <mxCell id="n_DAOSolicitudLaboratorio" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«DAO»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;DAOSolicitudLaboratorio&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- conexion: PDO&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ __construct(conexion: PDO)&lt;br/&gt;+ listar(filtros: array = []): array&lt;br/&gt;+ obtener(idSolicitud: int): ?array&lt;br/&gt;+ crear(datos: array): int&lt;br/&gt;+ actualizar(idSolicitud: int, datos: array): bool&lt;br/&gt;+ eliminar(idSolicitud: int): bool&lt;br/&gt;+ existeLaboratorio(idLaboratorio: string): bool&lt;br/&gt;- consultaBase(): string&lt;br/&gt;- armarSolicitud(fila: array): array&lt;/p&gt;" vertex="1">
+          <mxGeometry height="224" width="330" x="2595" y="3265" as="geometry" />
+        </mxCell>
+        <mxCell id="n_ControladorDiagnostico" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«controlador»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;ControladorDiagnostico&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- Ruta: index.php?ruta=diagnosticos&lt;br/&gt;- GET: coordinador, tecnico&lt;br/&gt;- POST: coordinador, tecnico&lt;br/&gt;- PUT: coordinador, tecnico&lt;br/&gt;- DELETE: coordinador, tecnico&lt;br/&gt;- dao: DAODiagnostico&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ gestionar(): void&lt;br/&gt;- conectar(): void&lt;br/&gt;- listar(): array   [GET]&lt;br/&gt;- registrar(): array   [POST]&lt;br/&gt;- actualizar(): array   [PUT]&lt;br/&gt;- eliminar(): array   [DELETE]&lt;br/&gt;- validarDatos(datosEnviados: array): array&lt;/p&gt;" vertex="1">
+          <mxGeometry height="269" width="340" x="2960" y="2846" as="geometry" />
+        </mxCell>
+        <mxCell id="n_DAODiagnostico" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«DAO»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;DAODiagnostico&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- conexion: PDO&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ __construct(conexion: PDO)&lt;br/&gt;+ listar(idTicket: ?string = null): array&lt;br/&gt;+ obtener(idDiagnostico: int): ?array&lt;br/&gt;+ crear(datos: array): int&lt;br/&gt;+ actualizar(idDiagnostico: int, datos: array): bool&lt;br/&gt;+ eliminar(idDiagnostico: int): bool&lt;br/&gt;+ existeTicket(idTicket: string): bool&lt;/p&gt;" vertex="1">
+          <mxGeometry height="194" width="330" x="2965" y="3265" as="geometry" />
+        </mxCell>
+        <mxCell id="n_ControladorSolucion" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«controlador»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;ControladorSolucion&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- Ruta: index.php?ruta=soluciones&lt;br/&gt;- GET: coordinador, tecnico&lt;br/&gt;- POST: coordinador, tecnico&lt;br/&gt;- PUT: coordinador, tecnico&lt;br/&gt;- DELETE: coordinador, tecnico&lt;br/&gt;- dao: DAOSolucion&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ gestionar(): void&lt;br/&gt;- conectar(): void&lt;br/&gt;- listar(): array   [GET]&lt;br/&gt;- registrar(): array   [POST]&lt;br/&gt;- actualizar(): array   [PUT]&lt;br/&gt;- eliminar(): array   [DELETE]&lt;br/&gt;- validarDatos(datosEnviados: array): array&lt;/p&gt;" vertex="1">
+          <mxGeometry height="269" width="340" x="3330" y="2846" as="geometry" />
+        </mxCell>
+        <mxCell id="n_DAOSolucion" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«DAO»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;DAOSolucion&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- conexion: PDO&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ __construct(conexion: PDO)&lt;br/&gt;+ listar(): array&lt;br/&gt;+ obtener(idSolucion: int): ?array&lt;br/&gt;+ crear(datos: array): int&lt;br/&gt;+ actualizar(idSolucion: int, datos: array): bool&lt;br/&gt;+ eliminar(idSolucion: int): bool&lt;br/&gt;+ existeDiagnostico(idDiagnostico: int): bool&lt;/p&gt;" vertex="1">
+          <mxGeometry height="194" width="330" x="3335" y="3265" as="geometry" />
+        </mxCell>
+        <mxCell id="n_ControladorReparacion" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«controlador»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;ControladorReparacion&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- Ruta: index.php?ruta=reparaciones&lt;br/&gt;- GET: coordinador, tecnico&lt;br/&gt;- POST: coordinador, tecnico&lt;br/&gt;- PUT: coordinador, tecnico&lt;br/&gt;- DELETE: coordinador, tecnico&lt;br/&gt;- dao: DAOReparacion&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ gestionar(): void&lt;br/&gt;- conectar(): void&lt;br/&gt;- listar(): array   [GET]&lt;br/&gt;- registrar(): array   [POST]&lt;br/&gt;- actualizar(): array   [PUT]&lt;br/&gt;- eliminar(): array   [DELETE]&lt;br/&gt;- validarDatos(datosEnviados: array): array&lt;/p&gt;" vertex="1">
+          <mxGeometry height="269" width="340" x="3700" y="2846" as="geometry" />
+        </mxCell>
+        <mxCell id="n_DAOReparacion" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«DAO»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;DAOReparacion&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- conexion: PDO&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ __construct(conexion: PDO)&lt;br/&gt;+ listar(idEquipo: ?string = null): array&lt;br/&gt;+ obtener(idReparacion: int): ?array&lt;br/&gt;+ crear(datos: array): int&lt;br/&gt;+ actualizar(idReparacion: int, datos: array): bool&lt;br/&gt;+ eliminar(idReparacion: int): bool&lt;br/&gt;+ existeDiagnostico(idDiagnostico: int): bool&lt;/p&gt;" vertex="1">
+          <mxGeometry height="194" width="330" x="3705" y="3265" as="geometry" />
+        </mxCell>
+        <mxCell id="n_ControladorIntervencion" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«controlador»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;ControladorIntervencion&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- Ruta: index.php?ruta=intervenciones&lt;br/&gt;- POST: tecnico&lt;br/&gt;- Usa también DAOEquipo&lt;br/&gt;- daoEquipo: DAOEquipo&lt;br/&gt;- dao: DAOIntervencion&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ gestionar(): void&lt;br/&gt;- conectar(): void&lt;br/&gt;- registrar(): array   [POST]&lt;/p&gt;" vertex="1">
+          <mxGeometry height="194" width="340" x="4070" y="2846" as="geometry" />
+        </mxCell>
+        <mxCell id="n_DAOIntervencion" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«DAO»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;DAOIntervencion&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- conexion: PDO&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ __construct(conexion: PDO)&lt;br/&gt;+ crear(datos: array): int&lt;br/&gt;+ obtener(idIntervencion: int): ?array&lt;/p&gt;" vertex="1">
+          <mxGeometry height="134" width="330" x="4075" y="3265" as="geometry" />
+        </mxCell>
+        <mxCell id="n_ControladorReemplazo" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«controlador»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;ControladorReemplazo&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- Ruta: index.php?ruta=reemplazos&lt;br/&gt;- POST: tecnico&lt;br/&gt;- Usa también DAOEquipo&lt;br/&gt;- daoEquipo: DAOEquipo&lt;br/&gt;- dao: DAOReemplazo&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ gestionar(): void&lt;br/&gt;- conectar(): void&lt;br/&gt;- registrar(): array   [POST]&lt;/p&gt;" vertex="1">
+          <mxGeometry height="194" width="340" x="4440" y="2846" as="geometry" />
+        </mxCell>
+        <mxCell id="n_DAOReemplazo" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«DAO»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;DAOReemplazo&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- conexion: PDO&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ __construct(conexion: PDO)&lt;br/&gt;+ crear(datos: array): int&lt;br/&gt;+ obtener(idReemplazo: int): ?array&lt;/p&gt;" vertex="1">
+          <mxGeometry height="134" width="330" x="4445" y="3265" as="geometry" />
+        </mxCell>
+        <mxCell id="n_ControladorHistorialEquipo" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«controlador»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;ControladorHistorialEquipo&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- Ruta: index.php?ruta=historialEquipo&lt;br/&gt;- GET: coordinador, tecnico&lt;br/&gt;- dao: DAOHistorialEquipo&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ gestionar(): void&lt;br/&gt;- conectar(): void&lt;br/&gt;- listar(): array   [GET]&lt;/p&gt;" vertex="1">
+          <mxGeometry height="164" width="340" x="4810" y="2846" as="geometry" />
+        </mxCell>
+        <mxCell id="n_DAOHistorialEquipo" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«DAO»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;DAOHistorialEquipo&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- conexion: PDO&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ __construct(conexion: PDO)&lt;br/&gt;+ listar(idEquipo: string): array&lt;br/&gt;+ existeEquipo(idEquipo: string): bool&lt;/p&gt;" vertex="1">
+          <mxGeometry height="134" width="330" x="4815" y="3265" as="geometry" />
+        </mxCell>
+        <mxCell id="n_ControladorPrestamo" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«controlador»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;ControladorPrestamo&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- Ruta: index.php?ruta=prestamos&lt;br/&gt;- GET: coordinador, tecnico&lt;br/&gt;- POST: coordinador, tecnico&lt;br/&gt;- PUT: coordinador, tecnico&lt;br/&gt;- DELETE: coordinador, tecnico&lt;br/&gt;- dao: DAOPrestamo&lt;br/&gt;- estadosValidos: array = [&quot;Activo&quot;, &quot;Devuelto&quot;]&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ gestionar(): void&lt;br/&gt;- conectar(): void&lt;br/&gt;- listar(): array   [GET]&lt;br/&gt;- obtenerFiltros(): array&lt;br/&gt;- registrar(): array   [POST]&lt;br/&gt;- actualizar(): array   [PUT]&lt;br/&gt;- eliminar(): array   [DELETE]&lt;br/&gt;- obtenerIdIndicado(datosEnviados: array): int&lt;br/&gt;- validarFechaEstimada(fecha): string&lt;/p&gt;" vertex="1">
+          <mxGeometry height="314" width="340" x="5180" y="2846" as="geometry" />
+        </mxCell>
+        <mxCell id="n_DAOPrestamo" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«DAO»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;DAOPrestamo&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- conexion: PDO&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ __construct(conexion: PDO)&lt;br/&gt;+ listar(filtros: array = []): array&lt;br/&gt;+ obtener(idPrestamo: int): ?array&lt;br/&gt;+ crear(datos: array): int&lt;br/&gt;+ devolver(idPrestamo: int): bool&lt;br/&gt;+ actualizarFechaEstimada(idPrestamo: int, fechaDevolucionEstimada: string): bool&lt;br/&gt;+ eliminar(idPrestamo: int): bool&lt;br/&gt;+ existeEquipo(idEquipo: string): bool&lt;br/&gt;+ existeUsuario(cedula: string): bool&lt;br/&gt;- consultaBase(): string&lt;/p&gt;" vertex="1">
+          <mxGeometry height="239" width="330" x="5185" y="3265" as="geometry" />
+        </mxCell>
+        <mxCell id="gPHP" parent="1" style="swimlane;startSize=30;html=1;dashed=1;fillColor=none;fontStyle=1;fontSize=14;" value="Clases comunes PHP (app/nucleo, app/modelo, app/vista) – relaciones entre ellas" vertex="1">
+          <mxGeometry height="1281" width="1480" x="5670" as="geometry" />
+        </mxCell>
+        <mxCell id="n_Conexion" parent="gPHP" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«núcleo»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;Conexion&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- static conectorPDO: ?ConectorPDO = null&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ static conectar(): PDO&lt;br/&gt;+ static desconectar(): void&lt;/p&gt;" vertex="1">
+          <mxGeometry height="119" width="320" x="20" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="n_ConectorPDO" parent="gPHP" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«modelo»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;ConectorPDO&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- servername: string&lt;br/&gt;- username: string&lt;br/&gt;- password: string&lt;br/&gt;- dbname: string&lt;br/&gt;- conexion: ?PDO&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ __construct(servername: string, username: string, password: string, dbname: string)&lt;br/&gt;+ establecerConexion(): ?PDO&lt;br/&gt;+ desconectar()&lt;/p&gt;" vertex="1">
+          <mxGeometry height="194" width="320" x="380" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="n_RegistradorErrores" parent="gPHP" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«núcleo»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;RegistradorErrores&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ static registrar(error: Throwable): void&lt;/p&gt;" vertex="1">
+          <mxGeometry height="89" width="320" x="740" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="n_ManejadorErrores" parent="gPHP" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«núcleo»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;ManejadorErrores&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ static responder(error: Throwable): void&lt;br/&gt;- static responderErrorBaseDeDatos(error: PDOException): void&lt;/p&gt;" vertex="1">
+          <mxGeometry height="104" width="320" x="1100" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="n_Sesion" parent="gPHP" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«núcleo»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;Sesion&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ static iniciar(usuario: Usuario): void&lt;br/&gt;+ static cerrar(): void&lt;br/&gt;+ static verificarRolApi(roles: array): void&lt;br/&gt;+ static verificarSesionIniciada(): void&lt;/p&gt;" vertex="1">
+          <mxGeometry height="134" width="320" x="20" y="329" as="geometry" />
+        </mxCell>
+        <mxCell id="n_Token" parent="gPHP" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«núcleo»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;Token&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ static generarTokenCSRF(): string&lt;br/&gt;+ static verificarCSRF(): void&lt;/p&gt;" vertex="1">
+          <mxGeometry height="104" width="320" x="380" y="329" as="geometry" />
+        </mxCell>
+        <mxCell id="n_RespuestaJson" parent="gPHP" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«vista»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;RespuestaJson&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ static enviar(codigo: int, cuerpo: array): void&lt;br/&gt;+ static exito(datos = null, mensaje: string = &quot;Operación realizada correctamente.&quot;, codigo: int = 200): void&lt;br/&gt;+ static error(mensaje: string, codigo: int = 400): void&lt;/p&gt;" vertex="1">
+          <mxGeometry height="119" width="320" x="380" y="553" as="geometry" />
+        </mxCell>
+        <mxCell id="n_Traductor" parent="gPHP" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«núcleo»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;Traductor&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;- static idioma: string = &quot;es&quot;&lt;br/&gt;- static secciones: array = []&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ static iniciar(): void&lt;br/&gt;+ static esIdiomaValido(idioma): bool&lt;br/&gt;+ static obtenerIdioma(): string&lt;br/&gt;+ static t(clave: string): string&lt;br/&gt;+ static obtenerSecciones(nombres: array): array&lt;br/&gt;- static obtenerSeccion(seccion: string): array&lt;br/&gt;- static leerSeccion(seccion: string): array&lt;/p&gt;" vertex="1">
+          <mxGeometry height="209" width="320" x="740" y="553" as="geometry" />
+        </mxCell>
+        <mxCell id="n_ValidadorUsuario" parent="gPHP" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«modelo»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;ValidadorUsuario&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ static registro(datos: array): array&lt;br/&gt;+ static cambios(datos: array, cedulaSesion: string, cedula: string): array&lt;br/&gt;+ static cedula(valor): string&lt;br/&gt;+ static texto(valor): string&lt;br/&gt;- static roles(roles): array&lt;br/&gt;- static activo(activo): int&lt;/p&gt;" vertex="1">
+          <mxGeometry height="164" width="320" x="20" y="902" as="geometry" />
+        </mxCell>
+        <mxCell id="n_Validador" parent="gPHP" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«modelo»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;Validador&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ static requerido(valor, campo: string): string&lt;br/&gt;+ static longitud(valor, minimo: int, maximo: int, campo: string): string&lt;br/&gt;+ static cedula(valor): string&lt;br/&gt;+ static numerico(valor, campo: string): string&lt;br/&gt;+ static enLista(valor, listaValida: array, campo: string): string&lt;br/&gt;+ static fecha(valor, campo: string): string&lt;br/&gt;+ static hora(valor, campo: string): string&lt;br/&gt;+ static booleano(valor, campo: string): int&lt;br/&gt;+ static limpiar(valor): string&lt;/p&gt;" vertex="1">
+          <mxGeometry height="209" width="320" x="380" y="902" as="geometry" />
+        </mxCell>
+        <mxCell id="n_Solicitud" parent="gPHP" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«núcleo»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;Solicitud&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ static obtenerDatos(): array&lt;/p&gt;" vertex="1">
+          <mxGeometry height="89" width="320" x="740" y="902" as="geometry" />
+        </mxCell>
+        <mxCell id="gPerm" parent="1" style="swimlane;startSize=30;html=1;dashed=1;fillColor=none;fontStyle=1;fontSize=14;" value="Permisos por rol (Sesion::verificarRolApi en cada controlador)" vertex="1">
+          <mxGeometry height="254" width="1160" x="5670" y="1321" as="geometry" />
+        </mxCell>
+        <mxCell id="n_Coordinador" parent="gPerm" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«rol»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;Coordinador&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ usuarios: GET, POST, PUT, DELETE (único rol)&lt;br/&gt;+ tickets: GET, POST, PUT, DELETE&lt;br/&gt;+ equipos / laboratorios: GET, POST, PUT, DELETE&lt;br/&gt;+ solicitudes: GET, PUT, DELETE&lt;br/&gt;+ diagnosticos / soluciones / reparaciones: todos&lt;br/&gt;+ prestamos: todos&lt;br/&gt;+ historialEquipo, dashboard: GET&lt;/p&gt;" vertex="1">
+          <mxGeometry height="179" width="360" x="10" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="n_Tecnico" parent="gPerm" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«rol»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;Tecnico&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ tickets: GET, POST, PUT, DELETE&lt;br/&gt;+ equipos / laboratorios: GET, POST, PUT, DELETE&lt;br/&gt;+ solicitudes: GET, PUT, DELETE&lt;br/&gt;+ diagnosticos / soluciones / reparaciones: todos&lt;br/&gt;+ prestamos: todos&lt;br/&gt;+ intervenciones, reemplazos: POST (único rol)&lt;br/&gt;+ historialEquipo, dashboard: GET&lt;/p&gt;" vertex="1">
+          <mxGeometry height="179" width="360" x="390" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="n_Docente" parent="gPerm" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;fontSize=11;" value="&lt;p style=&quot;margin:0;margin-top:4px;text-align:center;font-size:10px&quot;&gt;«rol»&lt;/p&gt;&lt;p style=&quot;margin:0;text-align:center&quot;&gt;&lt;b&gt;Docente&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;/&gt;&lt;p style=&quot;margin:0;margin-left:4px;&quot;&gt;+ tickets: POST&lt;br/&gt;+ solicitudes: POST (único rol)&lt;br/&gt;+ equipos, laboratorios: GET&lt;/p&gt;" vertex="1">
+          <mxGeometry height="119" width="360" x="770" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="e_n_panelRoles_html" edge="1" parent="1" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" value="Abre">
+          <mxGeometry relative="1" x="0.0222" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="2759.5" y="234" as="sourcePoint" />
+            <mxPoint x="2759.5" y="324" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m1" connectable="0" parent="e_n_panelRoles_html" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint y="9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2" connectable="0" parent="e_n_panelRoles_html" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="0..1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="30" y="7" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_administrador_html" edge="1" parent="1" source="n_panelRoles_html" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_administrador_html" value="Abre">
+          <mxGeometry relative="1" x="0.75" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m4" connectable="0" parent="e_n_administrador_html" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="-1699" y="-3" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m5" connectable="0" parent="e_n_administrador_html" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="0..1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-121" y="37" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_dashboard_html" edge="1" parent="1" source="n_administrador_html" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_dashboard_html" value="Abre">
+          <mxGeometry relative="1" x="0.75" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m7" connectable="0" parent="e_n_dashboard_html" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="-20" y="11" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m8" connectable="0" parent="e_n_dashboard_html" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="0..1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-20" y="5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_docente_html" edge="1" parent="1" source="n_panelRoles_html" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_docente_html" value="Abre">
+          <mxGeometry relative="1" x="0.75" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m10" connectable="0" parent="e_n_docente_html" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="-2310" y="-3" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m11" connectable="0" parent="e_n_docente_html" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="0..1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-70" y="37" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_ingresoTickets_html" edge="1" parent="1" source="n_docente_html" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_ingresoTickets_html" value="Abre">
+          <mxGeometry relative="1" x="0.75" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m13" connectable="0" parent="e_n_ingresoTickets_html" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="6" y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m14" connectable="0" parent="e_n_ingresoTickets_html" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="0..1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-10" y="16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_solicitarLab_html" edge="1" parent="1" source="n_docente_html" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_solicitarLab_html" value="Abre">
+          <mxGeometry relative="1" x="0.75" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m17" connectable="0" parent="e_n_solicitarLab_html" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="0..1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-10" y="16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_tecnico_html" edge="1" parent="1" source="n_panelRoles_html" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_tecnico_html" value="Abre">
+          <mxGeometry relative="1" x="0.5079" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m19" connectable="0" parent="e_n_tecnico_html" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="6" y="-23" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m20" connectable="0" parent="e_n_tecnico_html" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="0..1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-6" y="45" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_vistaTickets_html" edge="1" parent="1" source="n_tecnico_html" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_vistaTickets_html" value="Abre">
+          <mxGeometry relative="1" x="0.9519" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m22" connectable="0" parent="e_n_vistaTickets_html" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="-108" y="18" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m23" connectable="0" parent="e_n_vistaTickets_html" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="0..1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-42" y="90" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_equipos_html" edge="1" parent="1" source="n_tecnico_html" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_equipos_html" value="Abre">
+          <mxGeometry relative="1" x="0.9422" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m25" connectable="0" parent="e_n_equipos_html" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="215" y="18" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m26" connectable="0" parent="e_n_equipos_html" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="0..1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-15" y="90" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_registrarDiagnostico_html" edge="1" parent="1" source="n_tecnico_html" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_registrarDiagnostico_html" value="Abre">
+          <mxGeometry relative="1" x="0.9278" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m28" connectable="0" parent="e_n_registrarDiagnostico_html" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="-522" y="18" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m29" connectable="0" parent="e_n_registrarDiagnostico_html" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="0..1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="12" y="90" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_consultarDiagnostico_html" edge="1" parent="1" source="n_tecnico_html" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_consultarDiagnostico_html" value="Abre">
+          <mxGeometry relative="1" x="0.9037" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m32" connectable="0" parent="e_n_consultarDiagnostico_html" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="0..1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="30" y="81" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_modificarDiagnostico_html" edge="1" parent="1" source="n_tecnico_html" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_modificarDiagnostico_html" value="Abre">
+          <mxGeometry relative="1" x="0.8556" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m35" connectable="0" parent="e_n_modificarDiagnostico_html" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="0..1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-10" y="52" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_registrarSolucion_html" edge="1" parent="1" source="n_tecnico_html" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_registrarSolucion_html" value="Abre">
+          <mxGeometry relative="1" x="0.75" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m38" connectable="0" parent="e_n_registrarSolucion_html" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="0..1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-10" y="25" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_registrarReparacion_html" edge="1" parent="1" source="n_tecnico_html" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_registrarReparacion_html" value="Abre">
+          <mxGeometry relative="1" x="0.75" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m40" connectable="0" parent="e_n_registrarReparacion_html" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="1610" y="81" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m41" connectable="0" parent="e_n_registrarReparacion_html" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="0..1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-15" y="25" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_historialTecnico_html" edge="1" parent="1" source="n_tecnico_html" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_historialTecnico_html" value="Abre">
+          <mxGeometry relative="1" x="0.8833" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m43" connectable="0" parent="e_n_historialTecnico_html" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;rotation=0;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="1970" y="54" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m44" connectable="0" parent="e_n_historialTecnico_html" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="0..1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-10" y="52" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_registrarIntervencion_html" edge="1" parent="1" source="n_tecnico_html" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_registrarIntervencion_html" value="Abre">
+          <mxGeometry relative="1" x="0.9037" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m47" connectable="0" parent="e_n_registrarIntervencion_html" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="0..1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-10" y="79" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_registrarReemplazo_html" edge="1" parent="1" source="n_tecnico_html" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_registrarReemplazo_html" value="Abre">
+          <mxGeometry relative="1" x="0.9278" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m49" connectable="0" parent="e_n_registrarReemplazo_html" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="1232" y="18" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m50" connectable="0" parent="e_n_registrarReemplazo_html" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="0..1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="8" y="88" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_prestamos_html" edge="1" parent="1" source="n_tecnico_html" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_prestamos_html" value="Abre">
+          <mxGeometry relative="1" x="0.9422" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m52" connectable="0" parent="e_n_prestamos_html" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="845" y="18" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m53" connectable="0" parent="e_n_prestamos_html" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="0..1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="35" y="88" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_vistaLab_html" edge="1" parent="1" source="n_tecnico_html" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_vistaLab_html" value="Abre">
+          <mxGeometry relative="1" x="0.9519" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m55" connectable="0" parent="e_n_vistaLab_html" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="458" y="18" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m56" connectable="0" parent="e_n_vistaLab_html" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="0..1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="62" y="88" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge57" edge="1" parent="1" source="n_pagina_js" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;fontSize=10;labelBackgroundColor=default;" target="n_sesion_js" value="Usa">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ge57m-1" connectable="0" parent="ge57" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.8" as="geometry">
+            <mxPoint y="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge57m1" connectable="0" parent="ge57" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.8" as="geometry">
+            <mxPoint y="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge60" edge="1" parent="1" source="n_pagina_js" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;fontSize=10;labelBackgroundColor=default;" target="n_traductor_js" value="Usa">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ge60m-1" connectable="0" parent="ge60" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.8" as="geometry">
+            <mxPoint x="10" y="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge60m1" connectable="0" parent="ge60" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.8" as="geometry">
+            <mxPoint x="10" y="-13" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge63" edge="1" parent="1" source="n_pagina_js" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;fontSize=10;labelBackgroundColor=default;" target="n_barraNavegacion_js" value="Usa">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ge63m-1" connectable="0" parent="ge63" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.8" as="geometry">
+            <mxPoint x="-32" y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge63m1" connectable="0" parent="ge63" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.8" as="geometry">
+            <mxPoint y="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge66" edge="1" parent="1" source="n_sesion_js" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;fontSize=10;labelBackgroundColor=default;startArrow=open;startSize=10;exitX=0.5;exitY=1;entryX=0.25;entryY=0;" target="n_api_js" value="Se usan mutuamente">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ge66m-1" connectable="0" parent="ge66" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.8" as="geometry">
+            <mxPoint x="10" y="-16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge66m1" connectable="0" parent="ge66" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.8" as="geometry">
+            <mxPoint x="10" y="-13" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge69" edge="1" parent="1" source="n_traductor_js" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;fontSize=10;labelBackgroundColor=default;startArrow=open;startSize=10;exitX=0.5;exitY=1;entryX=0.75;entryY=0;" target="n_api_js" value="Se usan mutuamente">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ge69m-1" connectable="0" parent="ge69" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.8" as="geometry">
+            <mxPoint x="10" y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge69m1" connectable="0" parent="ge69" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.8" as="geometry">
+            <mxPoint x="10" y="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_api" edge="1" parent="1" source="n_index" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_api" value="Incluye">
+          <mxGeometry relative="1" x="0.75" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m73" connectable="0" parent="e_n_api" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m74" connectable="0" parent="e_n_api" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_ControladorLogin" edge="1" parent="1" source="n_api" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_ControladorLogin" value="Despacha">
+          <mxGeometry relative="1" x="0.9806" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m77" connectable="0" parent="e_n_ControladorLogin" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-136" y="45" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_Login" edge="1" parent="1" source="n_ControladorLogin" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_Login" value="Crea y usa">
+          <mxGeometry relative="1" x="0.0044" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m79" connectable="0" parent="e_n_Login" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m80" connectable="0" parent="e_n_Login" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_AccesoDatosUsuario" edge="1" parent="1" source="n_Login" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_AccesoDatosUsuario" value="Usa">
+          <mxGeometry relative="1" x="-0.1179" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m82" connectable="0" parent="e_n_AccesoDatosUsuario" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m83" connectable="0" parent="e_n_AccesoDatosUsuario" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_Usuario" edge="1" parent="1" source="n_AccesoDatosUsuario" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_Usuario" value="Crea">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m85" connectable="0" parent="e_n_Usuario" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="6" y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m86" connectable="0" parent="e_n_Usuario" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="0..*" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_ControladorIdioma" edge="1" parent="1" source="n_api" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_ControladorIdioma" value="Despacha">
+          <mxGeometry relative="1" x="0.9775" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m89" connectable="0" parent="e_n_ControladorIdioma" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-108" y="45" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_ControladorUsuario" edge="1" parent="1" source="n_api" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_ControladorUsuario" value="Despacha">
+          <mxGeometry relative="1" x="0.9732" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m92" connectable="0" parent="e_n_ControladorUsuario" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-80" y="45" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_DAOUsuario" edge="1" parent="1" source="n_ControladorUsuario" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_DAOUsuario" value="Usa">
+          <mxGeometry relative="1" x="-0.0303" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m94" connectable="0" parent="e_n_DAOUsuario" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m95" connectable="0" parent="e_n_DAOUsuario" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_ControladorDashboard" edge="1" parent="1" source="n_api" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_ControladorDashboard" value="Despacha">
+          <mxGeometry relative="1" x="0.9669" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m98" connectable="0" parent="e_n_ControladorDashboard" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-53" y="45" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_AccesoDatosDashboard" edge="1" parent="1" source="n_ControladorDashboard" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_AccesoDatosDashboard" value="Crea y usa">
+          <mxGeometry relative="1" x="0.2333" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m100" connectable="0" parent="e_n_AccesoDatosDashboard" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m101" connectable="0" parent="e_n_AccesoDatosDashboard" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_ControladorTicket" edge="1" parent="1" source="n_api" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_ControladorTicket" value="Despacha">
+          <mxGeometry relative="1" x="0.9567" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m104" connectable="0" parent="e_n_ControladorTicket" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-25" y="45" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_DAOTicket" edge="1" parent="1" source="n_ControladorTicket" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_DAOTicket" value="Usa">
+          <mxGeometry relative="1" x="-0.0833" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m106" connectable="0" parent="e_n_DAOTicket" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="5" y="6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m107" connectable="0" parent="e_n_DAOTicket" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_ControladorEquipo" edge="1" parent="1" source="n_api" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_ControladorEquipo" value="Despacha">
+          <mxGeometry relative="1" x="0.9373" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m110" connectable="0" parent="e_n_ControladorEquipo" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="3" y="45" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_DAOEquipo" edge="1" parent="1" source="n_ControladorEquipo" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_DAOEquipo" value="Usa">
+          <mxGeometry relative="1" x="-0.1111" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m112" connectable="0" parent="e_n_DAOEquipo" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="5" y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m113" connectable="0" parent="e_n_DAOEquipo" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-10" y="5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_ControladorLaboratorio" edge="1" parent="1" source="n_api" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_ControladorLaboratorio" value="Despacha">
+          <mxGeometry relative="1" x="0.887" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m116" connectable="0" parent="e_n_ControladorLaboratorio" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-10" y="34" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_DAOLaboratorio" edge="1" parent="1" source="n_ControladorLaboratorio" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_DAOLaboratorio" value="Usa">
+          <mxGeometry relative="1" x="0.75" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m118" connectable="0" parent="e_n_DAOLaboratorio" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="5" y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m119" connectable="0" parent="e_n_DAOLaboratorio" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-10" y="5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_ControladorSolicitudLaboratorio" edge="1" parent="1" source="n_api" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_ControladorSolicitudLaboratorio" value="Despacha">
+          <mxGeometry relative="1" x="0.4222" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m122" connectable="0" parent="e_n_ControladorSolicitudLaboratorio" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-10" y="7" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_DAOSolicitudLaboratorio" edge="1" parent="1" source="n_ControladorSolicitudLaboratorio" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_DAOSolicitudLaboratorio" value="Usa">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m124" connectable="0" parent="e_n_DAOSolicitudLaboratorio" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint y="8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m125" connectable="0" parent="e_n_DAOSolicitudLaboratorio" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_ControladorDiagnostico" edge="1" parent="1" source="n_api" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_ControladorDiagnostico" value="Despacha">
+          <mxGeometry relative="1" x="0.887" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m128" connectable="0" parent="e_n_ControladorDiagnostico" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="20" y="34" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_DAODiagnostico" edge="1" parent="1" source="n_ControladorDiagnostico" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_DAODiagnostico" value="Usa">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m130" connectable="0" parent="e_n_DAODiagnostico" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="6" y="4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m131" connectable="0" parent="e_n_DAODiagnostico" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="20" y="11" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_ControladorSolucion" edge="1" parent="1" source="n_api" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_ControladorSolucion" value="Despacha">
+          <mxGeometry relative="1" x="0.9373" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m134" connectable="0" parent="e_n_ControladorSolucion" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="37" y="45" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_DAOSolucion" edge="1" parent="1" source="n_ControladorSolucion" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_DAOSolucion" value="Usa">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m136" connectable="0" parent="e_n_DAOSolucion" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint y="4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m137" connectable="0" parent="e_n_DAOSolucion" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="20" y="11" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_ControladorReparacion" edge="1" parent="1" source="n_api" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_ControladorReparacion" value="Despacha">
+          <mxGeometry relative="1" x="0.9567" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m140" connectable="0" parent="e_n_ControladorReparacion" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="65" y="45" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_DAOReparacion" edge="1" parent="1" source="n_ControladorReparacion" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_DAOReparacion" value="Usa">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m142" connectable="0" parent="e_n_DAOReparacion" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint y="4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m143" connectable="0" parent="e_n_DAOReparacion" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="20" y="11" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_ControladorIntervencion" edge="1" parent="1" source="n_api" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_ControladorIntervencion" value="Despacha">
+          <mxGeometry relative="1" x="0.9669" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m146" connectable="0" parent="e_n_ControladorIntervencion" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="93" y="45" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_DAOIntervencion" edge="1" parent="1" source="n_ControladorIntervencion" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_DAOIntervencion" value="Usa">
+          <mxGeometry relative="1" x="-0.0222" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m148" connectable="0" parent="e_n_DAOIntervencion" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m149" connectable="0" parent="e_n_DAOIntervencion" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="20" y="17" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_ControladorReemplazo" edge="1" parent="1" source="n_api" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_ControladorReemplazo" value="Despacha">
+          <mxGeometry relative="1" x="0.9732" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m152" connectable="0" parent="e_n_ControladorReemplazo" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="120" y="45" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_DAOReemplazo" edge="1" parent="1" source="n_ControladorReemplazo" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_DAOReemplazo" value="Usa">
+          <mxGeometry relative="1" x="0.0044" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m154" connectable="0" parent="e_n_DAOReemplazo" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m155" connectable="0" parent="e_n_DAOReemplazo" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="20" y="12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_ControladorHistorialEquipo" edge="1" parent="1" source="n_api" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_ControladorHistorialEquipo" value="Despacha">
+          <mxGeometry relative="1" x="0.9775" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m158" connectable="0" parent="e_n_ControladorHistorialEquipo" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="138" y="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_DAOHistorialEquipo" edge="1" parent="1" source="n_ControladorHistorialEquipo" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_DAOHistorialEquipo" value="Usa">
+          <mxGeometry relative="1" x="0.098" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m160" connectable="0" parent="e_n_DAOHistorialEquipo" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint x="6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m161" connectable="0" parent="e_n_DAOHistorialEquipo" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="20" y="19" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_ControladorPrestamo" edge="1" parent="1" source="n_api" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_ControladorPrestamo" value="Despacha">
+          <mxGeometry relative="1" x="0.9806" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m164" connectable="0" parent="e_n_ControladorPrestamo" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="176" y="45" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_n_DAOPrestamo" edge="1" parent="1" style="edgeStyle=elbowEdgeStyle;elbow=vertical;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" value="Usa">
+          <mxGeometry relative="1" x="-0.0476" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="5349.5" y="3160" as="sourcePoint" />
+            <mxPoint x="5349.5" y="3265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m166" connectable="0" parent="e_n_DAOPrestamo" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint y="12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m167" connectable="0" parent="e_n_DAOPrestamo" style="edgeLabel;resizable=0;html=1;align=right;verticalAlign=bottom;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.85" as="geometry">
+            <mxPoint x="21" y="8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_bridge" edge="1" parent="1" source="n_api_js" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endSize=10;dashed=1;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;labelBackgroundColor=default;" target="n_index" value="fetch&amp;nbsp;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ebm-1" connectable="0" parent="e_bridge" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1..*" vertex="1">
+          <mxGeometry relative="1" x="-0.8" as="geometry">
+            <mxPoint y="-87" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ebm1" connectable="0" parent="e_bridge" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.8" as="geometry">
+            <mxPoint x="14" y="59" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge171" edge="1" parent="1" source="n_Conexion" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;fontSize=10;labelBackgroundColor=default;" target="n_ConectorPDO" value="Crea">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ge171m-1" connectable="0" parent="ge171" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.8" as="geometry">
+            <mxPoint y="-24" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge171m1" connectable="0" parent="ge171" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="0..1" vertex="1">
+          <mxGeometry relative="1" x="0.8" as="geometry">
+            <mxPoint x="-22" y="8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge174" edge="1" parent="1" source="n_ConectorPDO" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;fontSize=10;labelBackgroundColor=default;" target="n_RegistradorErrores" value="Usa">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ge174m-1" connectable="0" parent="ge174" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.8" as="geometry">
+            <mxPoint x="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge174m1" connectable="0" parent="ge174" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.8" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge177" edge="1" parent="1" source="n_ManejadorErrores" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;fontSize=10;labelBackgroundColor=default;" target="n_RegistradorErrores" value="Usa">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ge177m-1" connectable="0" parent="ge177" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.8" as="geometry">
+            <mxPoint y="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge177m1" connectable="0" parent="ge177" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.8" as="geometry">
+            <mxPoint y="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge180" edge="1" parent="1" source="n_Sesion" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;fontSize=10;labelBackgroundColor=default;" target="n_Token" value="Usa">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ge180m-1" connectable="0" parent="ge180" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.8" as="geometry">
+            <mxPoint y="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge180m1" connectable="0" parent="ge180" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.8" as="geometry">
+            <mxPoint y="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge183" edge="1" parent="1" source="n_Token" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;fontSize=10;labelBackgroundColor=default;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="n_RespuestaJson" value="Usa">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ge183m-1" connectable="0" parent="ge183" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.8" as="geometry">
+            <mxPoint y="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge183m1" connectable="0" parent="ge183" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.8" as="geometry">
+            <mxPoint x="10" y="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge186" edge="1" parent="1" source="n_Token" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;fontSize=10;labelBackgroundColor=default;exitX=0.85;exitY=1;entryX=0.25;entryY=0;" target="n_Traductor" value="Usa">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ge186m-1" connectable="0" parent="ge186" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.8" as="geometry">
+            <mxPoint y="-29" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge186m1" connectable="0" parent="ge186" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.8" as="geometry">
+            <mxPoint y="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge189" edge="1" parent="1" source="n_Sesion" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;fontSize=10;labelBackgroundColor=default;exitX=0.5;exitY=1;entryX=0;entryY=0.5;" target="n_RespuestaJson" value="Usa">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ge189m-1" connectable="0" parent="ge189" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.8" as="geometry">
+            <mxPoint y="-35" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge189m1" connectable="0" parent="ge189" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.8" as="geometry">
+            <mxPoint x="15" y="8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge192" edge="1" parent="1" source="n_Sesion" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;fontSize=10;labelBackgroundColor=default;exitX=0.2;exitY=1;entryX=0.5;entryY=1;" target="n_Traductor" value="Usa">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="5754" y="822" />
+              <mxPoint x="6570" y="822" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge192m-1" connectable="0" parent="ge192" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.8" as="geometry">
+            <mxPoint x="6" y="-124" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge192m1" connectable="0" parent="ge192" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.8" as="geometry">
+            <mxPoint x="43" y="-62" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge195" edge="1" parent="1" source="n_ManejadorErrores" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;fontSize=10;labelBackgroundColor=default;exitX=0.5;exitY=1;entryX=1;entryY=0.5;" target="n_Traductor" value="Usa">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ge195m-1" connectable="0" parent="ge195" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.8" as="geometry">
+            <mxPoint y="-70" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge195m1" connectable="0" parent="ge195" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.8" as="geometry">
+            <mxPoint x="-50" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge198" edge="1" parent="1" source="n_ManejadorErrores" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;fontSize=10;labelBackgroundColor=default;exitX=0.85;exitY=1;entryX=0.5;entryY=1;" target="n_RespuestaJson" value="Usa">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="7042" y="857" />
+              <mxPoint x="6210" y="857" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge198m-1" connectable="0" parent="ge198" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.8" as="geometry">
+            <mxPoint y="-173" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge198m1" connectable="0" parent="ge198" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.8" as="geometry">
+            <mxPoint x="10" y="-164" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge201" edge="1" parent="1" source="n_ValidadorUsuario" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endSize=10;dashed=1;fontSize=10;labelBackgroundColor=default;" target="n_Validador" value="Usa">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ge201m-1" connectable="0" parent="ge201" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.8" as="geometry">
+            <mxPoint x="-6" y="-24" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ge201m1" connectable="0" parent="ge201" style="edgeLabel;resizable=0;html=1;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry relative="1" x="0.8" as="geometry">
+            <mxPoint x="-3" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gPHPn" parent="1" style="shape=note;whiteSpace=wrap;html=1;size=14;align=left;spacingLeft=6;fontSize=11;" value="Uso desde el resto del sistema:&#xa;- RespuestaJson: los 15 controladores.&#xa;- Conexion y Sesion: 14 controladores (todos menos ControladorIdioma).&#xa;- Solicitud: 13 · Token y Validador: 12.&#xa;- Traductor: index.php, Login, ControladorLogin, ControladorIdioma y ControladorDashboard.&#xa;- ValidadorUsuario: solo ControladorUsuario.&#xa;- ManejadorErrores: index.php (captura todos los errores).&#xa;Solicitud, Validador, RespuestaJson, Traductor y RegistradorErrores no dependen de ninguna otra clase." vertex="1">
+          <mxGeometry height="469" width="320" x="7250" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="rJBfHHJDpJwejfeYlO8i-1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
+          <mxGeometry height="15" width="10" x="2400" y="770" as="geometry" />
+        </mxCell>
+        <mxCell id="rJBfHHJDpJwejfeYlO8i-2" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
+          <mxGeometry height="30" width="60" x="2020" y="770" as="geometry" />
+        </mxCell>
+        <mxCell id="rJBfHHJDpJwejfeYlO8i-3" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
+          <mxGeometry height="30" width="60" x="1660" y="770" as="geometry" />
+        </mxCell>
+        <mxCell id="rJBfHHJDpJwejfeYlO8i-4" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
+          <mxGeometry height="30" width="60" x="1300" y="770" as="geometry" />
+        </mxCell>
+        <mxCell id="rJBfHHJDpJwejfeYlO8i-5" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
+          <mxGeometry height="10" width="5" x="765" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="rJBfHHJDpJwejfeYlO8i-13" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
+          <mxGeometry height="10" width="10" x="170" y="2780" as="geometry" />
+        </mxCell>
+        <mxCell id="rJBfHHJDpJwejfeYlO8i-14" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
+          <mxGeometry height="10" width="10" x="560" y="2780" as="geometry" />
+        </mxCell>
+        <mxCell id="rJBfHHJDpJwejfeYlO8i-15" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
+          <mxGeometry height="10" width="10" x="910" y="2790" as="geometry" />
+        </mxCell>
+        <mxCell id="rJBfHHJDpJwejfeYlO8i-16" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
+          <mxGeometry height="10" width="10" x="1280" y="2790" as="geometry" />
+        </mxCell>
+        <mxCell id="rJBfHHJDpJwejfeYlO8i-17" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
+          <mxGeometry height="10" width="10" x="1650" y="2790" as="geometry" />
+        </mxCell>
+        <mxCell id="rJBfHHJDpJwejfeYlO8i-18" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
+          <mxGeometry height="10" width="10" x="2020" y="2790" as="geometry" />
+        </mxCell>
+        <mxCell id="rJBfHHJDpJwejfeYlO8i-19" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
+          <mxGeometry height="10" width="10" x="2390" y="2790" as="geometry" />
+        </mxCell>
+        <mxCell id="rJBfHHJDpJwejfeYlO8i-20" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
+          <mxGeometry height="10" width="10" x="2750" y="2760" as="geometry" />
+        </mxCell>
+        <mxCell id="rJBfHHJDpJwejfeYlO8i-21" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
+          <mxGeometry height="10" width="10" x="3130" y="2790" as="geometry" />
+        </mxCell>
+        <mxCell id="rJBfHHJDpJwejfeYlO8i-25" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
+          <mxGeometry height="10" width="10" x="3870" y="2790" as="geometry" />
+        </mxCell>
+        <mxCell id="rJBfHHJDpJwejfeYlO8i-27" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
+          <mxGeometry height="10" width="10" x="3500" y="2790" as="geometry" />
+        </mxCell>
+        <mxCell id="rJBfHHJDpJwejfeYlO8i-28" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
+          <mxGeometry height="10" width="10" x="4240" y="2790" as="geometry" />
+        </mxCell>
+        <mxCell id="rJBfHHJDpJwejfeYlO8i-31" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
+          <mxGeometry height="10" width="10" x="4610" y="2790" as="geometry" />
+        </mxCell>
+        <mxCell id="rJBfHHJDpJwejfeYlO8i-32" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
+          <mxGeometry height="10" width="10" x="4990" y="2830" as="geometry" />
+        </mxCell>
+        <mxCell id="rJBfHHJDpJwejfeYlO8i-33" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
+          <mxGeometry height="10" width="10" x="5340" y="2790" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
