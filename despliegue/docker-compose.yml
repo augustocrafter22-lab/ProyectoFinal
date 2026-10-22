@@ -1,0 +1,86 @@
+# docker-compose.yml - Despliegue del SGRSI en dos contenedores.
+#   bd  -> MariaDB con los datos guardados en un volumen
+#   web -> Apache + PHP con la aplicación
+# La base de datos solo es visible para la aplicación (red interna);
+# desde afuera solo se llega a la web por el puerto WEB_PUERTO.
+# Los valores entre ${...} se leen del archivo .env de esta carpeta.
+
+name: sgrsi
+
+services:
+  bd:
+    image: mariadb:11.8
+    container_name: sgrsi-bd
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${BD_ROOT_PASS}
+      MARIADB_DATABASE: ${BD_NAME}
+      MARIADB_USER: ${BD_USER}
+      MARIADB_PASSWORD: ${BD_PASS}
+      TZ: America/Montevideo
+    volumes:
+      # Volumen con los datos: no se pierde al borrar o recrear el contenedor
+      - datos_bd:/var/lib/mysql
+      # Scripts SQL del repositorio. Solo se ejecutan la primera vez (volumen vacío),
+      # en el orden del número, para respetar las claves foráneas.
+      - ../baseDeDatos/DDL/creacionUsuario.sql:/docker-entrypoint-initdb.d/01_usuario.sql:ro
+      - ../baseDeDatos/DDL/creacionLaboratorio.sql:/docker-entrypoint-initdb.d/02_laboratorio.sql:ro
+      - ../baseDeDatos/DDL/creacionEquipo.sql:/docker-entrypoint-initdb.d/03_equipo.sql:ro
+      - ../baseDeDatos/DDL/creacionTicket.sql:/docker-entrypoint-initdb.d/04_ticket.sql:ro
+      - ../baseDeDatos/DDL/creacionDiagnosticoSolucion.sql:/docker-entrypoint-initdb.d/05_diagnostico.sql:ro
+      - ../baseDeDatos/DDL/creacionReparacion.sql:/docker-entrypoint-initdb.d/06_reparacion.sql:ro
+      - ../baseDeDatos/DDL/creacionPrestamo.sql:/docker-entrypoint-initdb.d/07_prestamo.sql:ro
+      - ../baseDeDatos/DDL/creacionTrazabilidadEquipo.sql:/docker-entrypoint-initdb.d/08_trazabilidad.sql:ro
+      - ../baseDeDatos/DML/inserccionUsuario.sql:/docker-entrypoint-initdb.d/11_datos_usuario.sql:ro
+      - ../baseDeDatos/DML/inserccionLaboratorio.sql:/docker-entrypoint-initdb.d/12_datos_laboratorio.sql:ro
+      - ../baseDeDatos/DML/inserccionEquipo.sql:/docker-entrypoint-initdb.d/13_datos_equipo.sql:ro
+      - ../baseDeDatos/DML/inserccionTicket.sql:/docker-entrypoint-initdb.d/14_datos_ticket.sql:ro
+    networks:
+      - red_interna
+    # La web espera a que MariaDB esté lista para recibir conexiones
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  web:
+    build:
+      # El contexto es la raíz del repositorio para poder copiar la carpeta PROYECTO
+      context: ..
+      dockerfile: despliegue/web/Dockerfile
+    image: sgrsi-web:1.0
+    container_name: sgrsi-web
+    restart: unless-stopped
+    environment:
+      # Datos que iniciar.sh escribe en el .env de la aplicación.
+      # BD_HOST es el nombre del servicio de la base de datos dentro de la red.
+      BD_HOST: bd
+      BD_PORT: "3306"
+      BD_NAME: ${BD_NAME}
+      BD_USER: ${BD_USER}
+      BD_PASS: ${BD_PASS}
+      TZ: America/Montevideo
+    ports:
+      - "${WEB_PUERTO}:80"
+    depends_on:
+      bd:
+        condition: service_healthy
+    networks:
+      - red_interna
+      - red_publica
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost/paginas/login.html"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  datos_bd:
+
+networks:
+  # internal: true deja a la base de datos sin salida ni entrada desde afuera
+  red_interna:
+    internal: true
+  red_publica:

@@ -1,0 +1,3 @@
+# Contraseñas reales y respaldos de la base: no se suben al repositorio
+.env
+respaldos_bd/

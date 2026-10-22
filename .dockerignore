@@ -1,0 +1,9 @@
+# .dockerignore - Lo que no se copia a la imagen web.
+# Va en la raíz del repositorio (es el contexto del build).
+.git
+docs
+baseDeDatos
+.vscode
+# Credenciales locales: el contenedor genera su propio .env al arrancar
+PROYECTO/.env
+despliegue/.env
