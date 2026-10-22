@@ -2,7 +2,7 @@
 
 body.paginaDashboard {
   min-height: 100vh;
-  background: var(--gris);
+  background: var(--fondoBlanco);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
