@@ -47,6 +47,10 @@ class ControladorPrestamo
 
         Sesion::verificarRolApi(["coordinador", "tecnico"]);
 
+        // GET no modifica datos, por eso solo se pide el token en POST, PUT y DELETE.
+        if (in_array($metodo, ["POST", "PUT", "DELETE"], true)) {
+            Token::verificarCSRF();
+        }
 
         $this->conectar();
 
