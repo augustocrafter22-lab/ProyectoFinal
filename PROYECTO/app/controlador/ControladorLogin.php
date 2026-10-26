@@ -48,7 +48,6 @@ class ControladorLogin
             throw new Exception(Traductor::t("login.sinRoles"), 403);
         }
 
-        Sesion::iniciar($usuario);
 
         RespuestaJson::exito([
             "nombre" => $usuario->getNombre(),
@@ -98,8 +97,6 @@ class ControladorLogin
             throw new Exception(Traductor::t("login.sinRoles"), 401);
         }
 
-        // Los permisos de la API se toman de la base de datos y no del momento del login.
-        Sesion::actualizarRoles($usuario);
 
         RespuestaJson::exito([
             "cedula" => $usuario->getCedula(),

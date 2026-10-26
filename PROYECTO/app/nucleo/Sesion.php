@@ -14,7 +14,7 @@ class Sesion
 
     private static function obtenerClaims():object{
         if (self::$claims === null){
-            self::$claims = Token::vrificar();
+            self::$claims = Token::verificar();
         }
         return self::$claims;
     }

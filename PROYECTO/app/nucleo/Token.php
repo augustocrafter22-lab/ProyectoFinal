@@ -20,7 +20,7 @@ class Token
      * @param usuario $u Usuario que se quiere identificar
      * @return string Token JWT generado
      */
-    public static function generarToken(usuario $u):string{
+    public static function generar(usuario $u):string{
         return JWT::encode(
             [
                 "sub" => $u->getCedula(),
