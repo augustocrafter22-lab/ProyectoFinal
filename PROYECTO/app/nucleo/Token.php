@@ -3,37 +3,49 @@
 require_once RUTA_VISTA . "/RespuestaJson.php";
 require_once RUTA_NUCLEO . "/Traductor.php";
 
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
 /**
- * Genera y verifica el token CSRF, para que solo las páginas del
- * sistema puedan hacer POST, PUT o DELETE en la API.
+ * Genera e identifica a los usuarios con el token JWT
  */
+
 class Token
-{
-    /**
-     * Devuelve el token CSRF de la sesión, si no existe lo crea.
-     *
-     * @return string Token de la sesión.
-     */
-    public static function generarTokenCSRF(): string
-    {
-        if (!isset($_SESSION["csrfToken"])) {
-            $_SESSION["csrfToken"] = bin2hex(random_bytes(32));
-        }
+{ 
+    private const DuracionToken = 3600; // 1 hora
 
-        return $_SESSION["csrfToken"];
+
+    /**
+     * Genera un token JWT para un usuario 
+     * @param usuario $u Usuario que se quiere identificar
+     * @return string Token JWT generado
+     */
+    public static function generarToken(usuario $u):string{
+        return JWT::encode(
+            [
+                "sub" => $u->getCedula(),
+                "roles" => $u->getRoles(),
+                "iat" => time(),
+                "exp" => time() + 3600
+            ], $ENV["JWT_SECRETO"], 'HS256'
+        );   
     }
 
     /**
-     * Verifica que el token de la cabecera X-CSRF-Token sea el de la sesión.
-     *
-     * @return void
+     * Verifica la validez de un token JWT
+     * @return object Claims del token verificado
      */
-    public static function verificarCSRF(): void
-    {
-        $token = $_SERVER["HTTP_X_CSRF_TOKEN"] ?? "";
-
-        if (!isset($_SESSION["csrfToken"]) || !hash_equals($_SESSION["csrfToken"], $token)) {
-            RespuestaJson::error(Traductor::t("comun.errorSolicitudRechazada"), 403);
+    public static function verificar():object{
+        $cab =  $_SERVER["HTTP_AUTHORIZATION"] ?? "";
+        if (!preg_match('/^Bearer (.+)$/', $cab, $matches)) {
+            RespuestaJson::error(Traductor::t("comun.error.SesionNoIniciadada"), 401);
         }
-    }
+        try{
+            return JWT::decode($matches[1], new Key($ENV["JWT_SECRETO"], 'HS256'));
+
+        }catch (Exception $e){
+            RespuestaJson::error(Traductor::t("comun.error.SesionNoIniciadada"), 401);
+        }
+
+}
 }

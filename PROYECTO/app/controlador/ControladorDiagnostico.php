@@ -37,10 +37,6 @@ class ControladorDiagnostico
             Sesion::verificarRolApi(["coordinador", "tecnico"]);
         }
 
-        // GET no modifica datos, por eso solo se pide el token en POST, PUT y DELETE.
-        if (in_array($metodo, ["POST", "PUT", "DELETE"], true)) {
-            Token::verificarCSRF();
-        }
 
         $this->conectar();
 
@@ -120,7 +116,7 @@ class ControladorDiagnostico
     {
         $datos = $this->validarDatos(Solicitud::obtenerDatos());
         // La cédula sale de la sesión y no del cliente, así nadie registra a nombre de otro técnico.
-        $datos["cedulaTecnico"] = $_SESSION["cedula"];
+        $datos["cedulaTecnico"] = Sesion::cedula();
 
         $idDiagnostico = $this->dao->crear($datos);
 

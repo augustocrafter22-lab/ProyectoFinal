@@ -57,11 +57,14 @@ async function leerRespuestaAPI(respuesta) {
 async function llamarApi(ruta, { metodo = "GET", parametros = {}, cuerpo = null } = {}) {
     const opciones = { method: metodo, headers: {} };
 
-    //Solo las operaciones que modifican datos llevan el token CSRF
-    if (metodo !== "GET") {
-        opciones.headers["X-CSRF-Token"] = sessionStorage.getItem("csrfToken") ?? "";
-    }
+    opciones.headers["X-idioma"] = localStorage.getItem("idioma") ?? "es";
 
+    const token = sessionStorage.getItem("token");
+
+    if (token !==null) {
+        opciones.headers["Authorization"] = `Bearer ${token}`;
+    }
+    
     if (cuerpo !== null) {
         opciones.headers["Content-Type"] = "application/json";
         opciones.body = JSON.stringify(cuerpo);

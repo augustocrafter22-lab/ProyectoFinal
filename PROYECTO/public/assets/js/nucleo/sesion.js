@@ -9,7 +9,6 @@ let datosSesion = null;
 async function cargarSesion() {
     const { datos } = await llamarApi("sesion");
 
-    sessionStorage.setItem("csrfToken", datos.csrfToken);
     datosSesion = datos;
 
     return datos;
@@ -41,9 +40,11 @@ async function cerrarSesion() {
     try {
         await llamarApi("logout", { metodo: "POST" });
 
-        sessionStorage.removeItem("csrfToken");
         window.location.replace("login.html");
-    } catch (error) {
-        window.alert(error.message);
+    } catch {
+        //Si no se pudo cerrar la sesión en el servidor, igual se borra la sesión local
     }
+
+    sessionStorage.removeItem("token");
+    window.location.replace("login.html");
 }

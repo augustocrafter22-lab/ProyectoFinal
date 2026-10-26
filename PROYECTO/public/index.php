@@ -11,7 +11,6 @@ if (!isset($_GET["ruta"])) {
 
 try {
     // La sesión se abre primero para que hasta el error de ruta salga en el idioma elegido.
-    session_start();
     Traductor::iniciar();
 
     // Captura el nombre del recurso que viene luego de ? en la URL
