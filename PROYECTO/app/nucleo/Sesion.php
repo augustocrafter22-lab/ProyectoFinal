@@ -19,7 +19,7 @@ class Sesion
         return self::$claims;
     }
 
-    private static function Cedula():string{
+    public static function cedula():string{
         return (string) self::obtenerClaims()->sub;
     }
 

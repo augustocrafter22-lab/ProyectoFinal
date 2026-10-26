@@ -27,7 +27,7 @@ class Token
                 "roles" => $u->getRoles(),
                 "iat" => time(),
                 "exp" => time() + 3600
-            ], $ENV["JWT_SECRETO"], 'HS256'
+            ], $_ENV["JWT_SECRETO"], 'HS256'
         );   
     }
 
@@ -38,13 +38,13 @@ class Token
     public static function verificar():object{
         $cab =  $_SERVER["HTTP_AUTHORIZATION"] ?? "";
         if (!preg_match('/^Bearer (.+)$/', $cab, $matches)) {
-            RespuestaJson::error(Traductor::t("comun.error.SesionNoIniciadada"), 401);
+            RespuestaJson::error(Traductor::t("comun.errorSesionNoIniciadada"), 401);
         }
         try{
-            return JWT::decode($matches[1], new Key($ENV["JWT_SECRETO"], 'HS256'));
+            return JWT::decode($matches[1], new Key($_ENV["JWT_SECRETO"], 'HS256'));
 
         }catch (Exception $e){
-            RespuestaJson::error(Traductor::t("comun.error.SesionNoIniciadada"), 401);
+            RespuestaJson::error(Traductor::t("comun.errorSesionNoIniciadada"), 401);
         }
 
 }

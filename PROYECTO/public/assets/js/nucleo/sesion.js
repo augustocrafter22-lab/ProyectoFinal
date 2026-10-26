@@ -5,7 +5,6 @@
 //Datos de la sesión que devolvió la API (cedula, nombre, apellido, roles, idioma)
 let datosSesion = null;
 
-//Consulta la sesión al servidor y guarda el token CSRF que usarán las operaciones de la pantalla
 async function cargarSesion() {
     const { datos } = await llamarApi("sesion");
 
@@ -40,7 +39,6 @@ async function cerrarSesion() {
     try {
         await llamarApi("logout", { metodo: "POST" });
 
-        window.location.replace("login.html");
     } catch {
         //Si no se pudo cerrar la sesión en el servidor, igual se borra la sesión local
     }

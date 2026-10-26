@@ -173,7 +173,7 @@ class ControladorUsuario
             throw new Exception(Traductor::t("usuarios.noExiste", ["cedula" => $cedula]), 404);
         }
 
-        if ($cedula === $_SESSION["cedula"]) {
+        if ($cedula === Sesion::cedula()) {
             throw new Exception(Traductor::t("usuarios.noEliminarse"), 409);
         }
 
