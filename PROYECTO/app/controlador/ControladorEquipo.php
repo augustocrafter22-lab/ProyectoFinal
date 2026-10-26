@@ -41,10 +41,6 @@ class ControladorEquipo
             Sesion::verificarRolApi(["coordinador", "tecnico"]);
         }
 
-        // GET no modifica datos, por eso solo se pide el token en POST, PUT y DELETE.
-        if (in_array($metodo, ["POST", "PUT", "DELETE"], true)) {
-            Token::verificarCSRF();
-        }
 
         $this->conectar();
 
@@ -197,7 +193,7 @@ class ControladorEquipo
 
         $datos = $this->validarDatos($datosEnviados);
 
-        $this->dao->actualizar($idEquipo, $datos, $_SESSION["cedula"]);
+        $this->dao->actualizar($idEquipo, $datos, Sesion::cedula());
 
         return [
             "datos" => $this->dao->obtener($idEquipo),

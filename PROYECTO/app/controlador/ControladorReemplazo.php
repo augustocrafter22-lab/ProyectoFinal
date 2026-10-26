@@ -22,9 +22,6 @@ class ControladorReemplazo
         $metodo = $_SERVER["REQUEST_METHOD"];
         Sesion::verificarRolApi(["tecnico"]);
 
-        if ($metodo === "POST") {
-            Token::verificarCSRF();
-        }
 
         if ($metodo !== "POST") {
             throw new Exception(Traductor::t("comun.errorMetodoNoPermitido"), 405);
@@ -63,7 +60,7 @@ class ControladorReemplazo
             "idEquipo" => $idEquipo,
             "componente" => Validador::longitud($datosEnviados["componente"] ?? "", 1, 100, "componente"),
             "descripcion" => Validador::longitud($datosEnviados["descripcion"] ?? "", 10, 2000, "descripcion"),
-            "cedulaTecnico" => $_SESSION["cedula"]
+            "cedulaTecnico" => Sesion::cedula()
         ]);
 
         return [

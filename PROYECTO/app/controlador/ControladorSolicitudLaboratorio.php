@@ -50,10 +50,6 @@ class ControladorSolicitudLaboratorio
             Sesion::verificarRolApi(["coordinador", "tecnico"]);
         }
 
-        // GET no modifica datos, por eso solo se pide el token en POST, PUT y DELETE.
-        if (in_array($metodo, ["POST", "PUT", "DELETE"], true)) {
-            Token::verificarCSRF();
-        }
 
         $this->conectar();
 
@@ -162,7 +158,7 @@ class ControladorSolicitudLaboratorio
     {
         $datos = $this->validarDatos(Solicitud::obtenerDatos());
         $this->validarFechaNoPasada($datos["fechaEstimada"], $datos["horaEstimada"]);
-        $datos["cedulaSolicitante"] = $_SESSION["cedula"];
+        $datos["cedulaSolicitante"] = Sesion::cedula();
 
         $idSolicitud = $this->dao->crear($datos);
 

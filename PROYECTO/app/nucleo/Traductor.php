@@ -25,7 +25,7 @@ class Traductor
      */
     public static function iniciar(): void
     {
-        $idioma = $_SESSION["idioma"] ?? "es";
+        $idioma = $_SERVER["HTTP_X_IDIOMA"] ?? "es";
 
         self::$idioma = self::esIdiomaValido($idioma) ? $idioma : "es";
         self::$secciones = [];

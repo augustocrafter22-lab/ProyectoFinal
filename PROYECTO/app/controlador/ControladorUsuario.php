@@ -30,10 +30,6 @@ class ControladorUsuario
 
         Sesion::verificarRolApi(["coordinador"]);
 
-        if (in_array($metodo, ["POST", "PUT", "DELETE"], true)) {
-            Token::verificarCSRF();
-        }
-
         $this->conectar();
 
         switch ($metodo) {
@@ -138,7 +134,7 @@ class ControladorUsuario
             throw new Exception(Traductor::t("usuarios.noExiste", ["cedula" => $cedula]), 404);
         }
 
-        $cambios = ValidadorUsuario::cambios($datosEnviados, $_SESSION["cedula"], $cedula);
+        $cambios = ValidadorUsuario::cambios($datosEnviados, Sesion::cedula(), $cedula);
 
         if (array_key_exists("clave", $cambios)) {
             $cambios["claveHash"] = password_hash($cambios["clave"], PASSWORD_BCRYPT);
