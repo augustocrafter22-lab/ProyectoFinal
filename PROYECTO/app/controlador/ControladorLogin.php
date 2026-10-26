@@ -54,7 +54,7 @@ class ControladorLogin
             "nombre" => $usuario->getNombre(),
             "apellido" => $usuario->getApellido(),
             "roles" => $usuario->getRoles(),
-            "token" => Token::generar($usuario)
+            "csrfToken" => Token::generarTokenCSRF()
         ], Traductor::t("login.sesionIniciada"));
     }
 
@@ -67,11 +67,16 @@ class ControladorLogin
     public function cerrarSesion(): void
     {
         $this->verificarMetodo("POST");
+
+        Token::verificarCSRF();
+        Sesion::cerrar();
+
         RespuestaJson::exito(null, Traductor::t("login.sesionCerrada"));
     }
 
     /**
      * Devuelve los datos de la sesión actual: quién es el usuario, sus roles,
+     * el idioma elegido y el token CSRF que debe usar la página.
      *
      * @return void
      * @throws Exception Si el método no es GET, o el usuario de la sesión ya no existe, fue desactivado o se quedó sin roles.
@@ -82,19 +87,22 @@ class ControladorLogin
         Sesion::verificarSesionIniciada();
 
         $accesoDatosUsuario = new AccesoDatosUsuario(Conexion::conectar());
-        $usuario = $accesoDatosUsuario->buscarUsuario(Sesion::cedula());
+        $usuario = $accesoDatosUsuario->buscarUsuario($_SESSION["cedula"]);
         Conexion::desconectar();
 
         if ($usuario === null) {
+            Sesion::cerrar();
             throw new Exception(Traductor::t("login.usuarioNoEncontrado"), 401);
         }
 
         // Si el coordinador lo desactivó o le quitó todos los roles, la sesión abierta deja de servir.
         if (!$usuario->estaActivo()) {
+            Sesion::cerrar();
             throw new Exception(Traductor::t("login.usuarioInactivo"), 401);
         }
 
         if (!$usuario->tieneAlgunRol()) {
+            Sesion::cerrar();
             throw new Exception(Traductor::t("login.sinRoles"), 401);
         }
 
@@ -107,6 +115,7 @@ class ControladorLogin
             "apellido" => $usuario->getApellido(),
             "roles" => $usuario->getRoles(),
             "idioma" => Traductor::obtenerIdioma(),
+            "csrfToken" => Token::generarTokenCSRF()
         ], Traductor::t("login.sesionActiva"));
     }
 

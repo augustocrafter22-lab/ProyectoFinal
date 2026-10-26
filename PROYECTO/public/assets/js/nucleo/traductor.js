@@ -72,7 +72,12 @@ function aplicarTraducciones() {
 }
 
 //Guarda el idioma elegido en la sesión y recarga la pantalla para que todo quede traducido
-function cambiarIdioma(idioma) {
-    localStorage.setItem("idioma", idioma);
-    window.location.reload();
+async function cambiarIdioma(idioma) {
+    try {
+        await llamarApi("idioma", { metodo: "POST", cuerpo: { idioma: idioma } });
+
+        window.location.reload();
+    } catch (error) {
+        window.alert(error.message);
+    }
 }

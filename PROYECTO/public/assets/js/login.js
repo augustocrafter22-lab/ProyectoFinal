@@ -47,7 +47,7 @@ async function gestionarLogin(eventoFormulario) {
     try {
         const sesion = await loguear(campoCedula.value.trim(), campoClave.value);
 
-        sessionStorage.setItem("token", sesion.token);
+        sessionStorage.setItem("csrfToken", sesion.csrfToken);
         //replace() abre la siguiente página borrando el historial de la previa
         window.location.replace(obtenerPaginaInicio(sesion.roles));
     } catch (error) {
